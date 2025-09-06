@@ -1,4 +1,4 @@
 ---
 include:
-  - board: xiao_ble
-    shield: glove0x0a
+  - board: seeeduino_xiao_ble
+    shield: hummingbird
