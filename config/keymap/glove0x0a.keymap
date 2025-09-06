@@ -23,7 +23,7 @@ keymap:
 
     - name: FN3
       bindings:
-        - &trans    &lt KC_F4      &kp F2     &kp UP     &lgui KC_R &lctrl KC_W &lgui KC_M &custom U07 &kp PSCR  &custom U05 &lsft KC_INT3 &kp LBRC
+        - &trans    &lt KC_F4      &kp F2     &kp UP     &lgui KC_R &lctrl KC_W &lgui KC_M &trans      &kp PSCR  &custom U05 &lsft KC_INT3 &kp LBRC
         - &trans    &kp LALT       &kp LEFT   &kp DOWN   &kp RIGHT  &kp F3      &kp RBRC   &trans      &kp HOME  &kp PG_UP   &kp INT1      &kp QUOTE
         - &trans    &lsft KC_EQUAL &lgui KC_X &lgui KC_E &kp F5     &kp F4      &kp NUHS   &kp DEL     &kp END   &kp PG_DN   &kp SLASH     &kp EQL
         - &trans    &trans         &trans     &trans     &mo FN3    &kp trans              &mo FN2     &trans    &kp APP     &kp F7        &kp F8
