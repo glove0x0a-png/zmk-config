@@ -1,9 +1,69 @@
 / {
-  mouse_jiggler_toggle {
+  // --- bluetooth制御 ---
+  bt_toggle {
+    compatible = "zmk,behavior-toggle";
+    label = "BLE Toggle";
+    bindings = <&bt on>, <&bt off>;
+  };
+
+  bt_bat {
+    compatible = "zmk,behavior-toggle";
+    label = "Battery LED";
+    bindings = <&rgb_ug_batt>;
+  };
+
+  bt_pair {
+    compatible = "zmk,behavior-toggle";
+    label = "Pairing Switch";
+    bindings = <&bt profile 1>;
+  };
+
+  bt_stat {
+    compatible = "zmk,behavior-toggle";
+    label = "BLE Status LED";
+    bindings = <&rgb_ug_status>;
+  };
+
+  // ---カスタムキー制御 ---
+  user_02 {
+    compatible = "zmk,behavior-toggle";
+    label = "Zero or Pipe";
+    bindings = <&kp 0>, <&kp PIPE>;
+  };
+
+  user_05 {
     compatible = "zmk,behavior-toggle";
     label = "Mouse Jiggler Toggle";
-    status = "okay";
+    bindings = <&mouse_jiggler_on>, <&mouse_jiggler_off>;
   };
+
+  // --マウスジグラー制御(START) ---
+  mouse_jiggler_on {
+    compatible = "zmk,behavior-toggle";
+    label = "Mouse Jiggler ON";
+    bindings = <
+      &jiggler_on_step1.toggle
+      &jiggler_on_step2.toggle
+      &jiggler_on_step3.toggle
+      &jiggler_on_step4.toggle
+      &jiggler_on_step5.toggle
+      &jiggler_on_step6.toggle
+    >;
+  };
+
+  mouse_jiggler_off {
+    compatible = "zmk,behavior-toggle";
+    label = "Mouse Jiggler OFF";
+    bindings = <
+      &jiggler_off_step1.toggle
+      &jiggler_off_step2.toggle
+      &jiggler_off_step3.toggle
+      &jiggler_off_step4.toggle
+      &jiggler_off_step5.toggle
+      &jiggler_off_step6.toggle
+    >;
+  };
+
 
   // --- ONステップ（右下 → 左上） ---
   jiggler_on_step1 {
@@ -126,4 +186,6 @@
     move-y = <10>;
     active = <false>;
   };
+  // --マウスジグラー制御(END) ---
+
 };
