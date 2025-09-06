@@ -1,0 +1,17 @@
+/ {
+  mouse_jiggler {
+    compatible = "zmk,behavior-toggle";
+    label = "Mouse Jiggler Toggle";
+    status = "okay";
+  };
+
+  jiggler_input_proc {
+    compatible = "zmk,input-processor";
+    label = "Mouse Jiggler Processor";
+    status = "okay";
+    interval-ms = <30000>;  // 30秒ごと
+    move-x = <1>;
+    move-y = <0>;
+    active = <false>;
+  };
+};
