@@ -55,3 +55,9 @@ behaviors:
     bindings:
       - &kp 0
       - &kp PIPE
+  U05:
+    label: "Mouse Jiggler Toggle"
+    bindings:
+      - &jiggler_input_proc.toggle
+      - &mkp MOVE_DOWN
+      - &mkp MOVE_UP
