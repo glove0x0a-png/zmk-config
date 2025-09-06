@@ -1,17 +1,129 @@
 / {
-  mouse_jiggler {
+  mouse_jiggler_toggle {
     compatible = "zmk,behavior-toggle";
     label = "Mouse Jiggler Toggle";
     status = "okay";
   };
 
-  jiggler_input_proc {
+  // --- ONステップ（右下 → 左上） ---
+  jiggler_on_step1 {
     compatible = "zmk,input-processor";
-    label = "Mouse Jiggler Processor";
+    label = "Jiggler ON Step 1";
     status = "okay";
-    interval-ms = <30000>;  // 30秒ごと
-    move-x = <1>;
-    move-y = <0>;
-    active = <true>;
+    interval-ms = <100>;
+    move-x = <10>;
+    move-y = <10>;
+    active = <false>;
+  };
+
+  jiggler_on_step2 {
+    compatible = "zmk,input-processor";
+    label = "Jiggler ON Step 2";
+    status = "okay";
+    interval-ms = <100>;
+    move-x = <10>;
+    move-y = <10>;
+    active = <false>;
+  };
+
+  jiggler_on_step3 {
+    compatible = "zmk,input-processor";
+    label = "Jiggler ON Step 3";
+    status = "okay";
+    interval-ms = <100>;
+    move-x = <10>;
+    move-y = <10>;
+    active = <false>;
+  };
+
+  jiggler_on_step4 {
+    compatible = "zmk,input-processor";
+    label = "Jiggler ON Step 4";
+    status = "okay";
+    interval-ms = <100>;
+    move-x = <-10>;
+    move-y = <-10>;
+    active = <false>;
+  };
+
+  jiggler_on_step5 {
+    compatible = "zmk,input-processor";
+    label = "Jiggler ON Step 5";
+    status = "okay";
+    interval-ms = <100>;
+    move-x = <-10>;
+    move-y = <-10>;
+    active = <false>;
+  };
+
+  jiggler_on_step6 {
+    compatible = "zmk,input-processor";
+    label = "Jiggler ON Step 6";
+    status = "okay";
+    interval-ms = <100>;
+    move-x = <-10>;
+    move-y = <-10>;
+    active = <false>;
+  };
+
+  // --- OFFステップ（右上 → 左下） ---
+  jiggler_off_step1 {
+    compatible = "zmk,input-processor";
+    label = "Jiggler OFF Step 1";
+    status = "okay";
+    interval-ms = <100>;
+    move-x = <10>;
+    move-y = <-10>;
+    active = <false>;
+  };
+
+  jiggler_off_step2 {
+    compatible = "zmk,input-processor";
+    label = "Jiggler OFF Step 2";
+    status = "okay";
+    interval-ms = <100>;
+    move-x = <10>;
+    move-y = <-10>;
+    active = <false>;
+  };
+
+  jiggler_off_step3 {
+    compatible = "zmk,input-processor";
+    label = "Jiggler OFF Step 3";
+    status = "okay";
+    interval-ms = <100>;
+    move-x = <10>;
+    move-y = <-10>;
+    active = <false>;
+  };
+
+  jiggler_off_step4 {
+    compatible = "zmk,input-processor";
+    label = "Jiggler OFF Step 4";
+    status = "okay";
+    interval-ms = <100>;
+    move-x = <-10>;
+    move-y = <10>;
+    active = <false>;
+  };
+
+  jiggler_off_step5 {
+    compatible = "zmk,input-processor";
+    label = "Jiggler OFF Step 5";
+    status = "okay";
+    interval-ms = <100>;
+    move-x = <-10>;
+    move-y = <10>;
+    active = <false>;
+  };
+
+  jiggler_off_step6 {
+    compatible = "zmk,input-processor";
+    label = "Jiggler OFF Step 6";
+    status =　"okay";
+    interval-ms = <100>;
+    move-x = <-10>;
+    move-y = <10>;
+    active = <false>;
   };
 };
