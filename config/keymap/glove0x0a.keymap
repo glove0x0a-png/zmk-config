@@ -1,1 +1,56 @@
+keymap:
+  layers:
+    - name: QWERTY
+      bindings:
+        - &kp TAB    &kp Q     &kp W     &kp E     &kp R     &kp T     &kp Y     &kp U     &kp I     &kp O     &kp P     &kp MINUS
+        - &kp CAPS   &kp A     &kp S     &kp D     &kp F     &kp G     &kp H     &none     &kp K     &kp L     &kp SEMI  &kp ENTER
+        - &kp LSFT   &kp Z     &kp X     &kp C     &kp V     &kp B     &kp N     &kp M     &kp COMMA &kp DOT   &kp UP    &kp INT1
+        - &kp LCTRL  &kp LGUI  &kp LALT  &kp BTN1  &mo FN1   &kp SPACE           &mo FN2   &none     &kp LEFT  &kp DOWN  &kp RIGHT
 
+    - name: FN1
+      bindings:
+        - &kp ESC    &lt KC_F4      &kp F2     &kp UP     &lgui KC_R     &lctrl KC_W     &lgui KC_M     &custom U07     &kp PSCR  &custom U05     &lsft KC_INT3  &kp LBRC
+        - &kp LGUI   &kp LALT      &kp LEFT   &kp DOWN   &kp RIGHT      &kp F3          &kp RBRC       &trans           &kp HOME   &kp PG_UP       &kp INT1       &kp QUOTE
+        - &trans     &lsft KC_EQUAL &lgui KC_X &lgui KC_E &kp F5         &kp F4          &kp NUHS       &kp DEL          &kp END    &kp PG_DN       &kp SLASH      &kp EQL
+        - &trans     &trans         &trans     &kp BTN2   &mo FN1        &kp BSPC              &mo FN3   &trans          &kp APP    &kp F7          &kp F8
+
+    - name: FN2
+      bindings:
+        - &kp ESC    &kp 1     &kp 2     &kp 3     &kp 4     &kp 5     &kp 6     &kp 7     &kp 8     &kp 9     &custom U02     &trans
+        - &kp LGUI   &trans    &trans    &trans    &trans    &trans    &trans    &trans    &trans    &trans    &trans          &kp QUOTE
+        - &trans     &trans    &trans    &trans    &trans    &trans    &trans    &trans    &trans    &trans    &kp SLASH       &trans
+        - &trans     &trans    &trans    &kp BTN2  &mo FN3   &kp CAPS           &mo FN2   &trans    &trans    &trans          &trans
+
+    - name: FN3
+      bindings:
+        - &kp ESC    &bt_toggle     &battery_led     &bt_pairing     &status_led     &kp F5     &kp F6     &kp F7     &kp F8     &kp F9     &kp F10    &kp F11
+        - &kp A      &kp S          &kp D            &kp F           &trans          &trans     &trans     &trans     &trans     &trans     &trans     &kp F12
+        - &trans     &trans         &trans           &trans          &trans          &trans     &trans     &trans     &trans     &trans     &trans     &trans
+        - &trans     &trans         &trans           &trans          &mo FN3         &trans           &mo FN3   &trans     &trans     &trans     &trans
+behaviors:
+  bt_toggle:
+    label: "BLE Toggle"
+    bindings:
+      - &bt on
+      - &bt off
+
+  battery_led:
+    label: "Battery LED"
+    bindings:
+      - &rgb_ug_batt
+
+  bt_pairing:
+    label: "Pairing Switch"
+    bindings:
+      - &bt profile 1
+
+  status_led:
+    label: "BLE Status LED"
+    bindings:
+      - &rgb_ug_status
+
+  U02:
+    label: "Zero or Pipe"
+    bindings:
+      - &kp 0
+      - &kp PIPE
