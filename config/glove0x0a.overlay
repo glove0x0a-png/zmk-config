@@ -12,6 +12,6 @@
     interval-ms = <30000>;  // 30秒ごと
     move-x = <1>;
     move-y = <0>;
-    active = <false>;
+    active = <true>;
   };
 };
