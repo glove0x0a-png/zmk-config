@@ -1,4 +1,8 @@
 / {
+  // --- none ----
+  none {
+    compatible = "zmk,behavior-none";
+  };
   // --- bluetooth制御 ---
   bt_toggle {
     compatible = "zmk,behavior-toggle";
@@ -39,7 +43,7 @@
 
   // --マウスジグラー制御(START) ---
   mouse_jiggler_on {
-    compatible = "zmk,behavior-toggle";
+    compatible = "zmk,behavior-macro";
     label = "Mouse Jiggler ON";
     bindings = <
       &jiggler_on_step1.toggle
@@ -52,7 +56,7 @@
   };
 
   mouse_jiggler_off {
-    compatible = "zmk,behavior-toggle";
+    compatible = "zmk,behavior-macro";
     label = "Mouse Jiggler OFF";
     bindings = <
       &jiggler_off_step1.toggle
