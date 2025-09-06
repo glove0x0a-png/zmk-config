@@ -50,14 +50,38 @@ behaviors:
     bindings:
       - &rgb_ug_status
 
+  mouse_jiggler_on:
+    label: "Mouse Jiggler ON"
+    bindings:
+      - &jiggler_on_step1.toggle
+      - &jiggler_on_step2.toggle
+      - &jiggler_on_step3.toggle
+      - &jiggler_on_step4.toggle
+      - &jiggler_on_step5.toggle
+      - &jiggler_on_step6.toggle
+
+  mouse_jiggler_off:
+    label: "Mouse Jiggler OFF"
+    bindings:
+      - &jiggler_off_step1.toggle
+      - &jiggler_off_step2.toggle
+      - &jiggler_off_step3.toggle
+      - &jiggler_off_step4.toggle
+      - &jiggler_off_step5.toggle
+      - &jiggler_off_step6.toggle
+
+  mouse_jiggler_toggle:
+    label: "Mouse Jiggler Toggle"
+    bindings:
+      - &mouse_jiggler_on
+      - &mouse_jiggler_off
+
   U02:
     label: "Zero or Pipe"
     bindings:
       - &kp 0
       - &kp PIPE
-  U05:
-    label: "Mouse Jiggler Toggle"
-    bindings:
-      - &jiggler_input_proc.toggle
-      - &mkp MOVE_DOWN
-      - &mkp MOVE_UP
+U05:
+  label: "Mouse Jiggler Toggle"
+  bindings:
+    - &mouse_jiggler_toggle
