@@ -120,7 +120,7 @@
   jiggler_off_step6 {
     compatible = "zmk,input-processor";
     label = "Jiggler OFF Step 6";
-    status =　"okay";
+    status = "okay";
     interval-ms = <100>;
     move-x = <-10>;
     move-y = <10>;

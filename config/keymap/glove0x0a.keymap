@@ -81,7 +81,8 @@ behaviors:
     bindings:
       - &kp 0
       - &kp PIPE
-U05:
-  label: "Mouse Jiggler Toggle"
-  bindings:
-    - &mouse_jiggler_toggle
+
+  U05:
+    label: "Mouse Jiggler Toggle"
+    bindings:
+      - &mouse_jiggler_toggle
