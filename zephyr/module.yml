@@ -1,4 +1,4 @@
-name: mamekey
+name: glove0x0a
 build:
   settings:
     board_root: config
