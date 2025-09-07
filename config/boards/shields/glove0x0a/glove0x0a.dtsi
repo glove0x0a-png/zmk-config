@@ -1,15 +1,12 @@
 #include <dt-bindings/zmk/matrix_transform.h>
 #include <physical_layouts.dtsi>
 #include <dt-bindings/zmk/bt.h>
-
-#define _PIPE LS(BSLH)
-
 / {
     behaviors {
         pipe_0: mod-morph_0 {
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
-            bindings = <&kp N0>, <&kp _PIPE>;
+            bindings = <&kp N0>, <&kp PIPE>;
             mods = <MOD_LSFT>;
         };
     };
