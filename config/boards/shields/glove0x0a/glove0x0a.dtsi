@@ -6,7 +6,7 @@
         pipe_0: mod-morph_0 {
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
-            bindings = <&kp N0>, <&kp PIPE>;
+            bindings = <&kp N0>, <&kp LS(INT3)>;
             mods = <MOD_LSFT>;
         };
     };
