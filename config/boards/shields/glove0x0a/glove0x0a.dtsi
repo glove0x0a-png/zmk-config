@@ -3,13 +3,14 @@
 #include <dt-bindings/zmk/bt.h>
 
 / {
-  behaviors {
-    pipe_0: mod-morph_0 {
-      compatible = "zmk,behavior-mod-morph";
-      bindings = <&kp N0>, <&kp PIPE>;
-      mods = <(MOD_LSFT)>;
+    behaviors {
+        pipe_0: mod-morph_0 {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp N0>, <&kp LS(BSLH)>;
+            mods = <(MOD_LSFT)>;
+        };
     };
-  };
 };
 
 / {
