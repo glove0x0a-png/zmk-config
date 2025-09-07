@@ -11,9 +11,7 @@
             mods = <(MOD_LSFT)>;
         };
     };
-};
 
-/ {
     chosen {
         zmk,physical-layout = &glove0x0a_physical_layout;
     };
