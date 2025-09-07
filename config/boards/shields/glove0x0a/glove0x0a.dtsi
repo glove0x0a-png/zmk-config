@@ -1,9 +1,8 @@
-	#include <dt-bindings/zmk/matrix_transform.h>
+#include <dt-bindings/zmk/matrix_transform.h>
 #include <physical_layouts.dtsi>
 #include <dt-bindings/zmk/bt.h>
 
 / {
-
     chosen {
         zmk,physical-layout = &glove0x0a_physical_layout;
     };
@@ -97,5 +96,4 @@
                     <&gpio0  2 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN )>;
     };
 };
-
 &xiao_i2c { status = "disabled"; };
