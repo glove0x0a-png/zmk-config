@@ -4,16 +4,12 @@
 #include <dt-bindings/zmk/outputs.h>
 #include <dt-bindings/zmk/rgb.h>
 #include <behaviors/rgbled_widget.dtsi>
-
 #define ZMK_POINTING_DEFAULT_MOVE_VAL 1500
 #define ZMK_POINTING_DEFAULT_SCRL_VAL 120 // (好きな値)
 #include <dt-bindings/zmk/pointing.h>
-
 / {
-
   keymap {
     compatible = "zmk,keymap";
-
     layer_qwerty {
       bindings = <
         &kp TAB    &kp Q    &kp W    &kp E    &kp R    &kp T    &kp Y    &kp U    &kp I    &kp O    &kp P    &kp MINUS
@@ -22,16 +18,14 @@
         &kp LCTRL  &kp LGUI &kp LALT &none    &mo 3    &kp SPACE &mo 1   &none    &kp LEFT  &kp DOWN &kp RIGHT
       >;
     };
-
     layer_fn1 {
       bindings = <
         &kp ESC    &kp 1    &kp 2    &kp 3    &kp 4    &kp 5    &kp 6    &kp 7    &kp 8    &kp 9    &kp 0       &trans
         &kp LGUI   &trans   &trans   &trans   &trans   &trans   &trans   &trans   &trans   &trans   &trans      &kp QUOTE
         &trans     &trans   &trans   &trans   &trans   &trans   &trans   &trans   &trans   &trans   &kp SLASH   &trans
-        &trans     &trans   &trans   &none    &mo 2    &kp CAPS &mo 1   &trans   &trans   &trans   &trans
+        &trans     &trans   &trans   &none    &mo 2    &kp CAPS &mo 1   &trans   &trans   &trans    &trans
       >;
     };
-
     layer_fn2 {
       bindings = <
         &trans     &kp F1   &kp F2   &kp F3   &kp F4   &kp F5   &kp F6   &kp F7   &kp F8   &kp F9   &kp F10     &kp F11
@@ -40,16 +34,14 @@
         &trans     &trans   &trans   &trans   &mo 2    &kp BSPC &mo 2    &trans   &trans   &trans   &trans
       >;
     };
-
     layer_fn3 {
       bindings = <
-        &trans     &kp LA(F4)  &kp F2    &kp UP    &kp LG(R) &kp LC(W)  &kp LG(M)   &trans   &kp PSCR &trans    &kp PIPE    &kp LBRC
+        &trans     &kp LA(F4)  &kp F2    &kp UP    &kp LG(R) &kp LC(W)  &kp LG(M)   &trans   &kp PSCR &trans    &]trans     &kp LBRC
         &trans     &kp LALT    &kp LEFT  &kp DOWN  &kp RIGHT &kp F3     &kp RBRC    &trans   &kp HOME &kp PG_UP &kp KC_INT1 &kp QUOTE
         &trans     &kp LS(EQL) &kp LG(X) &kp LG(E) &kp F5    &kp F4     &kp KC_BSLS &kp DEL  &kp END  &kp PG_DN &kp SLASH   &kp EQL
         &trans     &trans      &trans    &trans    &mo 3     &trans     &mo 2       &trans   &kp APP  &kp F7    &kp F8
       >;
     };
-
   };
 };
 
