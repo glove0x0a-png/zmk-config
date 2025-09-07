@@ -1,0 +1,4 @@
+name: mamekey
+build:
+  settings:
+    board_root: config
