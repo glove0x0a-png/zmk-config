@@ -1,4 +1,0 @@
-if SHIELD_MAMEKEY
-config ZMK_KEYBOARD_NAME
-        default "mamekey"
-endif

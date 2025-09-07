@@ -1,8 +1,0 @@
-file_format: "1"
-id: mamekey
-name: mamekey
-type: shield
-url: https://github.com/mameeeeekko/zmk-config-mamekey.git
-requires: [seeeduino_xiao_ble]
-features:
-  - keys
