@@ -3,9 +3,6 @@
 #include <physical_layouts.dtsi>
 #include <dt-bindings/zmk/bt.h>
 / {
-    chosen {
-        zmk,physical-layout = &glove0x0a_physical_layout;
-    };
 
     sensors: sensors {
         compatible = "zmk,keymap-sensors";
@@ -17,8 +14,13 @@
         compatible = "alps,ec11";
         a-gpios = <&gpio0 10 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
         b-gpios = <&gpio0 31 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
-        steps = <2>;
-        status = "disabled";
+        steps = <24>;
+        status = "OK";
+    };
+
+
+    chosen {
+        zmk,physical-layout = &glove0x0a_physical_layout;
     };
 
     default_transform: matrix_transform {
@@ -111,7 +113,3 @@
     };
 };
 &xiao_i2c { status = "disabled"; };
-
-&left_encoder {
-    status = "okay";
-};
