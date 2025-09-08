@@ -34,6 +34,7 @@
             #sensor-binding-cells = <2>;
             bindings = <&msc SCRL_LEFT>, <&msc SCRL_RIGHT>;
         };
+
         mouse_scrl: mouse_scrl{
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;

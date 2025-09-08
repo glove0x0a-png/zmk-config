@@ -10,7 +10,7 @@
         triggers-per-rotation = <20>;
     };
 
-    left_encoder: encoder_left  {
+    left_encoder: left_encoder  {
         compatible = "alps,ec11";
         a-gpios = <&gpio0 10 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
         b-gpios = <&gpio0 31 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
