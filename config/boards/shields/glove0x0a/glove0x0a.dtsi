@@ -3,20 +3,19 @@
 #include <physical_layouts.dtsi>
 #include <dt-bindings/zmk/bt.h>
 / {
-
     sensors: sensors {
         compatible = "zmk,keymap-sensors";
-        sensors = <&left_encoder>;
-        triggers-per-rotation = <20>;
+        sensors = <&encoder>;
+        triggers-per-rotation = <10>;
     };
 
-    left_encoder: left_encoder  {
+    encoder: encoder {
         compatible = "alps,ec11";
         a-gpios = <&gpio0 10 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
         b-gpios = <&gpio0 31 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
         steps = <24>;
+        status = "okay";
     };
-
 
     chosen {
         zmk,physical-layout = &glove0x0a_physical_layout;
