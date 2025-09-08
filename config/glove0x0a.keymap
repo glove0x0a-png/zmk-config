@@ -37,7 +37,7 @@
         mouse_scrl: mouse_scrl{
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
-            bindings = <&mouse_scrl_left>, <&mouse_scrl_up)>;
+            bindings = <&mouse_scrl_left>, <&mouse_scrl_up>;
             mods = <MOD_LSFT>;
         };
   };
