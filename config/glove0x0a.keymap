@@ -68,8 +68,8 @@
         &kp LGUI  &trans     &trans    &trans    &trans    &trans    &trans    &trans  &trans    &trans    &trans    &kp F12
         &trans    &trans     &trans    &trans    &trans    &trans    &trans    &trans  &trans    &trans    &kp SLASH &trans
         &trans    &trans     &trans    &mkp RCLK &mo 2     &kp BSPC            &mo 2   &trans    &trans    &trans    &trans
-      sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
       >;
+      sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
     };
     layer_fn3 {
       bindings = <
@@ -77,8 +77,8 @@
         &kp LGUI  &kp LALT   &kp LEFT  &kp DOWN  &kp RIGHT &kp F3    &kp RBKT  &trans  &kp HOME  &kp PG_UP &kp INT1  &kp SQT
         &trans    &kp _tild  &kp LG(X) &kp LG(E) &kp F5    &kp F4    &kp NUHS  &kp DEL &kp END   &kp PG_DN &kp SLASH &kp EQUAL
         &trans    &trans     &trans    &mkp RCLK &mo 3     &kp BSPC            &mo 2   &trans    &kp K_APP &kp F7    &kp F8
-      sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
       >;
+      sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
     };
   };
 };
