@@ -7,10 +7,16 @@
         zmk,physical-layout = &glove0x0a_physical_layout;
     };
 
-    right_encoder: encoder_right {
+    sensors: sensors {
+        compatible = "zmk,keymap-sensors";
+        sensors = <&left_encoder>;
+        triggers-per-rotation = <20>;
+    };
+
+    left_encoder: encoder_left  {
         compatible = "alps,ec11";
         a-gpios = <&gpio0 10 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
-        b-gpios = <&gpio1 11 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
+        b-gpios = <&gpio0 31 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
         steps = <2>;
         status = "disabled";
     };
@@ -93,7 +99,7 @@
         col-gpios = <&gpio1 12 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN )>,
                     <&gpio1  3 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN )>,
                     <&gpio1 13 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN )>,
-                    <&gpio0 31 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN )>,
+                    <&gpio0 10 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN )>,
                     <&gpio0  9 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN )>,
                     <&gpio0 29 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN )>,
                     <&gpio1  1 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN )>,
@@ -105,3 +111,7 @@
     };
 };
 &xiao_i2c { status = "disabled"; };
+
+&left_encoder {
+    status = "okay";
+};
