@@ -4,14 +4,35 @@
 #include <dt-bindings/zmk/outputs.h>
 #include <dt-bindings/zmk/rgb.h>
 #include <behaviors/rgbled_widget.dtsi>
+//ロータリーエンコーダ：マウスのスクロール量
+#define ZMK_POINTING_DEFAULT_SCRL_VAL 80
+//
 #define ZMK_POINTING_DEFAULT_MOVE_VAL 1500
-#define ZMK_POINTING_DEFAULT_SCRL_VAL 120 // (好きな値)
 #include <dt-bindings/zmk/pointing.h>
 
 //user define
 #define _tild LS(EQUAL)
 
 / {
+
+   behaviors {
+        pipe_0: mod-morph_0 {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp N0>, <&kp LS(INT3)>;
+            mods = <MOD_LSFT>;
+        };
+
+        encoder_msc_down_up: encoder_msc_down_up {
+            compatible = "zmk,behavior-sensor-rotate";
+            label = "ENCODER_MSC_DOWN_UP";
+            #sensor-binding-cells = <0>;
+            bindings = <&msc SCRL_DOWN>, <&msc SCRL_UP>;
+            tap-ms = <20>;
+        };
+
+  };
+
   keymap {
     compatible = "zmk,keymap";
     layer_qwerty {
@@ -21,6 +42,7 @@
         &kp LSHFT &kp Z      &kp X     &kp C     &kp V     &kp B     &kp N     &kp M   &kp COMMA &kp DOT   &kp UP    &kp INT1
         &kp LCTRL &kp LGUI   &kp LALT  &none     &mo 3     &kp SPACE           &mo 1   &none     &kp LEFT  &kp DOWN  &kp RIGHT
       >;
+      sensor-bindings = <&encoder_msc_down_up>;
     };
     layer_fn1 {
       bindings = <

@@ -3,17 +3,16 @@
 #include <physical_layouts.dtsi>
 #include <dt-bindings/zmk/bt.h>
 / {
-    behaviors {
-        pipe_0: mod-morph_0 {
-            compatible = "zmk,behavior-mod-morph";
-            #binding-cells = <0>;
-            bindings = <&kp N0>, <&kp LS(INT3)>;
-            mods = <MOD_LSFT>;
-        };
-    };
-
     chosen {
         zmk,physical-layout = &glove0x0a_physical_layout;
+    };
+
+    right_encoder: encoder_right {
+        compatible = "alps,ec11";
+        a-gpios = <&gpio0 31 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
+        b-gpios = <&gpio1 11 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
+        steps = <2>;
+        status = "disabled";
     };
 
     default_transform: matrix_transform {
