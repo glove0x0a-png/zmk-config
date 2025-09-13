@@ -4,17 +4,16 @@
 #include <dt-bindings/zmk/outputs.h>
 #include <dt-bindings/zmk/rgb.h>
 #include <behaviors/rgbled_widget.dtsi>
+
 //ロータリーエンコーダ：マウスのスクロール量
-#define ZMK_POINTING_DEFAULT_SCRL_VAL 80
-//
 #define ZMK_POINTING_DEFAULT_MOVE_VAL 1500
+#define ZMK_POINTING_DEFAULT_SCRL_VAL 80
 #include <dt-bindings/zmk/pointing.h>
 
 //user define
 #define _tild LS(EQUAL)
 
 / {
-
    behaviors {
         pipe_0: mod-morph_0 {
             compatible = "zmk,behavior-mod-morph";
