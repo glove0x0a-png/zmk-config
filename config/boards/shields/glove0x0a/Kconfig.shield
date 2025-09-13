@@ -1,0 +1,3 @@
+# No whitespace after the comma or in your keyboard name!
+config SHIELD_MAMEKEY
+        def_bool $(shields_list_contains,glove0x0a)
