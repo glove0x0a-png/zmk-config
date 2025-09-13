@@ -38,7 +38,8 @@
     
     kscan0: kscan {
         compatible = "zmk,kscan-gpio-charlieplex";
-        interrupt-gpios = <&gpio1  3 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN) >;
+        wakeup-source;
+        interrupt-gpios = <&gpio1  3 (GPIO_ACTIVE_LOW | GPIO_PULL_UP) >;
     };
     glove0x0a_physical_layout: glove0x0a_physical_layout {
         compatible = "zmk,physical-layout";
