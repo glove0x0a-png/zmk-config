@@ -4,7 +4,6 @@
 #include <dt-bindings/zmk/outputs.h>
 #include <dt-bindings/zmk/rgb.h>
 #include <behaviors/rgbled_widget.dtsi>
-<<<<<<< HEAD
 #define ZMK_POINTING_DEFAULT_MOVE_VAL 1500
 #define ZMK_POINTING_DEFAULT_SCRL_VAL 120 // (好きな値)
 #include <dt-bindings/zmk/pointing.h>
