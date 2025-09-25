@@ -47,7 +47,7 @@
 
 ---
 
-## 2.0 ロータリーエンコーダ
+## 2.0 ロータリーエンコーダ(削除済み)
 
 - default：縦  
 - layer 1：横  
@@ -86,7 +86,7 @@ CONFIG_ZMK_IDLE_SLEEP_TIMEOUT=900000
 
 - 未操作20秒でidle  
 - idle 15分でdeep sleep  
-- 接続中はマウスジグラー（3分毎）が有効のため、deep sleepは未接続状態のみ有効  
+- 接続中はマウスジグラー（3分毎）(※#7参照)が有効のため、deep sleepは未接続状態のみ有効  
 
 ---
 
@@ -107,22 +107,23 @@ CONFIG_ZMK_IDLE_SLEEP_TIMEOUT=900000
 
 - az1uballドライバ追加  
 - リスナー定義が必要だった（トラブルあり）  
+- USB or BLE接続中(現在のプロファイルがactive)の場合3分毎にマウスジグラー起動。
 
 ---
 
 ## 8.0 大雑把マウス操作
 
-- fn2 + L：→  
-- fn2 + K：←  
-- fn2 + H：↑  
-- fn2 + N：↓  
+- fn2 + F：→  
+- fn2 + S：←  
+- fn2 + A：↑  
+- fn2 + D：↓  
 
 ---
 
 ## 9.0 マウスクリックでJキー送信
 
 - 以下のZMKイベント登録で対応  
-```c
+```
 zmk_behavior_invoke_binding(&binding, event, data->sw_pressed);
 ```
 
