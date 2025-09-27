@@ -1,0 +1,143 @@
+#include <dt-bindings/zmk/keys.h>
+#include <dt-bindings/zmk/matrix_transform.h>
+#include <physical_layouts.dtsi>
+#include <dt-bindings/zmk/bt.h>
+#include <dt-bindings/led/led.h>
+#include <input/processors.dtsi>
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+
+/ {
+    chosen {
+        zmk,physical-layout = &glove0x0a_physical_layout;
+    };
+
+    //sensors: sensors {
+    //    compatible = "zmk,keymap-sensors";
+    //    sensors = <&encoder>;
+    //    triggers-per-rotation = <24>;
+    //};
+    
+    //encoder: encoder {
+    //    compatible = "alps,ec11";
+    //    a-gpios = <&gpio1 11 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
+    //    b-gpios = <&gpio1 12 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
+    //    steps = <24>;
+    //    status = "okay";
+    //};
+
+
+    default_transform: matrix_transform {
+        compatible = "zmk,matrix-transform";
+        rows = <4>;
+        columns = <12>;
+        map = <
+            RC(11, 0) RC(11, 1) RC(11, 2) RC(11, 3) RC(0, 4) RC(0, 5) RC(0, 6) RC(0, 7) RC(0, 8) RC(0, 9) RC(0,10) RC(0,11)
+            RC(10, 0) RC(10, 1) RC(10, 2) RC(10, 3) RC(1, 4) RC(1, 5) RC(1, 6)          RC(1, 8) RC(1, 9) RC(1,10) RC(1,11)
+            RC( 9, 0) RC( 9, 1) RC( 9, 2) RC( 9, 3) RC(2, 4) RC(2, 5) RC(2, 6) RC(2, 7) RC(2, 8) RC(2, 9) RC(2,10) RC(2,11)
+            RC( 8, 0) RC( 8, 1) RC( 8, 2) RC( 8, 3) RC(3, 4) RC(3, 5)          RC(3, 7) RC(3, 8) RC(3, 9) RC(3,10) RC(3,11)
+        >;
+    };
+    
+    kscan0: kscan {
+        compatible = "zmk,kscan-gpio-charlieplex";
+        interrupt-gpios = <&gpio1  3 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN) >;
+        wakeup-source;
+        gpios
+          = <&gpio1  5  GPIO_ACTIVE_HIGH>
+          , <&gpio1 14  GPIO_ACTIVE_HIGH>
+          , <&gpio1  7  GPIO_ACTIVE_HIGH>
+          , <&gpio1 15  GPIO_ACTIVE_HIGH>
+          , <&gpio0  9  GPIO_ACTIVE_HIGH>
+          , <&gpio0 29  GPIO_ACTIVE_HIGH>
+          , <&gpio1  1  GPIO_ACTIVE_HIGH>
+          , <&gpio0 28  GPIO_ACTIVE_HIGH>
+          , <&gpio0 19  GPIO_ACTIVE_HIGH>
+          , <&gpio0  3  GPIO_ACTIVE_HIGH>
+          , <&gpio0 15  GPIO_ACTIVE_HIGH>
+          , <&gpio0  2  GPIO_ACTIVE_HIGH>
+        ;
+
+    };
+    glove0x0a_physical_layout: glove0x0a_physical_layout {
+        compatible = "zmk,physical-layout";
+        display-name = "Default";
+        transform = <&default_transform>;
+        kscan = <&kscan0>;
+
+        keys  //                     w   h    x    y     rot    rx    ry
+            = <&key_physical_attrs 100 100    0    0       0     0     0>
+            , <&key_physical_attrs 100 100  100    0       0     0     0>
+            , <&key_physical_attrs 100 100  200    0       0     0     0>
+            , <&key_physical_attrs 100 100  300    0       0     0     0>
+            , <&key_physical_attrs 100 100  400    0       0     0     0>
+            , <&key_physical_attrs 100 100  500    0       0     0     0>
+            , <&key_physical_attrs 100 100  600    0       0     0     0>
+            , <&key_physical_attrs 100 100  700    0       0     0     0>
+            , <&key_physical_attrs 100 100  800    0       0     0     0>
+            , <&key_physical_attrs 100 100  900    0       0     0     0>
+            , <&key_physical_attrs 100 100 1000    0       0     0     0>
+            , <&key_physical_attrs 100 100 1100    0       0     0     0>
+            , <&key_physical_attrs 100 100    0  100       0     0     0>
+            , <&key_physical_attrs 100 100  100  100       0     0     0>
+            , <&key_physical_attrs 100 100  200  100       0     0     0>
+            , <&key_physical_attrs 100 100  300  100       0     0     0>
+            , <&key_physical_attrs 100 100  400  100       0     0     0>
+            , <&key_physical_attrs 100 100  500  100       0     0     0>
+            , <&key_physical_attrs 100 100  600  100       0     0     0>
+            , <&key_physical_attrs 100 100  800  100       0     0     0>
+            , <&key_physical_attrs 100 100  900  100       0     0     0>
+            , <&key_physical_attrs 100 100 1000  100       0     0     0>
+            , <&key_physical_attrs 100 100 1100  100       0     0     0>
+            , <&key_physical_attrs 100 100    0  200       0     0     0>
+            , <&key_physical_attrs 100 100  100  200       0     0     0>
+            , <&key_physical_attrs 100 100  200  200       0     0     0>
+            , <&key_physical_attrs 100 100  300  200       0     0     0>
+            , <&key_physical_attrs 100 100  400  200       0     0     0>
+            , <&key_physical_attrs 100 100  500  200       0     0     0>
+            , <&key_physical_attrs 100 100  600  200       0     0     0>
+            , <&key_physical_attrs 100 100  700  200       0     0     0>
+            , <&key_physical_attrs 100 100  800  200       0     0     0>
+            , <&key_physical_attrs 100 100  900  200       0     0     0>
+            , <&key_physical_attrs 100 100 1000  200       0     0     0>
+            , <&key_physical_attrs 100 100 1100  200       0     0     0>
+            , <&key_physical_attrs 100 100    0  300       0     0     0>
+            , <&key_physical_attrs 100 100  100  300       0     0     0>
+            , <&key_physical_attrs 100 100  200  300       0     0     0>
+            , <&key_physical_attrs 100 100  300  300       0     0     0>
+            , <&key_physical_attrs 100 100  400  300       0     0     0>
+            , <&key_physical_attrs 200 100  500  300       0     0     0>
+            , <&key_physical_attrs 100 100  700  300       0     0     0>
+            , <&key_physical_attrs 100 100  800  300       0     0     0>
+            , <&key_physical_attrs 100 100  900  300       0     0     0>
+            , <&key_physical_attrs 100 100 1000  300       0     0     0>
+            , <&key_physical_attrs 100 100 1100  300       0     0     0>            ;
+    };
+};
+
+/// {
+//    input_processors {
+//        //zip_scroll_scaler: zip_scroll_scaler {
+//            //compatible = "zmk,input-processor-scaler";
+//            //#input-processor-cells = <2>;
+//            //type = <INPUT_EV_REL>;
+//            //codes = <INPUT_REL_WHEEL>;
+//            //track-remainders;
+//        };
+//    };
+//};
+/// {
+//  input_processors {
+//    code_mapper_vol: code_mapper_vol {
+//      compatible = "zmk,input-processor-code-mapper";
+//      #input-processor-cells = <0>;
+//      type = <1>; // 
+//      // RCTRL (0xE4) → C_VOL_UP (0x00E9)
+//      // RSHIFT (0xE5) → C_VOL_DN (0x00EA)
+//      map = <0xE4 0x00E9 0xE5 0x00EA>;
+//    };
+//  };
+//};
+
+&xiao_i2c {
+    status = "okay";
+};

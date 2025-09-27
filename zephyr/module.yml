@@ -1,3 +1,5 @@
+name: glove0x0a
+
 build:
   settings:
-    board_root: .
+    board_root: config

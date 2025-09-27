@@ -1,0 +1,19 @@
+manifest:
+  remotes:
+    - name: zmkfirmware
+      url-base: https://github.com/glove0x0a-png
+    - name: caksoylar
+      url-base: https://github.com/caksoylar
+
+  projects:
+    - name: zmk
+      remote: zmkfirmware
+      revision: main
+      import: app/west.yml
+
+    - name: zmk-rgbled-widget
+      remote: caksoylar
+      revision: main
+
+  self:
+    path: config
