@@ -98,18 +98,18 @@
     layer_qwerty {
       bindings = <
         &kp TAB   &kp Q      &kp W     &kp E     &kp R     &kp T        &kp Y     &kp U   &kp I     &kp O     &kp P     &kp MINUS
-        &kp CAPS  &kp A      &kp S     &kp D     &kp F     &kp G        &kp H             &kp K     &kp L     &kp SEMI  &kp ENTER
-        &kp LSHFT &kp Z      &kp X     &kp C     &kp V     &kp B        &kp N     &kp M   &kp COMMA &kp DOT   &kp UP    &kp SLASH
-        &kp LCTRL &kp LGUI   &kp LALT  &mkp LCLK &mo 1     &kp SPACE              &mo 2   &kp LGUI  &kp LEFT  &kp DOWN  &kp RIGHT
+        &kp CAPS  &kp A      &kp S     &kp D     &kp F     &kp G        &kp H             &kp K     &kp L     &kp SEMI  &kp SQT
+        &kp LSHFT &kp Z      &kp X     &kp C     &kp V     &kp B        &kp N     &kp M   &kp COMMA &kp DOT   &kp SLASH &kp ENTER
+        &kp LCTRL &kp LGUI   &kp LALT  &mkp LCLK &mo 1     &kp SPACE              &mo 2   &kp UP    &kp LEFT  &kp DOWN  &kp RIGHT
       >;
       //sensor-bindings = <&mouse_scrl_up>;
     };
     layer_fn1 {
-      bindings = <
-        &kp ESC   &kp LA(F4) &kp F2    &kp UP    &kp LG(R) &kp LC(T)    &trans    &trans  &kp PSCRN &trans    &kp EQUAL &kp LBKT
-        &kp LGUI  &kp LALT   &kp LEFT  &kp DOWN  &kp RIGHT &kp F3       &kp RBKT          &kp HOME  &kp PG_UP &trans    &kp SQT
-        &trans    &kp LC(W)  &kp LG(X) &kp LG(E) &kp F4    &kp F5       &kp NUHS  &kp DEL &kp END   &kp PG_DN &kp SLASH &kp INT1
-        &trans    &trans     &trans    &mkp RCLK &mo 1     &kp BSPC               &mo 3   &trans    &kp K_APP &kp F7    &kp F8
+      bindings = <;
+        &kp ESC   &kp LA(F4) &kp F2    &kp UP    &kp LG(R) &kp LC(T)    &LS(EQUAL) &LS(INT1) &kp PSCRN &kp LS(INT3) &kp EQUAL &kp LBKT
+        &kp LGUI  &kp LALT   &kp LEFT  &kp DOWN  &kp RIGHT &kp F3       &kp RBKT          &kp HOME  &kp PG_UP &trans    &trans
+        &trans    &kp LC(W)  &kp LG(X) &kp LG(E) &kp F4    &kp F5       &kp NUHS  &kp DEL &kp END   &kp PG_DN &trans    &trans
+        &trans    &trans     &trans    &mkp RCLK &mo 1     &kp BSPC               &mo 3   &kp LGUI  &kp K_APP &kp F7    &kp F8
       >;
       //sensor-bindings = <&mouse_scrl_left>
     };
@@ -120,21 +120,21 @@
                              &mmv MOVE_X(-5000)
                                        &mmv MOVE_Y( 2000)
                                                  &mmv MOVE_X(5000)
-                                                           &kp F3       &kp RBKT          &s_up_mor &s_dn_mor &trans    &kp SQT
-        &trans    &trans     &trans    &trans    &kp F4    &kp F5       &kp NUHS  &kp DEL &trans    &trans    &kp SLASH &kp INT1
-        &trans    &trans     &trans    &mkp RCLK &mo 3     &trans                 &mo 2   &trans    &trans    &trans    &trans
+                                                           &kp F3       &kp RBKT          &s_up_mor &s_dn_mor &trans    &trans
+        &trans    &trans     &trans    &trans    &kp F4    &kp F5       &kp NUHS  &kp DEL &trans    &trans    &trans    &trans
+        &trans    &trans     &trans    &mkp RCLK &mo 3     &trans                 &mo 2   &kp LGUI  &trans    &trans    &trans
       >;
       //sensor-bindings = <&inc_dec_kp C_VOL_DN C_VOL_UP>;
     };
     layer_fn3 {
       bindings = <
         &bt BT_CLR &kp F1     &kp F2    &kp F3    &kp F4    &kp F5      &kp F6    &kp F7  &kp F8    &kp F9    &kp F10   &kp F11
-        &trans     &bt BT_SEL 3 &bt BT_SEL 2
-                                &bt BT_SEL 1  &bt BT_SEL 0 &trans       &trans            &mt C_VOL_DN C_VOL_DN
+        &none      &bt BT_SEL 3 &bt BT_SEL 2
+                                &bt BT_SEL 1  &bt BT_SEL 0 &none        &none             &mt C_VOL_DN C_VOL_DN
                                                                                                     &mt C_VOL_UP C_VOL_UP
-                                                                                                              &trans    &kp F12
-        &trans     &trans     &trans    &trans    &trans    &trans      &trans    &trans  &trans    &trans    &trans    &trans
-        &trans     &trans     &trans    &trans    &mo 3     &mcr_BT_off           &mo 3   &trans    &trans    &trans    &trans
+                                                                                                              &none     &kp F12
+        &trans     &none      &none     &none     &none     &none       &none     &none   &none     &none     &none     &none
+        &trans     &trans     &trans    &none     &mo 3     &mcr_BT_off           &mo 3   &none     &none     &none     &none
       >;
       //sensor-bindings = <&inc_dec_kp C_VOL_DN C_VOL_UP>;
     };
