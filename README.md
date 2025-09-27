@@ -1,3 +1,23 @@
+# 仕様
+## 使用部品
+
+| # | 部品 | 名称 | URL |
+| --- | --- | --- | --- |
+| 1 | PCB（基盤） | CSTS40 | https://ja.aliexpress.com/item/1005004702079962.html |
+| 2 | MCU (ﾏｲｺﾝ) | XIAO nRF52840 Plus | https://wiki.seeedstudio.com/ja/XIAO_BLE/ |
+| 3 | トラックボール | AZ1UBALL | https://booth.pm/ja/items/4202085?srsltid=AfmBOorsZkPYZq80An_3UKa-HHpciWQeS2lXHikH4J_Y13bmAngWI2rI |
+| 4 | (参考)driver | AZ1UBALLL | https://github.com/kzyz/zmk-az1uball-driver |
+| 5 | (自作)behavior | behavior_capslock_led(Caps Lock 状態の検知)　| https://github.com/glove0x0a-png/zmk/blob/main/app/src/behaviors/behavior_capslock_led.c |
+
+## キーボード
+
+  - 47key キーボード(4行×12列)をUSB接続 or BLE接続で実装。
+  - Jキーを外してトラックボール(az1uball)を配置。I2C通信。
+  - ファームウェアは ZMK Firmware。
+  - キースキャンはCharlieplexにより低電力化とGPIOピンを削減。
+
+---
+
 # 構築履歴
 
 ## -2.0 QMKとZMKの共存のために実施した内容
@@ -164,15 +184,13 @@ zmk_behavior_invoke_binding(&binding, event, data->sw_pressed);
 
 ---
 
-## 14.0 FireStickで音が出ない（★最新 #455）
-
+## 14.0 FireStickで音が出ない（#455）
 - ボリュームを `&kp C_VOL_UP` で実装  
 - hold-tapを追加（デフォルトではタップ時間が短すぎて反応しなかった）  
 - 約50msに設定  
 ---
 
 ## 15.0 こまごまバージョンアップ
-
 - キーマップ見直し 475
 - Ctrl,Shiftでマウスカーソル速度変更 475
 - マウスカーソルの動きを滑らかに 476
