@@ -105,7 +105,7 @@
       //sensor-bindings = <&mouse_scrl_up>;
     };
     layer_fn1 {
-      bindings = <;
+      bindings = <
         &kp ESC   &kp LA(F4) &kp F2    &kp UP    &kp LG(R) &kp LC(T)    &LS(EQUAL) &LS(INT1) &kp PSCRN &kp LS(INT3) &kp EQUAL &kp LBKT
         &kp LGUI  &kp LALT   &kp LEFT  &kp DOWN  &kp RIGHT &kp F3       &kp RBKT          &kp HOME  &kp PG_UP &trans    &trans
         &trans    &kp LC(W)  &kp LG(X) &kp LG(E) &kp F4    &kp F5       &kp NUHS  &kp DEL &kp END   &kp PG_DN &trans    &trans
