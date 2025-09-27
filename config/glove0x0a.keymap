@@ -111,7 +111,7 @@
                                                                                           &kp PSCRN &kp LS(INT3)
                                                                                                               &kp EQUAL &kp LBKT
         &kp LGUI  &kp LALT   &kp LEFT  &kp DOWN  &kp RIGHT &kp F3       &kp RBKT          &kp HOME  &kp PG_UP &trans    &trans
-        &trans    &kp LC(W)  &kp LG(X) &kp LG(E) &kp F4    &kp F5       &kp NUHS  &kp DEL &kp END   &kp PG_DN &trans    &trans
+        &trans    &kp LC(W)  &kp LG(X) &kp LG(E) &kp F4    &kp F5       &kp NUHS  &kp DEL &kp END   &kp PG_DN &trans    &kp INT1
         &trans    &trans     &trans    &mkp RCLK &mo 1     &kp BSPC               &mo 3   &kp LGUI  &kp K_APP &kp F7    &kp F8
       >;
       //sensor-bindings = <&mouse_scrl_left>
@@ -124,7 +124,7 @@
                                        &mmv MOVE_Y( 2000)
                                                  &mmv MOVE_X(5000)
                                                            &kp F3       &kp RBKT          &s_up_mor &s_dn_mor &trans    &trans
-        &trans    &trans     &trans    &trans    &kp F4    &kp F5       &kp NUHS  &kp DEL &trans    &trans    &trans    &trans
+        &trans    &trans     &trans    &trans    &kp F4    &kp F5       &kp NUHS  &kp DEL &trans    &trans    &trans    &kp INT1
         &trans    &trans     &trans    &mkp RCLK &mo 3     &trans                 &mo 2   &kp LGUI  &trans    &trans    &trans
       >;
       //sensor-bindings = <&inc_dec_kp C_VOL_DN C_VOL_UP>;
