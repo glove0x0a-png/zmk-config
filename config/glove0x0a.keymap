@@ -8,140 +8,131 @@
 //ロータリーエンコーダ：マウスのスクロール量
 #define ZMK_POINTING_DEFAULT_MOVE_VAL 1500
 #define ZMK_POINTING_DEFAULT_SCRL_VAL 60
-
 #include <dt-bindings/zmk/pointing.h>
 #include <dt-bindings/input/input-event-codes.h>
-
-
 #define _tild LS(EQUAL)
 
 //&
 &mt {
-    tapping-term-ms = <50>; // This is the value already set by default
+    tapping-term-ms = <100>; // This is the value already set by default
 };
 
 //root
 / {
-  macros{
-       //同時押し
-       mcr_BT_off: mcr_BT_off {
-           compatible = "zmk,behavior-macro";
-           #binding-cells = <0>;
-           wait-ms = <20>;
-           tap-ms = <10>;
-           bindings =
-               <&macro_tap &bt BT_SEL 4>
-             , <&macro_wait_time 1000>
-             , <&macro_tap &bt BT_CLR >;
-      };
-  };
+    macros{
+        //同時押し
+        mcr_BT_off: mcr_BT_off {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <20>;
+            tap-ms = <10>;
+            bindings =
+                <&macro_tap &bt BT_SEL 4>
+              , <&macro_wait_time 300>
+              , <&macro_tap &bt BT_CLR >;
+        };
+    };
 
-  behaviors {
-      //key"0" + shift -> "|"
-      pipe_0: mod-morph_0 {
-          compatible = "zmk,behavior-mod-morph";
-          #binding-cells = <0>;
-          bindings = <&kp N0>, <&kp LS(INT3)>;
-          mods = <MOD_LSFT>;
-      };
-
-      // スクロール方向切り替え（Shift: 横スクロール, Ctrl: 逆スクロール）
-      s_up_mor1: s_up_mor1 {
-          compatible = "zmk,behavior-mod-morph";
-          #binding-cells = <0>;
-          bindings = <&msc SCRL_UP>, <&msc SCRL_LEFT>;
-          mods = <(MOD_LSFT|MOD_LCTL)>;
-      };
-      s_up_mor: s_up_mor {
-          compatible = "zmk,behavior-mod-morph";
-          #binding-cells = <0>;
-          bindings = <&s_up_mor1>, <&msc SCRL_DOWN>;
-          mods = <MOD_LCTL>;
-      };
-      s_dn_mor1: s_dn_mor1 {
-          compatible = "zmk,behavior-mod-morph";
-          #binding-cells = <0>;
-          bindings = <&msc SCRL_DOWN>, <&msc SCRL_RIGHT>;
-          mods = <(MOD_LSFT|MOD_LCTL)>;
-      };
-      s_dn_mor: s_dn_mor {
-          compatible = "zmk,behavior-mod-morph";
-          #binding-cells = <0>;
-          bindings = <&s_dn_mor1>, <&msc SCRL_UP>;
-          mods = <MOD_LCTL>;
-      };
-
-      //タップダンス
-      //td_mo1: tap_dance1 {
-      //    compatible = "zmk,behavior-tap-dance";
-      //    #binding-cells = <0>;
-      //    bindings = <&mo 1>, <&kp CAPS>;
-      //    tapping-term-ms = <200>; // 任意調整
-      //};
-      //td_mo2: tap_dance2 {
-      //    compatible = "zmk,behavior-tap-dance";
-      //    #binding-cells = <0>;
-      //    bindings = <&mo 2>, <&kp CAPS>;
-      //    tapping-term-ms = <200>; // 任意調整
-      //};
-      //LED制御
-      capslock_led: capslock_led {
-          compatible = "zmk,behavior-status-indicator";
-          #binding-cells = <0>;
-          behavior-status = "capslock";
-          outputs = <&caps_led>;  // ✅ ラベルと一致
-      };
-  };
-//keymap
-  keymap {
-    compatible = "zmk,keymap";
-    layer_qwerty {
-      bindings = <
-        &kp TAB   &kp Q      &kp W     &kp E     &kp R     &kp T        &kp Y     &kp U   &kp I     &kp O     &kp P     &kp MINUS
-        &kp CAPS  &kp A      &kp S     &kp D     &kp F     &kp G        &kp H             &kp K     &kp L     &kp SEMI  &kp SQT
-        &kp LSHFT &kp Z      &kp X     &kp C     &kp V     &kp B        &kp N     &kp M   &kp COMMA &kp DOT   &kp SLASH &kp ENTER
-        &kp LCTRL &kp LGUI   &kp LALT  &mkp LCLK &mo 1     &kp SPACE              &mo 2   &kp UP    &kp LEFT  &kp DOWN  &kp RIGHT
-      >;
-      //sensor-bindings = <&mouse_scrl_up>;
+    behaviors {
+        //key"0" + shift -> "|"
+        pipe_0: mod-morph_0 {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp N0>, <&kp LS(INT3)>;
+            mods = <MOD_LSFT>;
+        };
+        // スクロール方向切り替え（Shift: 横スクロール, Ctrl: 逆スクロール）
+        s_up_mor1: s_up_mor1 {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&msc SCRL_UP>, <&msc SCRL_LEFT>;
+            mods = <(MOD_LSFT|MOD_LCTL)>;
+        };
+        s_up_mor: s_up_mor {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&s_up_mor1>, <&msc SCRL_DOWN>;
+            mods = <MOD_LCTL>;
+        };
+        s_dn_mor1: s_dn_mor1 {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&msc SCRL_DOWN>, <&msc SCRL_RIGHT>;
+            mods = <(MOD_LSFT|MOD_LCTL)>;
+        };
+        s_dn_mor: s_dn_mor {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&s_dn_mor1>, <&msc SCRL_UP>;
+            mods = <MOD_LCTL>;
+        };
+        //タップダンス
+        //td_mo1: tap_dance1 {
+        //    compatible = "zmk,behavior-tap-dance";
+        //    #binding-cells = <0>;
+        //    bindings = <&mo 1>, <&kp CAPS>;
+        //    tapping-term-ms = <200>; // 任意調整
+        //};
+        //td_mo2: tap_dance2 {
+        //    compatible = "zmk,behavior-tap-dance";
+        //    #binding-cells = <0>;
+        //    bindings = <&mo 2>, <&kp CAPS>;
+        //    tapping-term-ms = <200>; // 任意調整
+        //};
+        //LED制御
+        capslock_led: capslock_led {
+            compatible = "zmk,behavior-status-indicator";
+            #binding-cells = <0>;
+            behavior-status = "capslock";
+            outputs = <&caps_led>;  // ✅ ラベルと一致
+        };
     };
-    layer_fn1 {
-      bindings = <
-        &kp ESC   &kp LA(F4) &kp F2    &kp UP    &kp LG(R) &kp LC(T)    &kp LS(EQUAL)
-                                                                                  &kp LS(INT1)
-                                                                                          &kp PSCRN &kp EQUAL &kp INT3  &kp LBKT
-        &kp LGUI  &kp LALT   &kp LEFT  &kp DOWN  &kp RIGHT &kp F3       &kp RBKT          &kp HOME  &kp PG_UP &trans    &trans
-        &trans    &kp LC(W)  &kp LG(X) &kp LG(E) &kp F4    &kp F5       &kp NUHS  &kp DEL &kp END   &kp PG_DN &trans    &trans
-        &trans    &trans     &trans    &mkp RCLK &mo 1     &kp BSPC               &mo 3   &kp LC(TAB)
-                                                                                                    &kp K_APP &kp F7    &kp F8
-      >;
-      //sensor-bindings = <&mouse_scrl_left>
+    //keymap
+    keymap {
+        compatible = "zmk,keymap";
+        layer_qwerty {
+          bindings = <
+  &kp TAB   &kp Q      &kp W     &kp E     &kp R     &kp T     &kp Y     &kp U   &kp I     &kp O     &kp P     &kp MINUS
+  &kp CAPS  &kp A      &kp S     &kp D     &kp F     &kp G     &kp H             &kp K     &kp L     &kp SEMI  &kp SQT
+  &kp LSHFT &kp Z      &kp X     &kp C     &kp V     &kp B     &kp N     &kp M   &kp COMMA &kp DOT   &kp SLASH &kp ENTER
+  &kp LCTRL &kp LGUI   &kp LALT  &mkp LCLK &mo 1     &kp SPACE           &mo 2   &kp UP    &kp LEFT  &kp DOWN  &kp RIGHT
+          >;
+          //sensor-bindings = <&mouse_scrl_up>;
+        };
+        layer_fn1 {
+          bindings = <
+  &kp ESC   &kp LA(F4) &kp F2    &kp UP    &kp LG(R) &kp LC(T) &mmv MOVE_X(-4000)
+                                                                         &mmv MOVE_X(4000)
+                                                                                 &kp PSCRN &kp EQUAL &kp INT3  &kp LBKT
+  &kp LGUI  &kp LALT   &kp LEFT  &kp DOWN  &kp RIGHT &kp F3    &kp RBKT          &kp HOME  &kp PG_UP &kp INT1  &mmv MOVE_Y(-2000)
+  &trans    &kp LC(W)  &kp LG(X) &kp LG(E) &kp F4    &kp F5    &kp NUHS  &kp DEL &kp END   &kp PG_DN &trans    &mmv MOVE_Y( 2000)
+  &trans    &trans     &trans    &mkp RCLK &mo 1     &kp BSPC            &mo 3   &kp LC(TAB)
+                                                                                           &kp K_APP &kp F7    &kp F8
+          >;
+          //sensor-bindings = <&mouse_scrl_left>
+        };
+        layer_fn2 {
+          bindings = <
+  &kp ESC   &kp N1     &kp N2    &kp N3    &kp N4    &kp N5    &kp N6    &kp N7  &kp N8    &kp N9    &pipe_0   &trans
+  &trans    &trans     &trans    &trans    &trans    &kp F3    &kp RBKT          &s_up_mor &s_dn_mor &trans    &trans
+  &trans    &trans     &trans    &trans    &kp F4    &kp F5    &kp NUHS  &kp DEL &trans    &trans    &trans    &trans
+  &trans    &trans     &trans    &mkp RCLK &mo 3     &trans              &mo 2   &kp LGUI  &trans    &trans    &trans
+          >;
+          //sensor-bindings = <&inc_dec_kp C_VOL_DN C_VOL_UP>;
+        };
+        layer_fn3 {
+          bindings = <
+  &bt BT_CLR &kp F1     &kp F2    &kp F3    &kp F4    &kp F5   &kp F6    &kp F7  &kp F8    &kp F9    &kp F10   &kp F11
+  &none      &bt BT_SEL 3 &bt BT_SEL 2
+                          &bt BT_SEL 1  &bt BT_SEL 0 &none     &none             &mt C_VOL_DN C_VOL_DN
+                                                                                           &mt C_VOL_UP C_VOL_UP
+                                                                                                     &none     &kp F12
+  &trans     &none      &none     &none     &none     &none    &none     &none   &none     &none     &none     &none
+  &trans     &trans     &trans    &none     &mo 3     &mcr_BT_off        &mo 3   &none     &none     &none     &none
+          >;
+          //sensor-bindings = <&inc_dec_kp C_VOL_DN C_VOL_UP>;
+        };
     };
-    layer_fn2 {
-      bindings = <
-        &kp ESC   &kp N1     &kp N2    &kp N3    &kp N4    &kp N5       &kp N6    &kp N7  &kp N8    &kp N9    &pipe_0   &trans
-        &trans    &mmv MOVE_Y(-2000)
-                             &mmv MOVE_X(-5000)
-                                       &mmv MOVE_Y( 2000)
-                                                 &mmv MOVE_X(5000)
-                                                           &kp F3       &kp RBKT          &s_up_mor &s_dn_mor &trans    &trans
-        &trans    &trans     &trans    &trans    &kp F4    &kp F5       &kp NUHS  &kp DEL &trans    &trans    &trans    &trans
-        &trans    &trans     &trans    &mkp RCLK &mo 3     &trans                 &mo 2   &kp LGUI  &trans    &trans    &trans
-      >;
-      //sensor-bindings = <&inc_dec_kp C_VOL_DN C_VOL_UP>;
-    };
-    layer_fn3 {
-      bindings = <
-        &bt BT_CLR &kp F1     &kp F2    &kp F3    &kp F4    &kp F5      &kp F6    &kp F7  &kp F8    &kp F9    &kp F10   &kp F11
-        &none      &bt BT_SEL 3 &bt BT_SEL 2
-                                &bt BT_SEL 1  &bt BT_SEL 0 &none        &none             &mt C_VOL_DN C_VOL_DN
-                                                                                                    &mt C_VOL_UP C_VOL_UP
-                                                                                                              &none     &kp F12
-        &trans     &none      &none     &none     &none     &none       &none     &none   &none     &none     &none     &none
-        &trans     &trans     &trans    &none     &mo 3     &mcr_BT_off           &mo 3   &none     &none     &none     &none
-      >;
-      //sensor-bindings = <&inc_dec_kp C_VOL_DN C_VOL_UP>;
-    };
-  };
 };
 
 //root
