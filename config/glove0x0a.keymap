@@ -35,8 +35,18 @@
                 <&macro_tap &led1_off >
               , <&macro_tap &led2_off >
               , <&macro_tap &led3_off >
-              , <&macro_wait_time 300>
-              , <&macro_tap &soft_off>;
+              , <&macro_tap &led1_on  >
+              , <&macro_wait_time 300 >
+              , <&macro_tap &led1_off >
+              , <&macro_wait_time 300 >
+              , <&macro_tap &led1_on  >
+              , <&macro_wait_time 300 >
+              , <&macro_tap &led1_off >
+              , <&macro_wait_time 300 >
+              , <&macro_tap &led1_on  >
+              , <&macro_wait_time 300 >
+              , <&macro_tap &led1_off >
+              , <&macro_tap &soft_off >;
         };
     };
 
@@ -46,19 +56,25 @@
             compatible = "zmk,behavior-output";
             #binding-cells = <0>;
             outputs = <&caps_led>;
-            activate = <false>; // ✅ falseでOFFにする
+            activate = <0>; // ✅ falseでOFFにする
+        };
+        led1_on: led1_on {
+            compatible = "zmk,behavior-output";
+            #binding-cells = <0>;
+            outputs = <&caps_led>;
+            activate = <1>; // ✅ falseでOFFにする
         };
         led2_off: led2_off {
             compatible = "zmk,behavior-output";
             #binding-cells = <0>;
             outputs = <&led1>;
-            activate = <false>; // ✅ falseでOFFにする
+            activate = <0>; // ✅ falseでOFFにする
         };
         led3_off: led3_off {
             compatible = "zmk,behavior-output";
             #binding-cells = <0>;
             outputs = <&led2>;
-            activate = <false>; // ✅ falseでOFFにする
+            activate = <0>; // ✅ falseでOFFにする
         };
 
         //key"0" + shift -> "|"
