@@ -21,61 +21,46 @@
 
 //root
 / {
-    macros{
-        //同時押し
-        mcr_S_off: mcr_S_off {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            wait-ms = <20>;
-            tap-ms = <10>;
-            bindings =
-              //  <&macro_tap &bt BT_SEL 4>
-              //, <&macro_wait_time 300>
-              //, <&macro_tap &bt BT_CLR >;
-                <&led1_off >
-              , <&led2_off >
-              , <&led3_off >
-              , <&led1_on  >
-              , <&macro_wait_time 300 >
-              , <&led1_off >
-              , <&macro_wait_time 300 >
-              , <&led1_on  >
-              , <&macro_wait_time 300 >
-              , <&led1_off >
-              , <&macro_wait_time 300 >
-              , <&led1_on  >
-              , <&macro_wait_time 300 >
-              , <&led1_off >
-              , <&soft_off >;
-        };
-    };
+    //macros{
+    //    //同時押し
+    //    mcr_S_off: mcr_S_off {
+    //        compatible = "zmk,behavior-macro";
+    //        #binding-cells = <0>;
+    //        wait-ms = <20>;
+    //        tap-ms = <10>;
+    //        bindings =
+    //            <&macro_tap &bt BT_SEL 4>
+    //          , <&macro_wait_time 300>
+    //          , <&macro_tap &bt BT_CLR >;
+    //    };
+    //};
 
     behaviors {
-        //LED制御
-        led1_off: led1_off {
-            compatible = "zmk,behavior-output";
-            #binding-cells = <0>;
-            outputs = <&caps_led>;
-            activate = <0>; // ✅ falseでOFFにする
-        };
-        led1_on: led1_on {
-            compatible = "zmk,behavior-output";
-            #binding-cells = <0>;
-            outputs = <&caps_led>;
-            activate = <1>; // ✅ falseでOFFにする
-        };
-        led2_off: led2_off {
-            compatible = "zmk,behavior-output";
-            #binding-cells = <0>;
-            outputs = <&led1>;
-            activate = <0>; // ✅ falseでOFFにする
-        };
-        led3_off: led3_off {
-            compatible = "zmk,behavior-output";
-            #binding-cells = <0>;
-            outputs = <&led2>;
-            activate = <0>; // ✅ falseでOFFにする
-        };
+        ////LED制御
+        //led1_off: led1_off {
+        //    compatible = "zmk,behavior-output";
+        //    #binding-cells = <0>;
+        //    outputs = <&caps_led>;
+        //    activate = <0>; // ✅ falseでOFFにする
+        //};
+        //led1_on: led1_on {
+        //    compatible = "zmk,behavior-output";
+        //    #binding-cells = <0>;
+        //    outputs = <&caps_led>;
+        //    activate = <1>; // ✅ falseでOFFにする
+        //};
+        //led2_off: led2_off {
+        //    compatible = "zmk,behavior-output";
+        //    #binding-cells = <0>;
+        //    outputs = <&led1>;
+        //    activate = <0>; // ✅ falseでOFFにする
+        //};
+        //led3_off: led3_off {
+        //    compatible = "zmk,behavior-output";
+        //    #binding-cells = <0>;
+        //    outputs = <&led2>;
+        //    activate = <0>; // ✅ falseでOFFにする
+        //};
 
         //key"0" + shift -> "|"
         pipe_0: mod-morph_0 {
@@ -174,7 +159,7 @@
                                                                                            &mt C_VOL_UP C_VOL_UP
                                                                                                      &none     &kp F12
   &trans     &none      &none     &none     &none     &none    &none     &none   &none     &none     &none     &none
-  &trans     &trans     &trans    &none     &mo 3     &mcr_S_off         &mo 3   &none     &none     &none     &none
+  &trans     &trans     &trans    &none     &mo 3     &soft_off          &mo 3   &none     &none     &none     &none
           >;
           //sensor-bindings = <&inc_dec_kp C_VOL_DN C_VOL_UP>;
         };
