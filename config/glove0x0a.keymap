@@ -21,19 +21,22 @@
 
 //root
 / {
-    //macros{
-    //    //同時押し
-    //    mcr_BT_off: mcr_BT_off {
-    //        compatible = "zmk,behavior-macro";
-    //        #binding-cells = <0>;
-    //        wait-ms = <20>;
-    //        tap-ms = <10>;
-    //        bindings =
-    //            <&macro_tap &bt BT_SEL 4>
-    //          , <&macro_wait_time 300>
-    //          , <&macro_tap &bt BT_CLR >;
-    //    };
-    //};
+    macros{
+        //同時押し
+        mcr_S_off: mcr_S_off {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <20>;
+            tap-ms = <10>;
+            bindings =
+              //  <&macro_tap &bt BT_SEL 4>
+              //, <&macro_wait_time 300>
+              //, <&macro_tap &bt BT_CLR >;
+                <&macro_tap &mo 0 >
+              , <&macro_wait_time 300>
+              , <&macro_tap &soft_off>;
+        };
+    };
 
     behaviors {
         //key"0" + shift -> "|"
@@ -133,7 +136,7 @@
                                                                                            &mt C_VOL_UP C_VOL_UP
                                                                                                      &none     &kp F12
   &trans     &none      &none     &none     &none     &none    &none     &none   &none     &none     &none     &none
-  &trans     &trans     &trans    &none     &mo 3     &soft_off          &mo 3   &none     &none     &none     &none
+  &trans     &trans     &trans    &none     &mo 3     &mcr_S_off         &mo 3   &none     &none     &none     &none
           >;
           //sensor-bindings = <&inc_dec_kp C_VOL_DN C_VOL_UP>;
         };
