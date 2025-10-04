@@ -32,21 +32,21 @@
               //  <&macro_tap &bt BT_SEL 4>
               //, <&macro_wait_time 300>
               //, <&macro_tap &bt BT_CLR >;
-                <&macro_tap &led1_off >
-              , <&macro_tap &led2_off >
-              , <&macro_tap &led3_off >
-              , <&macro_tap &led1_on  >
+                <&led1_off >
+              , <&led2_off >
+              , <&led3_off >
+              , <&led1_on  >
               , <&macro_wait_time 300 >
-              , <&macro_tap &led1_off >
+              , <&led1_off >
               , <&macro_wait_time 300 >
-              , <&macro_tap &led1_on  >
+              , <&led1_on  >
               , <&macro_wait_time 300 >
-              , <&macro_tap &led1_off >
+              , <&led1_off >
               , <&macro_wait_time 300 >
-              , <&macro_tap &led1_on  >
+              , <&led1_on  >
               , <&macro_wait_time 300 >
-              , <&macro_tap &led1_off >
-              , <&macro_tap &soft_off >;
+              , <&led1_off >
+              , <&soft_off >;
         };
     };
 
