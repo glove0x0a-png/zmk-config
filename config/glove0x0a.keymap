@@ -10,6 +10,7 @@
 #define ZMK_POINTING_DEFAULT_SCRL_VAL 60
 #include <dt-bindings/zmk/pointing.h>
 #include <dt-bindings/input/input-event-codes.h>
+
 #define _tild LS(EQUAL)
 
 //&
@@ -19,19 +20,19 @@
 
 //root
 / {
-    macros{
-        //同時押し
-        mcr_BT_off: mcr_BT_off {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            wait-ms = <20>;
-            tap-ms = <10>;
-            bindings =
-                <&macro_tap &bt BT_SEL 4>
-              , <&macro_wait_time 300>
-              , <&macro_tap &bt BT_CLR >;
-        };
-    };
+    //macros{
+    //    //同時押し
+    //    mcr_BT_off: mcr_BT_off {
+    //        compatible = "zmk,behavior-macro";
+    //        #binding-cells = <0>;
+    //        wait-ms = <20>;
+    //        tap-ms = <10>;
+    //        bindings =
+    //            <&macro_tap &bt BT_SEL 4>
+    //          , <&macro_wait_time 300>
+    //          , <&macro_tap &bt BT_CLR >;
+    //    };
+    //};
 
     behaviors {
         //key"0" + shift -> "|"
@@ -126,11 +127,12 @@
           bindings = <
   &bt BT_CLR &kp F1     &kp F2    &kp F3    &kp F4    &kp F5   &kp F6    &kp F7  &kp F8    &kp F9    &kp F10   &kp F11
   &none      &bt BT_SEL 3 &bt BT_SEL 2
-                          &bt BT_SEL 1  &bt BT_SEL 0 &none     &none             &mt C_VOL_DN C_VOL_DN
+                          &bt BT_SEL 1  &bt BT_SEL 0  &bt BT_SEL 4
+                                                               &none             &mt C_VOL_DN C_VOL_DN
                                                                                            &mt C_VOL_UP C_VOL_UP
                                                                                                      &none     &kp F12
   &trans     &none      &none     &none     &none     &none    &none     &none   &none     &none     &none     &none
-  &trans     &trans     &trans    &none     &mo 3     &mcr_BT_off        &mo 3   &none     &none     &none     &none
+  &trans     &trans     &trans    &none     &mo 3     &soft_off          &mo 3   &none     &none     &none     &none
           >;
           //sensor-bindings = <&inc_dec_kp C_VOL_DN C_VOL_UP>;
         };
