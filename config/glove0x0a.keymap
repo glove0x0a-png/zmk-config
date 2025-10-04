@@ -32,13 +32,35 @@
               //  <&macro_tap &bt BT_SEL 4>
               //, <&macro_wait_time 300>
               //, <&macro_tap &bt BT_CLR >;
-                <&macro_tap &mo 0 >
+                <&macro_tap &led1_off >
+              , <&macro_tap &led2_off >
+              , <&macro_tap &led3_off >
               , <&macro_wait_time 300>
               , <&macro_tap &soft_off>;
         };
     };
 
     behaviors {
+        //LED制御
+        led1_off: led1_off {
+            compatible = "zmk,behavior-output";
+            #binding-cells = <0>;
+            outputs = <&caps_led>;
+            activate = <false>; // ✅ falseでOFFにする
+        };
+        led2_off: led2_off {
+            compatible = "zmk,behavior-output";
+            #binding-cells = <0>;
+            outputs = <&led1>;
+            activate = <false>; // ✅ falseでOFFにする
+        };
+        led3_off: led3_off {
+            compatible = "zmk,behavior-output";
+            #binding-cells = <0>;
+            outputs = <&led2>;
+            activate = <false>; // ✅ falseでOFFにする
+        };
+
         //key"0" + shift -> "|"
         pipe_0: mod-morph_0 {
             compatible = "zmk,behavior-mod-morph";
