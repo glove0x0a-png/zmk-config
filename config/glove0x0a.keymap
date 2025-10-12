@@ -111,6 +111,7 @@
         //vol制御
         vol_repeat: vol_repeat {
             compatible = "zmk,behavior-repeat";
+            #binding-cells = <1>;         // ← これが必要！
             delay-ms = <300>;       // 初回遅延
             period-ms = <100>;      // 繰り返し周期
         };
