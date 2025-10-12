@@ -15,10 +15,10 @@
 #define _tild LS(EQUAL)
 
 //&
-&mt {
-    tapping-term-ms = <500>; // This is the value already set by default
-    hold-trigger-behavior = <&vol_repeat>;
-};
+//&mt {
+//    tapping-term-ms = <500>; // This is the value already set by default
+//    hold-trigger-behavior = <&vol_repeat>;
+//};
 
 //root
 / {
@@ -164,7 +164,7 @@
   &none      &bt BT_SEL 3 &bt BT_SEL 2
                           &bt BT_SEL 1  &bt BT_SEL 0  &bt BT_SEL 4
                                                                &none             &vol_repeat C_VOL_DN
-                                                                                           &mt C_VOL_UP C_VOL_UP
+                                                                                           &vol_repeat C_VOL_UP
                                                                                                      &none     &kp F12
   &trans     &none      &none     &none     &none     &none    &none     &none   &none     &none     &none     &none
   &trans     &trans     &trans    &none     &mo 3     &ind_bat           &mo 3   &none     &none     &bt BT_CLR &soft_off
