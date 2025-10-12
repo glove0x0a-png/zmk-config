@@ -34,11 +34,13 @@
     //          , <&macro_tap &bt BT_CLR >;
     //    };
         vol_up_macro: vol_up_macro {
+            #binding-cells = <0>;
             compatible = "zmk,behavior-macro";
             bindings = <&kp C_VOL_UP &kp C_VOL_UP>;
         };
 
         vol_dn_macro: vol_dn_macro {
+            #binding-cells = <0>;
             compatible = "zmk,behavior-macro";
             bindings = <&kp C_VOL_DN &kp C_VOL_DN>;
         };
