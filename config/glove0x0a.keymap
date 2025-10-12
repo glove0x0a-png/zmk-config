@@ -53,7 +53,6 @@
                      , <&my_hold C_VOL_DN>
                      , <&macro_wait_time _hold_time>
                      , <&my_rele C_VOL_DN>;
-            >;
         };
     };
 
