@@ -16,7 +16,7 @@
 
 //&
 &mt {
-    tapping-term-ms = <500>; // This is the value already set by default
+    tapping-term-ms = <250>; // This is the value already set by default
 };
 
 //root
@@ -36,13 +36,13 @@
         vol_up_macro: vol_up_macro {
             #binding-cells = <0>;
             compatible = "zmk,behavior-macro";
-            bindings = <&kp C_VOL_UP &kp C_VOL_UP>;
+            bindings = <&mt C_VOL_UP &mt C_VOL_UP &mt C_VOL_UP>;
         };
 
         vol_dn_macro: vol_dn_macro {
             #binding-cells = <0>;
             compatible = "zmk,behavior-macro";
-            bindings = <&kp C_VOL_DN &kp C_VOL_DN>;
+            bindings = <&mt C_VOL_DN &mt C_VOL_DN &mt C_VOL_DN>;
         };
     };
 
