@@ -22,7 +22,7 @@
 
 //root
 / {
-    macros{
+    //    macros{
     //    //同時押し
     //    mcr_S_off: mcr_S_off {
     //        compatible = "zmk,behavior-macro";
@@ -34,41 +34,41 @@
     //          , <&macro_wait_time 300>
     //          , <&macro_tap &bt BT_CLR >;
     //    };
-        //vol_up_macro: vol_up_macro {
-        //    #binding-cells = <0>;
-        //    compatible = "zmk,behavior-macro";
-        //    bindings = <&my_hold C_VOL_UP>
-        //             , <&macro_wait_time _hold_time>
-        //             , <&my_rele C_VOL_UP>
-        //             , <&my_hold C_VOL_UP>
-        //             , <&macro_wait_time _hold_time>
-        //             , <&my_rele C_VOL_UP>;
-        //};
-//        vol_up_macro: vol_up_macro {
-//            compatible = "zmk,behavior-macro";
-//            #binding-cells = <0>;
-//            wait-ms = <20>;
-//            tap-ms = <10>;
-//            bindings = <&kp C_VOL_UP>, <&macro_wait_time 100>, <&kp C_VOL_UP>, <&macro_wait_time 100>;
-//        };
-//        vol_dn_macro: vol_dn_macro {
-//            compatible = "zmk,behavior-macro";
-//            #binding-cells = <0>;
-//            wait-ms = <20>;
-//            tap-ms = <10>;
-//            bindings = <&kp C_VOL_DN>, <&macro_wait_time 100>, <&kp C_VOL_DN>, <&macro_wait_time 100>;
-//        };
-//        vol_dn_macro: vol_dn_macro {
-//            #binding-cells = <0>;
-//            compatible = "zmk,behavior-macro";
-//            bindings = <&my_hold C_VOL_DN>
-//                     , <&macro_wait_time _hold_time>
-//                     , <&my_rele C_VOL_DN>
-//                     , <&my_hold C_VOL_DN>
-//                     , <&macro_wait_time _hold_time>
-//                     , <&my_rele C_VOL_DN>;
-//        };
-    };
+    //    vol_up_macro: vol_up_macro {
+    //        #binding-cells = <0>;
+    //        compatible = "zmk,behavior-macro";
+    //        bindings = <&my_hold C_VOL_UP>
+    //                 , <&macro_wait_time _hold_time>
+    //                 , <&my_rele C_VOL_UP>
+    //                 , <&my_hold C_VOL_UP>
+    //                 , <&macro_wait_time _hold_time>
+    //                 , <&my_rele C_VOL_UP>;
+    //    };
+    //    vol_up_macro: vol_up_macro {
+    //        compatible = "zmk,behavior-macro";
+    //        #binding-cells = <0>;
+    //        wait-ms = <20>;
+    //        tap-ms = <10>;
+    //        bindings = <&kp C_VOL_UP>, <&macro_wait_time 100>, <&kp C_VOL_UP>, <&macro_wait_time 100>;
+    //    };
+    //    vol_dn_macro: vol_dn_macro {
+    //        compatible = "zmk,behavior-macro";
+    //        #binding-cells = <0>;
+    //        wait-ms = <20>;
+    //        tap-ms = <10>;
+    //        bindings = <&kp C_VOL_DN>, <&macro_wait_time 100>, <&kp C_VOL_DN>, <&macro_wait_time 100>;
+    //    };
+    //    vol_dn_macro: vol_dn_macro {
+    //        #binding-cells = <0>;
+    //        compatible = "zmk,behavior-macro";
+    //        bindings = <&my_hold C_VOL_DN>
+    //                 , <&macro_wait_time _hold_time>
+    //                 , <&my_rele C_VOL_DN>
+    //                 , <&my_hold C_VOL_DN>
+    //                 , <&macro_wait_time _hold_time>
+    //                 , <&my_rele C_VOL_DN>;
+    //    };
+    //};
 
     behaviors {
         my_hold: my_hold {
