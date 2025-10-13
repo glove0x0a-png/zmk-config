@@ -27,12 +27,12 @@
               compatible = "zmk,behavior-macro";
               #binding-cells = <0>;
               bindings =<&macro_tap &kp C_VOL_UP &kp K_VOL_UP>;
-          }
+          };
           mcr_V_dn: mcr_V_dn {
               compatible = "zmk,behavior-macro";
               #binding-cells = <0>;
               bindings =<&macro_tap &kp C_VOL_DN &kp K_VOL_DN>;
-          }
+          };
         };
     //    //同時押し
     //    mcr_S_off: mcr_S_off {
