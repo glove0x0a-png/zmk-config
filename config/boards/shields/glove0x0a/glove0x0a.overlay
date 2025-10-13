@@ -10,7 +10,7 @@
         compatible = "zmk,az1uball";
         reg = <0x0a>;
         status = "okay";
-        sensitivity = "3x";
+        sensitivity = "9x";
     };
 };
 / {
@@ -26,59 +26,4 @@
         device  = < &az1uball >;
     };
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
