@@ -16,9 +16,9 @@
 //#define _hold_time 200
 
 
-&mt {
-    tapping-term-ms = <500>; // This is the value already set by default
-};
+//&mt {
+//    tapping-term-ms = <500>; // This is the value already set by default
+//};
 
 //root
 / {
@@ -167,6 +167,12 @@
             behavior-status = "capslock";
             outputs = <&caps_led>;  // ✅ ラベルと一致
         };
+        td_Caps: td_Caps {
+            compatible = "zmk,behavior-tap-dance";
+            #binding-cells = <0>;
+            bindings = <&kp CAPS>, <&kp LALT>;
+            tapping-term-ms = <200>; // 任意調整
+        };
     };
     //keymap
     keymap {
@@ -174,8 +180,7 @@
         layer_qwerty {
           bindings = <
   &kp TAB   &kp Q      &kp W     &kp E     &kp R     &kp T     &kp Y     &kp U   &kp I     &kp O     &kp P     &kp MINUS
-  &mt LALT CAPS  
-            &kp A      &kp S     &kp D     &kp F     &kp G     &kp H             &kp K     &kp L     &kp SEMI  &kp SQT
+  &td_Caps  &kp A      &kp S     &kp D     &kp F     &kp G     &kp H             &kp K     &kp L     &kp SEMI  &kp SQT
   &kp LSHFT &kp Z      &kp X     &kp C     &kp V     &kp B     &kp N     &kp M   &kp COMMA &kp DOT   &kp SLASH &kp ENTER
   &kp LCTRL &kp LGUI   &kp LALT  &mkp LCLK &mo 1     &kp SPACE           &mo 2   &kp UP    &kp LEFT  &kp DOWN  &kp RIGHT
           >;
@@ -183,11 +188,10 @@
         };
         layer_fn1 {
           bindings = <
-  &kp ESC   &kp LA(F4) &kp F2    &kp UP    &kp LG(R) &kp LC(T) &trans    &trans  &kp PSCRN &kp EQUAL &kp INT3  &kp LBKT
-  &kp LALT  &kp LGUI   &kp LEFT  &kp DOWN  &kp RIGHT &kp F3    &kp RBKT          &kp HOME  &kp PG_UP &kp INT1  &trans
-  &trans    &kp LC(W)  &kp LG(X) &kp LG(E) &kp F4    &kp F5    &kp NUHS  &kp DEL &kp END   &kp PG_DN &trans    &kp INT1
-  &trans    &trans     &trans    &mkp RCLK &mo 1     &kp BSPC            &mo 3   &kp LC(TAB)
-                                                                                           &kp K_APP &kp F7    &kp F8
+  &kp ESC   &kp F4     &kp F2    &kp UP    &kp LG(R) &kp LC(T) &kp F9    &kp F10 &kp PSCRN &kp EQUAL &kp INT3  &kp LBKT
+  &kp LALT  &kp LGUI   &kp LEFT  &kp DOWN  &kp RIGHT &kp F3    &kp RBKT          &kp HOME  &kp PG_UP &kp INT1  &kp F11
+  &trans    &kp LC(W)  &kp LG(X) &kp LG(E) &kp F6    &kp F5    &kp NUHS  &kp DEL &kp END   &kp PG_DN &trans    &kp F12
+  &trans    &trans     &trans    &mkp RCLK &mo 1     &kp BSPC            &mo 3   &kp LC(TAB) &kp K_APP &kp F7  &kp F8
           >;
           //sensor-bindings = <&mouse_scrl_left>
         };
