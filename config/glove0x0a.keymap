@@ -203,7 +203,7 @@
                                  &mmv MOVE_Y( 2000)
                                            &mmv MOVE_X(5000)
                                                      &kp F3    &kp RBKT          &s_up_mor &s_dn_mor &trans    &trans
-  &trans    &trans     &trans    &trans    &kp F4    &kp F5    &kp NUHS  &kp DEL &trans    &trans    &trans    &trans
+  &trans    &trans     &trans    &trans    &trans    &kp F5    &kp NUHS  &kp DEL &trans    &trans    &trans    &trans
   &trans    &trans     &trans    &mkp RCLK &mo 3     &trans              &mo 2   &kp LGUI  &trans    &trans    &trans
           >;
           //sensor-bindings = <&inc_dec_kp C_VOL_DN C_VOL_UP>;
