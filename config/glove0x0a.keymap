@@ -22,7 +22,7 @@
 
 //root
 / {
-    //    macros{
+        macros{
     //      mcr_V_up: mcr_V_up {
     //          compatible = "zmk,behavior-macro";
     //          #binding-cells = <0>;
@@ -78,7 +78,59 @@
     //                 , <&my_hold C_VOL_DN>
     //                 , <&macro_wait_time _hold_time>
     //                 , <&my_rele C_VOL_DN>;
-    //    };
+            mcr_0bt: mcr_0bt {
+                compatible = "zmk,behavior-macro";
+                #binding-cells = <0>;
+                wait-ms = <20>;
+                tap-ms = <10>;
+                bindings =
+                    <&macro_tap &bt BT_DISC 1>
+                  , <&macro_tap &bt BT_DISC 2>
+                  , <&macro_tap &bt BT_DISC 3>
+                  , <&macro_tap &bt BT_DISC 4>
+                  , <&macro_wait_time 100>
+                  , <&macro_tap &bt BT_SEL 0>;
+            };
+            mcr_1bt: mcr_1bt {
+                compatible = "zmk,behavior-macro";
+                #binding-cells = <0>;
+                wait-ms = <20>;
+                tap-ms = <10>;
+                bindings =
+                    <&macro_tap &bt BT_DISC 0>
+                  , <&macro_tap &bt BT_DISC 2>
+                  , <&macro_tap &bt BT_DISC 3>
+                  , <&macro_tap &bt BT_DISC 4>
+                  , <&macro_wait_time 100>
+                  , <&macro_tap &bt BT_SEL 1>;
+            };
+            l: mcr_2bt {
+                compatible = "zmk,behavior-macro";
+                #binding-cells = <0>;
+                wait-ms = <20>;
+                tap-ms = <10>;
+                bindings =
+                    <&macro_tap &bt BT_DISC 0>
+                  , <&macro_tap &bt BT_DISC 1>
+                  , <&macro_tap &bt BT_DISC 3>
+                  , <&macro_tap &bt BT_DISC 4>
+                  , <&macro_wait_time 100>
+                  , <&macro_tap &bt BT_SEL 2>;
+            };
+            mcr_3bt: mcr_3bt {
+                compatible = "zmk,behavior-macro";
+                #binding-cells = <0>;
+                wait-ms = <20>;
+                tap-ms = <10>;
+                bindings =
+                    <&macro_tap &bt BT_DISC 0>
+                  , <&macro_tap &bt BT_DISC 1>
+                  , <&macro_tap &bt BT_DISC 2>
+                  , <&macro_tap &bt BT_DISC 4>
+                  , <&macro_wait_time 100>
+                  , <&macro_tap &bt BT_SEL 3>;
+            };
+        };
 
     behaviors {
         my_hold: my_hold {
@@ -211,9 +263,7 @@
         layer_fn3 {
           bindings = <
   &none      &kp F1     &kp F2    &kp F3    &kp F4    &kp F5   &kp F6    &kp F7  &kp F8    &kp F9    &kp F10   &kp F11
-  &none      &bt BT_SEL 3 &bt BT_SEL 2
-                          &bt BT_SEL 1  &bt BT_SEL 0  &bt BT_SEL 4
-                                                               &none             &kp C_VOL_DN
+  &none      &mcr_3bt   &mcr_2bt  &mcr_1bt  &mcr_0bt  &none    &none             &kp C_VOL_DN
                                                                                            &kp C_VOL_UP
                                                                                                      &none     &kp F12
   &trans     &none      &none     &none     &none     &none    &none     &none   &none     &none     &none     &none
