@@ -240,10 +240,10 @@
         };
         layer_fn1 {
           bindings = <
-  &kp ESC   &kp F4     &kp F2    &kp UP    &kp LG(R) &kp LC(T) &trans    &trans  &kp PSCRN &kp EQUAL &kp INT3  &kp LBKT
-  &kp LALT  &kp LGUI   &kp LEFT  &kp DOWN  &kp RIGHT &kp F3    &kp RBKT          &kp HOME  &kp PG_UP &kp INT1  &trans
+  &kp ESC   &kp LA(F4) &kp F2    &kp UP    &kp LG(R) &kp LC(T) &trans    &trans  &kp PSCRN &kp EQUAL &kp INT3  &kp LBKT
+  &kp LGUI  &kp LALT  &kp LEFT  &kp DOWN  &kp RIGHT &kp F3    &kp RBKT          &kp HOME  &kp PG_UP &kp INT1  &trans
   &trans    &kp LC(W)  &kp LG(X) &kp LG(E) &kp F6    &kp F5    &kp NUHS  &kp DEL &kp END   &kp PG_DN &trans    &trans
-  &trans    &kp LA(F4) &trans    &mkp RCLK &mo 1     &kp BSPC            &mo 3   &kp LC(TAB) &kp K_APP &kp F7  &kp F8
+  &trans    &trans     &trans    &mkp RCLK &mo 1     &kp BSPC            &mo 3   &kp LC(TAB) &kp K_APP &kp F7  &kp F8
           >;
           //sensor-bindings = <&mouse_scrl_left>
         };
@@ -263,7 +263,11 @@
         layer_fn3 {
           bindings = <
   &none      &kp F1     &kp F2    &kp F3    &kp F4    &kp F5   &kp F6    &kp F7  &kp F8    &kp F9    &kp F10   &kp F11
-  &none      &mcr_3bt   &mcr_2bt  &mcr_1bt  &mcr_0bt  &none    &none             &kp C_VOL_DN
+  &none      &bt BT_SEL 3
+                        &bt BT_SEL 2
+                                  &bt BT_SEL 1
+                                            &bt BT_SEL 0
+                                                      &none    &none             &kp C_VOL_DN
                                                                                            &kp C_VOL_UP
                                                                                                      &none     &kp F12
   &trans     &none      &none     &none     &none     &none    &none     &none   &none     &none     &none     &none
