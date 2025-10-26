@@ -104,7 +104,7 @@
                   , <&macro_wait_time 100>
                   , <&macro_tap &bt BT_SEL 1>;
             };
-            l: mcr_2bt {
+            mcr_2bt: mcr_2bt {
                 compatible = "zmk,behavior-macro";
                 #binding-cells = <0>;
                 wait-ms = <20>;
@@ -243,7 +243,7 @@
   &kp ESC   &kp F4     &kp F2    &kp UP    &kp LG(R) &kp LC(T) &trans    &trans  &kp PSCRN &kp EQUAL &kp INT3  &kp LBKT
   &kp LALT  &kp LGUI   &kp LEFT  &kp DOWN  &kp RIGHT &kp F3    &kp RBKT          &kp HOME  &kp PG_UP &kp INT1  &trans
   &trans    &kp LC(W)  &kp LG(X) &kp LG(E) &kp F6    &kp F5    &kp NUHS  &kp DEL &kp END   &kp PG_DN &trans    &trans
-  &trans    &trans     &trans    &mkp RCLK &mo 1     &kp BSPC            &mo 3   &kp LC(TAB) &kp K_APP &kp F7  &kp F8
+  &trans    &kp LA(F4) &trans    &mkp RCLK &mo 1     &kp BSPC            &mo 3   &kp LC(TAB) &kp K_APP &kp F7  &kp F8
           >;
           //sensor-bindings = <&mouse_scrl_left>
         };
