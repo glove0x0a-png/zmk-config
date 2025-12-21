@@ -271,7 +271,7 @@
                                                                                            &kp C_VOL_UP
                                                                                                      &none     &kp F12
   &trans     &none      &none     &none     &none     &none    &none     &none   &none     &none     &none     &none
-  &trans     &trans     &trans    &none     &mo 3     &ind_bat           &mo 3   &kp K_VOL_UP &none  &kp K_VOL_DN &BT_CLR
+  &trans     &trans     &trans    &none     &mo 3     &ind_bat           &mo 3   &kp K_VOL_UP &none  &kp K_VOL_DN &bt BT_CLR
           >;
           //sensor-bindings = <&inc_dec_kp C_VOL_DN C_VOL_UP>;
         };
