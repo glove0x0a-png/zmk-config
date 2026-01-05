@@ -1,3 +1,10 @@
+
+
+
+
+
+
+
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/bt.h>
@@ -78,42 +85,42 @@
     //                 , <&my_hold C_VOL_DN>
     //                 , <&macro_wait_time _hold_time>
     //                 , <&my_rele C_VOL_DN>;
-            mcr_0bt: mcr_0bt {
-                compatible = "zmk,behavior-macro";
-                #binding-cells = <0>;
-                wait-ms = <20>;
-                tap-ms = <10>;
-                bindings =
-                    <&macro_tap &out OUT_BLE>
-                  , <&macro_tap &bt BT_SEL 0>;
-            };
-            mcr_1bt: mcr_1bt {
-                compatible = "zmk,behavior-macro";
-                #binding-cells = <0>;
-                wait-ms = <20>;
-                tap-ms = <10>;
-                bindings =
-                    <&macro_tap &out OUT_BLE>
-                  , <&macro_tap &bt BT_SEL 1>;
-            };
-            mcr_2bt: mcr_2bt {
-                compatible = "zmk,behavior-macro";
-                #binding-cells = <0>;
-                wait-ms = <20>;
-                tap-ms = <10>;
-                bindings =
-                    <&macro_tap &out OUT_BLE>
-                  , <&macro_tap &bt BT_SEL 2>;
-            };
-            mcr_3bt: mcr_3bt {
-                compatible = "zmk,behavior-macro";
-                #binding-cells = <0>;
-                wait-ms = <20>;
-                tap-ms = <10>;
-                bindings =
-                    <&macro_tap &out OUT_BLE>
-                  , <&macro_tap &bt BT_SEL 3>;
-            };
+    //        mcr_0bt: mcr_0bt {
+    //            compatible = "zmk,behavior-macro";
+    //            #binding-cells = <0>;
+    //            wait-ms = <20>;
+    //            tap-ms = <10>;
+    //            bindings =
+    //                <&macro_tap &out OUT_BLE>
+    //              , <&macro_tap &bt BT_SEL 0>;
+    //        };
+    //        mcr_1bt: mcr_1bt {
+    //            compatible = "zmk,behavior-macro";
+    //            #binding-cells = <0>;
+    //            wait-ms = <20>;
+    //            tap-ms = <10>;
+    //            bindings =
+    //                <&macro_tap &out OUT_BLE>
+    //              , <&macro_tap &bt BT_SEL 1>;
+    //        };
+    //        mcr_2bt: mcr_2bt {
+    //            compatible = "zmk,behavior-macro";
+    //            #binding-cells = <0>;
+    //            wait-ms = <20>;
+    //            tap-ms = <10>;
+    //            bindings =
+    //                <&macro_tap &out OUT_BLE>
+    //              , <&macro_tap &bt BT_SEL 2>;
+    //        };
+    //        mcr_3bt: mcr_3bt {
+    //            compatible = "zmk,behavior-macro";
+    //            #binding-cells = <0>;
+    //            wait-ms = <20>;
+    //            tap-ms = <10>;
+    //            bindings =
+    //                <&macro_tap &out OUT_BLE>
+    //              , <&macro_tap &bt BT_SEL 3>;
+    //        };
     //        mcr_0bt: mcr_0bt {
     //            compatible = "zmk,behavior-macro";
     //            #binding-cells = <0>;
@@ -299,11 +306,12 @@
         layer_fn3 {
           bindings = <
   &none      &kp F1     &kp F2    &kp F3    &kp F4    &kp F5   &kp F6    &kp F7  &kp F8    &kp F9    &kp F10   &kp F11
-  &out OUT_USB &mcr_3bt
-                        &mcr_2bt
-                                  &mcr_1bt
-                                            &mcr_0bt
-                                                      &none    &none             &kp C_VOL_DN
+  &out OUT_USB &bt BT_SEL 3
+                        &bt BT_SEL 2
+                                  &bt BT_SEL 1
+                                            &bt BT_SEL 0
+                                                      &out OUT_BLE
+                                                               &none             &kp C_VOL_DN
                                                                                            &kp C_VOL_UP
                                                                                                      &none     &kp F12
   &trans     &none      &none     &none     &none     &none    &none     &none   &none     &none     &none     &none
