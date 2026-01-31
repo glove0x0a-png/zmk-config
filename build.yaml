@@ -1,7 +1,10 @@
 include:
   - board: seeeduino_xiao_ble
-    shield:
-      - glove0x0a
-      - rgbled_adapter
+    shield: glove0x0a
+    snippet: studio-rpc-usb-uart
+    cmake-args: -DCONFIG_ZMK_STUDIO=y
+
+  - board: seeeduino_xiao_ble
+    shield: rgbled_adapter
     snippet: studio-rpc-usb-uart
     cmake-args: -DCONFIG_ZMK_STUDIO=y
