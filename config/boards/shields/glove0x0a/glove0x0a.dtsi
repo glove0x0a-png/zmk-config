@@ -25,6 +25,17 @@
     //    status = "okay";
     //};
 
+    //2026.01.31 analog_stick(START)
+    stick_btn: stick_btn {
+        compatible = "zmk,gpio-keys";
+        gpios = <&gpio1 11 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>; // D6	gpio1 11 Analog Stick ボタン
+        input-code = <0>;                                        // keymap で上書きするので 0 でOK
+        debounce-press-ms = <5>;
+        debounce-release-ms = <5>;
+        wakeup-source;
+        interrupt-gpios = <&gpio1 11 GPIO_ACTIVE_HIGH>;
+    };
+    //2026.01.31 analog_stick(END)
 
     default_transform: matrix_transform {
         compatible = "zmk,matrix-transform";
@@ -138,6 +149,9 @@
 //  };
 //};
 
-&xiao_i2c {
-    status = "okay";
-};
+
+//2026.01.31 Analog Stick START
+//&xiao_i2c {
+//    status = "okay";
+//};
+//2026.01.31 Analog Stick END
