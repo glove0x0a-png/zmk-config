@@ -71,18 +71,9 @@
 		};
 	};
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+/{
+    chosen {
+        zmk,input-devices = &anin0;
+    };
+};
 
