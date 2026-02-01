@@ -94,7 +94,7 @@
         layer_fn1 {
           bindings = <
   &kp ESC   &kp LA(F4) &kp F2    &kp UP    &kp LG(R) &kp LC(T) &trans    &trans  &kp PSCRN &kp LS(INT3) &kp EQUAL &kp LBKT
-  &kp LGUI  &kp LALT   &kp LEFT  &kp DOWN  &kp RIGHT &kp F3    &kp RBKT          &kp HOME  &kp PG_UP    &kp INT1  &trans
+  &kp LGUI  &kp LALT   &kp LEFT  &kp DOWN  &kp RIGHT &kp F3    &kp RBKT  &trans  &kp HOME  &kp PG_UP    &kp INT1  &trans
   &trans    &kp LC(W)  &kp LG(X) &kp LG(E) &kp F4    &kp F5    &kp NUHS  &kp DEL &kp END   &kp PG_DN    &kp UP    &trans
   &trans    &trans     &trans    &trans    &mo 1     &kp BSPC            &mo 3   &kp TAB   &kp K_APP    &kp F7    &kp F8
           >;
@@ -106,7 +106,7 @@
                        &mmv MOVE_X(-5000)
                                  &mmv MOVE_Y( 2000)
                                            &mmv MOVE_X(5000)
-                                                     &none     &kp RBKT          &s_up_mor &s_dn_mor &trans    &trans
+                                                     &none     &kp RBKT  &trans  &s_up_mor &s_dn_mor &trans    &trans
   &trans    &none      &none     &none    &none      &none     &kp NUHS  &kp DEL &trans    &trans    &trans    &trans
   &trans    &trans     &trans    &mkp RCLK &mo 3     &kp LGUI            &mo 2   &trans    &trans    &trans    &trans    
           >;
@@ -119,7 +119,7 @@
                                   &bt BT_SEL 1
                                             &bt BT_SEL 0
                                                       &out OUT_BLE
-                                                               &none             &kp C_VOL_DN
+                                                               &none     &none   &kp C_VOL_DN
                                                                                            &kp C_VOL_UP
                                                                                                      &none     &kp F12
   &trans     &none      &none     &none     &none     &none    &none     &none   &none     &none     &none     &none
