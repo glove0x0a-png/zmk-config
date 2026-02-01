@@ -19,6 +19,7 @@
 / {
     chosen {
         zmk,physical-layout = &glove0x0a_physical_layout;
+        zmk,kscan = &kscan0;
         zmk,input-devices = <&anin0 &stick_btn>;
     };
 
