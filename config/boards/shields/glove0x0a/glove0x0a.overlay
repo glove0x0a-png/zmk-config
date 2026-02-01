@@ -11,6 +11,10 @@
 &adc {
 	status = "okay";
 };
+&usbd {
+    status = "okay";
+};
+
 
 / {
 	anin0: analog_input_0 {
@@ -52,3 +56,4 @@
         zmk,input-devices = &anin0;
     };
 };
+
