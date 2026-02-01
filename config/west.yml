@@ -4,10 +4,6 @@ manifest:
       url-base: https://github.com/glove0x0a-png
     - name: caksoylar
       url-base: https://github.com/caksoylar
-    # START #####
-    - name: badjeff
-      url-base: https://github.com/badjeff
-    # END #######
 
   projects:
     - name: zmk
@@ -18,12 +14,6 @@ manifest:
     - name: zmk-rgbled-widget
       remote: caksoylar
       revision: main
-
-   # START #####
-    - name: zmk-analog-input-driver
-      remote: badjeff
-      revision: main
-    # END #######
 
   self:
     path: config
