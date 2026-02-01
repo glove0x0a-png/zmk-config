@@ -4,6 +4,11 @@ config SHIELD_GLOVE0X0A
 
 if SHIELD_GLOVE0X0A
 
-# 何も追加しない（ZMK が自動で必要なものを有効化する）
+config ANALOG_INPUT
+    bool "Enable analog input driver"
+    default y
+
+config ADC
+    default y
 
 endif
