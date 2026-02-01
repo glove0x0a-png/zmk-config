@@ -127,11 +127,6 @@
     };
 };
 
-//&stick_btn {
-//    bindings = <
-//        &kp J
-//        &mkp LCLK
-//        &mkp LCLK
-//        &none
-//    >;
-//};
+&stick_btn {
+    bindings = <&kp J>;
+};

@@ -15,7 +15,6 @@
     status = "okay";
 };
 
-
 / {
 	anin0: analog_input_0 {
 		compatible = "zmk,analog-input";
@@ -51,10 +50,11 @@
 		};
 	};
 };
-/{
+/ {
     chosen {
         zmk,input-devices = &anin0;
     };
 };
+
 
 
