@@ -100,16 +100,13 @@
         layer_fn2 {
           bindings = <
   &kp ESC   &kp N1     &kp N2    &kp N3    &kp N4    &kp N5    &kp N6    &kp N7  &kp N8    &kp N9    &kp N0    &trans
-  &trans    &mmv MOVE_Y(-2000)
-                       &mmv MOVE_X(-5000)
-                                 &mmv MOVE_Y( 2000)
-                                           &mmv MOVE_X(5000)
-                                                     &none     &kp RBKT  &mmv MOVE_X(-5000)
-                                                                                 &mmv MOVE_Y(-5000)
-                                                                                           &mmv MOVE_X(5000)
-                                                                                                     &mmv MOVE_Y(5000)
-                                                                                                               &s_up_mor
-  &trans    &none      &none     &none    &none      &none     &kp NUHS  &kp DEL &trans    &trans    &kp SLASH &s_dn_mor
+  &trans    &mmv MOVE_Y(-4000)
+                       &mmv MOVE_X(-4000)
+                                 &mmv MOVE_Y( 4000)
+                                           &mmv MOVE_X(4000)
+                                                     &none     &kp RBKT  &mkp LCLK
+                                                                                 &s_up_mor &s_dn_mor &trans    &trans
+  &trans    &none      &none     &none    &none      &none     &kp NUHS  &kp DEL &trans    &trans    &kp SLASH &trans
   &trans    &trans     &trans    &mkp RCLK &mo 3     &kp LGUI            &mo 2   &trans    &trans    &trans    &trans
           >;
         };
