@@ -106,13 +106,7 @@
 //        input-gpios = <&gpio1 11 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
 //        status = "okay";
 //    };
-};
 
-&xiao_i2c {
-    status = "disabled";
-};
-
-/ {
     // USB 電源状態を監視
     usb_power: usb_power {
         compatible = "zmk,pm-usb-power";
@@ -122,11 +116,9 @@
     // マウスジグラー用のマクロ
     behavior_jiggler: behavior_jiggler {
         compatible = "zmk,behavior-macro";
-        label = "JIGGLER";
         #binding-cells = <0>;
-
         bindings = <
-            &mmv MOVE_X 1
+          &macro_press &mmv MOVE_X(1)
         >;
     };
 
@@ -142,4 +134,8 @@
         // USB 電源があるときだけ有効
         power-source = <&usb_power>;
     };
+};
+
+&xiao_i2c {
+    status = "disabled";
 };
