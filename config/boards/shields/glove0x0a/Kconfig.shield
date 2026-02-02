@@ -2,13 +2,13 @@
 config SHIELD_GLOVE0X0A
     def_bool $(shields_list_contains,glove0x0a)
 
-if SHIELD_GLOVE0X0A
-
-config ANALOG_INPUT
-    bool "Enable analog input driver"
-    default y
-
-config ADC
-    default y
-
-endif
+#if SHIELD_GLOVE0X0A
+#
+#config ANALOG_INPUT
+#    bool "Enable analog input driver"
+#    default y
+#
+#config ADC
+#    default y
+#
+#endif
