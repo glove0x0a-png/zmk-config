@@ -86,7 +86,7 @@
   &kp TAB   &kp Q      &kp W     &kp E     &kp R     &kp T     &kp Y     &kp U   &kp I     &kp O     &kp P     &kp MINUS
   &kp CAPS  &kp A      &kp S     &kp D     &kp F     &kp G     &kp H     &kp J   &kp K     &kp L     &kp SEMI  &kp SQT
   &kp LSHFT &kp Z      &kp X     &kp C     &kp V     &kp B     &kp N     &kp M   &kp COMMA &kp DOT   &kp UP    &kp ENTER
-  &kp LCTRL &kp LGUI   &kp LALT  &mkp LCLK &mo 1     &kp SPACE           &mo 2   &kp UP    &kp LEFT  &kp DOWN  &kp RIGHT   &kp J
+  &kp LCTRL &kp LGUI   &kp LALT  &mkp LCLK &mo 1     &kp SPACE           &mo 2   &kp UP    &kp LEFT  &kp DOWN  &kp RIGHT
           >;
         };
         layer_fn1 {
@@ -94,7 +94,7 @@
   &kp ESC   &kp LA(F4) &kp F2    &kp UP    &kp LG(R) &kp LC(T) &trans    &trans  &kp PSCRN &kp LS(INT3) &kp EQUAL &kp LBKT
   &kp LGUI  &kp LALT   &kp LEFT  &kp DOWN  &kp RIGHT &kp F3    &kp RBKT  &trans  &kp HOME  &kp PG_UP    &kp INT1  &trans
   &trans    &kp LC(W)  &kp LG(X) &kp LG(E) &kp F4    &kp F5    &kp NUHS  &kp DEL &kp END   &kp PG_DN    &kp SLASH &trans
-  &trans    &trans     &trans    &trans    &mo 1     &kp BSPC            &mo 3   &kp TAB   &kp K_APP    &kp F7    &kp F8   &kp J
+  &trans    &trans     &trans    &trans    &mo 1     &kp BSPC            &mo 3   &kp TAB   &kp K_APP    &kp F7    &kp F8
           >;
         };
         layer_fn2 {
@@ -106,7 +106,7 @@
                                            &mmv MOVE_X(5000)
                                                      &none     &kp RBKT  &trans  &s_up_mor &s_dn_mor &trans    &trans
   &trans    &none      &none     &none    &none      &none     &kp NUHS  &kp DEL &trans    &trans    &kp SLASH &trans
-  &trans    &trans     &trans    &mkp RCLK &mo 3     &kp LGUI            &mo 2   &trans    &trans    &trans    &trans      &kp J
+  &trans    &trans     &trans    &mkp RCLK &mo 3     &kp LGUI            &mo 2   &trans    &trans    &trans    &trans
           >;
         };
         layer_fn3 {
@@ -121,7 +121,7 @@
                                                                                            &kp C_VOL_UP
                                                                                                      &none     &kp F12
   &trans     &none      &none     &none     &none     &none    &none     &none   &none     &none     &none     &none
-  &trans     &trans     &trans    &none     &mo 3     &ind_bat           &mo 3     &kp K_VOL_UP &none  &kp K_VOL_DN &bt BT_CLR   &kp J
+  &trans     &trans     &trans    &none     &mo 3     &ind_bat           &mo 3     &kp K_VOL_UP &none  &kp K_VOL_DN &bt BT_CLR
           >;
         };
     };
