@@ -104,10 +104,10 @@
                        &mmv MOVE_X(-5000)
                                  &mmv MOVE_Y( 2000)
                                            &mmv MOVE_X(5000)
-                                                     &none     &kp RBKT  &mmv MOVE_X(-10000)
-                                                                                 &&mmv MOVE_Y(-10000)
-                                                                                           &mmv MOVE_X(10000)
-                                                                                                     &mmv MOVE_Y(10000)
+                                                     &none     &kp RBKT  &mmv MOVE_X(-9999)
+                                                                                 &&mmv MOVE_Y(-9999)
+                                                                                           &mmv MOVE_X(9999)
+                                                                                                     &mmv MOVE_Y(9999)
                                                                                                                &s_up_mor
   &trans    &none      &none     &none    &none      &none     &kp NUHS  &kp DEL &trans    &trans    &kp SLASH &s_dn_mor
   &trans    &trans     &trans    &mkp RCLK &mo 3     &kp LGUI            &mo 2   &trans    &trans    &trans    &trans
