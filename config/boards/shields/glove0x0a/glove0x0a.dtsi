@@ -106,34 +106,6 @@
 //        input-gpios = <&gpio1 11 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
 //        status = "okay";
 //    };
-
-    // USB 電源状態を監視
-    usb_power: usb_power {
-        compatible = "zmk,pm-usb-power";
-        status = "okay";
-    };
-
-    // マウスジグラー用のマクロ
-    behavior_jiggler: behavior_jiggler {
-        compatible = "zmk,behavior-macro";
-        #binding-cells = <0>;
-        bindings = <
-          &macro_press &mmv MOVE_X(1)
-        >;
-    };
-
-    // USB 接続時だけマクロを定期実行
-    jiggler_timer: jiggler_timer {
-        compatible = "zmk,behavior-timer";
-        label = "JIGGLER_TIMER";
-        #binding-cells = <0>;
-
-        // 30秒ごとに実行
-        delay-ms = <30000>;
-        behavior = <&behavior_jiggler>;
-        // USB 電源があるときだけ有効
-        power-source = <&usb_power>;
-    };
 };
 
 &xiao_i2c {
