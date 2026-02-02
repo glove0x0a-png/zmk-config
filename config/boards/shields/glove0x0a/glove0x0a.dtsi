@@ -106,9 +106,18 @@
         input-gpios = <&gpio1 11 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
     };
 
+    extra_transform: extra_transform {
+        compatible = "zmk,matrix-transform";
+        rows = <1>;
+        columns = <1>;
+        map = <RC(0,0)>;
+    };
+
+
     glove0x0a_extra_layout: glove0x0a_extra_layout {
         compatible = "zmk,physical-layout";
         display-name = "Extra";
+        transform = <&extra_transform>;
         kscan = <&kscan_button>;
         keys  //                     w   h    x    y     rot    rx    ry
             = <&key_physical_attrs 100 100 1200  300       0     0     0>            ;
