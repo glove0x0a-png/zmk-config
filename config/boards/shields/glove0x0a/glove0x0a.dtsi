@@ -119,8 +119,8 @@
         label = "JIGGLER";
         #binding-cells = <0>;
         bindings = <
-            &mmv MOVE_X <1>
-            &mmv MOVE_X <-1>
+            &mmv MOVE_X(1)
+            &mmv MOVE_X(-1)
         >;
     };
 
