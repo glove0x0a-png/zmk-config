@@ -8,7 +8,7 @@
 
 / {
     chosen {
-        zmk,physical-layout = &glove0x0a_physical_layout;
+        zmk,physical-layout = <&glove0x0a_physical_layout &glove0x0a_extra_layout>;
     };
 
     default_transform: matrix_transform {
@@ -23,13 +23,6 @@
         >;
     };
 
-    kscan_button: kscan_button {
-        compatible = "zmk,kscan-gpio";
-        label = "EXTRA_BUTTON";
-        input-gpios = <&gpio1 11 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
-    };
-
-    
     kscan0: kscan {
         compatible = "zmk,kscan-gpio-charlieplex";
         interrupt-gpios = <&gpio1  3 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN) >;
@@ -50,12 +43,12 @@
         ;
 
     };
+
     glove0x0a_physical_layout: glove0x0a_physical_layout {
         compatible = "zmk,physical-layout";
         display-name = "Default";
         transform = <&default_transform>;
-        //kscan = <&kscan0>;
-        kscan = <&kscan0 &kscan_button>;
+        kscan = <&kscan0>;
 
         keys  //                     w   h    x    y     rot    rx    ry
             = <&key_physical_attrs 100 100    0    0       0     0     0>
@@ -104,17 +97,25 @@
             , <&key_physical_attrs 100 100  800  300       0     0     0>
             , <&key_physical_attrs 100 100  900  300       0     0     0>
             , <&key_physical_attrs 100 100 1000  300       0     0     0>
-            , <&key_physical_attrs 100 100 1100  300       0     0     0>
-            , <&key_physical_attrs 100 100 1200  300       0     0     0>            ;
+            , <&key_physical_attrs 100 100 1100  300       0     0     0>            ;
+
+    kscan_button: kscan_button {
+        compatible = "zmk,kscan-gpio";
+        label = "EXTRA_BUTTON";
+        input-gpios = <&gpio1 11 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+    };
+
+    glove0x0a_extra_layout: glove0x0a_extra_layout {
+        compatible = "zmk,physical-layout";
+        display-name = "Extra";
+        kscan = <&kscan_button>;
+
+        keys  //                     w   h    x    y     rot    rx    ry
+            = <&key_physical_attrs 100 100 1200  300       0     0     0>            ;
+
     };
 };
 
 &xiao_i2c {
-//2026.01.31 Analog Stick START
-//    status = "okay";
     status = "disabled";
-//2026.01.31 Analog Stick END
 };
-
-
-
