@@ -105,7 +105,7 @@
                                  &mmv MOVE_Y( 2000)
                                            &mmv MOVE_X(5000)
                                                      &none     &kp RBKT  &mmv MOVE_X(-5000)
-                                                                                 &&mmv MOVE_Y(-5000)
+                                                                                 &mmv MOVE_Y(-5000)
                                                                                            &mmv MOVE_X(5000)
                                                                                                      &mmv MOVE_Y(5000)
                                                                                                                &s_up_mor
