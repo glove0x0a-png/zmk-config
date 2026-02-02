@@ -106,7 +106,7 @@
                                            &mmv MOVE_X(5000)
                                                      &none     &kp RBKT  &trans  &s_up_mor &s_dn_mor &trans    &trans
   &trans    &none      &none     &none    &none      &none     &kp NUHS  &kp DEL &trans    &trans    &trans    &trans
-  &trans    &trans     &trans    &mkp RCLK &mo 3     &kp LGUI            &mo 2   &trans    &trans    &kp SLASH &trans    
+  &trans    &trans     &trans    &mkp RCLK &mo 3     &kp LGUI            &mo 2   &trans    &trans    &kp SLASH &trans
           >;
         };
         layer_fn3 {
