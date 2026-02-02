@@ -40,6 +40,31 @@
             bindings = <&s_dn_mor1>, <&msc SCRL_UP>;
             mods = <MOD_LCTL>;
         };
+        // マウス移動
+        s_mo_up: s_mo_up {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&mmv MOVE_Y(-4000)>, <&mmv MOVE_Y(-400)>;
+            mods = <(MOD_LSFT|MOD_LCTL)>;
+        };
+        s_mo_le: s_mo_le {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&mmv MOVE_X(-4000)>, <&mmv MOVE_X(-400)>;
+            mods = <(MOD_LSFT|MOD_LCTL)>;
+        };
+        s_mo_dn: s_mo_dn {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&mmv MOVE_Y(4000)>, <&mmv MOVE_Y(400)>;
+            mods = <(MOD_LSFT|MOD_LCTL)>;
+        };
+        s_mo_ri: s_mo_ri {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&mmv MOVE_X(4000)>, <&mmv MOVE_X(400)>;
+            mods = <(MOD_LSFT|MOD_LCTL)>;
+        };
 
         //LED制御
         capslock_led: capslock_led {
@@ -100,11 +125,7 @@
         layer_fn2 {
           bindings = <
   &kp ESC   &kp N1     &kp N2    &kp N3    &kp N4    &kp N5    &kp N6    &kp N7  &kp N8    &kp N9    &kp N0    &trans
-  &trans    &mmv MOVE_Y(-4000)
-                       &mmv MOVE_X(-4000)
-                                 &mmv MOVE_Y( 4000)
-                                           &mmv MOVE_X(4000)
-                                                     &none     &kp RBKT  &mkp LCLK
+  &trans    &s_mo_up   &s_mo_le  &s_mo_dn  &s_mo_ri  &none     &kp RBKT  &mkp LCLK
                                                                                  &s_up_mor &s_dn_mor &trans    &trans
   &trans    &none      &none     &none    &none      &none     &kp NUHS  &kp DEL &trans    &trans    &kp SLASH &trans
   &trans    &trans     &trans    &mkp RCLK &mo 3     &kp LGUI            &mo 2   &trans    &trans    &trans    &trans
