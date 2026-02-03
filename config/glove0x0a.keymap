@@ -77,7 +77,7 @@
             bindings = <&mmv MOVE_X(-400)>, <&mmv MOVE_X(-4000)>;
             mods = <(MOD_LSFT|MOD_LCTL)>;
         };
-        s_mo_sdn : s_mo_sdn {
+        s_mo_sdn: s_mo_sdn {
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
             bindings = <&mmv MOVE_Y(400)>, <&mmv MOVE_Y(4000)>;
@@ -89,8 +89,6 @@
             bindings = <&mmv MOVE_X(400)>, <&mmv MOVE_X(4000)>;
             mods = <(MOD_LSFT|MOD_LCTL)>;
         };
-
-
 
         //LED制御
         capslock_led: capslock_led {
