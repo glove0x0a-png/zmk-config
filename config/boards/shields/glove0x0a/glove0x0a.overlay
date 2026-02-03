@@ -14,21 +14,4 @@
     status = "okay";
 };
 
-/ {
-    /* あなたの analog_input.c はこのノードを使わないので削除しても良い */
-    anin0: analog_input_0 {
-        compatible = "zmk,analog-input";
-        status = "disabled";
-    };
-
-    /* ZMK input subsystem に登録される input device */
-    analog_in: analog_in {
-        compatible = "zephyr,input-device";
-        label = "ANALOG_IN";
-    };
-};
-
-&{/chosen} {
-    zmk,input-devices = &analog_in;
-};
 
