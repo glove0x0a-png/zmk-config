@@ -5,14 +5,8 @@
 &xiao_serial {
     status = "disabled";
 };
-&adc {
-    status = "okay";
-};
-&usbd {
-    status = "okay";
-};
 
-/ {
+&adc {
     anin0: analog_input_0 {
         compatible = "zmk,analog-input";
         status = "okay";
@@ -47,14 +41,15 @@
             /* 2026.01.31(END) */
         };
     };
+
+    status = "okay";
+};
+&usbd {
+    status = "okay";
 };
 / {
     chosen {
         zmk,input-devices = &anin0;
     };
 };
-
-
-
-
 
