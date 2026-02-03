@@ -7,6 +7,12 @@
 };
 
 &adc {
+    status = "okay";
+};
+&usbd {
+    status = "okay";
+};
+/ {
     anin0: analog_input_0 {
         compatible = "zmk,analog-input";
         status = "okay";
@@ -41,15 +47,11 @@
             /* 2026.01.31(END) */
         };
     };
-
-    status = "okay";
-};
-&usbd {
-    status = "okay";
 };
 / {
     chosen {
         zmk,input-devices = &anin0;
     };
 };
+
 
