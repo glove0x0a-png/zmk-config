@@ -9,52 +9,26 @@
 &adc {
     status = "okay";
 };
+
 &usbd {
     status = "okay";
 };
+
 / {
+    /* あなたの analog_input.c はこのノードを使わないので削除しても良い */
     anin0: analog_input_0 {
         compatible = "zmk,analog-input";
-        status = "okay";
-        sampling-hz = <100>;
-        x-ch {
-            io-channels = <&adc 2>; // <--- see ain-map.png for nRF52840 D4=A4=P0.04=AIN 2
-            mv-mid = <1630>;
-            mv-min-max = <1600>;
-            mv-deadzone = <10>;
-            scale-multiplier = <3>;
-            scale-divisor = <4>;
-            invert;
-            evt-type = <INPUT_EV_REL>;
-            input-code = <INPUT_REL_X>;
-        };
-        y-ch {
-            io-channels = <&adc 3>; // <--- see ain-map.png for nRF52840 D5=A5=P0.05=AIN 3
-            mv-mid = <1630>;
-            mv-min-max = <1600>;
-            mv-deadzone = <10>;
-            scale-multiplier = <3>;
-            scale-divisor = <4>;
-            invert;
-            evt-type = <INPUT_EV_REL>;
-            input-code = <INPUT_REL_Y>;
-
-            /* enable report mdoe for gamepad axix or knob */
-            /* to only call input_report on quantquantized value is updated */
-            /* NOTE: mouse input does NOT need this */
-            /* 2026.01.31(START) mouse input not need*/
-            /* report-on-change-only; */
-            /* 2026.01.31(END) */
-        };
+        status = "disabled";
     };
-};
-/ {
-    chosen {
-        zmk,input-devices = &anin0;
+
+    /* ZMK input subsystem に登録される input device */
+    analog_in: analog_in {
+        compatible = "zephyr,input-device";
+        label = "ANALOG_IN";
     };
 };
 
-
-
-
+&{/chosen} {
+    zmk,input-devices = &analog_in;
+};
 
