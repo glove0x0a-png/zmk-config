@@ -71,19 +71,19 @@
             bindings = <&mmv MOVE_Y(-400)>, <&mmv MOVE_Y(-4000)>;
             mods = <(MOD_LSFT|MOD_LCTL)>;
         };
-        s_mo_le: s_mo_sle {
+        s_mo_sle: s_mo_sle {
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
             bindings = <&mmv MOVE_X(-400)>, <&mmv MOVE_X(-4000)>;
             mods = <(MOD_LSFT|MOD_LCTL)>;
         };
-        s_mo_dn: s_mo_sdn {
+        s_mo_sdn : s_mo_sdn {
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
             bindings = <&mmv MOVE_Y(400)>, <&mmv MOVE_Y(4000)>;
             mods = <(MOD_LSFT|MOD_LCTL)>;
         };
-        s_mo_ri: s_mo_sri {
+        s_mo_sri: s_mo_sri {
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
             bindings = <&mmv MOVE_X(400)>, <&mmv MOVE_X(4000)>;
@@ -153,7 +153,7 @@
   &kp ESC   &kp N1     &kp N2    &kp N3    &kp N4    &kp N5    &kp N6    &kp N7  &kp N8    &kp N9    &kp N0    &trans
   &trans    &s_mo_up   &s_mo_le  &s_mo_dn  &s_mo_ri  &s_mo_up  &kp RBKT  &mkp LCLK
                                                                                  &s_up_mor &s_dn_mor &trans    &trans
-  &trans    &s_mo_sup  &s_mo_sdn &s_mo_sri &s_mo_sle &s_mo_sup &kp NUHS  &kp DEL &trans    &trans    &kp SLASH &trans
+  &trans    &s_mo_sup  &s_mo_sle &s_mo_sdn &s_mo_sri &s_mo_sup &kp NUHS  &kp DEL &trans    &trans    &kp SLASH &trans
   &trans    &trans     &trans    &mkp RCLK &mo 3     &kp LGUI            &mo 2   &trans    &trans    &trans    &trans
           >;
         };
