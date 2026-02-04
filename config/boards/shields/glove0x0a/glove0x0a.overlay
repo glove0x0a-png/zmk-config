@@ -10,8 +10,17 @@
     status = "okay";
 };
 
-&usbd {
-    status = "okay";
+/ {
+    analog_x: analog_x {
+        compatible = "zmk,analog_input";
+        io-channels = <&adc 2>;  // A2 (D4)
+        label = "ANALOG_X";
+    };
+
+    analog_y: analog_y {
+        compatible = "zmk,analog_input";
+        io-channels = <&adc 3>;  // A3 (D5)
+        label = "ANALOG_Y";
+    };
 };
-
-
+...
