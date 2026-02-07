@@ -2,6 +2,10 @@
 config SHIELD_GLOVE0X0A
     def_bool $(shields_list_contains,glove0x0a)
 
+config ADC_OVERSAMPLING
+    default 0
+
+
 # Sensor data simulator
 #
 # Copyright (c) 2019 Nordic Semiconductor

@@ -8,7 +8,6 @@
 
 &adc {
     status = "okay";
-    zephyr,oversampling = <0>;
 };
 
 / {
@@ -45,5 +44,6 @@
 		};
 	};
 };
+
 
 
