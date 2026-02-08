@@ -5,62 +5,42 @@
 | --- | --- | --- | --- |
 | 1 | PCB（基盤） | CSTS40 | https://ja.aliexpress.com/item/1005004702079962.html |
 | 2 | MCU (ﾏｲｺﾝ) | XIAO nRF52840 Plus | https://wiki.seeedstudio.com/ja/XIAO_BLE/ |
-| 3 | トラックボール | AZ1UBALL | https://booth.pm/ja/items/4202085?srsltid=AfmBOorsZkPYZq80An_3UKa-HHpciWQeS2lXHikH4J_Y13bmAngWI2rI |
-| 4 | (参考)driver | AZ1UBALLL | https://github.com/kzyz/zmk-az1uball-driver |
-| 5 | (自作)behavior | behavior_capslock_led(Caps Lock 状態の検知)　| https://github.com/glove0x0a-png/zmk/blob/main/app/src/behaviors/behavior_capslock_led.c |
+| 3 | (自作)behavior | behavior_capslock_led(Caps Lock 状態の検知)　| https://github.com/glove0x0a-png/zmk/blob/main/app/src/behaviors/behavior_capslock_led.c |
 
 ## キーボード
 
-  - 47key キーボード(4行×12列)をUSB接続 or BLE接続で実装。
-  - Jキーを外してトラックボール(az1uball)を配置。I2C通信。
+  - 47key キーボード(4行×12列)をUSB接続 & BLE接続で実装。
+  - Jキーを外してジョイスティックを配置。(https://electropeak.com/learn/interfacing-5-direction-joystick-button-module-with-arduino/#google_vignette)
   - ファームウェアは ZMK Firmware。
-  - キースキャンはCharlieplexにより低電力化とGPIOピンを削減。
-  - ロータリーエンコーダは感度の問題か上下ブレが気になり、部品を排除。
-  - アンダーグローは省電力化のために機能削除。XIAOは本体LEDがある為、CapsLock状態、レイヤー、BLE関連は本体LEDで対応。
+  - key scanはCharlieplexにより低電力化とGPIOピンを削減。
 
 ---
 
 # 構築履歴
 
-## -2.0 QMKとZMKの共存のために実施した内容
-
-### 前提
-1. 作業開始時点では、Raspberry Pi Pico W(rp2040) + QMK + CSTS40 でキーボード構築。
-2. BLE対応がしたくなり、QMK->ZMKへ乗り換え。MCUもRaspberry Pi Pico W（rp2040）からXIAOへ変更。
-3. 作業前の情報。
-- MCU：Raspberry Pi Pico W（rp2040）  
-- 各接点からrp2040へはんだ付け (4行/12列 raw2col-matrix scan：16pin + LED制御：1pin + 同電源/GND + トラックボールi2c制御：2pin + 同電源/GND + ロータリーエンコーダ：2pin + 同GND)
-- AZ1UBALLをI2Cで接続（key(1,7)のJキーを削除、jキーはクリック押下に対応）
-- ロータリーエンコーダを増設（key(3,8)に設置）
-
-### 対応内容
+## GPIO Pin
 - 以下の紐づけでピンを接続。
 
-| rp2040 | XIAO(D) | XIAO(gpio) | コメント                                 |
-|--------|---------|------------|------------------------------------------|
-| GP5    | D18     | gpio1 5    | 0行 ESC & 0列(Tab Ctrl ～Tab)           |
-| GP6    | D9      | gpio1 14   | 1行 CAP & 1列(Q Win ～Q)                |
-| GP7    | D19     | gpio1 7    | 2行 SHF & 2列(W Alt ～W)                |
-| GP8    | D10     | gpio1 15   | 3行 Ctrl & 3列(E BTN1 ～E)              |
-| GP16   | D14     | gpio0 9    | 4列(1列) R                               |
-| GP15   | D3      | gpio0 29   | 5列(2列) T                               |
-| GP14   | D13     | gpio1 1    | 6列(3列) Y                               |
-| GP13   | D2      | gpio0 28   | 7列(4列) U                               |
-| GP12   | D12     | gpio0 19   | 8列(5列) I & 4行(Ctrl ～BTN1)           |
-| GP11   | D1      | gpio0 3    | 9列(6列) O & 3行(Shift～C)              |
-| GP10   | D11     | gpio0 15   | 10列(7列) P & 2行(Caps ～D)             |
-| GP9    | D0      | gpio0 2    | 11列(8列) - & 1行(Tab ～E)              |
-| GP2    | D4      | gpio0 4    | I2C通信、SDA                             |
-| GP3    | D5      | gpio0 5    | I2C通信、SCL                             |
-| GP0    | D6      | gpio1 11   | エンコーダ pina                          |
-| GP0    | D7      | gpio1 12   | エンコーダ pinb                          |
-| GP21   | D8      | gpio1 13   | ws2812 アンダーグローLED制御            |
-| なし   | D17     | gpio1 3    | 割り込みピンとして追加                  |
-
-- rp2040とXIAOを接続したところ、XIAOは電源OFF中に特定pin間で通電があり、rp2040の動作に悪影響があった。
-- このため、XIAO用に全pin絶縁用のuf2を作成し、rp2040起動中はXIAOに絶縁uf2を書き込み、起動する方針に。
-- 逆に、XIAO起動中はrp2040をOFFで問題なし。（全pin絶縁確認済み）  
-- I2Cデバイスの電源部分が共有されるため、想定外の電力供給/受給を防ぐためダイオードを設置。
+| # | rp2040 | XIAO(D) | XIAO(gpio) | コメント                                 |
+| --- |--------|---------|------------|------------------------------------------|
+| # | GP5    | D18     | gpio1 5    | 0行 (0,5)～(0,11) &11列(0,11)～(3,11) |
+| # | GP6    | D9      | gpio1 14   | 1行 (1,5)～(1,11) &10列(0,10)～(3,10) |
+| # | GP7    | D19     | gpio1 7    | 2行 (2,5)～(2,11) & 9列(0, 9)～(3, 9) |
+| # | GP8    | D10     | gpio1 15   | 3行 (3,5)～(3,11) & 8列(0 ,8)～(3 ,8) |
+| # | GP16   | D14     | gpio0 9    | 拡張 (4,5)～(4,10) & 7列(0,7)～(3 ,7) |
+| # | GP15   | D3      | gpio0 29   | 5列 (0,5)～(3,5) & 拡張(4,5) |
+| # | GP14   | D13     | gpio1 1    | 6列 (0,6)～(3,6) & 拡張(4,6) |
+| # | GP13   | D2      | gpio0 28   | 7列 (0,7)～(3,7) & 拡張(4,7) |
+| # | GP12   | D12     | gpio0 19   | 8列 (0,8)～(3,8) & 拡張(4,8) |
+| # | GP11   | D1      | gpio0 3    | 9列 (0,9)～(3,9) & 拡張(4,9) |
+| # | GP10   | D11     | gpio0 15   | 10列 P & 2行(Caps ～F)             |
+| # | GP9    | D0      | gpio0 2    | 11列 - & 1行(Tab ～R)              |
+| # | GP2    | D4      | gpio0 4    | 未使用 |
+| # | GP3    | D5      | gpio0 5    | 未使用 |
+| # | GP0    | D6      | gpio1 11   | 未使用 |
+| # | GP0    | D7      | gpio1 12   | 未使用 |
+| # | GP21   | D8      | gpio1 13   | ws2812 アンダーグローLED制御            |
+| # | なし   | D17     | gpio1 3    | 割り込みピンとして追加                  |
 
 ---
 
