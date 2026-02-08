@@ -6,7 +6,3 @@
     status = "disabled";
 };
 
-&adc {
-    status = "disabled";
-};
-
