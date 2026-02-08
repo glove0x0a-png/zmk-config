@@ -5,6 +5,24 @@
 &xiao_serial {
     status = "disabled";
 };
+/ {
+    az1uball: az1uball {
+        compatible = "zmk,az1uball";
+        status = "okay";
+    };
 
+    chosen {
+        zmk,input-devices = &az1uball;
+    };
 
+    input-listeners {
+        compatible = "zmk,input-listeners";
+        listeners = < &az1uball_listener>;
+    };
+
+    az1uball_listener: az1uball_listener {
+        compatible = "zmk,input-listener";
+        device = < &az1uball >;
+    };
+};
 
