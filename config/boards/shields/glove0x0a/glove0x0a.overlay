@@ -6,7 +6,7 @@
     status = "disabled";
 };
 
-&{
+ / {
     az1uball: az1uball {
         compatible = "zmk,az1uball";
         status = "okay";
