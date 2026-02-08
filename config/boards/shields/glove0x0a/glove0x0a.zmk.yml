@@ -6,4 +6,3 @@ url: https://github.com/glove0x0a-png/zmk-config.git
 requires: [seeeduino_xiao_ble]
 features:
   - keys
-  - analog-input
