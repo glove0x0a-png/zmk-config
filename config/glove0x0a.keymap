@@ -12,6 +12,8 @@
 #include <dt-bindings/zmk/pointing.h>
 #include <dt-bindings/input/input-event-codes.h>
 
+#define MOUSE_HIGH 5000
+#define MOUSH_LOW  600
 / {
     //behaviors
     behaviors {
@@ -44,49 +46,49 @@
         s_mo_up: s_mo_up {
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
-            bindings = <&mmv MOVE_Y(-5000)>, <&mmv MOVE_Y(-600)>;
+            bindings = <&mmv MOVE_Y(-MOUSE_HIGH)>, <&mmv MOVE_Y(-MOUSE_LOW)>;
             mods = <(MOD_LSFT|MOD_LCTL)>;
         };
         s_mo_le: s_mo_le {
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
-            bindings = <&mmv MOVE_X(-5000)>, <&mmv MOVE_X(-600)>;
+            bindings = <&mmv MOVE_X(-MOUSE_HIGH)>, <&mmv MOVE_X(-MOUSE_LOW)>;
             mods = <(MOD_LSFT|MOD_LCTL)>;
         };
         s_mo_dn: s_mo_dn {
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
-            bindings = <&mmv MOVE_Y(5000)>, <&mmv MOVE_Y(600)>;
+            bindings = <&mmv MOVE_Y(MOUSE_HIGH)>, <&mmv MOVE_Y(MOUSE_LOW)>;
             mods = <(MOD_LSFT|MOD_LCTL)>;
         };
         s_mo_ri: s_mo_ri {
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
-            bindings = <&mmv MOVE_X(5000)>, <&mmv MOVE_X(600)>;
+            bindings = <&mmv MOVE_X(MOUSE_HIGH)>, <&mmv MOVE_X(MOUSE_LOW)>;
             mods = <(MOD_LSFT|MOD_LCTL)>;
         };
         s_mo_sup: s_mo_sup {
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
-            bindings = <&mmv MOVE_Y(-600)>, <&mmv MOVE_Y(-5000)>;
+            bindings = <&mmv MOVE_Y(-MOUSE_LOW)>, <&mmv MOVE_Y(-MOUSE_HIGH)>;
             mods = <(MOD_LSFT|MOD_LCTL)>;
         };
         s_mo_sle: s_mo_sle {
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
-            bindings = <&mmv MOVE_X(-600)>, <&mmv MOVE_X(-5000)>;
+            bindings = <&mmv MOVE_X(-MOUSE_LOW)>, <&mmv MOVE_X(-MOUSE_HIGH)>;
             mods = <(MOD_LSFT|MOD_LCTL)>;
         };
         s_mo_sdn: s_mo_sdn {
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
-            bindings = <&mmv MOVE_Y(600)>, <&mmv MOVE_Y(5000)>;
+            bindings = <&mmv MOVE_Y(MOUSE_LOW)>, <&mmv MOVE_Y(MOUSE_HIGH)>;
             mods = <(MOD_LSFT|MOD_LCTL)>;
         };
         s_mo_sri: s_mo_sri {
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
-            bindings = <&mmv MOVE_X(600)>, <&mmv MOVE_X(5000)>;
+            bindings = <&mmv MOVE_X(MOUSE_LOW)>, <&mmv MOVE_X(MOUSE_HIGH)>;
             mods = <(MOD_LSFT|MOD_LCTL)>;
         };
 
@@ -151,9 +153,9 @@
         layer_fn2 {
           bindings = <
   &kp ESC   &kp N1     &kp N2    &kp N3    &kp N4    &kp N5    &kp N6    &kp N7  &kp N8    &kp N9    &kp N0    &trans
-  &trans    &s_mo_up   &s_mo_le  &s_mo_dn  &s_mo_ri  &s_mo_up  &kp RBKT  &mkp LCLK
+  &trans    &s_mo_sup  &s_mo_sle &s_mo_sdn &s_mo_sri &s_mo_sup &kp RBKT  &mkp LCLK
                                                                                  &s_up_mor &s_dn_mor &trans    &trans
-  &trans    &s_mo_sup  &s_mo_sle &s_mo_sdn &s_mo_sri &s_mo_sup &kp NUHS  &kp DEL &trans    &trans    &kp SLASH &trans
+  &trans    &s_mo_up   &s_mo_le  &s_mo_dn  &s_mo_ri  &s_mo_up  &kp NUHS  &kp DEL &trans    &trans    &kp SLASH &trans
   &trans    &trans     &trans    &mkp RCLK &mo 3     &kp LGUI            &mo 2   &trans    &trans    &trans    &trans
   &s_mo_dn  &s_mo_ri  &s_mo_le   &s_mo_up  &mkp LCLK 
           >;
