@@ -136,7 +136,9 @@
   &kp CAPS  &kp A      &kp S     &kp D     &kp F     &kp G     &kp H     &kp J   &kp K     &kp L     &kp SEMI  &kp SQT
   &kp LSHFT &kp Z      &kp X     &kp C     &kp V     &kp B     &kp N     &kp M   &kp COMMA &kp DOT   &kp UP    &kp ENTER
   &kp LCTRL &kp LGUI   &kp LALT  &mkp LCLK &mo 1     &kp SPACE           &mo 2   &kp UP    &kp LEFT  &kp DOWN  &kp RIGHT
-  &s_mo_sdn &s_mo_sri  &s_mo_sle &s_mo_sup &kp J
+            &s_mo_sup
+  &s_mo_sle &kp J      &s_mo_sri  
+            &s_mo_sdn
           >;
         };
         layer_fn1 {
@@ -145,17 +147,21 @@
   &kp LGUI  &kp LALT   &kp LEFT  &kp DOWN  &kp RIGHT &kp F3    &kp RBKT  &trans  &kp HOME  &kp PG_UP    &kp INT1  &trans
   &trans    &kp LC(W)  &kp LG(X) &kp LG(E) &kp F4    &kp F5    &kp NUHS  &kp DEL &kp END   &kp PG_DN    &kp SLASH &trans
   &trans    &trans     &trans    &trans    &mo 1     &kp BSPC            &mo 3   &kp TAB   &kp K_APP    &kp F7    &kp F8
-  &s_mo_dn  &s_mo_ri  &s_mo_le   &s_mo_up  &mkp LCLK 
+            &s_mo_up
+  &s_mo_le  &mkp LCLK  &s_mo_ri  
+            &s_mo_dn
           >;
         };
         layer_fn2 {
           bindings = <
   &kp ESC   &kp N1     &kp N2    &kp N3    &kp N4    &kp N5    &kp N6    &kp N7  &kp N8    &kp N9    &kp N0    &trans
-  &trans    &s_mo_up   &s_mo_le  &s_mo_dn  &s_mo_ri  &s_mo_up  &kp RBKT  &mkp LCLK
+  &trans    &s_mo_sup  &s_mo_sle &s_mo_sdn &s_mo_sri &s_mo_sup &kp RBKT  &mkp LCLK
                                                                                  &s_up_mor &s_dn_mor &trans    &trans
-  &trans    &s_mo_sup  &s_mo_sle &s_mo_sdn &s_mo_sri &s_mo_sup &kp NUHS  &kp DEL &trans    &trans    &kp SLASH &trans
+  &trans    &s_mo_up   &s_mo_le  &s_mo_dn  &s_mo_ri  &s_mo_up  &kp NUHS  &kp DEL &trans    &trans    &kp SLASH &trans
   &trans    &trans     &trans    &mkp RCLK &mo 3     &kp LGUI            &mo 2   &trans    &trans    &trans    &trans
-  &s_mo_dn  &s_mo_ri  &s_mo_le   &s_mo_up  &mkp LCLK 
+            &s_mo_up
+  &s_mo_le  &mkp LCLK  &s_mo_ri  
+            &s_mo_dn
           >;
         };
         layer_fn3 {
@@ -171,7 +177,7 @@
                                                                                                      &none     &kp F12
   &trans     &none      &none     &none     &none     &none    &none     &none   &none     &none     &none     &none
   &trans     &trans     &trans    &none     &mo 3     &ind_bat           &mo 3     &kp K_VOL_UP &none  &kp K_VOL_DN &bt BT_CLR
-  &trans    &trans     &trans    &trans    &trans
+  &trans     &trans     &trans    &trans    &trans
           >;
         };
     };
