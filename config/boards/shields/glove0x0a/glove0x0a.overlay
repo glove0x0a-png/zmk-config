@@ -1,4 +1,8 @@
+#include "glove0x0a.dtsi"
+#include <dt-bindings/led/led.h>
+#include <zephyr/dt-bindings/input/input-event-codes.h>
 
-
-
+&xiao_serial {
+    status = "disabled";
+};
 
