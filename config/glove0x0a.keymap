@@ -31,14 +31,14 @@
         _scrl_up: _scrl_up {
           compatible = "zmk,behavior-hold-tap";
           #binding-cells = <2>;
-          bindings = <&mkp MSC_SCROLL_UP>,<&mkp MSC_SCROLL_UP>;
+          bindings = <&mkp MSC_SCROLL_UP>, <&mkp MSC_SCROLL_UP>;
           tapping-term-ms = <500>;
         };
 
         _scrl_dn: _scrl_dn {
           compatible = "zmk,behavior-hold-tap";
           #binding-cells = <2>;
-          bindings = <&mkp MSC_SCROLL_DOWN>,<&mkp MSC_SCROLL_DOWN>;
+          bindings = <&mkp MSC_SCROLL_DOWN>, <&mkp MSC_SCROLL_DOWN>;
           tapping-term-ms = <500>;
         };
 
