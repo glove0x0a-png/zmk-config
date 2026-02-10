@@ -12,82 +12,76 @@
 #include <dt-bindings/zmk/pointing.h>
 #include <dt-bindings/input/input-event-codes.h>
 
+#define P_B PAUSE_BREAK
+
+#define LO_U MOVE_Y(-1000)
+#define LO_D MOVE_Y(1000)
+#define LO_R MOVE_X(-1000)
+#define LO_L MOVE_X(1000)
+#define HI_U MOVE_Y(-5000)
+#define HI_D MOVE_Y(5000)
+#define HI_R MOVE_X(-5000)
+#define HI_L MOVE_X(5000)
+
 / {
     //behaviors
     behaviors {
-        // スクロール方向切り替え（Shift: 横スクロール, Ctrl: 逆スクロール）
-        s_up_mor1: s_up_mor1 {
-            compatible = "zmk,behavior-mod-morph";
-            #binding-cells = <0>;
-            bindings = <&msc SCRL_UP>, <&msc SCRL_LEFT>;
-            mods = <(MOD_LSFT|MOD_LCTL)>;
+        //★hold-tap------------------------------------------------
+        //長押し制御(スクロールの初動待機)
+        _scrl_up: _scrl_up {
+          compatible = "zmk,behavior-hold-tap";
+          #binding-cells = <2>;
+          bindings = <&msc SCRL_UP>, <&msc SCRL_UP>;
+          tapping-term-ms = <500>;
         };
-        s_up_mor: s_up_mor {
-            compatible = "zmk,behavior-mod-morph";
-            #binding-cells = <0>;
-            bindings = <&s_up_mor1>, <&msc SCRL_DOWN>;
-            mods = <MOD_LCTL>;
+
+        _scrl_dn: _scrl_dn {
+          compatible = "zmk,behavior-hold-tap";
+          #binding-cells = <2>;
+          bindings = <&msc SCRL_DOWN>, <&msc SCRL_DOWN>;
+          tapping-term-ms = <500>;
         };
-        s_dn_mor1: s_dn_mor1 {
+
+        //★mod-morph-----------------------------------------------
+        //Shift
+        //ボリューム操作(Win->UNIX)
+        _vol_up: _vol_up {
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
-            bindings = <&msc SCRL_DOWN>, <&msc SCRL_RIGHT>;
-            mods = <(MOD_LSFT|MOD_LCTL)>;
+            bindings = <&msc C_VOL_UP>, <&msc K_VOL_UP>;
+            mods = <(MOD_LSFT)>;
         };
-        s_dn_mor: s_dn_mor {
+        _vol_dn: _vol_dn {
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
-            bindings = <&s_dn_mor1>, <&msc SCRL_UP>;
-            mods = <MOD_LCTL>;
+            bindings = <&msc C_VOL_DN>, <&msc K_VOL_DN>;
+            mods = <(MOD_LSFT)>;
         };
-        // マウス移動
-        s_mo_up: s_mo_up {
+       //Q->Fn1:Alt(F4)->Fn1+Alt:F1
+       QUIT: QUIT {
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
-            bindings = <&mmv MOVE_Y(-5000)>, <&mmv MOVE_Y(-600)>;
-            mods = <(MOD_LSFT|MOD_LCTL)>;
+            bindings = <&kp LA(F4)>, <&kp F1>;
+            mods = <(MOD_LSFT)>;
         };
-        s_mo_le: s_mo_le {
+        //右下
+        App_F10: App_F10{
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
-            bindings = <&mmv MOVE_X(-5000)>, <&mmv MOVE_X(-600)>;
-            mods = <(MOD_LSFT|MOD_LCTL)>;
+            bindings = <&kp K_APP>, <&kp F10>;
+            mods = <(MOD_LSFT)>;
         };
-        s_mo_dn: s_mo_dn {
+        F7_F11: F7_F11{
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
-            bindings = <&mmv MOVE_Y(5000)>, <&mmv MOVE_Y(600)>;
-            mods = <(MOD_LSFT|MOD_LCTL)>;
+            bindings = <&kp F7>, <&kp F11>;
+            mods = <(MOD_LSFT)>;
         };
-        s_mo_ri: s_mo_ri {
+        F8_F12: F8_F12{
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
-            bindings = <&mmv MOVE_X(5000)>, <&mmv MOVE_X(600)>;
-            mods = <(MOD_LSFT|MOD_LCTL)>;
-        };
-        s_mo_sup: s_mo_sup {
-            compatible = "zmk,behavior-mod-morph";
-            #binding-cells = <0>;
-            bindings = <&mmv MOVE_Y(-600)>, <&mmv MOVE_Y(-5000)>;
-            mods = <(MOD_LSFT|MOD_LCTL)>;
-        };
-        s_mo_sle: s_mo_sle {
-            compatible = "zmk,behavior-mod-morph";
-            #binding-cells = <0>;
-            bindings = <&mmv MOVE_X(-600)>, <&mmv MOVE_X(-5000)>;
-            mods = <(MOD_LSFT|MOD_LCTL)>;
-        };
-        s_mo_sdn: s_mo_sdn {
-            compatible = "zmk,behavior-mod-morph";
-            #binding-cells = <0>;
-            bindings = <&mmv MOVE_Y(600)>, <&mmv MOVE_Y(5000)>;
-            mods = <(MOD_LSFT|MOD_LCTL)>;
-        };
-        s_mo_sri: s_mo_sri {
-            compatible = "zmk,behavior-mod-morph";
-            #binding-cells = <0>;
-            bindings = <&mmv MOVE_X(600)>, <&mmv MOVE_X(5000)>;
-            mods = <(MOD_LSFT|MOD_LCTL)>;
+            bindings = <&kp F8>, <&kp F12>;
+            mods = <(MOD_LSFT)>;
         };
 
         //LED制御
@@ -130,48 +124,38 @@
     //keymap
     keymap {
         compatible = "zmk,keymap";
+        //normal
         layer_qwerty {
           bindings = <
   &kp TAB   &kp Q      &kp W     &kp E     &kp R     &kp T     &kp Y     &kp U   &kp I     &kp O     &kp P     &kp MINUS
-  &kp CAPS  &kp A      &kp S     &kp D     &kp F     &kp G     &kp H     &kp J   &kp K     &kp L     &kp SEMI  &kp SQT
+  &kp CAPS  &kp A      &kp S     &kp D     &kp F     &kp G     &kp H     &kp P_B &kp K     &kp L     &kp SEMI  &kp SQT
   &kp LSHFT &kp Z      &kp X     &kp C     &kp V     &kp B     &kp N     &kp M   &kp COMMA &kp DOT   &kp UP    &kp ENTER
   &kp LCTRL &kp LGUI   &kp LALT  &mkp LCLK &mo 1     &kp SPACE           &mo 2   &kp UP    &kp LEFT  &kp DOWN  &kp RIGHT
-  &s_mo_sdn &s_mo_sri  &s_mo_sle &s_mo_sup &kp J
+  &mmv LO_D &mmv LO_R  &mmv LO_L &mmv LO_U &kp J
           >;
         };
+        //Custom + FKeys + Vol
         layer_fn1 {
           bindings = <
-  &kp ESC   &kp LA(F4) &kp F2    &kp UP    &kp LG(R) &kp LC(T) &trans    &trans  &kp PSCRN &kp LS(INT3) &kp EQUAL &kp LBKT
-  &kp LGUI  &kp LALT   &kp LEFT  &kp DOWN  &kp RIGHT &kp F3    &kp RBKT  &trans  &kp HOME  &kp PG_UP    &kp INT1  &trans
-  &trans    &kp LC(W)  &kp LG(X) &kp LG(E) &kp F4    &kp F5    &kp NUHS  &kp DEL &kp END   &kp PG_DN    &kp SLASH &trans
-  &trans    &trans     &trans    &trans    &mo 1     &kp BSPC            &mo 3   &kp TAB   &kp K_APP    &kp F7    &kp F8
-  &s_mo_dn  &s_mo_ri  &s_mo_le   &s_mo_up  &mkp LCLK 
+  &kp ESC   &QUIT      &kp F2    &kp UP    &kp LG(R) &kp LC(T) &kp F6    &kp LS(INT3) &kp PSCRN &kp F9       &kp EQUAL &kp LBKT
+  &kp LGUI  &kp LALT   &kp LEFT  &kp DOWN  &kp RIGHT &kp F3    &kp RBKT  &trans       &kp HOME  &kp PG_UP    &kp INT1  &_vol_up
+  &trans    &kp LC(W)  &kp LG(X) &kp LG(E) &kp F4    &kp F5    &kp NUHS  &kp DEL      &kp END   &kp PG_DN    &kp SLASH &_vol_dn
+  &trans    &trans     &trans    &trans    &mo 1     &kp BSPC            &ind_bat     &kp TAB   &App_F10     &F7_F11   &F8_F12
+  &mmv HI_D &mmv HI_R  &mmv HI_L &mmv HI_U &mkp LCLK 
           >;
         };
+        //Number + 
         layer_fn2 {
           bindings = <
-  &kp ESC   &kp N1     &kp N2    &kp N3    &kp N4    &kp N5    &kp N6    &kp N7  &kp N8    &kp N9    &kp N0    &trans
-  &trans    &s_mo_sup  &s_mo_sle &s_mo_sdn &s_mo_sri &s_mo_sup &kp RBKT  &mkp LCLK
-                                                                                 &s_up_mor &s_dn_mor &trans    &trans
-  &trans    &s_mo_up   &s_mo_le  &s_mo_dn  &s_mo_ri  &s_mo_up  &kp NUHS  &kp DEL &trans    &trans    &kp SLASH &trans
-  &trans    &trans     &trans    &mkp RCLK &mo 3     &kp LGUI            &mo 2   &trans    &trans    &trans    &trans
-  &s_mo_dn  &s_mo_ri  &s_mo_le   &s_mo_up  &mkp LCLK 
-          >;
-        };
-        layer_fn3 {
-          bindings = <
-  &none      &kp F1     &kp F2    &kp F3    &kp F4    &kp F5   &kp F6    &kp F7  &kp F8    &kp F9    &kp F10   &kp F11
-  &out OUT_USB &bt BT_SEL 3
-                        &bt BT_SEL 2
-                                  &bt BT_SEL 1
-                                            &bt BT_SEL 0
-                                                      &out OUT_BLE
-                                                               &none     &none   &kp C_VOL_DN
-                                                                                           &kp C_VOL_UP
-                                                                                                     &none     &kp F12
-  &trans     &none      &none     &none     &none     &none    &none     &none   &none     &none     &none     &none
-  &trans     &trans     &trans    &none     &mo 3     &ind_bat           &mo 3     &kp K_VOL_UP &none  &kp K_VOL_DN &bt BT_CLR
-  &trans    &trans     &trans    &trans    &trans
+  &kp ESC   &kp N1     &kp N2    &kp N3    &kp N4    &kp N5    &kp N6    &kp N7  &kp N8    &kp N9       &kp N0    &trans
+  &trans    &trans     &trans    &trans    &trans    &kp F3    &kp RBKT  &trans  &trans    &trans       &trans    &trans
+  &trans    &trans     &trans    &trans    &kp F4    &kp F5    &kp NUHS  &kp DEL &trans    &trans       &kp SLASH &bt BT_CLR
+  &trans    &out OUT_USB
+                       &out OUT_BLE
+                                 &mkp RCLK &ind_bat   &kp LGUI            &mo 2   &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3
+  &_scrl_dn &msc SCRL_RIGHT
+                       &msc SCRL_LEFT
+                                 &_scrl_up &mkp LCLK 
           >;
         };
     };
