@@ -28,20 +28,13 @@
     behaviors {
         //★hold-tap------------------------------------------------
         //長押し制御(スクロールの初動待機)
-        _scrl_up: _scrl_up {
+        _ms: _ms {
           compatible = "zmk,behavior-hold-tap";
           #binding-cells = <2>;
-          bindings = <&msc SCRL_UP>, <&msc SCRL_UP>;
+          flavor = "tap-preferred";
           tapping-term-ms = <500>;
+          bindings = <&msc>, <&msc>;
         };
-
-        _scrl_dn: _scrl_dn {
-          compatible = "zmk,behavior-hold-tap";
-          #binding-cells = <2>;
-          bindings = <&msc SCRL_DOWN>, <&msc SCRL_DOWN>;
-          tapping-term-ms = <500>;
-        };
-
         //★mod-morph-----------------------------------------------
         //Shift
         //ボリューム操作(Win->UNIX)
@@ -153,9 +146,11 @@
   &trans    &out OUT_USB
                        &out OUT_BLE
                                  &mkp RCLK &ind_bat   &kp LGUI            &mo 2   &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3
-  &_scrl_dn &msc SCRL_RIGHT
+  &_ms SCRL_DOWN SCRL_DOWN
+            &msc SCRL_RIGHT
                        &msc SCRL_LEFT
-                                 &_scrl_up &mkp LCLK 
+                                 &_ms SCRL_UP SCRL_UP
+                                           &mkp LCLK 
           >;
         };
     };
