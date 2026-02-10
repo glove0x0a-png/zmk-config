@@ -31,14 +31,14 @@
         _scrl_up: _scrl_up {
           compatible = "zmk,behavior-hold-tap";
           #binding-cells = <2>;
-          bindings = <&mkp SCROLL_UP>,<&mkp SCROLL_UP>;
+          bindings = <&mkp MSC_SCROLL_UP>,<&mkp MSC_SCROLL_UP>;
           tapping-term-ms = <500>;
         };
 
         _scrl_dn: _scrl_dn {
           compatible = "zmk,behavior-hold-tap";
           #binding-cells = <2>;
-          bindings = <&mkp SCROLL_DOWN>,<&mkp SCROLL_DOWN>;
+          bindings = <&mkp MSC_SCROLL_DOWN>,<&mkp MSC_SCROLL_DOWN>;
           tapping-term-ms = <500>;
         };
 
@@ -144,7 +144,7 @@
   &mmv HI_D &mmv HI_R  &mmv HI_L &mmv HI_U &mkp LCLK 
           >;
         };
-        //Number + 
+        //Number + Bluetooth 
         layer_fn2 {
           bindings = <
   &kp ESC   &kp N1     &kp N2    &kp N3    &kp N4    &kp N5    &kp N6    &kp N7       &kp N8    &kp N9    &kp N0    &trans
