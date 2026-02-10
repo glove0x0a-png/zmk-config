@@ -14,14 +14,14 @@
 
 #define P_B PAUSE_BREAK
 
-#define LO_U MOVE_Y(-1000)
-#define LO_D MOVE_Y(1000)
-#define LO_R MOVE_X(-1000)
-#define LO_L MOVE_X(1000)
-#define HI_U MOVE_Y(-5000)
-#define HI_D MOVE_Y(5000)
-#define HI_R MOVE_X(-5000)
-#define HI_L MOVE_X(5000)
+#define LO_U MOVE_Y(-1500)
+#define LO_D MOVE_Y(1500)
+#define LO_R MOVE_X(-1500)
+#define LO_L MOVE_X(1500)
+#define HI_U MOVE_Y(-500)
+#define HI_D MOVE_Y(500)
+#define HI_R MOVE_X(-500)
+#define HI_L MOVE_X(500)
 
 / {
     //behaviors
@@ -31,14 +31,14 @@
         _scrl_up: _scrl_up {
           compatible = "zmk,behavior-hold-tap";
           #binding-cells = <2>;
-          bindings = <&msc MSC_SCROLL_UP  &msc MSC_SCROLL_UP >;
+          bindings = <&mkp MSC_SCROLL_UP &mkp MSC_SCROLL_UP>;
           tapping-term-ms = <500>;
         };
 
         _scrl_dn: _scrl_dn {
           compatible = "zmk,behavior-hold-tap";
           #binding-cells = <2>;
-          bindings = <&msc MSC_SCROLL_DOWN  &msc MSC_SCROLL_DOWN >;
+          bindings = <&mkp MSC_SCROLL_DOWN &mkp MSC_SCROLL_DOWN>;
           tapping-term-ms = <500>;
         };
 
