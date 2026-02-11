@@ -24,18 +24,20 @@
 #define HI_R MOVE_X(500)
 
 / {
+   //macros
+   macros {
+        scroll_dn: scroll_dn {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_press   &msc SCRL_DOWN>
+                , <&macro_wait_time 100>
+                , <&macro_release &msc SCRL_DOWN>
+                ;
+        };
+    };
     //behaviors
     behaviors {
-        ms_c: ms_c {
-          compatible = "zmk,behavior-input-two-axis";
-          #binding-cells        = <1>;
-          x-input-code          = <INPUT_REL_HWHEEL>;
-          y-input-code          = <INPUT_REL_WHEEL>;
-          trigger-period-ms     = <16>;
-          delay-ms              = <0>;
-          time-to-max-speed-ms  = <0>;
-          acceleration-exponent = <0>;
-        };
         //★hold-tap------------------------------------------------
         //長押し制御(スクロールの初動待機)
         _ms: _ms {
@@ -43,7 +45,7 @@
           #binding-cells = <2>;
           flavor = "tap-preferred";
           tapping-term-ms = <300>;
-          bindings = <&ms_c>, <&ms_c>;
+          bindings = <&zed_em_kay>, <&ms_c>;
         };
         //★mod-morph-----------------------------------------------
         //Shift
