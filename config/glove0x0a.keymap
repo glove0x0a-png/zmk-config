@@ -16,38 +16,38 @@
 
 #define LO_U MOVE_Y(-1500)
 #define LO_D MOVE_Y(1500)
-#define LO_R MOVE_X(-1500)
-#define LO_L MOVE_X(1500)
+#define LO_L MOVE_X(-1500)
+#define LO_R MOVE_X(1500)
 #define HI_U MOVE_Y(-500)
 #define HI_D MOVE_Y(500)
-#define HI_R MOVE_X(-500)
-#define HI_L MOVE_X(500)
+#define HI_L MOVE_X(-500)
+#define HI_R MOVE_X(500)
 
 / {
     //behaviors
     behaviors {
         //★hold-tap------------------------------------------------
         //長押し制御(スクロールの初動待機)
-        _ms: _ms {
-          compatible = "zmk,behavior-hold-tap";
-          #binding-cells = <2>;
-          flavor = "tap-preferred";
-          tapping-term-ms = <500>;
-          bindings = <&msc>, <&msc>;
-        };
+        //_ms: _ms {
+        //  compatible = "zmk,behavior-hold-tap";
+        //  #binding-cells = <2>;
+        //  flavor = "tap-preferred";
+        //  tapping-term-ms = <500>;
+        //  bindings = <&msc>, <&msc>;
+        //};
         //★mod-morph-----------------------------------------------
         //Shift
         //ボリューム操作(Win->UNIX)
         _vol_up: _vol_up {
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
-            bindings = <&msc C_VOL_UP>, <&msc K_VOL_UP>;
+            bindings = <&kp C_VOL_UP>, <&kp K_VOL_UP>;
             mods = <MOD_LSFT>;
         };
         _vol_dn: _vol_dn {
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
-            bindings = <&msc C_VOL_DN>, <&msc K_VOL_DN>;
+            bindings = <&kp C_VOL_DN>, <&kp K_VOL_DN>;
             mods = <MOD_LSFT>;
         };
        //Q->Fn1:Alt(F4)->Fn1+Alt:F1
@@ -146,10 +146,10 @@
   &trans    &out OUT_USB
                        &out OUT_BLE
                                  &mkp RCLK &ind_bat   &kp LGUI            &mo 2   &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3
-  &_ms SCRL_DOWN SCRL_DOWN
+  &msc SCRL_DOWN 
             &msc SCRL_RIGHT
                        &msc SCRL_LEFT
-                                 &_ms SCRL_UP SCRL_UP
+                                 &msc SCRL_UP
                                            &mkp LCLK 
           >;
         };
