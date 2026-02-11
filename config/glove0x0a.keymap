@@ -23,18 +23,26 @@
 #define HI_L MOVE_X(-500)
 #define HI_R MOVE_X(500)
 
+
+&msc {
+    x-input-code = <INPUT_REL_HWHEEL>;
+    y-input-code = <INPUT_REL_WHEEL>;
+    time-to-max-speed-ms = <0>;
+    acceleration-exponent = <0>;
+};
+
 / {
     //behaviors
     behaviors {
         //★hold-tap------------------------------------------------
         //長押し制御(スクロールの初動待機)
-        //_ms: _ms {
-        //  compatible = "zmk,behavior-hold-tap";
-        //  #binding-cells = <2>;
-        //  flavor = "tap-preferred";
-        //  tapping-term-ms = <500>;
-        //  bindings = <&msc>, <&msc>;
-        //};
+        _ms: _ms {
+          compatible = "zmk,behavior-hold-tap";
+          #binding-cells = <2>;
+          flavor = "tap-preferred";
+          tapping-term-ms = <300>;
+          bindings = <&msc>, <&msc>;
+        };
         //★mod-morph-----------------------------------------------
         //Shift
         //ボリューム操作(Win->UNIX)
@@ -146,10 +154,10 @@
   &trans    &out OUT_USB
                        &out OUT_BLE
                                  &mkp RCLK &ind_bat   &kp LGUI            &mo 2   &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3
-  &msc SCRL_DOWN 
+  &_ms SCRL_DOWN SCRL_DOWN
             &msc SCRL_RIGHT
                        &msc SCRL_LEFT
-                                 &msc SCRL_UP
+                                 &msc SCRL_UP SCRL_UP
                                            &mkp LCLK 
           >;
         };
