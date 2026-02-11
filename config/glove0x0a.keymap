@@ -32,7 +32,7 @@
             #binding-cells = <0>;
             bindings
                 = <&macro_press   &msc SCRL_DOWN>
-                , <&macro_wait_time 100>
+                , <&macro_wait_time 301>
                 , <&macro_release &msc SCRL_DOWN>
                 ;
         };
