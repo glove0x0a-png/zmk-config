@@ -13,7 +13,7 @@
 #include <dt-bindings/input/input-event-codes.h>
 
 #define P_B PAUSE_BREAK
-
+#define PIPE LS(INT3)
 #define LO_U MOVE_Y(-2000)
 #define LO_D MOVE_Y(2000)
 #define LO_L MOVE_X(-2000)
@@ -27,14 +27,13 @@
     //behaviors
     behaviors {
         //長押し制御(スクロールの初動待機)
-        _ms: _ms {
-          compatible = "zmk,behavior-hold-tap";
-          #binding-cells = <2>;
-          flavor = "tap-preferred";
-          tapping-term-ms = <300>;
-          bindings = <&mkp>, <&msc>;
-        };
-
+        //_ms: _ms {
+        //  compatible = "zmk,behavior-hold-tap";
+        //  #binding-cells = <2>;
+        //  flavor = "tap-preferred";
+        //  tapping-term-ms = <300>;
+        //  bindings = <&mkp>, <&msc>;
+        //};
         //★mod-morph-----------------------------------------------
         //Shift
         //ボリューム操作(Win->UNIX)
@@ -118,38 +117,39 @@
     keymap {
         compatible = "zmk,keymap";
         //normal
+//|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****
         layer_qwerty {
           bindings = <
-  &kp TAB   &kp Q      &kp W     &kp E     &kp R     &kp T     &kp Y     &kp U        &kp I     &kp O     &kp P     &kp MINUS
-  &kp CAPS  &kp A      &kp S     &kp D     &kp F     &kp G     &kp H     &kp P_B      &kp K     &kp L     &kp SEMI  &kp SQT
-  &kp LSHFT &kp Z      &kp X     &kp C     &kp V     &kp B     &kp N     &kp M        &kp COMMA &kp DOT   &kp UP    &kp ENTER
-  &kp LCTRL &kp LGUI   &kp LALT  &mkp LCLK &mo 1     &kp SPACE           &mo 2        &kp UP    &kp LEFT  &kp DOWN  &kp RIGHT
-  &mmv LO_D &mmv LO_R  &mmv LO_L &mmv LO_U &kp J
+  &kp  TAB   &kp  Q     &kp  W     &kp  E     &kp  R     &kp  T     &kp  Y     &kp  U     &kp  I     &kp  O     &kp  P     &kp  MINUS
+  &kp  CAPS  &kp  A     &kp  S     &kp  D     &kp  F     &kp  G     &kp  H     &kp  P_B   &kp  K     &kp  L     &kp  SEMI  &kp  SQT
+  &kp  LSHFT &kp  Z     &kp  X     &kp  C     &kp  V     &kp  B     &kp  N     &kp  M     &kp  COMMA &kp  DOT   &kp  UP    &kp  ENTER
+  &kp  LCTRL &kp  LGUI  &kp  LALT  &mkp LCLK  &mo  1     &kp  SPACE            &mo  2     &kp  UP    &kp  LEFT  &kp  DOWN  &kp  RIGHT
+  &mmv LO_D  &mmv LO_R  &mmv LO_L  &mmv LO_U  &kp  J
           >;
         };
         //Custom + FKeys + Vol
         layer_fn1 {
           bindings = <
-  &kp ESC   &QUIT      &kp F2    &kp UP    &kp LG(R) &kp LC(T) &kp F6    &kp LS(INT3) &kp PSCRN &kp F9    &kp EQUAL &kp LBKT
-  &kp LGUI  &kp LALT   &kp LEFT  &kp DOWN  &kp RIGHT &kp F3    &kp RBKT  &trans       &kp HOME  &kp PG_UP &kp INT1  &_vol_up
-  &trans    &kp LC(W)  &kp LG(X) &kp LG(E) &kp F4    &kp F5    &kp NUHS  &kp DEL      &kp END   &kp PG_DN &kp SLASH &_vol_dn
-  &trans    &trans     &trans    &trans    &mo 1     &kp BSPC            &ind_bat     &kp TAB   &App_F10  &F7_F11   &F8_F12
-  &mmv HI_D &mmv HI_R  &mmv HI_L &mmv HI_U &mkp LCLK 
+  &kp  ESC   &QUIT      &kp  F2    &kp  UP    &kp  LG(R) &kp  LC(T) &kp  F6    &kp  PIPE  &kp  PSCRN &kp  F9    &kp  EQUAL &kp  LBKT
+  &kp  LGUI  &kp  LALT  &kp  LEFT  &kp  DOWN  &kp  RIGHT &kp  F3    &kp  RBKT  &trans     &kp  HOME  &kp  PG_UP &kp  INT1  &_vol_up
+  &trans     &kp  LC(W) &kp  LG(X) &kp  LG(E) &kp  F4    &kp  F5    &kp  NUHS  &kp  DEL   &kp  END   &kp  PG_DN &kp  SLASH &_vol_dn
+  &trans     &trans     &trans     &trans     &mo  1     &kp  BSPC             &ind_bat   &kp  TAB   &App_F10   &F7_F11    &F8_F12
+  &mmv HI_D  &mmv HI_R  &mmv HI_L  &mmv HI_U  &mkp LCLK 
           >;
         };
         //Number + Bluetooth 
         layer_fn2 {
           bindings = <
-  &kp ESC   &kp N1     &kp N2    &kp N3    &kp N4    &kp N5    &kp N6    &kp N7       &kp N8    &kp N9    &kp N0    &trans
-  &trans    &mmv HI_U  &mmv HI_L &mmv HI_D &mmv HI_R &kp F3    &kp RBKT  &trans       &trans    &trans    &trans    &trans
-  &trans    &trans     &trans    &trans    &kp F4    &kp F5    &kp NUHS  &kp DEL      &trans    &trans    &kp SLASH &bt BT_CLR
-  &trans    &out OUT_USB
-                       &out OUT_BLE
-                                 &mkp RCLK &ind_bat   &kp LGUI            &mo 2   &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3
-  &_ms SCRL_DOWN SCRL_DOWN
+  &kp  ESC   &kp  N1    &kp  N2    &kp  N3    &kp N4     &kp  N5    &kp  N6    &kp  N7    &kp  N8    &kp  N9    &kp  N0    &trans
+  &trans     &mmv HI_U  &mmv HI_L  &mmv HI_D  &mmv HI_R  &kp  F3    &kp  RBKT  &trans     &trans     &trans     &trans     &trans
+  &trans     &trans     &trans     &trans     &kp F4     &kp  F5    &kp  NUHS  &kp  DEL   &trans     &trans     &kp  SLASH &bt BT_CLR
+  &trans     &out OUT_USB
+                        &out OUT_BLE
+                                   &mkp RCLK  &ind_bat   &kp  LGUI  &mo  2     &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3
+  &msc SCRL_DOWN
             &msc SCRL_RIGHT SCRL_RIGHT
                        &msc SCRL_LEFT SCRL_LEFT
-                                 &_ms SCRL_UP SCRL_UP
+                                 &msc SCRL_UP
                                            &mkp LCLK 
           >;
         };
