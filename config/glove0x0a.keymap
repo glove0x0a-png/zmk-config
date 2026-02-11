@@ -24,13 +24,6 @@
 #define HI_R MOVE_X(500)
 
 
-&msc {
-    x-input-code = <INPUT_REL_HWHEEL>;
-    y-input-code = <INPUT_REL_WHEEL>;
-    time-to-max-speed-ms = <0>;
-    acceleration-exponent = <0>;
-};
-
 / {
     //behaviors
     behaviors {
@@ -157,7 +150,7 @@
   &_ms SCRL_DOWN SCRL_DOWN
             &msc SCRL_RIGHT
                        &msc SCRL_LEFT
-                                 &msc SCRL_UP SCRL_UP
+                                 &_ms SCRL_UP SCRL_UP
                                            &mkp LCLK 
           >;
         };
