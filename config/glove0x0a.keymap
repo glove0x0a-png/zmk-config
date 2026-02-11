@@ -14,10 +14,20 @@
 
 #define P_B PAUSE_BREAK
 #define PIPE LS(INT3)
-#define LO_U MOVE_Y(-2000)
-#define LO_D MOVE_Y(2000)
-#define LO_L MOVE_X(-2000)
-#define LO_R MOVE_X(2000)
+
+#define _USB OUT_USB
+#define _BLE OUT_BLE
+#define _BT  BT_SEL
+
+#define SC_U SCRL_UP
+#define SC_D SCRL_DOWN
+#define SC_L SCRL_LEFT
+#define SC_R SCRL_RIGHT
+
+#define LO_U MOVE_Y(-1800)
+#define LO_D MOVE_Y(1800)
+#define LO_L MOVE_X(-3200)
+#define LO_R MOVE_X(3200)
 #define HI_U MOVE_Y(-500)
 #define HI_D MOVE_Y(500)
 #define HI_L MOVE_X(-500)
@@ -131,8 +141,8 @@
         layer_fn1 {
           bindings = <
   &kp  ESC   &QUIT      &kp  F2    &kp  UP    &kp  LG(R) &kp  LC(T) &kp  F6    &kp  PIPE  &kp  PSCRN &kp  F9    &kp  EQUAL &kp  LBKT
-  &kp  LGUI  &kp  LALT  &kp  LEFT  &kp  DOWN  &kp  RIGHT &kp  F3    &kp  RBKT  &trans     &kp  HOME  &kp  PG_UP &kp  INT1  &_vol_up
-  &trans     &kp  LC(W) &kp  LG(X) &kp  LG(E) &kp  F4    &kp  F5    &kp  NUHS  &kp  DEL   &kp  END   &kp  PG_DN &kp  SLASH &_vol_dn
+  &kp  LGUI  &kp  LALT  &kp  LEFT  &kp  DOWN  &kp  RIGHT &kp  F3    &kp  RBKT  &trans     &kp  HOME  &kp  PG_UP &kp  INT1  &trans
+  &trans     &kp  LC(W) &kp  LG(X) &kp  LG(E) &kp  F4    &kp  F5    &kp  NUHS  &kp  DEL   &kp  END   &kp  PG_DN &kp  SLASH &trans
   &trans     &trans     &trans     &trans     &mo  1     &kp  BSPC             &ind_bat   &kp  TAB   &App_F10   &F7_F11    &F8_F12
   &mmv HI_D  &mmv HI_R  &mmv HI_L  &mmv HI_U  &mkp LCLK 
           >;
@@ -142,15 +152,9 @@
           bindings = <
   &kp  ESC   &kp  N1    &kp  N2    &kp  N3    &kp N4     &kp  N5    &kp  N6    &kp  N7    &kp  N8    &kp  N9    &kp  N0    &trans
   &trans     &mmv HI_U  &mmv HI_L  &mmv HI_D  &mmv HI_R  &kp  F3    &kp  RBKT  &trans     &trans     &trans     &trans     &trans
-  &trans     &trans     &trans     &trans     &kp F4     &kp  F5    &kp  NUHS  &kp  DEL   &trans     &trans     &kp  SLASH &bt BT_CLR
-  &trans     &out OUT_USB
-                        &out OUT_BLE
-                                   &mkp RCLK  &ind_bat   &kp  LGUI  &mo  2     &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3
-  &msc SCRL_DOWN
-            &msc SCRL_RIGHT SCRL_RIGHT
-                       &msc SCRL_LEFT SCRL_LEFT
-                                 &msc SCRL_UP
-                                           &mkp LCLK 
+  &trans     &out _USB  &out _BLE  &bt BT_CLR &kp F4     &kp  F5    &kp  NUHS  &kp  DEL   &trans     &trans     &kp  SLASH &trans
+  &trans     &_vol_dn   &_vol_up   &mkp RCLK  &ind_bat   &kp  LGUI  &mo  2     &bt  _BT 0 &bt  _BT 1 &bt  _BT 2 &bt  _BT 3
+  &msc SC_D  &msc SC_R  &msc SC_L  &msc SC_U  &mkp LCLK 
           >;
         };
     };
