@@ -26,6 +26,7 @@
 / {
    //macros
    macros {
+        //スクロールの1回押し
         scroll_dn: scroll_dn {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
@@ -45,7 +46,7 @@
           #binding-cells = <2>;
           flavor = "tap-preferred";
           tapping-term-ms = <300>;
-          bindings = <&zed_em_kay>, <&ms_c>;
+          bindings = <&scroll_dn>, <&ms_c>;
         };
         //★mod-morph-----------------------------------------------
         //Shift
