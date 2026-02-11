@@ -24,30 +24,17 @@
 #define HI_R MOVE_X(500)
 
 / {
-   //macros
-   macros {
-        //スクロールの1回押し
-        scroll_dn: scroll_dn {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings
-                = <&macro_press   &msc SCRL_DOWN>
-                , <&macro_wait_time 301>
-                , <&macro_release &msc SCRL_DOWN>
-                ;
-        };
-    };
     //behaviors
     behaviors {
-        //★hold-tap------------------------------------------------
         //長押し制御(スクロールの初動待機)
         _ms: _ms {
           compatible = "zmk,behavior-hold-tap";
           #binding-cells = <2>;
           flavor = "tap-preferred";
           tapping-term-ms = <300>;
-          bindings = <&scroll_dn>, <&msc>;
+          bindings = <&mkp>, <&msc>;
         };
+
         //★mod-morph-----------------------------------------------
         //Shift
         //ボリューム操作(Win->UNIX)
@@ -159,10 +146,10 @@
   &trans    &out OUT_USB
                        &out OUT_BLE
                                  &mkp RCLK &ind_bat   &kp LGUI            &mo 2   &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3
-  &scroll_dn
-            &msc SCRL_RIGHT
-                       &msc SCRL_LEFT
-                                 &msc SCRL_UP
+  &_ms SCRL_DOWN SCRL_DOWN
+            &_ms SCRL_RIGHT SCRL_RIGHT
+                       &_ms SCRL_LEFT SCRL_LEFT
+                                 &_mc SCRL_UP SCRL_UP
                                            &mkp LCLK 
           >;
         };
