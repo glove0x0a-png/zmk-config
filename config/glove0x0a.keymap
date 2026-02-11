@@ -23,10 +23,18 @@
 #define HI_L MOVE_X(-500)
 #define HI_R MOVE_X(500)
 
-
 / {
     //behaviors
     behaviors {
+        ms_c: ms_c {
+          compatible = "zmk,behavior-input-two-axis"；
+          #binding-cells       = <1>;
+          x-input-code         = <INPUT_REL_HWHEEL>;
+          y-input-code         = <INPUT_REL_WHEEL>;
+          time-to-max-speed-ms = <0>;
+        };
+
+
         //★hold-tap------------------------------------------------
         //長押し制御(スクロールの初動待機)
         _ms: _ms {
@@ -34,7 +42,7 @@
           #binding-cells = <2>;
           flavor = "tap-preferred";
           tapping-term-ms = <300>;
-          bindings = <&msc>, <&msc>;
+          bindings = <&ms_c>, <&ms_c>;
         };
         //★mod-morph-----------------------------------------------
         //Shift
