@@ -146,10 +146,10 @@
   &trans    &out OUT_USB
                        &out OUT_BLE
                                  &mkp RCLK &ind_bat   &kp LGUI            &mo 2   &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3
-  &_ms SCROLL_Y(40) SCRL_DOWN
+  &_ms SCRL_DOWN SCRL_DOWN
             &msc SCRL_RIGHT SCRL_RIGHT
                        &msc SCRL_LEFT SCRL_LEFT
-                                 &_ms SCROLL_Y(-40) SCRL_UP
+                                 &_ms SCRL_UP SCRL_UP
                                            &mkp LCLK 
           >;
         };
