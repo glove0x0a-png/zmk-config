@@ -28,10 +28,13 @@
     behaviors {
         ms_c: ms_c {
           compatible = "zmk,behavior-input-two-axis";
-          #binding-cells       = <1>;
-          x-input-code         = <INPUT_REL_HWHEEL>;
-          y-input-code         = <INPUT_REL_WHEEL>;
-          time-to-max-speed-ms = <0>;
+          #binding-cells        = <1>;
+          x-input-code          = <INPUT_REL_HWHEEL>;
+          y-input-code          = <INPUT_REL_WHEEL>;
+          trigger-period-ms     = <16>;
+          delay-ms              = <0>;
+          time-to-max-speed-ms  = <0>;
+          acceleration-exponent = <0>;
         };
         //★hold-tap------------------------------------------------
         //長押し制御(スクロールの初動待機)
