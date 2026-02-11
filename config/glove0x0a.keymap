@@ -46,7 +46,7 @@
           #binding-cells = <2>;
           flavor = "tap-preferred";
           tapping-term-ms = <300>;
-          bindings = <&scroll_dn>, <&ms_c>;
+          bindings = <&scroll_dn>, <&msc>;
         };
         //★mod-morph-----------------------------------------------
         //Shift
