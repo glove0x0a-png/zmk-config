@@ -24,14 +24,14 @@
 #define SC_R SCRL_RIGHT
 
 #define DUMM MOVE_Y(-5)
-#define LO_U MOVE_Y(-1500)
-#define LO_D MOVE_Y(1500)
-#define LO_L MOVE_X(-1500)
-#define LO_R MOVE_X(1500)
-#define HI_U MOVE_Y(-500)
-#define HI_D MOVE_Y(500)
-#define HI_L MOVE_X(-500)
-#define HI_R MOVE_X(500)
+#define LO_U MOVE_Y(-1000)
+#define LO_D MOVE_Y(1000)
+#define LO_L MOVE_X(-1000)
+#define LO_R MOVE_X(1000)
+#define HI_U MOVE_Y(-200)
+#define HI_D MOVE_Y(200)
+#define HI_L MOVE_X(-200)
+#define HI_R MOVE_X(200)
 
 / {
     //behaviors
