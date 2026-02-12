@@ -1,4 +1,4 @@
-#include <behaviors.dtsi>
+#include <behaviors.dtsi>kkk
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/outputs.h>
@@ -144,7 +144,7 @@
   &kp  LGUI  &kp  LALT  &kp  LEFT  &kp  DOWN  &kp  RIGHT &kp  F3    &kp  RBKT  &trans     &kp  HOME  &kp  PG_UP &kp  INT1  &trans
   &trans     &kp  LC(W) &kp  LG(X) &kp  LG(E) &kp  F4    &kp  F5    &kp  NUHS  &kp  DEL   &kp  END   &kp  PG_DN &kp  SLASH &trans
   &trans     &trans     &trans     &trans     &mo  1     &kp  BSPC             &ind_bat   &kp  TAB   &App_F10   &F7_F11    &F8_F12
-  &mmv HI_D  &mmv HI_R  &mmv HI_L  &mmv HI_U  &mkp LCLK 
+  &mmv HI_D  &mmv HI_R  &mmv HI_L  &mmv HI_U  &none
           >;
         };
         //Number + Bluetooth 
