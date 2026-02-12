@@ -23,7 +23,7 @@
 #define SC_L SCRL_LEFT
 #define SC_R SCRL_RIGHT
 
-#define DUMM MOVE_Y(0)
+#define DUMM MOVE_Y(-5)
 #define LO_U MOVE_Y(-1800)
 #define LO_D MOVE_Y(1800)
 #define LO_L MOVE_X(-3200)
@@ -44,7 +44,7 @@
         //  tapping-term-ms = <300>;
         //  bindings = <&mkp>, <&msc>;
         //};
-        //★mod-morph-----------------------------------------------
+//★mod-morph-----------------------------------------------
         //Shift
         //ボリューム操作(Win->UNIX)
         _vol_up: _vol_up {
@@ -134,7 +134,7 @@
   &kp  CAPS  &kp  A     &kp  S     &kp  D     &kp  F     &kp  G     &kp  H     &mmv DUMM  &kp  K     &kp  L     &kp  SEMI  &kp  SQT
   &kp  LSHFT &kp  Z     &kp  X     &kp  C     &kp  V     &kp  B     &kp  N     &kp  M     &kp  COMMA &kp  DOT   &kp  UP    &kp  ENTER
   &kp  LCTRL &kp  LGUI  &kp  LALT  &mkp LCLK  &mo  1     &kp  SPACE            &mo  2     &kp  UP    &kp  LEFT  &kp  DOWN  &kp  RIGHT
-  &mmv LO_D  &mmv LO_R  &mmv LO_L  &mmv LO_U  &kp  J
+  &mmv LO_D  &mmv LO_R  &mmv LO_L  &mmv LO_U  &none
           >;
         };
         //Custom + FKeys + Vol
@@ -154,7 +154,7 @@
   &trans     &mmv HI_U  &mmv HI_L  &mmv HI_D  &mmv HI_R  &kp  F3    &kp  RBKT  &trans     &trans     &trans     &trans     &trans
   &trans     &out _USB  &out _BLE  &bt BT_CLR &kp F4     &kp  F5    &kp  NUHS  &kp  DEL   &trans     &trans     &kp  SLASH &trans
   &trans     &_vol_dn   &_vol_up   &mkp RCLK  &ind_bat   &kp  LGUI  &mo  2     &bt  _BT 0 &bt  _BT 1 &bt  _BT 2 &bt  _BT 3
-  &msc SC_D  &msc SC_R  &msc SC_L  &msc SC_U  &mkp LCLK 
+  &msc SC_D  &msc SC_R  &msc SC_L  &msc SC_U  &kp J
           >;
         };
     };
