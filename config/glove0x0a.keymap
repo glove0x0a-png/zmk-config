@@ -1,4 +1,4 @@
-#include <behaviors.dtsi>kkk
+#include <behaviors.dtsi>
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/outputs.h>
@@ -178,7 +178,7 @@
   &trans     &MY_U      &MY_L      &MY_D      &MY_R      &kp  F3    &kp  RBKT  &trans     &trans     &trans     &trans     &trans
   &trans     &out _USB  &out _BLE  &bt BT_CLR &kp F4     &kp  F5    &kp  NUHS  &kp  DEL   &trans     &trans     &kp  SLASH &trans
   &trans     &_vol_dn   &_vol_up   &mkp RCLK  &ind_bat   &kp  LGUI  &mo  2     &bt  _BT 0 &bt  _BT 1 &bt  _BT 2 &bt  _BT 3
-  &msc SC_D  &msc SC_R  &msc SC_L  &msc SC_U  &kp J
+  &msc SC_D  &msc SC_R  &msc SC_L  &msc SC_U  &mkp LCLK  
           >;
         };
     };
