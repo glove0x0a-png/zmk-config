@@ -85,7 +85,31 @@
             bindings = <&kp F8>, <&kp F12>;
             mods = <MOD_LSFT>;
         };
-
+        //十字キー
+        MY_R: MY_R{
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&mmv LO_R>, <&mmv HI_R>;
+            mods = <MOD_LSFT>;
+        };
+        MY_U: MY_U{
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&mmv LO_U>, <&mmv HI_U>;
+            mods = <MOD_LSFT>;
+        };
+        MY_L: MY_L{
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&mmv LO_L>, <&mmv HI_L>;
+            mods = <MOD_LSFT>;
+        };
+        MY_D: MY_D{
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&mmv LO_D>, <&mmv HI_D>;
+            mods = <MOD_LSFT>;
+        };
         //LED制御
         capslock_led: capslock_led {
             compatible = "zmk,behavior-status-indicator";
@@ -134,7 +158,7 @@
   &kp  CAPS  &kp  A     &kp  S     &kp  D     &kp  F     &kp  G     &kp  H     &mmv DUMM  &kp  K     &kp  L     &kp  SEMI  &kp  SQT
   &kp  LSHFT &kp  Z     &kp  X     &kp  C     &kp  V     &kp  B     &kp  N     &kp  M     &kp  COMMA &kp  DOT   &kp  UP    &kp  ENTER
   &kp  LCTRL &kp  LGUI  &kp  LALT  &mkp LCLK  &mo  1     &kp  SPACE            &mo  2     &kp  UP    &kp  LEFT  &kp  DOWN  &kp  RIGHT
-  &mmv LO_D  &mmv LO_R  &mmv LO_L  &mmv LO_U  &none
+  &mmv HI_D  &mmv HI_R  &mmv HI_L  &mmv HI_U  &kp J
           >;
         };
         //Custom + FKeys + Vol
@@ -144,14 +168,14 @@
   &kp  LGUI  &kp  LALT  &kp  LEFT  &kp  DOWN  &kp  RIGHT &kp  F3    &kp  RBKT  &trans     &kp  HOME  &kp  PG_UP &kp  INT1  &trans
   &trans     &kp  LC(W) &kp  LG(X) &kp  LG(E) &kp  F4    &kp  F5    &kp  NUHS  &kp  DEL   &kp  END   &kp  PG_DN &kp  SLASH &trans
   &trans     &trans     &trans     &trans     &mo  1     &kp  BSPC             &ind_bat   &kp  TAB   &App_F10   &F7_F11    &F8_F12
-  &mmv HI_D  &mmv HI_R  &mmv HI_L  &mmv HI_U  &none
+  &mmv L_D  &mmv LO_R  &mmv LO_L  &mmv LO_U   &kp J
           >;
         };
         //Number + Bluetooth 
         layer_fn2 {
           bindings = <
   &kp  ESC   &kp  N1    &kp  N2    &kp  N3    &kp N4     &kp  N5    &kp  N6    &kp  N7    &kp  N8    &kp  N9    &kp  N0    &trans
-  &trans     &mmv HI_U  &mmv HI_L  &mmv HI_D  &mmv HI_R  &kp  F3    &kp  RBKT  &trans     &trans     &trans     &trans     &trans
+  &trans     &MY_U      &MY_L      &MY_D      &MY_R      &kp  F3    &kp  RBKT  &trans     &trans     &trans     &trans     &trans
   &trans     &out _USB  &out _BLE  &bt BT_CLR &kp F4     &kp  F5    &kp  NUHS  &kp  DEL   &trans     &trans     &kp  SLASH &trans
   &trans     &_vol_dn   &_vol_up   &mkp RCLK  &ind_bat   &kp  LGUI  &mo  2     &bt  _BT 0 &bt  _BT 1 &bt  _BT 2 &bt  _BT 3
   &msc SC_D  &msc SC_R  &msc SC_L  &msc SC_U  &kp J
