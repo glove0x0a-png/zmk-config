@@ -23,7 +23,7 @@
 #define SC_L SCRL_LEFT
 #define SC_R SCRL_RIGHT
 
-#define DUMM MOVE_Y(-2)
+#define DUMM MOVE_Y(-3)
 #define LO_U MOVE_Y(-1000)
 #define LO_D MOVE_Y(1000)
 #define LO_L MOVE_X(-1000)
