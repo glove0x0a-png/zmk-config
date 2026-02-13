@@ -158,7 +158,7 @@
   &kp  CAPS  &kp  A     &kp  S     &kp  D     &kp  F     &kp  G     &kp  H     &mmv DUMM  &kp  K     &kp  L     &kp  SEMI  &kp  SQT
   &kp  LSHFT &kp  Z     &kp  X     &kp  C     &kp  V     &kp  B     &kp  N     &kp  M     &kp  COMMA &kp  DOT   &kp  UP    &kp  ENTER
   &kp  LCTRL &kp  LGUI  &kp  LALT  &mkp LCLK  &mo  1     &kp  SPACE            &mo  2     &kp  UP    &kp  LEFT  &kp  DOWN  &kp  RIGHT
-  &mmv HI_D  &mmv HI_R  &mmv HI_L  &mmv HI_U  &kp J
+  &MY_D      &MY_R      &MY_L      &MY_U      &none
           >;
         };
         //Custom + FKeys + Vol
