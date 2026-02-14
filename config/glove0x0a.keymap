@@ -41,9 +41,8 @@
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             bindings
-                = <&macro_press &mmv MOVE_X(9000)>
+                = <&&mmv MOVE_X(9000)>
                 , <&macro_wait_time 300>
-                , <&macro_release &mmv MOVE_X(9000)>
                 ;
         };
     };
