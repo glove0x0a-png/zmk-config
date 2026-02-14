@@ -87,7 +87,7 @@
           #binding-cells = <2>;
           flavor = "tap-preferred";
           tapping-term-ms = <250>;
-          bindings = <&MY_D>, <&MY_D>;
+          bindings = <&MY_D>, <&MY_U>;
         };
         tp_UP: tp_UP {
           compatible = "zmk,behavior-hold-tap";
@@ -231,7 +231,7 @@
   &kp  CAPS  &kp  A     &kp  S     &kp  D     &kp  F     &kp  G     &kp  H     &mmv DUMM  &kp  K     &kp  L     &kp  SEMI  &kp  SQT
   &kp  LSHFT &kp  Z     &kp  X     &kp  C     &kp  V     &kp  B     &kp  N     &kp  M     &kp  COMMA &kp  DOT   &kp  UP    &kp  ENTER
   &kp  LCTRL &kp  LGUI  &kp  LALT  &mkp LCLK  &mo  1     &kp  SPACE            &mo  2     &kp  UP    &kp  LEFT  &kp  DOWN  &kp  RIGHT
-  &tp_test 0 0
+  &tp_test &MY_U &MY_U
        &MY_R      &MY_L      &MY_U      &none
           >;
         };
