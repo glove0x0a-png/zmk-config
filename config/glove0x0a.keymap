@@ -77,7 +77,7 @@
         //長押し制御(スクロールの初動待機)
         tp_UP: tp_UP {
           compatible = "zmk,behavior-hold-tap";
-          #binding-cells = <2>;
+          #binding-cells = <0>;
           flavor = "tap-preferred";
           tapping-term-ms = <300>;
           bindings = <&large_U>, <&MY_U>;
