@@ -77,10 +77,31 @@
         //長押し制御(スクロールの初動待機)
         tp_UP: tp_UP {
           compatible = "zmk,behavior-hold-tap";
-          #binding-cells = <0>;
+          #binding-cells = <2>;
           flavor = "tap-preferred";
           tapping-term-ms = <300>;
           bindings = <&large_U>, <&MY_U>;
+        };
+        tp_LE: tp_LE {
+          compatible = "zmk,behavior-hold-tap";
+          #binding-cells = <2>;
+          flavor = "tap-preferred";
+          tapping-term-ms = <300>;
+          bindings = <&large_L>, <&MY_L>;
+        };
+        tp_RI: tp_RI {
+          compatible = "zmk,behavior-hold-tap";
+          #binding-cells = <2>;
+          flavor = "tap-preferred";
+          tapping-term-ms = <300>;
+          bindings = <&large_R>, <&MY_R>;
+        };
+        tp_DW: tp_DW {
+          compatible = "zmk,behavior-hold-tap";
+          #binding-cells = <2>;
+          flavor = "tap-preferred";
+          tapping-term-ms = <300>;
+          bindings = <&large_D>, <&MY_D>;
         };
 //★mod-morph-----------------------------------------------
         //Shift
@@ -196,7 +217,7 @@
   &kp  CAPS  &kp  A     &kp  S     &kp  D     &kp  F     &kp  G     &kp  H     &mmv DUMM  &kp  K     &kp  L     &kp  SEMI  &kp  SQT
   &kp  LSHFT &kp  Z     &kp  X     &kp  C     &kp  V     &kp  B     &kp  N     &kp  M     &kp  COMMA &kp  DOT   &kp  UP    &kp  ENTER
   &kp  LCTRL &kp  LGUI  &kp  LALT  &mkp LCLK  &mo  1     &kp  SPACE            &mo  2     &kp  UP    &kp  LEFT  &kp  DOWN  &kp  RIGHT
-  &MY_D      &MY_R      &MY_L      &tp_UP     &none
+  &MY_D      &MY_R      &MY_L      &tp_UP 1 1 &none
           >;
         };
         //Custom + FKeys + Vol
