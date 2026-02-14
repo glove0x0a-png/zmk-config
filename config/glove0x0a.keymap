@@ -38,15 +38,22 @@
     //macro
     macros {
         //1押し、大移動
-        large_R: large_R {
+        tap_UP: tap_UP {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             bindings
                 = <&mmv MOVE_X(9000)>
-                , <&macro_wait_time 1000>
                 ;
         };
         large_U: large_U {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&mao_press &tap_UP>
+                , <&macro_wait_time 500>
+                ;
+        };
+        large_R: large_R {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             bindings
