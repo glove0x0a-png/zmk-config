@@ -49,7 +49,7 @@
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             bindings
-                = <&mao_press &tap_UP>
+                = <&macro_press &tap_UP>
                 , <&macro_wait_time 500>
                 ;
         };
