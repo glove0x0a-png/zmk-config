@@ -8,6 +8,7 @@
 #include <zmk/ble.h> // 追加
 #include <zmk/usb.h>
 #include <zmk/hid.h>    // HID usage定義用
+#include <zmk/hid_consumer.h>
 #include "az1uball.h"
 
 //追加
@@ -135,25 +136,33 @@ void az1uball_read_data_work(struct k_work *work)
             if (delta_y > 1) {
                 if (lshift_pressed) {
                     binding.param1 = 0x81; //K_VOLUME_DOWN
+                    for(int i=0;i < delta_y;i++){
+                        zmk_behavior_invoke_binding(&binding, event, true);
+                        k_sleep(K_MSEC(10)); // 10ミリ秒待つ
+                        zmk_behavior_invoke_binding(&binding, event, false);
+                    }
                 } else {
-                    binding.param1 = 0xEA; //C_VOLUME_DOWN
-                }
-                for(int i=0;i < delta_y;i++){
-                    zmk_behavior_invoke_binding(&binding, event, true);
-                    k_sleep(K_MSEC(10)); // 10ミリ秒待つ
-                    zmk_behavior_invoke_binding(&binding, event, false);
+                    for(int i=0;i < delta_y;i++){
+                        zmk_hid_consumer_report_press(ZMK_HID_USAGE_CONSUMER_VOLUME_DECREMENT);
+                        k_sleep(K_MSEC(10));
+                        zmk_hid_consumer_report_release();
+                    }
                 }
                 return;
             } else if (delta_y < -1) {
-                for(int i=0;i < -1 * delta_y;i++){
-                    if (lshift_pressed) {
+                if (lshift_pressed) {
+                    for(int i=0;i < -1 * delta_y;i++){
                         binding.param1 = 0x80; //K_VOLUME_UP
-                    } else {
-                        binding.param1 = 0xE9; //C_VOLUME_UP
+                        zmk_behavior_invoke_binding(&binding, event, true);
+                        k_sleep(K_MSEC(10)); // 100ミリ秒待つ
+                        zmk_behavior_invoke_binding(&binding, event, false);
                     }
-                    zmk_behavior_invoke_binding(&binding, event, true);
-                    k_sleep(K_MSEC(10)); // 100ミリ秒待つ
-                    zmk_behavior_invoke_binding(&binding, event, false);
+                } else {
+                    for(int i=0;i < -1 * delta_y;i++){
+                        zmk_hid_consumer_report_press(ZMK_HID_USAGE_CONSUMER_VOLUME_INCREMENT);
+                        k_sleep(K_MSEC(10));
+                        zmk_hid_consumer_report_release();
+                    }
                 }
                 return;
             } else if (delta_x > 2) {
