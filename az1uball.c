@@ -144,6 +144,12 @@ void az1uball_read_data_work(struct k_work *work)
         return;
     }
 
+    struct zmk_behavior_binding_event event = {
+        .position = 0,
+        .timestamp = k_uptime_get(),
+        .layer = 0,
+    };
+
     // コンフィグ取得
     const struct az1uball_config *config = data->dev->config;
     uint8_t buf[5];
@@ -172,25 +178,29 @@ void az1uball_read_data_work(struct k_work *work)
 
         //レイヤー1なら
         if (layer == 1) {
-            if (delta_y > 2) {
+            if (delta_y > 1) {
                 if (lshift_pressed) {
                     binding.param1 = 0x81; //K_VOLUME_DOWN
                 } else {
                     binding.param1 = 0xEA; //C_VOLUME_DOWN
                 }
-                zmk_behavior_invoke_binding(&binding, event, true);
-                k_sleep(K_MSEC(100)); // 100ミリ秒待つ
-                zmk_behavior_invoke_binding(&binding, event, false);
-                return;
-            } else if (delta_y < -2) {
-                if (lshift_pressed) {
-                    binding.param1 = 0x80; //K_VOLUME_UP
-                } else {
-                    binding.param1 = 0xE9; //C_VOLUME_UP
+                for(int i=0;i < delta_y;i++){
+                    zmk_behavior_invoke_binding(&binding, event, true);
+                    k_sleep(K_MSEC(10)); // 10ミリ秒待つ
+                    zmk_behavior_invoke_binding(&binding, event, false);
                 }
-                zmk_behavior_invoke_binding(&binding, event, true);
-                k_sleep(K_MSEC(100)); // 100ミリ秒待つ
-                zmk_behavior_invoke_binding(&binding, event, false);
+                return;
+            } else if (delta_y < -1) {
+                for(int i=0;i < -1 * delta_y;i++){
+                    if (lshift_pressed) {
+                        binding.param1 = 0x80; //K_VOLUME_UP
+                    } else {
+                        binding.param1 = 0xE9; //C_VOLUME_UP
+                    }
+                    zmk_behavior_invoke_binding(&binding, event, true);
+                    k_sleep(K_MSEC(10)); // 100ミリ秒待つ
+                    zmk_behavior_invoke_binding(&binding, event, false);
+                }
                 return;
             } else if (delta_x > 2) {
                 binding.param1 = 0x2B; //TAB
@@ -212,17 +222,25 @@ void az1uball_read_data_work(struct k_work *work)
             }
         //レイヤー2なら
         } else if (layer == 2) {
-            if (delta_y > 2) {
-                input_report_rel(data->dev, INPUT_REL_WHEEL, -1 * delta_y/2, true, K_NO_WAIT);
+            if (delta_y > 1) {
+                for(int i=0;i < delta_y;i++){
+                  input_report_rel(data->dev, INPUT_REL_WHEEL, -1, true, K_NO_WAIT);
+                }
                 return;
-            } else if (delta_y < -2) {
-                input_report_rel(data->dev, INPUT_REL_WHEEL, -1 * delta_y/2, true, K_NO_WAIT);
+            } else if (delta_y < -1) {
+                for(int i=0;i < delta_y;i++){
+                    input_report_rel(data->dev, INPUT_REL_WHEEL, 1, true, K_NO_WAIT);
+                }
                 return;
-            } else if (delta_x > 2) {
-                input_report_rel(data->dev, INPUT_REL_HWHEEL, delta_x/2, true, K_NO_WAIT);
+            } else if (delta_x > 1) {
+                for(int i=0;i < delta_y;i++){
+                    input_report_rel(data->dev, INPUT_REL_HWHEEL, 1, true, K_NO_WAIT);
+                }
                 return;
-            } else if (delta_x < -2) {
-                input_report_rel(data->dev, INPUT_REL_HWHEEL, delta_x/2, true, K_NO_WAIT);
+            } else if (delta_x < -1) {
+                for(int i=0;i < delta_y;i++){
+                    input_report_rel(data->dev, INPUT_REL_HWHEEL, -1, true, K_NO_WAIT);
+                }
                 return;
             }
         }
@@ -240,12 +258,6 @@ void az1uball_read_data_work(struct k_work *work)
 
     data->sw_pressed = (buf[4] & MSK_SWITCH_STATE) != 0;
     if (data->sw_pressed != data->sw_pressed_prev) {
-        struct zmk_behavior_binding_event event = {
-            .position = 0,
-            .timestamp = k_uptime_get(),
-            .layer = 0,
-        };
-
         if (zmk_keymap_highest_layer_active() ) { //レイヤーチェンジ中なら/右クリック
             input_report_key(data->dev, INPUT_BTN_0, data->sw_pressed ? 1 : 0, true, K_NO_WAIT);  //マウスクリック
         } else {  //通常はJキー
