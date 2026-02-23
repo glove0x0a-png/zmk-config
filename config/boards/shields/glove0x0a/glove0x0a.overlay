@@ -24,7 +24,7 @@
     };
 };
 
-&{
+/ {
     chosen {
         zmk,input-devices = &az1uball;
     };
@@ -49,4 +49,5 @@
         status = "okay";
     };
 };
+
 
