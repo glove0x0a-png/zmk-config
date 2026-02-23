@@ -191,14 +191,14 @@ void az1uball_read_data_work(struct k_work *work)
                 }
                 return;
             } else if (delta_x > 20) {
-                input_report_key(data->dev, INPUT_KEY_KBD_TAB, 1, true, K_NO_WAIT);
-                input_report_key(data->dev, INPUT_KEY_KBD_TAB, 0, true, K_NO_WAIT);
+                input_report_key(data->dev, INPUT_KEY_TAB, 1, true, K_NO_WAIT);
+                input_report_key(data->dev, INPUT_KEY_TAB, 0, true, K_NO_WAIT);
                 return;
             } else if (delta_x < -20) {
-                input_report_key(data->dev, INPUT_KEY_KBD_LEFT_SHIFT, 1, true, K_NO_WAIT);
-                input_report_key(data->dev, INPUT_KEY_KBD_TAB, 1, true, K_NO_WAIT);
-                input_report_key(data->dev, INPUT_KEY_KBD_TAB, 0, true, K_NO_WAIT);
-                input_report_key(data->dev, INPUT_KEY_KBD_LEFT_SHIFT, 0, true, K_NO_WAIT);
+                input_report_key(data->dev, INPUT_KEY_LEFTSHIFT , 1, true, K_NO_WAIT);
+                input_report_key(data->dev, INPUT_KEY_TAB, 1, true, K_NO_WAIT);
+                input_report_key(data->dev, INPUT_KEY_TAB, 0, true, K_NO_WAIT);
+                input_report_key(data->dev, INPUT_KEY_LEFTSHIFT, 0, true, K_NO_WAIT);
                 return;
             }
         //レイヤー2なら
