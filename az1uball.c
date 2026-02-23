@@ -174,20 +174,20 @@ void az1uball_read_data_work(struct k_work *work)
         if (layer == 1) {
             if (delta_y > 10) {
                 if (lshift_pressed) {
-                    input_report(data->dev, 0x0C, 0x80, 1, true, NULL); //K_VOLUME_UP
-                    input_report(data->dev, 0x0C, 0x80, 0, true, NULL);
+                    input_report(data->dev, 0x0C, 0x80, 1, true, &(struct input_event){}); //K_VOLUME_UP
+                    input_report(data->dev, 0x0C, 0x80, 0, true, &(struct input_event){});
                 } else {
-                    input_report(data->dev, 0x0C, 0xE9, 1, true, NULL); //C_VOLUME_UP
-                    input_report(data->dev, 0x0C, 0xE9, 0, true, NULL);
+                    input_report(data->dev, 0x0C, 0xE9, 1, true, &(struct input_event){}); //C_VOLUME_UP
+                    input_report(data->dev, 0x0C, 0xE9, 0, true, &(struct input_event){});
                 }
                 return;
             } else if (delta_y < -10) {
                 if (lshift_pressed) {
-                    input_report(data->dev, 0x0C, 0x81, 1, true, NULL); //K_VOLUME_DOWN
-                    input_report(data->dev, 0x0C, 0x81, 0, true, NULL);
+                    input_report(data->dev, 0x0C, 0x81, 1, true, &(struct input_event){}); //K_VOLUME_DOWN
+                    input_report(data->dev, 0x0C, 0x81, 0, true, &(struct input_event){});
                 } else {
-                    input_report(data->dev, 0x0C, 0xEA, 1, true, NULL); //C_VOLUME_DOWN
-                    input_report(data->dev, 0x0C, 0xEA, 0, true, NULL);
+                    input_report(data->dev, 0x0C, 0xEA, 1, true, &(struct input_event){}); //C_VOLUME_DOWN
+                    input_report(data->dev, 0x0C, 0xEA, 0, true, &(struct input_event){});
                 }
                 return;
             } else if (delta_x > 20) {
