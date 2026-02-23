@@ -172,29 +172,29 @@ void az1uball_read_data_work(struct k_work *work)
 
         //レイヤー1なら
         if (layer == 1) {
-            if (delta_y > 10) {
+            if (delta_y > 5) {
                 if (lshift_pressed) {
-                    input_report(data->dev, 0x0C, 0x80, 1, true, K_NO_WAIT ); //K_VOLUME_UP
+                    input_report(data->dev, 0x0C, 0x80, delta_y/5, true, K_NO_WAIT ); //K_VOLUME_UP
                     input_report(data->dev, 0x0C, 0x80, 0, true, K_NO_WAIT );
                 } else {
-                    input_report(data->dev, 0x0C, 0xE9, 1, true, K_NO_WAIT ); //C_VOLUME_UP
+                    input_report(data->dev, 0x0C, 0xE9, delta_y/5, true, K_NO_WAIT ); //C_VOLUME_UP
                     input_report(data->dev, 0x0C, 0xE9, 0, true, K_NO_WAIT );
                 }
                 return;
-            } else if (delta_y < -10) {
+            } else if (delta_y < -5) {
                 if (lshift_pressed) {
-                    input_report(data->dev, 0x0C, 0x81, 1, true, K_NO_WAIT ); //K_VOLUME_DOWN
+                    input_report(data->dev, 0x0C, 0x81, delta_y/5, true, K_NO_WAIT ); //K_VOLUME_DOWN
                     input_report(data->dev, 0x0C, 0x81, 0, true, K_NO_WAIT );
                 } else {
-                    input_report(data->dev, 0x0C, 0xEA, 1, true, K_NO_WAIT ); //C_VOLUME_DOWN
+                    input_report(data->dev, 0x0C, 0xEA, delta_y/5, true, K_NO_WAIT ); //C_VOLUME_DOWN
                     input_report(data->dev, 0x0C, 0xEA, 0, true, K_NO_WAIT );
                 }
                 return;
-            } else if (delta_x > 20) {
+            } else if (delta_x > 10) {
                 input_report_key(data->dev, INPUT_KEY_TAB, 1, true, K_NO_WAIT);
                 input_report_key(data->dev, INPUT_KEY_TAB, 0, true, K_NO_WAIT);
                 return;
-            } else if (delta_x < -20) {
+            } else if (delta_x < -10) {
                 input_report_key(data->dev, INPUT_KEY_LEFTSHIFT , 1, true, K_NO_WAIT);
                 input_report_key(data->dev, INPUT_KEY_TAB, 1, true, K_NO_WAIT);
                 input_report_key(data->dev, INPUT_KEY_TAB, 0, true, K_NO_WAIT);
@@ -203,17 +203,17 @@ void az1uball_read_data_work(struct k_work *work)
             }
         //レイヤー2なら
         } else if (layer == 2) {
-            if (delta_y > 10) {
-                input_report_rel(data->dev, INPUT_REL_WHEEL, 1, true, K_NO_WAIT);
+            if (delta_y > 5) {
+                input_report_rel(data->dev, INPUT_REL_WHEEL, delta_y/5, true, K_NO_WAIT);
                 return;
-            } else if (delta_y < -10) {
-                input_report_rel(data->dev, INPUT_REL_WHEEL, -1, true, K_NO_WAIT);
+            } else if (delta_y < -5) {
+                input_report_rel(data->dev, INPUT_REL_WHEEL, delta_y/5, true, K_NO_WAIT);
                 return;
-            } else if (delta_x > 10) {
-                input_report_rel(data->dev, INPUT_REL_HWHEEL, 1, true, K_NO_WAIT);
+            } else if (delta_x > 5) {
+                input_report_rel(data->dev, INPUT_REL_HWHEEL, delta_x/5, true, K_NO_WAIT);
                 return;
-            } else if (delta_x < -10) {
-                input_report_rel(data->dev, INPUT_REL_HWHEEL, -1, true, K_NO_WAIT);
+            } else if (delta_x < -5) {
+                input_report_rel(data->dev, INPUT_REL_HWHEEL, delta_x/5, true, K_NO_WAIT);
                 return;
             }
         }
