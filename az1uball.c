@@ -51,7 +51,7 @@ static int az1uball_init(const struct device *dev)
     uint8_t cmd = 0x91;
 
     data->dev = dev;
-    data->sw_pressed_prev = false;
+    data->sw_pressed = false;
     data->last_activity_time = k_uptime_get();
     data->scaling_factor = parse_sensitivity(config->sensitivity);
 
@@ -159,7 +159,7 @@ void az1uball_read_data_work(struct k_work *work)
             } else if (delta_x > 2) {
                 binding.param1 = 0x2B; //TAB
                 zmk_behavior_invoke_binding(&binding, event, true);
-                k_sleep(K_MSEC(100)); // 100ミリ秒待つ
+                k_sleep(K_MSEC(300)); // 100ミリ秒待つ
                 zmk_behavior_invoke_binding(&binding, event, false);
                 return;
             } else if (delta_x < -2) {
@@ -167,7 +167,7 @@ void az1uball_read_data_work(struct k_work *work)
                 zmk_behavior_invoke_binding(&binding, event, true);
                 binding.param1 = 0x2B; //TAB
                 zmk_behavior_invoke_binding(&binding, event, true);
-                k_sleep(K_MSEC(100)); // 100ミリ秒待つ
+                k_sleep(K_MSEC(300)); // 100ミリ秒待つ
                 binding.param1 = 0xE1; //SHIFT
                 zmk_behavior_invoke_binding(&binding, event, false);
                 binding.param1 = 0x2B; //TAB
