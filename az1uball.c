@@ -141,9 +141,9 @@ void az1uball_read_data_work(struct k_work *work)
                     }
                 } else {
                     for(int i=0;i < delta_y;i++){
-                        zmk_hid_consumer_report_press(ZMK_HID_USAGE_CONSUMER_VOLUME_DECREMENT);
+                        zmk_hid_consumer_press(HID_USAGE_CONSUMER_VOLUME_INCREMENT );
                         k_sleep(K_MSEC(10));
-                        zmk_hid_consumer_report_release();
+                        zmk_hid_consumer_release();
                     }
                 }
                 return;
@@ -157,9 +157,9 @@ void az1uball_read_data_work(struct k_work *work)
                     }
                 } else {
                     for(int i=0;i < -1 * delta_y;i++){
-                        zmk_hid_consumer_report_press(ZMK_HID_USAGE_CONSUMER_VOLUME_INCREMENT);
+                        zmk_hid_consumer_press(HID_USAGE_CONSUMER_VOLUME_DECREMENT);
                         k_sleep(K_MSEC(10));
-                        zmk_hid_consumer_report_release();
+                        zmk_hid_consumer_release();
                     }
                 }
                 return;
