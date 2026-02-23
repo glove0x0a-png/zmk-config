@@ -11,9 +11,10 @@
 ## キーボード
 
   - 47key キーボード(4行×12列)をUSB接続 & BLE接続で実装。
-  - Jキーを外してtrack ball 配置。
+  - Jキーを外してtrack ball(az1uball) 配置。
   - ファームウェアは ZMK Firmware。
   - key scanはCharlieplexにより低電力化とGPIOピンを削減。
+  - RGB-LED widget.cをローカルへ統合。
 
 ---
 

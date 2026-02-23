@@ -109,110 +109,51 @@ void az1uball_read_data_work(struct k_work *work)
     //現レイヤ
     int layer = zmk_keymap_highest_layer_active();
     
-
     //shift押下状態取得
-    uint8_t mods = zmk_hid_get_explicit_mods();
-    bool lshift_pressed = mods & 0x02;  //左Shift
-    bool lctrl_pressed  = mods & 0x01;  //左Ctrl
+    bool lshift_pressed = zmk_hid_get_explicit_mods() & 0x02;  //左Shift
 
     //マウス操作 or レイヤー操作 or 修飾キー or ボタン状態変化
     if (    delta_x != 0
          || delta_y != 0
          || layer   != 0
          || lshift_pressed 
-         || lctrl_pressed 
          || btn_push != data->sw_pressed){
         data->last_activity_time = now;
     }
 
-    if (layer == 1 || layer == 2) {
-        //レイヤー1 or 2 なら、縦 or 横操作のみ。値が大きい方。
+    //レイヤー2なら
+    if (layer == 2) {
         if (abs(delta_x) > abs(delta_y)) delta_y = 0;
         else delta_x = 0;
-        //レイヤー1なら
-        if (layer == 1) {
-            if (delta_y > 1) {
-                if (lshift_pressed) {
-                    binding.param1 = 0x80; //K_VOLUME_UP
-                    for(int i=0;i < delta_y;i++){
-                        zmk_behavior_invoke_binding(&binding, event, true);
-                        k_sleep(K_MSEC(10)); // 10ミリ秒待つ
-                        zmk_behavior_invoke_binding(&binding, event, false);
-                    }
-                } else {
-                    for(int i=0;i < delta_y;i++){
-                        zmk_hid_consumer_press(HID_USAGE_CONSUMER_VOLUME_INCREMENT );
-                        k_sleep(K_MSEC(10));
-                        zmk_hid_consumer_release(HID_USAGE_CONSUMER_VOLUME_INCREMENT);
-                    }
-                }
-                return;
-            } else if (delta_y < -1) {
-                if (lshift_pressed) {
-                    for(int i=0;i < -1 * delta_y;i++){
-                        binding.param1 = 0x81; //K_VOLUME_DOWN
-                        zmk_behavior_invoke_binding(&binding, event, true);
-                        k_sleep(K_MSEC(10)); // 100ミリ秒待つ
-                        zmk_behavior_invoke_binding(&binding, event, false);
-                    }
-                } else {
-                    for(int i=0;i < -1 * delta_y;i++){
-                        zmk_hid_consumer_press(HID_USAGE_CONSUMER_VOLUME_DECREMENT);
-                        k_sleep(K_MSEC(10));
-                        zmk_hid_consumer_release(HID_USAGE_CONSUMER_VOLUME_DECREMENT);
-                    }
-                }
-                return;
-            } else if (delta_x > 2) {
-                binding.param1 = 0x2B; //TAB
-                zmk_behavior_invoke_binding(&binding, event, true);
-                k_sleep(K_MSEC(300)); // 100ミリ秒待つ
-                zmk_behavior_invoke_binding(&binding, event, false);
-                return;
-            } else if (delta_x < -2) {
-                binding.param1 = 0xE1; //SHIFT
-                zmk_behavior_invoke_binding(&binding, event, true);
-                binding.param1 = 0x2B; //TAB
-                zmk_behavior_invoke_binding(&binding, event, true);
-                k_sleep(K_MSEC(300)); // 100ミリ秒待つ
-                binding.param1 = 0xE1; //SHIFT
-                zmk_behavior_invoke_binding(&binding, event, false);
-                binding.param1 = 0x2B; //TAB
-                zmk_behavior_invoke_binding(&binding, event, false);
-                return;
+        if (delta_y > 1) {
+            for(int i=0;i < delta_y;i++){
+              input_report_rel(data->dev, INPUT_REL_WHEEL, -1, true, K_NO_WAIT);
             }
-        //レイヤー2なら
-        } else if (layer == 2) {
-            if (delta_y > 1) {
-                for(int i=0;i < delta_y;i++){
-                  input_report_rel(data->dev, INPUT_REL_WHEEL, -1, true, K_NO_WAIT);
-                }
-                return;
-            } else if (delta_y < -1) {
-                for(int i=0;i < -1 * delta_y;i++){
-                    input_report_rel(data->dev, INPUT_REL_WHEEL, 1, true, K_NO_WAIT);
-                }
-                return;
-            } else if (delta_x > 1) {
-                for(int i=0;i < delta_x;i++){
-                    input_report_rel(data->dev, INPUT_REL_HWHEEL, 1, true, K_NO_WAIT);
-                }
-                return;
-            } else if (delta_x < -1) {
-                for(int i=0;i < -1 * delta_x;i++){
-                    input_report_rel(data->dev, INPUT_REL_HWHEEL, -1, true, K_NO_WAIT);
-                }
-                return;
+            return;
+        } else if (delta_y < -1) {
+            for(int i=0;i < -1 * delta_y;i++){
+                input_report_rel(data->dev, INPUT_REL_WHEEL, 1, true, K_NO_WAIT);
             }
+            return;
+        } else if (delta_x > 1) {
+            for(int i=0;i < delta_x;i++){
+                input_report_rel(data->dev, INPUT_REL_HWHEEL, 1, true, K_NO_WAIT);
+            }
+            return;
+        } else if (delta_x < -1) {
+            for(int i=0;i < -1 * delta_x;i++){
+                input_report_rel(data->dev, INPUT_REL_HWHEEL, -1, true, K_NO_WAIT);
+            }
+            return;
         }
+    }
     // 通常のマウス処理（レイヤー0など）
     } else if (delta_x != 0 || delta_y != 0) {
+        //レイヤー1は高速モード
+        if (layer == 1) scaling *= 3.0f;   //感度3倍
         // 動的倍率変更
         if (lshift_pressed ){
             scaling /= 3.0f;   //shift 1/3倍
-        }
-        else if (lctrl_pressed ){
-            scaling *= 3.0f;   //ctrl  3倍
         }
         for (int i = 0; i < 2; i++) {
             if (delta_x != 0) input_report_rel(data->dev, INPUT_REL_X, delta_x / 2, true, K_NO_WAIT);
