@@ -174,26 +174,25 @@ void az1uball_read_data_work(struct k_work *work)
         if (layer == 1) {
             if (delta_y > 10) {
                 if (lshift_pressed) {
-                    input_report_key(data->dev, INPUT_KEY_KBD_KB_VOLUME_UP, 1, true, K_NO_WAIT);
-                    input_report_key(data->dev, INPUT_KEY_KBD_KB_VOLUME_UP, 0, true, K_NO_WAIT);
+                    input_report(data->dev, 0x0C, 0x80, 1, true, NULL); //K_VOLUME_UP
+                    input_report(data->dev, 0x0C, 0x80, 0, true, NULL);
                 } else {
-                    input_report(data->dev, 0x0C, 0xE9, 1, true, NULL);
+                    input_report(data->dev, 0x0C, 0xE9, 1, true, NULL); //C_VOLUME_UP
                     input_report(data->dev, 0x0C, 0xE9, 0, true, NULL);
                 }
                 return;
             } else if (delta_y < -10) {
                 if (lshift_pressed) {
-                    input_report_key(data->dev, INPUT_KEY_KBD_KB_VOLUME_DOWN, 1, true, K_NO_WAIT);
-                    input_report_key(data->dev, INPUT_KEY_KBD_KB_VOLUME_DOWN, 0, true, K_NO_WAIT);
+                    input_report(data->dev, 0x0C, 0x81, 1, true, NULL); //K_VOLUME_DOWN
+                    input_report(data->dev, 0x0C, 0x81, 0, true, NULL);
                 } else {
-                    input_report(data->dev, 0x0C, 0xEA, 1, true, NULL);
+                    input_report(data->dev, 0x0C, 0xEA, 1, true, NULL); //C_VOLUME_DOWN
                     input_report(data->dev, 0x0C, 0xEA, 0, true, NULL);
                 }
                 return;
             } else if (delta_x > 20) {
                 input_report_key(data->dev, INPUT_KEY_KBD_TAB, 1, true, K_NO_WAIT);
                 input_report_key(data->dev, INPUT_KEY_KBD_TAB, 0, true, K_NO_WAIT);
-                data->skip_count = 2;
                 return;
             } else if (delta_x < -20) {
                 input_report_key(data->dev, INPUT_KEY_KBD_LEFT_SHIFT, 1, true, K_NO_WAIT);
@@ -229,6 +228,22 @@ void az1uball_read_data_work(struct k_work *work)
             if (delta_x != 0) input_report_rel(data->dev, INPUT_REL_X, data->smoothed_x / 2, true, K_NO_WAIT);
             if (delta_y != 0) input_report_rel(data->dev, INPUT_REL_Y, data->smoothed_y / 2, true, K_NO_WAIT);
         }
+    }
+
+    data->sw_pressed = (buf[4] & MSK_SWITCH_STATE) != 0;
+    if (data->sw_pressed != data->sw_pressed_prev) {
+        struct zmk_behavior_binding_event event = {
+            .position = 0,
+            .timestamp = k_uptime_get(),
+            .layer = 0,
+        };
+
+        if (zmk_keymap_highest_layer_active() ) { //レイヤーチェンジ中なら/右クリック
+            input_report_key(data->dev, INPUT_BTN_0, data->sw_pressed ? 1 : 0, true, K_NO_WAIT);  //マウスクリック
+        } else {  //通常は
+            zmk_behavior_invoke_binding(&binding, event, data->sw_pressed);  //Jキー扱い
+        }
+        data->sw_pressed_prev = data->sw_pressed;
     }
 
     // ジグラー操作
