@@ -102,5 +102,5 @@
 };
 
 &xiao_i2c {
-    status = "disabled";
+    status = "okay";
 };
