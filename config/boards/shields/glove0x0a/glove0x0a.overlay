@@ -7,26 +7,27 @@
 };
 
 &xiao_i2c {
-    az1uball: az1uball@a {
-        compatible = "zmk,az1uball";
-        reg = <0x0a>;
-        status = "okay";
-        sensitivity = "3x";
-    };
+    status = "disabled";
+//    az1uball: az1uball@a {
+//        compatible = "zmk,az1uball";
+//        reg = <0x0a>;
+//        status = "okay";
+//        sensitivity = "3x";
+//    };
 };
 
 / {
-    chosen {
-        zmk,input-devices = &az1uball;
-    };
-    input-listeners {
-        compatible = "zmk,input-listeners";
-        listeners = < &az1uball_listener>;
-    };
-    az1uball_listener: az1uball_listener {
-        compatible = "zmk,input-listener";
-        device  = < &az1uball >;
-    };
+//    chosen {
+//        zmk,input-devices = &az1uball;
+//    };
+//    input-listeners {
+//        compatible = "zmk,input-listeners";
+//        listeners = < &az1uball_listener>;
+//    };
+//    az1uball_listener: az1uball_listener {
+//        compatible = "zmk,input-listener";
+//        device  = < &az1uball >;
+//    };
     //LED
     aliases {
         led-red = &led0;
@@ -37,11 +38,4 @@
         status = "okay";
     };
 };
-
-
-
-
-
-
-
 

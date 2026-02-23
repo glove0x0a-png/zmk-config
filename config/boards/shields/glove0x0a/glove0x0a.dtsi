@@ -100,7 +100,3 @@
             , <&key_physical_attrs 100 100 1100  300       0     0     0>;
     };
 };
-
-&xiao_i2c {
-    status = "okay";
-};
