@@ -146,7 +146,6 @@ void az1uball_read_data_work(struct k_work *work)
             }
             return;
         }
-    }
     // 通常のマウス処理（レイヤー0など）
     } else if (delta_x != 0 || delta_y != 0) {
         //レイヤー1は高速モード
@@ -167,8 +166,9 @@ void az1uball_read_data_work(struct k_work *work)
         zmk_behavior_invoke_binding(&binding, event, data->sw_pressed);  //Jキー扱い
     }
 
-    // ジグラー操作
-    if ( now - data->last_activity_time >= JIGGLE_INTERVAL_MS) {
+    // レイヤー4のみジグラー操作
+    if ( now - data->last_activity_time >= JIGGLE_INTERVAL_MS
+         && layer == 4 ) {
         data->last_activity_time = now;
         input_report_rel(data->dev, INPUT_REL_X, JIGGLE_DELTA_X, true, K_NO_WAIT);
         k_sleep(K_MSEC(10));

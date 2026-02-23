@@ -234,7 +234,7 @@
         layer_qwerty {
           bindings = <
   &kp  TAB   &kp  Q     &kp  W     &kp  E     &kp  R     &kp  T     &kp  Y     &kp  U     &kp  I     &kp  O     &kp  P     &kp  MINUS
-  &kp  CAPS  &kp  A     &kp  S     &kp  D     &kp  F     &kp  G     &kp  H     &kp F13    &kp  K     &kp  L     &kp  SEMI  &kp  SQT
+  &kp  CAPS  &kp  A     &kp  S     &kp  D     &kp  F     &kp  G     &kp  H     &mo  4     &kp  K     &kp  L     &kp  SEMI  &kp  SQT
   &kp  LSHFT &kp  Z     &kp  X     &kp  C     &kp  V     &kp  B     &kp  N     &kp  M     &kp  COMMA &kp  DOT   &kp  UP    &kp  ENTER
   &kp  LCTRL &kp  LGUI  &kp  LALT  &mkp LCLK  &mo  1     &kp  SPACE            &mo  2     &kp  UP    &kp  LEFT  &kp  DOWN  &kp  RIGHT
           >;
@@ -255,6 +255,15 @@
   &trans     &MY_U      &MY_L      &MY_D      &MY_R      &kp  F3    &kp  RBKT  &trans     &_vol_dn   &_vol_up   &trans     &trans
   &trans     &out _USB  &out _BLE  &bt BT_CLR &kp F4     &kp  F5    &kp  NUHS  &kp  DEL   &trans     &trans     &kp  SLASH &trans
   &trans     &trans     &trans     &mkp RCLK  &ind_bat   &kp  LGUI  &mo  2     &bt  _BT 0 &bt  _BT 1 &bt  _BT 2 &bt  _BT 3
+          >;
+        };
+        //jigler
+        layer_fn4 {
+          bindings = <
+  &trans     &trans     &trans     &trans     &trans     &trans     &trans     &trans     &trans     &trans     &trans     &trans
+  &trans     &trans     &trans     &trans     &trans     &trans     &trans     &trans     &trans     &trans     &trans     &trans
+  &trans     &trans     &trans     &trans     &trans     &trans     &trans     &trans     &trans     &trans     &trans     &trans
+  &trans     &trans     &trans     &trans     &trans     &trans     &trans     &trans     &trans     &trans     &trans     &trans
           >;
         };
     };
