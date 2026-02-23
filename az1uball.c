@@ -35,7 +35,7 @@ volatile float AZ1UBALL_SCROLL_SMOOTHING_FACTOR = 0.5f;
 //static enum az1uball_mode current_mode = AZ1UBALL_MODE_MOUSE;//default:mouse
 
 //struct
-const struct zmk_behavior_binding binding = {
+struct zmk_behavior_binding binding = {
     .behavior_dev = "key_press",
     .param1 = 0x0D,  //HID_USAGE_KEY_J
     .param2 = 0,
@@ -174,37 +174,40 @@ void az1uball_read_data_work(struct k_work *work)
         if (layer == 1) {
             if (delta_y > 2) {
                 if (lshift_pressed) {
-                    input_report(data->dev, 0x0C, 0x81, delta_y/2, true, K_NO_WAIT ); //K_VOLUME_UP
-                k_sleep(K_MSEC(100)); // 100ミリ秒待つ
-                    input_report(data->dev, 0x0C, 0x81, 0, true, K_NO_WAIT );
+                    binding.param1 = 0x81; //K_VOLUME_DOWN
                 } else {
-                    input_report(data->dev, 0x0C, 0xEA, delta_y/2, true, K_NO_WAIT ); //C_VOLUME_UP
-                k_sleep(K_MSEC(100)); // 100ミリ秒待つ
-                    input_report(data->dev, 0x0C, 0xEA, 0, true, K_NO_WAIT );
+                    binding.param1 = 0xEA; //C_VOLUME_DOWN
                 }
+                zmk_behavior_invoke_binding(&binding, event, true);
+                k_sleep(K_MSEC(100)); // 100ミリ秒待つ
+                zmk_behavior_invoke_binding(&binding, event, false);
                 return;
             } else if (delta_y < -2) {
                 if (lshift_pressed) {
-                    input_report(data->dev, 0x0C, 0x80, delta_y/2, true, K_NO_WAIT ); //K_VOLUME_DOWN
-                k_sleep(K_MSEC(100)); // 100ミリ秒待つ
-                    input_report(data->dev, 0x0C, 0x80, 0, true, K_NO_WAIT );
+                    binding.param1 = 0x80; //K_VOLUME_UP
                 } else {
-                    input_report(data->dev, 0x0C, 0xE9, delta_y/2, true, K_NO_WAIT ); //C_VOLUME_DOWN
-                k_sleep(K_MSEC(100)); // 100ミリ秒待つ
-                    input_report(data->dev, 0x0C, 0xE9, 0, true, K_NO_WAIT );
+                    binding.param1 = 0xE9; //C_VOLUME_UP
                 }
+                zmk_behavior_invoke_binding(&binding, event, true);
+                k_sleep(K_MSEC(100)); // 100ミリ秒待つ
+                zmk_behavior_invoke_binding(&binding, event, false);
                 return;
             } else if (delta_x > 2) {
-                input_report_key(data->dev, INPUT_KEY_TAB, 1, true, K_NO_WAIT);
+                binding.param1 = 0x2B; //TAB
+                zmk_behavior_invoke_binding(&binding, event, true);
                 k_sleep(K_MSEC(100)); // 100ミリ秒待つ
-                input_report_key(data->dev, INPUT_KEY_TAB, 0, true, K_NO_WAIT);
+                zmk_behavior_invoke_binding(&binding, event, false);
                 return;
             } else if (delta_x < -2) {
-                input_report_key(data->dev, INPUT_KEY_LEFTSHIFT , 1, true, K_NO_WAIT);
-                input_report_key(data->dev, INPUT_KEY_TAB, 1, true, K_NO_WAIT);
+                binding.param1 = 0xE1; //SHIFT
+                zmk_behavior_invoke_binding(&binding, event, true);
+                binding.param1 = 0x2B; //TAB
+                zmk_behavior_invoke_binding(&binding, event, true);
                 k_sleep(K_MSEC(100)); // 100ミリ秒待つ
-                input_report_key(data->dev, INPUT_KEY_TAB, 0, true, K_NO_WAIT);
-                input_report_key(data->dev, INPUT_KEY_LEFTSHIFT, 0, true, K_NO_WAIT);
+                binding.param1 = 0xE1; //SHIFT
+                zmk_behavior_invoke_binding(&binding, event, false);
+                binding.param1 = 0x2B; //TAB
+                zmk_behavior_invoke_binding(&binding, event, false);
                 return;
             }
         //レイヤー2なら
@@ -245,7 +248,8 @@ void az1uball_read_data_work(struct k_work *work)
 
         if (zmk_keymap_highest_layer_active() ) { //レイヤーチェンジ中なら/右クリック
             input_report_key(data->dev, INPUT_BTN_0, data->sw_pressed ? 1 : 0, true, K_NO_WAIT);  //マウスクリック
-        } else {  //通常は
+        } else {  //通常はJキー
+            binding.param1 = 0x0D; 
             zmk_behavior_invoke_binding(&binding, event, data->sw_pressed);  //Jキー扱い
         }
         data->sw_pressed_prev = data->sw_pressed;
