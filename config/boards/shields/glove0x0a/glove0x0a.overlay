@@ -7,7 +7,6 @@
 };
 
 &xiao_i2c {
-    //status = "disabled";
     az1uball: az1uball@a {
         compatible = "zmk,az1uball";
         reg = <0x0a>;
@@ -38,4 +37,3 @@
         status = "okay";
     };
 };
-
