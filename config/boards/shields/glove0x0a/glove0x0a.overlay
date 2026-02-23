@@ -5,35 +5,46 @@
 &xiao_serial {
     status = "disabled";
 };
-
 &xiao_i2c {
     status = "disabled";
-//    az1uball: az1uball@a {
-//        compatible = "zmk,az1uball";
-//        reg = <0x0a>;
-//        status = "okay";
-//        sensitivity = "3x";
-//    };
 };
 
-/ {
-//    chosen {
-//        zmk,input-devices = &az1uball;
-//    };
-//    input-listeners {
-//        compatible = "zmk,input-listeners";
-//        listeners = < &az1uball_listener>;
-//    };
-//    az1uball_listener: az1uball_listener {
-//        compatible = "zmk,input-listener";
-//        device  = < &az1uball >;
-//    };
-    //LED
+
+&i2c1 {
+    status = "okay";
+    sda-pin = <4>; // D4 = P0.04
+    scl-pin = <5>; // D5 = P0.05
+    clock-frequency = <I2C_BITRATE_STANDARD>;
+
+    az1uball: az1uball@0a {
+        compatible = "zmk,az1uball";
+        reg = <0x0a>;
+        status = "okay";
+        sensitivity = "3x";
+    };
+};
+
+&{
+    chosen {
+        zmk,input-devices = &az1uball;
+    };
+
+    input-listeners {
+        compatible = "zmk,input-listeners";
+        listeners = < &az1uball_listener >;
+    };
+
+    az1uball_listener: az1uball_listener {
+        compatible = "zmk,input-listener";
+        device = < &az1uball >;
+    };
+
     aliases {
         led-red = &led0;
         led-green = &led1;
         led-blue = &led2;
     };
+
     leds {
         status = "okay";
     };

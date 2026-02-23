@@ -33,8 +33,8 @@
 | 3-1 | LEFT  | D3      | gpio0 29   | なし               |  1列("T"～"△")  ( 無効化:拡張5行目"↓") |
 | 4-0 | LEFT  | D14     | gpio0 9    | 5列("R"～"Fn1")    |  (無効化:拡張5行目(十字キー + ボタン)) |
 | 4-1 | LEFT  | D4      | gpio0 4    | I2C-SDA |
-| 5-0 | LEFT  | D15     | gpio0 10   | I2C-SCL |
-| 5-1 | LEFT  | D5      | gpio0 5    | 未使用 |
+| 5-0 | LEFT  | D15     | gpio0 10   | 未使用 |
+| 5-1 | LEFT  | D5      | gpio0 5    | I2C-SCL  |
 | 6-0 | LEFT  | D16     | gpio0 31   | 未使用 |
 | 6-1 | LEFT  | D6      | gpio1 11   | 未使用 |
 | 7-1 | RIGHT | D7      | gpio1 12   | 未使用 |
