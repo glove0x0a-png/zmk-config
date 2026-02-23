@@ -217,10 +217,8 @@ void az1uball_read_data_work(struct k_work *work)
                 return;
             }
         }
-    }
-
     // 通常のマウス処理（レイヤー0など）
-    if (delta_x != 0 || delta_y != 0) {
+    } else if (delta_x != 0 || delta_y != 0) {
         az1uball_process_movement(data, delta_x, delta_y, time_between_interrupts,
                                   AZ1UBALL_MOUSE_MAX_SPEED, AZ1UBALL_MOUSE_MAX_TIME,
                                   AZ1UBALL_MOUSE_SMOOTHING_FACTOR);
@@ -229,6 +227,7 @@ void az1uball_read_data_work(struct k_work *work)
             if (delta_y != 0) input_report_rel(data->dev, INPUT_REL_Y, data->smoothed_y / 2, true, K_NO_WAIT);
         }
     }
+
 
     data->sw_pressed = (buf[4] & MSK_SWITCH_STATE) != 0;
     if (data->sw_pressed != data->sw_pressed_prev) {
