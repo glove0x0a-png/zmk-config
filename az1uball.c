@@ -8,7 +8,6 @@
 #include <zmk/ble.h> // 追加
 #include <zmk/usb.h>
 #include <zmk/hid.h>    // HID usage定義用
-#include <zmk/hid_consumer.h>
 #include "az1uball.h"
 
 //追加
@@ -32,7 +31,6 @@ struct zmk_behavior_binding binding = {
     .param1 = 0x0D,  //HID_USAGE_KEY_J
     .param2 = 0,
 };
-
 
 //prototype
 static int az1uball_init(const struct device *dev);					//初期化処理
