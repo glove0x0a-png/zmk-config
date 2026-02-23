@@ -133,7 +133,7 @@ void az1uball_read_data_work(struct k_work *work)
         if (layer == 1) {
             if (delta_y > 1) {
                 if (lshift_pressed) {
-                    binding.param1 = 0x81; //K_VOLUME_DOWN
+                    binding.param1 = 0x80; //K_VOLUME_UP
                     for(int i=0;i < delta_y;i++){
                         zmk_behavior_invoke_binding(&binding, event, true);
                         k_sleep(K_MSEC(10)); // 10ミリ秒待つ
@@ -143,14 +143,14 @@ void az1uball_read_data_work(struct k_work *work)
                     for(int i=0;i < delta_y;i++){
                         zmk_hid_consumer_press(HID_USAGE_CONSUMER_VOLUME_INCREMENT );
                         k_sleep(K_MSEC(10));
-                        zmk_hid_consumer_release();
+                        zmk_hid_consumer_release(HID_USAGE_CONSUMER_VOLUME_INCREMENT);
                     }
                 }
                 return;
             } else if (delta_y < -1) {
                 if (lshift_pressed) {
                     for(int i=0;i < -1 * delta_y;i++){
-                        binding.param1 = 0x80; //K_VOLUME_UP
+                        binding.param1 = 0x81; //K_VOLUME_DOWN
                         zmk_behavior_invoke_binding(&binding, event, true);
                         k_sleep(K_MSEC(10)); // 100ミリ秒待つ
                         zmk_behavior_invoke_binding(&binding, event, false);
@@ -159,7 +159,7 @@ void az1uball_read_data_work(struct k_work *work)
                     for(int i=0;i < -1 * delta_y;i++){
                         zmk_hid_consumer_press(HID_USAGE_CONSUMER_VOLUME_DECREMENT);
                         k_sleep(K_MSEC(10));
-                        zmk_hid_consumer_release();
+                        zmk_hid_consumer_release(HID_USAGE_CONSUMER_VOLUME_DECREMENT);
                     }
                 }
                 return;
