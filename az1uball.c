@@ -97,8 +97,8 @@ void az1uball_read_data_work(struct k_work *work)
     time_between_interrupts = data->last_interrupt_time - data->previous_interrupt_time;
     k_mutex_unlock(&data->data_lock);
 
-    int16_t delta_x = (int16_t)buf[1] - (int16_t)buf[0];
-    int16_t delta_y = (int16_t)buf[3] - (int16_t)buf[2];
+    int16_t delta_x = (int16_t)buf[3] - (int16_t)buf[2];
+    int16_t delta_y = (int16_t)buf[1] - (int16_t)buf[0];
 
     if ( (delta_x != 0 || delta_y != 0 )  //
     ) {
