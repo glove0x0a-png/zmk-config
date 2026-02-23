@@ -14,6 +14,7 @@
         sensitivity = "3x";
     };
 };
+
 / {
     chosen {
         zmk,input-devices = &az1uball;
@@ -26,4 +27,14 @@
         compatible = "zmk,input-listener";
         device  = < &az1uball >;
     };
+    //LED
+    aliases {
+        led-red = &led0;
+        led-green = &led1;
+        led-blue = &led2;
+    };
+    leds {
+        status = "okay";
+    };
 };
+
