@@ -115,7 +115,6 @@ void az1uball_read_data_work(struct k_work *work)
     //マウス操作 or レイヤー操作 or 修飾キー or ボタン状態変化
     if (    delta_x != 0
          || delta_y != 0
-         || layer   != 0
          || lshift_pressed 
          || btn_push != data->sw_pressed){
         data->last_activity_time = now;
@@ -166,9 +165,9 @@ void az1uball_read_data_work(struct k_work *work)
         zmk_behavior_invoke_binding(&binding, event, data->sw_pressed);  //Jキー扱い
     }
 
-    // レイヤー4のみジグラー操作
+    // レイヤー3のみジグラー操作
     if ( now - data->last_activity_time >= JIGGLE_INTERVAL_MS
-         && layer == 4 ) {
+         && layer == 3 ) {
         data->last_activity_time = now;
         input_report_rel(data->dev, INPUT_REL_X, JIGGLE_DELTA_X, true, K_NO_WAIT);
         k_sleep(K_MSEC(10));
