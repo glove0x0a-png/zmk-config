@@ -1,5 +1,4 @@
 #define DT_DRV_COMPAT zmk_az1uball
-
 #include <zephyr/device.h>
 #include <zephyr/input/input.h>
 #include <zephyr/drivers/i2c.h>
@@ -18,7 +17,7 @@
 
 //define
 #define NORMAL_POLL_INTERVAL K_MSEC(10)   // 通常時: 10ms (100Hz)
-#define LOW_POWER_POLL_INTERVAL K_MSEC(250) // 省電力時:  250ms (4Hz)
+#define LOW_POWER_POLL_INTERVAL K_MSEC(500) // 省電力時:  500ms (2Hz)
 #define NON_ACTIVE_POLL_INTERVAL K_MSEC(2000) // 省電力時:  2000ms (0.5Hz)
 #define LOW_POWER_TIMEOUT_MS 5000    // 5秒間入力がないと省電力モードへ
 
@@ -33,8 +32,6 @@ volatile float AZ1UBALL_MOUSE_SMOOTHING_FACTOR = 1.3f;
 volatile uint8_t AZ1UBALL_SCROLL_MAX_SPEED = 1;
 volatile uint8_t AZ1UBALL_SCROLL_MAX_TIME = 1;
 volatile float AZ1UBALL_SCROLL_SMOOTHING_FACTOR = 0.5f;
-static int previous_x = 0;
-static int previous_y = 0;
 //static enum az1uball_mode current_mode = AZ1UBALL_MODE_MOUSE;//default:mouse
 
 //struct
@@ -56,8 +53,10 @@ static void az1uball_polling(struct k_timer *timer);
 bool is_active_profile_connected(void);
 static void update_polling_state(struct az1uball_data *data);
 
+
 ///////////////////////////////////////////////////////////////////////////
-/* Initialization of AZ1UBALL */
+/* 01.Initialization of AZ1UBALL */
+///////////////////////////////////////////////////////////////////////////
 static int az1uball_init(const struct device *dev)
 {
     struct az1uball_data *data = dev->data;
@@ -76,105 +75,29 @@ static int az1uball_init(const struct device *dev)
     data->is_connected = true;
     data->is_active    = true;
     k_timer_init(&data->polling_timer, az1uball_polling, NULL);
+    //サイクル：NORMAL_POLL_INTERVAL
     k_timer_start(&data->polling_timer, NORMAL_POLL_INTERVAL, NORMAL_POLL_INTERVAL);
     return 0;
 }
 
-void az1uball_read_data_work(struct k_work *work)
-{
-    struct az1uball_data *data = CONTAINER_OF(work, struct az1uball_data, work);
-    if (!data->is_connected) {
-        return; // 状態①：非接続 → センサ読み取りもスキップ
-    }
-
-    const struct az1uball_config *config = data->dev->config;
-    uint8_t buf[5];
-    int ret;
-    uint32_t time_between_interrupts;
-
-    ret = i2c_read_dt(&config->i2c, buf, sizeof(buf));
-    k_mutex_lock(&data->data_lock, K_FOREVER);
-    time_between_interrupts = data->last_interrupt_time - data->previous_interrupt_time;
-    k_mutex_unlock(&data->data_lock);
-
-    int16_t delta_x = (int16_t)buf[3] - (int16_t)buf[2];
-    int16_t delta_y = (int16_t)buf[1] - (int16_t)buf[0];
-
-    if ( (delta_x != 0 || delta_y != 0 )  //
-    ) {
-        az1uball_process_movement(data, delta_x, delta_y, time_between_interrupts,
-                                  AZ1UBALL_MOUSE_MAX_SPEED, AZ1UBALL_MOUSE_MAX_TIME,
-                                  AZ1UBALL_MOUSE_SMOOTHING_FACTOR);
-
-//        if (zmk_keymap_highest_layer_active()<3){  //レイヤーが3未満なら
-
-            //マウスの動きを滑らかに
-            for(int i=0;i<3;i++){
-                if (delta_x != 0) {
-                    ret = input_report_rel(data->dev, INPUT_REL_X, data->smoothed_x/3, true, K_NO_WAIT);
-                }
-                if (delta_y != 0) {
-                    ret = input_report_rel(data->dev, INPUT_REL_Y, data->smoothed_y/3, true, K_NO_WAIT);
-                }
-            }
-
-//        } else if (delta_y != 0){  //レイヤーが3、かつ、y軸移動が <> 0
-//            if (delta_y > 10) {
-//                // 下方向 → ボリュームダウン
-//                input_report(data->dev, 0x0C, 0xEA, 1, true, (const struct zmk_behavior_binding_event *)NULL);
-//                input_report(data->dev, 0x0C, 0xEA, 0, true, (const struct zmk_behavior_binding_event *)NULL);
-//            } else if (delta_y < -10) {
-//                // 上方向 → ボリュームアップ
-//                //input_report(data->dev, 0x0C, 0xE9, 1, true, (const struct zmk_behavior_binding_event *)NULL);
-//                //input_report(data->dev, 0x0C, 0xE9, 0, true, (const struct zmk_behavior_binding_event *)NULL);
-//                input_report(data->dev, 1 /* INPUT_EV_KEY */, 115 /* KEY_VOLUMEUP */, 1, true, K_NO_WAIT);
-//            }
-//        }
-
-    }
-
-    data->sw_pressed = (buf[4] & MSK_SWITCH_STATE) != 0;
-    if (data->sw_pressed != data->sw_pressed_prev) {
-        struct zmk_behavior_binding_event event = {
-            .position = 0,
-            .timestamp = k_uptime_get(),
-            .layer = 0,
-        };
-
-        if (zmk_keymap_highest_layer_active() ) { //レイヤーチェンジ中なら
-            input_report_key(data->dev, INPUT_BTN_0, data->sw_pressed ? 1 : 0, true, K_NO_WAIT);  //マウスクリック
-        } else {  //通常は
-            zmk_behavior_invoke_binding(&binding, event, data->sw_pressed);  //Jキー扱い
-        }
-
-        data->sw_pressed_prev = data->sw_pressed;
-    }
-
-    // ジグラー操作
-    if (k_uptime_get() - data->last_jiggle_time >= JIGGLE_INTERVAL_MS) {
-        data->last_jiggle_time = k_uptime_get();
-        input_report_rel(data->dev, INPUT_REL_X, JIGGLE_DELTA_X, true, K_NO_WAIT);
-        k_sleep(K_MSEC(10));
-        input_report_rel(data->dev, INPUT_REL_X, -JIGGLE_DELTA_X, true, K_NO_WAIT);
-    }
-}
-
+///////////////////////////////////////////////////////////////////////////
+// 02.動作状態保存
+///////////////////////////////////////////////////////////////////////////
 static void az1uball_process_movement(struct az1uball_data *data, int delta_x, int delta_y, uint32_t time_between_interrupts, int max_speed, int max_time, float smoothing_factor) {
     const struct az1uball_config *config = data->dev->config;
-    float sensitivity = parse_sensitivity(config->sensitivity);
-    float scaling_factor = sensitivity;
+    float scaling_factor = parse_sensitivity(config->sensitivity);
 
     // 修飾キー状態を取得
     uint8_t mods = zmk_hid_get_explicit_mods();
     bool lshift_pressed = mods & 0x02;  //左Shift
     bool lctrl_pressed  = mods & 0x01;  //左Ctrl
 
-    // 動的倍率変更
-//    if (lshift_pressed) {
-    if (zmk_keymap_highest_layer_active() ) {
-        scaling_factor /= 2.0f;                           //layerチェンジ 1/2倍
-    } else if (lshift_pressed || lctrl_pressed) {
-        scaling_factor /= 6.0f;                           //shift or ctrl  1/6倍
+//    // 動的倍率変更
+    if (lshift_pressed ){
+        scaling_factor *= 3.0f;   //shift 3倍
+    }
+    if (lctrl_pressed ){
+        scaling_factor /= 6.0f;   //ctrl  1/6倍
     }
 
     if (time_between_interrupts < max_time) {
@@ -188,8 +111,8 @@ static void az1uball_process_movement(struct az1uball_data *data, int delta_x, i
     int scaled_x_movement = (int)(delta_x * scaling_factor);
     int scaled_y_movement = (int)(delta_y * scaling_factor);
 
-    data->smoothed_x = (int)(smoothing_factor * scaled_x_movement + (1.0f - smoothing_factor) * previous_x);
-    data->smoothed_y = (int)(smoothing_factor * scaled_y_movement + (1.0f - smoothing_factor) * previous_y * 9 / 16);
+    data->smoothed_x = (int)(smoothing_factor * scaled_x_movement + (1.0f - smoothing_factor) * data->previous_x);
+    data->smoothed_y = (int)(smoothing_factor * scaled_y_movement + (1.0f - smoothing_factor) * data->previous_y);
 
     data->previous_x = data->smoothed_x;
     data->previous_y = data->smoothed_y;
@@ -198,8 +121,129 @@ static void az1uball_process_movement(struct az1uball_data *data, int delta_x, i
         data->last_activity_time = k_uptime_get(); // 状態②→③への復帰トリガー
     }
 }
+// 02-2.configからsensitivityの取得
+static float parse_sensitivity(const char *sensitivity) {
+    float value;
+    char *endptr;
+    
+    value = strtof(sensitivity, &endptr);
+    if (endptr == sensitivity || (*endptr != 'x' && *endptr != 'X')) {
+        return 1.0f; // デフォルト値
+    }
+    
+    return value;
+}
+///////////////////////////////////////////////////////////////////////////
+// 03.心臓部 az1uball_read_data_work
+///////////////////////////////////////////////////////////////////////////
+void az1uball_read_data_work(struct k_work *work)
+{
+    struct az1uball_data *data = CONTAINER_OF(work, struct az1uball_data, work);
+    // 状態①：非接続 → センサ読み取りもスキップ
+    if (!data->is_connected) {
+        return;
+    }
 
+    // コンフィグ取得
+    const struct az1uball_config *config = data->dev->config;
+    uint8_t buf[5];
+    int ret;
+    uint32_t time_between_interrupts;
 
+    ret = i2c_read_dt(&config->i2c, buf, sizeof(buf));
+    k_mutex_lock(&data->data_lock, K_FOREVER);
+    time_between_interrupts = data->last_interrupt_time - data->previous_interrupt_time;
+    k_mutex_unlock(&data->data_lock);
+
+    int16_t delta_x = (int16_t)buf[3] - (int16_t)buf[2];
+    int16_t delta_y = (int16_t)buf[0] - (int16_t)buf[1];
+
+    int layer = zmk_keymap_highest_layer_active();
+    int16_t abs_dx = abs(delta_x);
+    int16_t abs_dy = abs(delta_y);
+
+    //shift押下状態取得
+    bool lshift_pressed = zmk_hid_get_explicit_mods() & 0x02;
+
+    if (layer == 1 || layer == 2) {
+        //レイヤー1 or 2 なら、縦 or 横操作のみ。値が大きい方。
+        if (abs_dx > abs_dy) delta_y = 0;
+        else delta_x = 0;
+
+        //レイヤー1なら
+        if (layer == 1) {
+            if (delta_y > 10) {
+                if (lshift_pressed) {
+                    input_report_key(data->dev, INPUT_KEY_KBD_KB_VOLUME_UP, 1, true, K_NO_WAIT);
+                    input_report_key(data->dev, INPUT_KEY_KBD_KB_VOLUME_UP, 0, true, K_NO_WAIT);
+                } else {
+                    input_report(data->dev, 0x0C, 0xE9, 1, true, NULL);
+                    input_report(data->dev, 0x0C, 0xE9, 0, true, NULL);
+                }
+                return;
+            } else if (delta_y < -10) {
+                if (lshift_pressed) {
+                    input_report_key(data->dev, INPUT_KEY_KBD_KB_VOLUME_DOWN, 1, true, K_NO_WAIT);
+                    input_report_key(data->dev, INPUT_KEY_KBD_KB_VOLUME_DOWN, 0, true, K_NO_WAIT);
+                } else {
+                    input_report(data->dev, 0x0C, 0xEA, 1, true, NULL);
+                    input_report(data->dev, 0x0C, 0xEA, 0, true, NULL);
+                }
+                return;
+            } else if (delta_x > 20) {
+                input_report_key(data->dev, INPUT_KEY_KBD_TAB, 1, true, K_NO_WAIT);
+                input_report_key(data->dev, INPUT_KEY_KBD_TAB, 0, true, K_NO_WAIT);
+                data->skip_count = 2;
+                return;
+            } else if (delta_x < -20) {
+                input_report_key(data->dev, INPUT_KEY_KBD_LEFT_SHIFT, 1, true, K_NO_WAIT);
+                input_report_key(data->dev, INPUT_KEY_KBD_TAB, 1, true, K_NO_WAIT);
+                input_report_key(data->dev, INPUT_KEY_KBD_TAB, 0, true, K_NO_WAIT);
+                input_report_key(data->dev, INPUT_KEY_KBD_LEFT_SHIFT, 0, true, K_NO_WAIT);
+                return;
+            }
+        //レイヤー2なら
+        } else if (layer == 2) {
+            if (delta_y > 10) {
+                input_report_rel(data->dev, INPUT_REL_WHEEL, 1, true, K_NO_WAIT);
+                return;
+            } else if (delta_y < -10) {
+                input_report_rel(data->dev, INPUT_REL_WHEEL, -1, true, K_NO_WAIT);
+                return;
+            } else if (delta_x > 10) {
+                input_report_rel(data->dev, INPUT_REL_HWHEEL, 1, true, K_NO_WAIT);
+                return;
+            } else if (delta_x < -10) {
+                input_report_rel(data->dev, INPUT_REL_HWHEEL, -1, true, K_NO_WAIT);
+                return;
+            }
+        }
+    }
+
+    // 通常のマウス処理（レイヤー0など）
+    if (delta_x != 0 || delta_y != 0) {
+        az1uball_process_movement(data, delta_x, delta_y, time_between_interrupts,
+                                  AZ1UBALL_MOUSE_MAX_SPEED, AZ1UBALL_MOUSE_MAX_TIME,
+                                  AZ1UBALL_MOUSE_SMOOTHING_FACTOR);
+        for (int i = 0; i < 2; i++) {
+            if (delta_x != 0) input_report_rel(data->dev, INPUT_REL_X, data->smoothed_x / 2, true, K_NO_WAIT);
+            if (delta_y != 0) input_report_rel(data->dev, INPUT_REL_Y, data->smoothed_y / 2, true, K_NO_WAIT);
+        }
+    }
+
+    // ジグラー操作
+    if (k_uptime_get() - data->last_jiggle_time >= JIGGLE_INTERVAL_MS) {
+        data->last_jiggle_time = k_uptime_get();
+        input_report_rel(data->dev, INPUT_REL_X, JIGGLE_DELTA_X, true, K_NO_WAIT);
+        k_sleep(K_MSEC(10));
+        input_report_rel(data->dev, INPUT_REL_X, -JIGGLE_DELTA_X, true, K_NO_WAIT);
+    }
+    return;
+}
+
+///////////////////////////////////////////////////////////////////////////
+// 04.polling
+///////////////////////////////////////////////////////////////////////////
 static void az1uball_polling(struct k_timer *timer)
 {
     struct az1uball_data *data = CONTAINER_OF(timer, struct az1uball_data, polling_timer);
@@ -215,26 +259,28 @@ static void az1uball_polling(struct k_timer *timer)
     k_mutex_unlock(&data->data_lock);
     k_work_submit(&data->work);
 }
-
 //polling周期を更新、input=last_activity_time、output=is_connected、is_active
 static void update_polling_state(struct az1uball_data *data) {
-    //未接続
+    //BLE未接続 & USB無接続
     if ( !zmk_ble_active_profile_is_connected() && !zmk_usb_is_powered() ) {
         if (data->is_connected){
             data->is_connected=false;
             data->is_active=false;     //dummy
             k_timer_stop(&data->polling_timer);
+            //サイクル：NON_ACTIVE_POLL_INTERVAL
             k_timer_start(&data->polling_timer, NON_ACTIVE_POLL_INTERVAL, NON_ACTIVE_POLL_INTERVAL);
         }
        return;
     }
     //接続
     data->is_connected=true;
+    //最後の操作から5秒間経過
     if (k_uptime_get() - data->last_activity_time > LOW_POWER_TIMEOUT_MS) {
         // 状態②：接続あり・未操作 → 省電力モード（検知あり）
         if (data->is_active){
             data->is_active = false;
             k_timer_stop(&data->polling_timer);
+            //サイクル：LOW_POWER_POLL_INTERVAL
             k_timer_start(&data->polling_timer, LOW_POWER_POLL_INTERVAL, LOW_POWER_POLL_INTERVAL);
         }
     } else {
@@ -242,24 +288,14 @@ static void update_polling_state(struct az1uball_data *data) {
         if (!data->is_active) {
             data->is_active = true;
             k_timer_stop(&data->polling_timer);
+            //サイクル：NORMAL_POLL_INTERVAL
             k_timer_start(&data->polling_timer, NORMAL_POLL_INTERVAL, NORMAL_POLL_INTERVAL);
         }
     }
 }
-//configからsensitivityの取得
-static float parse_sensitivity(const char *sensitivity) {
-    float value;
-    char *endptr;
-    
-    value = strtof(sensitivity, &endptr);
-    if (endptr == sensitivity || (*endptr != 'x' && *endptr != 'X')) {
-        return 1.0f; // デフォルト値
-    }
-    
-    return value;
-}
-
-
+///////////////////////////////////////////////////////////////////////////
+// 11.DEFINE
+///////////////////////////////////////////////////////////////////////////
 #define AZ1UBALL_DEFINE(n)                                             \
     static struct az1uball_data az1uball_data_##n;                     \
     static const struct az1uball_config az1uball_config_##n = {        \
@@ -277,6 +313,3 @@ static float parse_sensitivity(const char *sensitivity) {
                           NULL);
 
 DT_INST_FOREACH_STATUS_OKAY(AZ1UBALL_DEFINE)
-
-
-
