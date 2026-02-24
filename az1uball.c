@@ -120,8 +120,8 @@ void az1uball_read_data_work(struct k_work *work)
         data->last_activity_time = now;
     }
 
-    //レイヤー2なら
-    if (layer == 2) {
+    //カーソルレイヤー
+    if (layer == 3) {
         if (abs(delta_x) > abs(delta_y)) delta_y = 0;
         else delta_x = 0;
         if (delta_y > 1) {
@@ -148,7 +148,7 @@ void az1uball_read_data_work(struct k_work *work)
     // 通常のマウス処理（レイヤー0など）
     } else if (delta_x != 0 || delta_y != 0) {
         //レイヤー1は高速モード
-        if (layer == 1) scaling *= 3.0f;   //感度3倍
+        if (layer == 2) scaling *= 3.0f;   //感度3倍
         // 動的倍率変更
         if (lshift_pressed ){
             scaling /= 3.0f;   //shift 1/3倍
@@ -165,9 +165,9 @@ void az1uball_read_data_work(struct k_work *work)
         zmk_behavior_invoke_binding(&binding, event, data->sw_pressed);  //Jキー扱い
     }
 
-    // レイヤー3のみジグラー操作
+    // ジグラーレイヤーのみ、ジグラー操作
     if ( now - data->last_activity_time >= JIGGLE_INTERVAL_MS
-         && layer == 3 ) {
+         && layer == 1 ) {
         data->last_activity_time = now;
         input_report_rel(data->dev, INPUT_REL_X, JIGGLE_DELTA_X, true, K_NO_WAIT);
         k_sleep(K_MSEC(10));
