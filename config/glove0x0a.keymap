@@ -39,6 +39,7 @@
 //2026.02.23 #XXX ZIGGLER ON/OFFのため、JキーをF13へ。(物理スイッチあり)
 //2026.02.23 #765 I2CのSDA(D4)、SCL(D5)を明示的に指定。
 //2026.02.23 #798 I2Cでマウス、Fn1で速度追加、Fn2でカーソル、ジグラーはレイヤー3へ。
+//2026.02.23 #800 I2Cでマウス、ジグラーはレイヤー1へ。Fn2で速度追加、Fn3でカーソル。レイヤー1は未点灯。
 
 / {
     //macro
@@ -139,7 +140,7 @@
             mods = <MOD_LSFT>;
         };
        //Q->Fn1:Alt(F4)->Fn1+Alt:F1
-       QUIT: QUIT {
+       QUIT_F1: QUIT_F1 {
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
             bindings = <&kp LA(F4)>, <&kp F1>;
@@ -251,10 +252,10 @@
         //Custom + FKeys + Vol
         layer_fn2 {
           bindings = <
-  &kp  ESC   &QUIT      &kp  F2    &kp  UP    &kp  LG(R) &kp  LC(T) &kp  F6    &kp  PIPE_ &kp  PSCRN &kp  F9    &kp  EQUAL &kp  LBKT
-  &kp  LGUI  &kp  LALT  &kp  LEFT  &kp  DOWN  &kp  RIGHT &kp  F3    &kp  RBKT  &trans     &kp  HOME  &kp  PG_UP &kp  INT1  &trans
-  &trans     &kp  LC(W) &kp  LG(X) &kp  LG(E) &kp  F4    &kp  F5    &kp  NUHS  &kp  DEL   &kp  END   &kp  PG_DN &kp  SLASH &trans
-  &trans     &trans     &trans     &trans     &mo  2     &kp  BSPC             &ind_bat   &kp  TAB   &App_F10   &F7_F11    &F8_F12
+  &kp  ESC   &QUIT_F1   &kp  F2    &kp  UP    &none      &kp  LC(T) &kp  F6    &kp  PIPE_ &kp  PSCRN &kp  F9    &kp  EQUAL &kp  LBKT /* "R" */
+  &kp  LALT  &kp  LGUI  &kp  LEFT  &kp  DOWN  &kp  RIGHT &kp  F3    &kp  RBKT  &trans     &kp  HOME  &kp  PG_UP &kp  INT1  &trans    /* ":" */
+  &trans     &kp  LC(W) &none      &none      &kp  F4    &kp  F5    &kp  NUHS  &kp  DEL   &kp  END   &kp  PG_DN &kp  SLASH &trans    /* "X","C" */
+  &trans     &trans     &trans     &mkp RCLK  &mo  2     &kp  BSPC             &ind_bat   &kp  TAB   &App_F10   &F7_F11    &F8_F12
           >;
         };
         //Number + Bluetooth 
@@ -263,7 +264,7 @@
   &kp  ESC   &kp  N1    &kp  N2    &kp  N3    &kp N4     &kp  N5    &kp  N6    &kp  N7    &kp  N8    &kp  N9    &kp  N0    &trans
   &trans     &MY_U      &MY_L      &MY_D      &MY_R      &kp  F3    &kp  RBKT  &trans     &_vol_dn   &_vol_up   &trans     &trans
   &trans     &out _USB  &out _BLE  &bt BT_CLR &kp F4     &kp  F5    &kp  NUHS  &kp  DEL   &trans     &trans     &kp  SLASH &trans
-  &trans     &trans     &trans     &mkp RCLK  &ind_bat   &kp  LGUI  &mo  3     &bt  _BT 0 &bt  _BT 1 &bt  _BT 2 &bt  _BT 3
+  &trans     &trans     &trans     &trans     &ind_bat   &kp  LGUI  &mo  3     &bt  _BT 0 &bt  _BT 1 &bt  _BT 2 &bt  _BT 3
           >;
         };
     };

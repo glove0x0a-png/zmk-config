@@ -121,7 +121,7 @@ void az1uball_read_data_work(struct k_work *work)
     }
 
     //カーソルレイヤー
-    if (layer == 3) {
+    if (layer == 2) {
         if (abs(delta_x) > abs(delta_y)) delta_y = 0;
         else delta_x = 0;
         if (delta_y > 1) {
@@ -147,8 +147,8 @@ void az1uball_read_data_work(struct k_work *work)
         }
     // 通常のマウス処理（レイヤー0など）
     } else if (delta_x != 0 || delta_y != 0) {
-        //レイヤー1は高速モード
-        if (layer == 2) scaling *= 3.0f;   //感度3倍
+        //高速モードレイヤー
+        if (layer == 3) scaling *= 3.0f;   //感度3倍
         // 動的倍率変更
         if (lshift_pressed ){
             scaling /= 3.0f;   //shift 1/3倍
