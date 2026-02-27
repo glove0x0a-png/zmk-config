@@ -103,10 +103,10 @@ void az1uball_read_data_work(struct k_work *work)
 
     int16_t delta_x,delta_y;
     //移動距離(誤作動防止)
-    if( abs((int16_t)buf[1]) > abs(buf[0])) delta_x =    (int16_t)buf[1] * 6;
-    else                                    delta_x = -1*(int16_t)buf[0] * 6;
-    if( abs((int16_t)buf[3]) > abs(buf[2])) delta_y =    (int16_t)buf[3] * 6;
-    else                                    delta_y = -1*(int16_t)buf[2] * 6;
+    if( abs((int16_t)buf[1])   > abs(buf[0])+5) delta_x= 50//delta_x =    (int16_t)buf[1] * 6;
+    if( abs((int16_t)buf[1])+5 < abs(buf[0])  ) delta_x=-50//delta_x = -1*(int16_t)buf[0] * 6;
+    if( abs((int16_t)buf[3])   > abs(buf[2])+5) delta_y= 50//delta_y =    (int16_t)buf[3] * 6;
+    if( abs((int16_t)buf[3])+5 < abs(buf[2])  ) delta_y=-50//delta_y = -1*(int16_t)buf[2] * 6;
     bool  btn_push  = (buf[4] & MSK_SWITCH_STATE) != 0;
 
     //現レイヤ
@@ -151,14 +151,14 @@ void az1uball_read_data_work(struct k_work *work)
     // 通常のマウス処理（レイヤー0など）
     } else if (delta_x != 0 || delta_y != 0) {
         //レイヤー変化
-        if (layer == 3) scaling /= 2.0f;
+        if (layer == 3) scaling *= 2.0f;
         // 動的倍率変更
         if (lshift_pressed ){
-            scaling /= 5.0f;   //shift
+            scaling /= 2.0f;   //shift
         }
-        for (int i = 0; i < 3; i++) {
-            if (delta_x != 0) input_report_rel(data->dev, INPUT_REL_X, delta_x / 3 * scaling, false, K_NO_WAIT);
-            if (delta_y != 0) input_report_rel(data->dev, INPUT_REL_Y, delta_y / 3 * scaling, false, K_NO_WAIT);
+        for (int i = 0; i < 2; i++) {
+            if (delta_x != 0) input_report_rel(data->dev, INPUT_REL_X, delta_x / 2 * scaling, false, K_NO_WAIT);
+            if (delta_y != 0) input_report_rel(data->dev, INPUT_REL_Y, delta_y / 2 * scaling, false, K_NO_WAIT);
             input_report_rel(data->dev, INPUT_REL_Y, 0, true, K_NO_WAIT);
         }
     }
