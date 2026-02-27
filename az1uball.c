@@ -102,8 +102,8 @@ void az1uball_read_data_work(struct k_work *work)
     i2c_read_dt(&config->i2c, buf, sizeof(buf));
 
     //移動距離
-    int16_t delta_x = (int16_t)buf[3] - (int16_t)buf[2];
-    int16_t delta_y = (int16_t)buf[0] - (int16_t)buf[1];
+    int16_t delta_x = (int16_t)buf[0] - (int16_t)buf[1];
+    int16_t delta_y = (int16_t)buf[3] - (int16_t)buf[2];
     bool  btn_push  = (buf[4] & MSK_SWITCH_STATE) != 0;
 
     //現レイヤ

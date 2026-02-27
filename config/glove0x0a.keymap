@@ -42,88 +42,8 @@
 //2026.02.23 #800 I2Cでマウス、ジグラーはレイヤー1へ。Fn2で速度追加、Fn3でカーソル。レイヤー1は未点灯。
 
 / {
-    //macro
-    macros {
-        //1押し、大移動
-        tap_UP: tap_UP {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings
-                = <&mmv MOVE_X(9000)>
-                ;
-        };
-        large_U: large_U {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings
-                = <&macro_press &tap_UP>
-                , <&macro_wait_time 500>
-                ;
-        };
-        large_R: large_R {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings
-                = <&mmv MOVE_Y(-9000)>
-                , <&macro_wait_time 1000>
-                ;
-        };
-        large_L: large_L {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings
-                = <&mmv MOVE_X(-9000)>
-                , <&macro_wait_time 1000>
-                ;
-        };
-        large_D: large_D {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings
-                = <&mmv MOVE_Y(9000)>
-                , <&macro_wait_time 1000>
-                ;
-        };
-    };
-
     //behaviors
     behaviors {
-        //長押し制御(スクロールの初動待機)
-        tp_test: tp_test {
-          compatible = "zmk,behavior-hold-tap";
-          #binding-cells = <2>;
-          flavor = "tap-preferred";
-          tapping-term-ms = <250>;
-          bindings = <&MY_D>, <&MY_U>;
-        };
-        tp_UP: tp_UP {
-          compatible = "zmk,behavior-hold-tap";
-          #binding-cells = <2>;
-          flavor = "tap-preferred";
-          tapping-term-ms = <300>;
-          bindings = <&large_U>, <&MY_U>;
-        };
-        tp_LE: tp_LE {
-          compatible = "zmk,behavior-hold-tap";
-          #binding-cells = <2>;
-          flavor = "tap-preferred";
-          tapping-term-ms = <300>;
-          bindings = <&large_L>, <&MY_L>;
-        };
-        tp_RI: tp_RI {
-          compatible = "zmk,behavior-hold-tap";
-          #binding-cells = <2>;
-          flavor = "tap-preferred";
-          tapping-term-ms = <300>;
-          bindings = <&large_R>, <&MY_R>;
-        };
-        tp_DW: tp_DW {
-          compatible = "zmk,behavior-hold-tap";
-          #binding-cells = <2>;
-          flavor = "tap-preferred";
-          tapping-term-ms = <300>;
-          bindings = <&large_D>, <&MY_D>;
-        };
 //★mod-morph-----------------------------------------------
         //Shift
         //ボリューム操作(Win->UNIX)
@@ -190,6 +110,19 @@
             bindings = <&mmv LO_D>, <&mmv HI_D>;
             mods = <MOD_LSFT>;
         };
+        //スクロール
+        SC_U_L: SC_U_L{
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&msc SC_U>, <&msc SC_L>;
+            mods = <MOD_LSFT>;
+        };
+        SC_D_R: SC_D_R{
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&msc SC_D>, <&msc SC_R>;
+            mods = <MOD_LSFT>;
+        };
         //LED制御
         capslock_led: capslock_led {
             compatible = "zmk,behavior-status-indicator";
@@ -253,8 +186,8 @@
         layer_fn2 {
           bindings = <
   &kp  ESC   &QUIT_F1   &kp  F2    &kp  UP    &none      &kp  LC(T) &kp  F6    &kp  PIPE_ &kp  PSCRN &kp  F9    &kp  EQUAL &kp  LBKT /* "R" */
-  &kp  LALT  &kp  LGUI  &kp  LEFT  &kp  DOWN  &kp  RIGHT &kp  F3    &kp  RBKT  &trans     &kp  HOME  &kp  PG_UP &kp  INT1  &trans    /* ":" */
-  &trans     &kp  LC(W) &none      &none      &kp  F4    &kp  F5    &kp  NUHS  &kp  DEL   &kp  END   &kp  PG_DN &kp  SLASH &trans    /* "X","C" */
+  &kp  LGUI  &kp  LALT  &kp  LEFT  &kp  DOWN  &kp  RIGHT &kp  F3    &kp  RBKT  &trans     &kp  HOME  &kp  PG_UP &kp  INT1  &trans    /* ":" */
+  &trans     &kp  LC(W) &_vol_dn   &_vol_up   &kp  F4    &kp  F5    &kp  NUHS  &kp  DEL   &kp  END   &kp  PG_DN &kp  SLASH &trans    /* "X","C" */
   &trans     &trans     &trans     &mkp RCLK  &mo  2     &kp  BSPC             &ind_bat   &kp  TAB   &App_F10   &F7_F11    &F8_F12
           >;
         };
@@ -262,10 +195,91 @@
         layer_fn3 {
           bindings = <
   &kp  ESC   &kp  N1    &kp  N2    &kp  N3    &kp N4     &kp  N5    &kp  N6    &kp  N7    &kp  N8    &kp  N9    &kp  N0    &trans
-  &trans     &MY_U      &MY_L      &MY_D      &MY_R      &kp  F3    &kp  RBKT  &trans     &_vol_dn   &_vol_up   &trans     &trans
+  &trans     &MY_U      &MY_L      &MY_D      &MY_R      &kp  F3    &kp  RBKT  &trans     &SC_U_L    &SC_D_R    &trans     &trans
   &trans     &out _USB  &out _BLE  &bt BT_CLR &kp F4     &kp  F5    &kp  NUHS  &kp  DEL   &trans     &trans     &kp  SLASH &trans
   &trans     &trans     &trans     &trans     &ind_bat   &kp  LGUI  &mo  3     &bt  _BT 0 &bt  _BT 1 &bt  _BT 2 &bt  _BT 3
           >;
         };
     };
 };
+//2026.02.27 未使用
+    //macro
+    //macros {
+    //    //1押し、大移動
+    //    tap_UP: tap_UP {
+    //        compatible = "zmk,behavior-macro";
+    //        #binding-cells = <0>;
+    //        bindings
+    //            = <&mmv MOVE_X(9000)>
+    //            ;
+    //    };
+    //    large_U: large_U {
+    //        compatible = "zmk,behavior-macro";
+    //        #binding-cells = <0>;
+    //        bindings
+    //            = <&macro_press &tap_UP>
+    //            , <&macro_wait_time 500>
+    //            ;
+    //    };
+    //    large_R: large_R {
+    //        compatible = "zmk,behavior-macro";
+    //        #binding-cells = <0>;
+    //        bindings
+    //            = <&mmv MOVE_Y(-9000)>
+    //            , <&macro_wait_time 1000>
+    //            ;
+    //    };
+    //    large_L: large_L {
+    //        compatible = "zmk,behavior-macro";
+    //        #binding-cells = <0>;
+    //        bindings
+    //            = <&mmv MOVE_X(-9000)>
+    //            , <&macro_wait_time 1000>
+    //            ;
+    //    };
+    //    large_D: large_D {
+    //        compatible = "zmk,behavior-macro";
+    //        #binding-cells = <0>;
+    //        bindings
+    //            = <&mmv MOVE_Y(9000)>
+    //            , <&macro_wait_time 1000>
+    //            ;
+    //    };
+    //};
+
+        //長押し制御(スクロールの初動待機)
+        //tp_test: tp_test {
+        //  compatible = "zmk,behavior-hold-tap";
+        //  #binding-cells = <2>;
+        //  flavor = "tap-preferred";
+        //  tapping-term-ms = <250>;
+        //  bindings = <&MY_D>, <&MY_U>;
+        //};
+        //tp_UP: tp_UP {
+        //  compatible = "zmk,behavior-hold-tap";
+        //  #binding-cells = <2>;
+        //  flavor = "tap-preferred";
+        //  tapping-term-ms = <300>;
+        //  bindings = <&large_U>, <&MY_U>;
+        //};
+        //tp_LE: tp_LE {
+        //  compatible = "zmk,behavior-hold-tap";
+        //  #binding-cells = <2>;
+        //  flavor = "tap-preferred";
+        //  tapping-term-ms = <300>;
+        //  bindings = <&large_L>, <&MY_L>;
+        //};
+        //tp_RI: tp_RI {
+        //  compatible = "zmk,behavior-hold-tap";
+        //  #binding-cells = <2>;
+        //  flavor = "tap-preferred";
+        //  tapping-term-ms = <300>;
+        //  bindings = <&large_R>, <&MY_R>;
+        //};
+        //tp_DW: tp_DW {
+        //  compatible = "zmk,behavior-hold-tap";
+        //  #binding-cells = <2>;
+        //  flavor = "tap-preferred";
+        //  tapping-term-ms = <300>;
+        //  bindings = <&large_D>, <&MY_D>;
+        //};
