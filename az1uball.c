@@ -102,7 +102,7 @@ void az1uball_read_data_work(struct k_work *work)
     i2c_read_dt(&config->i2c, buf, sizeof(buf));
 
     //移動距離
-    int16_t delta_x = (int16_t)buf[0] - (int16_t)buf[1];
+    int16_t delta_x = (int16_t)buf[1] - (int16_t)buf[0];
     int16_t delta_y = (int16_t)buf[3] - (int16_t)buf[2];
     bool  btn_push  = (buf[4] & MSK_SWITCH_STATE) != 0;
 
@@ -153,9 +153,9 @@ void az1uball_read_data_work(struct k_work *work)
         if (lshift_pressed ){
             scaling /= 3.0f;   //shift 1/3倍
         }
-        for (int i = 0; i < 2; i++) {
-            if (delta_x != 0) input_report_rel(data->dev, INPUT_REL_X, delta_x / 2 * scaling, true, K_NO_WAIT);
-            if (delta_y != 0) input_report_rel(data->dev, INPUT_REL_Y, delta_y / 2 * scaling, true, K_NO_WAIT);
+        for (int i = 0; i < 3; i++) {
+            if (delta_x != 0) input_report_rel(data->dev, INPUT_REL_X, delta_x / 3 * scaling, true, K_NO_WAIT);
+            if (delta_y != 0) input_report_rel(data->dev, INPUT_REL_Y, delta_y / 3 * scaling, true, K_NO_WAIT);
         }
     }
     //ボタン押下があれば(レイヤー操作が複雑なのでJのみ)
