@@ -147,14 +147,16 @@ void az1uball_read_data_work(struct k_work *work)
         }
     // 通常のマウス処理（レイヤー0など）
     } else if (delta_x != 0 || delta_y != 0) {
+        //基本が超移動
+        scaling *= 3.0f;
         //高速モードレイヤー
-        if (layer == 3) scaling *= 3.0f;   //感度3倍
+        if (layer == 3) scaling /= 3.0f;   //1/3へ
         // 動的倍率変更
         if (lshift_pressed ){
-            scaling /= 3.0f;   //shift 1/3倍
+            scaling /= 9.0f;   //shift 1/9倍
         }
         for (int i = 0; i < 3; i++) {
-            if (delta_x != 0) input_report_rel(data->dev, INPUT_REL_X, delta_x / 3 * scaling, true, K_NO_WAIT);
+            if (delta_x != 0) input_report_rel(data->dev, INPUT_REL_X, delta_x / 3 * scaling, false, K_NO_WAIT);
             if (delta_y != 0) input_report_rel(data->dev, INPUT_REL_Y, delta_y / 3 * scaling, true, K_NO_WAIT);
         }
     }
