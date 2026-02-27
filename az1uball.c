@@ -101,7 +101,7 @@ void az1uball_read_data_work(struct k_work *work)
     //read
     i2c_read_dt(&config->i2c, buf, sizeof(buf));
 
-    int16_t delta_x,delta_y;
+    int16_t delta_x=0,delta_y=0;
     //移動距離(誤作動防止)
     if( abs((int16_t)buf[1])   > abs(buf[0])+5) delta_x= 50; //delta_x =    (int16_t)buf[1] * 6;
     if( abs((int16_t)buf[1])+5 < abs(buf[0])  ) delta_x=-50; //delta_x = -1*(int16_t)buf[0] * 6;
