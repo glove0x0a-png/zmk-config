@@ -114,11 +114,6 @@ void az1uball_read_data_work(struct k_work *work)
     else if( abs((int16_t)buf[2]) > abs(buf[3])+DED_ZONE) delta_y=-MOUSE_VAL; //buf[2]=上
     bool  btn_push  = (buf[4] & MSK_SWITCH_STATE) != 0;
 
-    if( delta_x != 0 && delta_x != 0 ){
-        delta_x /= 1.41421346;  //√2(cos 45)
-        delta_y /= 1.41421346;  //√2(sin 45)
-    }
-
     //前回操作時間から、無効化時間以内なら加速度加算
     if ( now - data->last_activity_time < NUTORAL ){
       if ( data->pre_x > 0 & delta_x > 0 ) delta_x = data->pre_x + ACCEL;
@@ -126,6 +121,12 @@ void az1uball_read_data_work(struct k_work *work)
       if ( data->pre_y > 0 & delta_y > 0 ) delta_y = data->pre_y + ACCEL;
       if ( data->pre_y < 0 & delta_y < 0 ) delta_y = data->pre_y - ACCEL;
     }
+
+    if( delta_x != 0 && delta_x != 0 ){
+        delta_x /= 1.41421346;  //√2(cos 45)
+        delta_y /= 1.41421346;  //√2(sin 45)
+    }
+
     //前回移動量保存。
     data->pre_x=delta_x;
     data->pre_y=delta_y;
