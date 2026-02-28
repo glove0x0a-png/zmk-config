@@ -24,6 +24,9 @@
 #define JIGGLE_INTERVAL_MS 180*1000           // ジグラー間隔
 #define JIGGLE_DELTA_X 1                      // X方向にnピクセル分動かす
 
+#define DED_ZONE 2                            // デッドゾーン/マウス動作を検知するまで
+#define MOUSE_VAL 10                          // マウス移動量
+
 
 //struct
 struct zmk_behavior_binding binding = {
@@ -103,10 +106,10 @@ void az1uball_read_data_work(struct k_work *work)
 
     int16_t delta_x=0,delta_y=0;
     //移動距離(誤作動防止)
-    if( abs((int16_t)buf[1])   > abs(buf[0])+5) delta_x= 50; //delta_x =    (int16_t)buf[1] * 6;
-    if( abs((int16_t)buf[1])+5 < abs(buf[0])  ) delta_x=-50; //delta_x = -1*(int16_t)buf[0] * 6;
-    if( abs((int16_t)buf[3])   > abs(buf[2])+5) delta_y= 50; //delta_y =    (int16_t)buf[3] * 6;
-    if( abs((int16_t)buf[3])+5 < abs(buf[2])  ) delta_y=-50; //delta_y = -1*(int16_t)buf[2] * 6;
+    if( abs((int16_t)buf[1])          > abs(buf[0])+DED_ZONE) delta_x= MOUSE_VAL; //delta_x =    (int16_t)buf[1] * 6;
+    if( abs((int16_t)buf[1])+DED_ZONE < abs(buf[0])         ) delta_x=-MOUSE_VAL; //delta_x = -1*(int16_t)buf[0] * 6;
+    if( abs((int16_t)buf[3])          > abs(buf[2])+DED_ZONE) delta_y= MOUSE_VAL; //delta_y =    (int16_t)buf[3] * 6;
+    if( abs((int16_t)buf[3])+DED_ZONE < abs(buf[2])         ) delta_y=-MOUSE_VAL; //delta_y = -1*(int16_t)buf[2] * 6;
     bool  btn_push  = (buf[4] & MSK_SWITCH_STATE) != 0;
 
     //現レイヤ
