@@ -187,7 +187,7 @@
           bindings = <
   &kp  ESC   &QUIT_F1   &kp  F2    &kp  UP    &none      &kp  LC(T) &kp  F6    &kp  PIPE_ &kp  PSCRN &kp  F9    &kp  EQUAL &kp  LBKT /* "R" */
   &kp  LGUI  &kp  LALT  &kp  LEFT  &kp  DOWN  &kp  RIGHT &kp  F3    &kp  RBKT  &trans     &kp  HOME  &kp  PG_UP &kp  INT1  &trans    /* ":" */
-  &trans     &kp  LC(W) &_vol_dn   &_vol_up   &kp  F4    &kp  F5    &kp  NUHS  &kp  DEL   &kp  END   &kp  PG_DN &kp  SLASH &trans    /* "X","C" */
+  &trans     &kp  LC(W) &_vol_dn   &_vol_up   &kp  F4    &kp  F5    &kp  NUHS  &kp  DEL   &kp  END   &kp  PG_DN &kp  SLASH &trans    
   &trans     &trans     &trans     &mkp RCLK  &mo  2     &kp  BSPC             &ind_bat   &kp  TAB   &App_F10   &F7_F11    &F8_F12
           >;
         };
