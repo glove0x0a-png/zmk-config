@@ -40,6 +40,7 @@
 //2026.02.23 #765 I2CのSDA(D4)、SCL(D5)を明示的に指定。
 //2026.02.23 #798 I2Cでマウス、Fn1で速度追加、Fn2でカーソル、ジグラーはレイヤー3へ。
 //2026.02.23 #800 I2Cでマウス、ジグラーはレイヤー1へ。Fn2で速度追加、Fn3でカーソル。レイヤー1は未点灯。
+//2026.02.28 #828 AZ1UBALLのカスタマイズ。移動量,角度,加速度,
 
 / {
     //behaviors
@@ -66,23 +67,11 @@
             bindings = <&kp LA(F4)>, <&kp F1>;
             mods = <MOD_LSFT>;
         };
-        //右下
-        App_F10: App_F10{
+       //N0 & pipe
+       N0_PIPE: N0_PIPE {
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
-            bindings = <&kp K_APP>, <&kp F10>;
-            mods = <MOD_LSFT>;
-        };
-        F7_F11: F7_F11{
-            compatible = "zmk,behavior-mod-morph";
-            #binding-cells = <0>;
-            bindings = <&kp F7>, <&kp F11>;
-            mods = <MOD_LSFT>;
-        };
-        F8_F12: F8_F12{
-            compatible = "zmk,behavior-mod-morph";
-            #binding-cells = <0>;
-            bindings = <&kp F8>, <&kp F12>;
+            bindings = <&kp N0>, <&kp PIPE>;
             mods = <MOD_LSFT>;
         };
         //十字キー
@@ -123,7 +112,7 @@
             bindings = <&msc SC_D>, <&msc SC_R>;
             mods = <MOD_LSFT>;
         };
-        //LED制御
+//★LED制御-------------------------------------------------
         capslock_led: capslock_led {
             compatible = "zmk,behavior-status-indicator";
             #binding-cells = <0>;
@@ -131,14 +120,12 @@
             outputs = <&caps_led>;  // ✅ ラベルと一致
         };
     };
-
     //aliases
     aliases {
         led-red = &caps_led;     // ✅ DT_ALIAS(led_red) が &caps_led を参照
         led-green = &led1;
         led-blue = &led2;
     };
-
     //leds
     leds {
         compatible = "gpio-leds";
@@ -163,7 +150,7 @@
     //keymap
     keymap {
         compatible = "zmk,keymap";
-        //normal
+        //0:normal
 //|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****
         layer_qwerty {
           bindings = <
@@ -173,28 +160,21 @@
   &kp  LCTRL &kp  LGUI  &kp  LALT  &mkp LCLK  &mo  2     &kp  SPACE            &mo  3     &kp  UP    &kp  LEFT  &kp  DOWN  &kp  RIGHT
           >;
         };
-        //jigler
-        layer_fn1 {
-          bindings = <
-  &trans     &trans     &trans     &trans     &trans     &trans     &trans     &trans     &trans     &trans     &trans     &trans
-  &trans     &trans     &trans     &trans     &trans     &trans     &trans     &trans     &trans     &trans     &trans     &trans
-  &trans     &trans     &trans     &trans     &trans     &trans     &trans     &trans     &trans     &trans     &trans     &trans
-  &trans     &trans     &trans     &trans     &trans     &trans     &trans     &trans     &trans     &trans     &trans     &trans
-          >;
-        };
-        //Custom + FKeys + Vol
+        //1:jigler-dummyレイヤー
+        layer_fn1 { bindings = < &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans >; };
+        //2:Custom + FKeys + Vol
         layer_fn2 {
           bindings = <
-  &kp  ESC   &QUIT_F1   &kp  F2    &kp  UP    &none      &kp  LC(T) &kp  F6    &kp  PIPE_ &kp  PSCRN &kp  F9    &kp  EQUAL &kp  LBKT /* "R" */
-  &kp  LGUI  &kp  LALT  &kp  LEFT  &kp  DOWN  &kp  RIGHT &kp  F3    &kp  RBKT  &trans     &kp  HOME  &kp  PG_UP &kp  INT1  &trans    /* ":" */
-  &trans     &kp  LC(W) &_vol_dn   &_vol_up   &kp  F4    &kp  F5    &kp  NUHS  &kp  DEL   &kp  END   &kp  PG_DN &kp  SLASH &trans    
-  &trans     &trans     &trans     &mkp RCLK  &mo  2     &kp  BSPC             &ind_bat   &kp  TAB   &App_F10   &F7_F11    &F8_F12
+  &kp  ESC   &QUIT_F1   &kp  F2    &kp  UP    &kp  PSCRN &kp  LC(T) &kp  F6    &kp  F7    &kp  F8    &kp  F9    &kp  F10   &kp  LBKT
+  &kp  LGUI  &kp  LALT  &kp  LEFT  &kp  DOWN  &kp  RIGHT &kp  F3    &kp  RBKT  &trans     &kp  HOME  &kp  PG_UP &kp  INT1  &kp  EQUAL
+  &trans     &kp  LC(W) &_vol_dn   &_vol_up   &kp  F4    &kp  F5    &kp  NUHS  &kp  DEL   &kp  END   &kp  PG_DN &kp  SLASH &trans
+  &trans     &trans     &trans     &mkp RCLK  &mo  2     &kp  BSPC             &ind_bat   &kp  TAB   &kp  K_APP &kp  F11   &kp  F12
           >;
         };
-        //Number + Bluetooth 
+        //3:Number + Bluetooth 
         layer_fn3 {
           bindings = <
-  &kp  ESC   &kp  N1    &kp  N2    &kp  N3    &kp N4     &kp  N5    &kp  N6    &kp  N7    &kp  N8    &kp  N9    &kp  N0    &trans
+  &kp  ESC   &kp  N1    &kp  N2    &kp  N3    &kp N4     &kp  N5    &kp  N6    &kp  N7    &kp  N8    &kp  N9    &N0_PIPE   &trans
   &trans     &MY_U      &MY_L      &MY_D      &MY_R      &kp  F3    &kp  RBKT  &trans     &SC_U_L    &SC_D_R    &trans     &trans
   &trans     &out _USB  &out _BLE  &bt BT_CLR &kp F4     &kp  F5    &kp  NUHS  &kp  DEL   &trans     &trans     &kp  SLASH &trans
   &trans     &trans     &trans     &trans     &ind_bat   &kp  LGUI  &mo  3     &bt  _BT 0 &bt  _BT 1 &bt  _BT 2 &bt  _BT 3
@@ -282,4 +262,23 @@
         //  flavor = "tap-preferred";
         //  tapping-term-ms = <300>;
         //  bindings = <&large_D>, <&MY_D>;
+        //};
+        //右下
+        //App_F10: App_F10{
+        //    compatible = "zmk,behavior-mod-morph";
+        //    #binding-cells = <0>;
+        //    bindings = <&kp K_APP>, <&kp F10>;
+        //    mods = <MOD_LSFT>;
+        //};
+        //F7_F11: F7_F11{
+        //    compatible = "zmk,behavior-mod-morph";
+        //    #binding-cells = <0>;
+        //    bindings = <&kp F7>, <&kp F11>;
+        //    mods = <MOD_LSFT>;
+        //};
+        //F8_F12: F8_F12{
+        //    compatible = "zmk,behavior-mod-morph";
+        //    #binding-cells = <0>;
+        //    bindings = <&kp F8>, <&kp F12>;
+        //    mods = <MOD_LSFT>;
         //};
