@@ -40,8 +40,9 @@
 //2026.02.23 #765 I2CのSDA(D4)、SCL(D5)を明示的に指定。
 //2026.02.23 #798 I2Cでマウス、Fn1で速度追加、Fn2でカーソル、ジグラーはレイヤー3へ。
 //2026.02.23 #800 I2Cでマウス、ジグラーはレイヤー1へ。Fn2で速度追加、Fn3でカーソル。レイヤー1は未点灯。
-//2026.02.28 #828 AZ1UBALLのカスタマイズ。移動量,角度,加速度,
+//2026.02.28 #828 AZ1UBALLのカスタマイズ。移動量,角度,加速度。
 //2026.02.28 #832 左Fnのレイヤー上段にFXを集約。整理。
+//2026.02.28 #833 デバッグ:AZ1UBALLの加速度不良。
 / {
     //behaviors
     behaviors {
@@ -182,103 +183,3 @@
         };
     };
 };
-//2026.02.27 未使用
-    //macro
-    //macros {
-    //    //1押し、大移動
-    //    tap_UP: tap_UP {
-    //        compatible = "zmk,behavior-macro";
-    //        #binding-cells = <0>;
-    //        bindings
-    //            = <&mmv MOVE_X(9000)>
-    //            ;
-    //    };
-    //    large_U: large_U {
-    //        compatible = "zmk,behavior-macro";
-    //        #binding-cells = <0>;
-    //        bindings
-    //            = <&macro_press &tap_UP>
-    //            , <&macro_wait_time 500>
-    //            ;
-    //    };
-    //    large_R: large_R {
-    //        compatible = "zmk,behavior-macro";
-    //        #binding-cells = <0>;
-    //        bindings
-    //            = <&mmv MOVE_Y(-9000)>
-    //            , <&macro_wait_time 1000>
-    //            ;
-    //    };
-    //    large_L: large_L {
-    //        compatible = "zmk,behavior-macro";
-    //        #binding-cells = <0>;
-    //        bindings
-    //            = <&mmv MOVE_X(-9000)>
-    //            , <&macro_wait_time 1000>
-    //            ;
-    //    };
-    //    large_D: large_D {
-    //        compatible = "zmk,behavior-macro";
-    //        #binding-cells = <0>;
-    //        bindings
-    //            = <&mmv MOVE_Y(9000)>
-    //            , <&macro_wait_time 1000>
-    //            ;
-    //    };
-    //};
-
-        //長押し制御(スクロールの初動待機)
-        //tp_test: tp_test {
-        //  compatible = "zmk,behavior-hold-tap";
-        //  #binding-cells = <2>;
-        //  flavor = "tap-preferred";
-        //  tapping-term-ms = <250>;
-        //  bindings = <&MY_D>, <&MY_U>;
-        //};
-        //tp_UP: tp_UP {
-        //  compatible = "zmk,behavior-hold-tap";
-        //  #binding-cells = <2>;
-        //  flavor = "tap-preferred";
-        //  tapping-term-ms = <300>;
-        //  bindings = <&large_U>, <&MY_U>;
-        //};
-        //tp_LE: tp_LE {
-        //  compatible = "zmk,behavior-hold-tap";
-        //  #binding-cells = <2>;
-        //  flavor = "tap-preferred";
-        //  tapping-term-ms = <300>;
-        //  bindings = <&large_L>, <&MY_L>;
-        //};
-        //tp_RI: tp_RI {
-        //  compatible = "zmk,behavior-hold-tap";
-        //  #binding-cells = <2>;
-        //  flavor = "tap-preferred";
-        //  tapping-term-ms = <300>;
-        //  bindings = <&large_R>, <&MY_R>;
-        //};
-        //tp_DW: tp_DW {
-        //  compatible = "zmk,behavior-hold-tap";
-        //  #binding-cells = <2>;
-        //  flavor = "tap-preferred";
-        //  tapping-term-ms = <300>;
-        //  bindings = <&large_D>, <&MY_D>;
-        //};
-        //右下
-        //App_F10: App_F10{
-        //    compatible = "zmk,behavior-mod-morph";
-        //    #binding-cells = <0>;
-        //    bindings = <&kp K_APP>, <&kp F10>;
-        //    mods = <MOD_LSFT>;
-        //};
-        //F7_F11: F7_F11{
-        //    compatible = "zmk,behavior-mod-morph";
-        //    #binding-cells = <0>;
-        //    bindings = <&kp F7>, <&kp F11>;
-        //    mods = <MOD_LSFT>;
-        //};
-        //F8_F12: F8_F12{
-        //    compatible = "zmk,behavior-mod-morph";
-        //    #binding-cells = <0>;
-        //    bindings = <&kp F8>, <&kp F12>;
-        //    mods = <MOD_LSFT>;
-        //};

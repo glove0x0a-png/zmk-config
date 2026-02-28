@@ -150,6 +150,8 @@ static int az1uball_init(const struct device *dev)
     data->sw_pressed = false;
     data->last_activity_time = k_uptime_get();
     data->scaling_factor = parse_sensitivity(config->sensitivity);
+    data->pre_x=0;
+    data->pre_y=0;
 
     device_is_ready(config->i2c.bus); //i2c_初期
     i2c_write_dt(&config->i2c, &cmd, sizeof(cmd));
