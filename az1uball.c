@@ -24,8 +24,10 @@
 #define JIGGLE_INTERVAL_MS 180*1000           // ジグラー間隔
 #define JIGGLE_DELTA_X 1                      // X方向にnピクセル分動かす
 
-#define DED_ZONE 3                            // デッドゾーン/マウス動作を検知するまで
+#define DED_ZONE 1                            // デッドゾーン/マウス動作を検知するまで
 #define MOUSE_VAL 9                           // マウス移動量
+#define NUTORAL K_MSEC(500)                   // 前回移動量の無効化時間
+#define ACCEL 3                               // 加速度
 
 
 //struct
@@ -105,17 +107,28 @@ void az1uball_read_data_work(struct k_work *work)
     i2c_read_dt(&config->i2c, buf, sizeof(buf));
 
     float delta_x=0,delta_y=0;
-    //移動距離(誤作動防止)
-    if( abs((int16_t)buf[1])          > abs(buf[0])+DED_ZONE) delta_x= MOUSE_VAL; //delta_x =    (int16_t)buf[1] * 6;
-    if( abs((int16_t)buf[1])+DED_ZONE < abs(buf[0])         ) delta_x=-MOUSE_VAL; //delta_x = -1*(int16_t)buf[0] * 6;
-    if( abs((int16_t)buf[3])          > abs(buf[2])+DED_ZONE) delta_y= MOUSE_VAL; //delta_y =    (int16_t)buf[3] * 6;
-    if( abs((int16_t)buf[3])+DED_ZONE < abs(buf[2])         ) delta_y=-MOUSE_VAL; //delta_y = -1*(int16_t)buf[2] * 6;
+    //移動距離(誤作動防止のためDED_ZONE考慮)
+    if     ( abs((int16_t)buf[1]) > abs(buf[0])+DED_ZONE) delta_x= MOUSE_VAL; //buf[1]=右
+    else if( abs((int16_t)buf[0]) > abs(buf[1])+DED_ZONE) delta_x=-MOUSE_VAL; //buf[0]=左
+    else if( abs((int16_t)buf[3]) > abs(buf[2])+DED_ZONE) delta_y= MOUSE_VAL; //buf[3]=下
+    else if( abs((int16_t)buf[2]) > abs(buf[3])+DED_ZONE) delta_y=-MOUSE_VAL; //buf[2]=上
     bool  btn_push  = (buf[4] & MSK_SWITCH_STATE) != 0;
 
     if( delta_x != 0 && delta_x != 0 ){
         delta_x /= 1.41421346;  //√2(cos 45)
         delta_y /= 1.41421346;  //√2(sin 45)
     }
+
+    //前回操作時間から、無効化時間以内なら加速度加算
+    if ( now - data->last_activity_time < NUTORAL ){
+      if ( data->pre_x > 0 & delta_x > 0 ) delta_x + ACCEL;
+      if ( data->pre_x < 0 & delta_x < 0 ) delta_x - ACCEL;
+      if ( data->pre_y > 0 & delta_y > 0 ) delta_y + ACCEL;
+      if ( data->pre_y < 0 & delta_y < 0 ) delta_y - ACCEL;
+    }
+    //前回移動量保存。
+    data->pre_x=delta_x;
+    data->pre_y=delta_y;
 
     //現レイヤ
     int layer = zmk_keymap_highest_layer_active();
