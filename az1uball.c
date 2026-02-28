@@ -33,12 +33,9 @@ struct zmk_behavior_binding binding = {
     .param1 = 0x0D,  //HID_USAGE_KEY_J
     .param2 = 0,
 };
-struct zmk_behavior_binding_event event = {
-    .position = 0,.timestamp = now,.layer = 0,
-};
 
 ///////////////////////////////////////////////////////////////////////////
-// 心臓部 az1uball_read_data_work
+// #01.心臓部
 void az1uball_read_data_work(struct k_work *work)
 {
     uint8_t buf[5]; //buf
@@ -48,6 +45,7 @@ void az1uball_read_data_work(struct k_work *work)
     float scaling = data->scaling_factor; //比率
     int layer = zmk_keymap_highest_layer_active(); //現レイヤ
     bool lshift_pressed = zmk_hid_get_explicit_mods() & 0x02;  //左Shift
+    struct zmk_behavior_binding_event event = { .position = 0,.timestamp = now,.layer = 0,}; //event
 
     //i2c_read
     i2c_read_dt(&config->i2c, buf, sizeof(buf));
@@ -111,8 +109,7 @@ void az1uball_read_data_work(struct k_work *work)
 }
 
 ///////////////////////////////////////////////////////////////////////////
-// 03.polling
-///////////////////////////////////////////////////////////////////////////
+// #02.ポーリング
 static void az1uball_polling(struct k_timer *timer)
 {
     struct az1uball_data *data = CONTAINER_OF(timer, struct az1uball_data, polling_timer);
@@ -133,7 +130,8 @@ static void az1uball_polling(struct k_timer *timer)
     return;
 }
 
-// 01.1 感度取得
+///////////////////////////////////////////////////////////////////////////
+// #03-XX.初期処理 / 感度取得
 static float parse_sensitivity(const char *sensitivity) {
     float value;
     char *endptr;
@@ -144,24 +142,20 @@ static float parse_sensitivity(const char *sensitivity) {
     }
     return value;
 }
-
 ///////////////////////////////////////////////////////////////////////////
-/* 01.Initialization of AZ1UBALL */
-///////////////////////////////////////////////////////////////////////////
+// #03 初期処理
 static int az1uball_init(const struct device *dev)
 {
     struct       az1uball_data   *data   = dev->data;
-    const struct az1uball_config *config = dev->config;
-    // コンフィグ取得
-
+    const struct az1uball_config *config = dev->config; // コンフィグ取得
     uint8_t cmd = 0x91;
 
-    data->dev = dev;
+    data->dev = dev; //構造体セット
     data->sw_pressed = false;
     data->last_activity_time = k_uptime_get();
     data->scaling_factor = parse_sensitivity(config->sensitivity);
 
-    device_is_ready(config->i2c.bus);
+    device_is_ready(config->i2c.bus); //i2c_初期
     i2c_write_dt(&config->i2c, &cmd, sizeof(cmd));
 
 
