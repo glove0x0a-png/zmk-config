@@ -123,8 +123,8 @@ void az1uball_read_data_work(struct k_work *work)
     }
 
     if( delta_x != 0 && delta_x != 0 ){
-        delta_x /= 1.41421346;  //√2(cos 45)
-        delta_y /= 1.41421346;  //√2(sin 45)
+        delta_x /= sqrt( delta_x*delta_x + delta_y * delta_y); //cos変換
+        delta_y /= sqrt( delta_x*delta_x + delta_y * delta_y); //sin変換
     }
 
     //前回移動量保存。
