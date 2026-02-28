@@ -122,7 +122,7 @@ void az1uball_read_data_work(struct k_work *work)
       if ( data->pre_y < 0 & delta_y < 0 ) delta_y = data->pre_y - ACCEL;
     }
 
-    if( delta_x != 0 && delta_x != 0 ){
+    if( delta_x != 0 && delta_y != 0 ){
         delta_x /= sqrt( delta_x*delta_x + delta_y * delta_y); //cos変換
         delta_y /= sqrt( delta_x*delta_x + delta_y * delta_y); //sin変換
     }
