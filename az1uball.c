@@ -25,9 +25,9 @@
 #define JIGGLE_DELTA_X 1                      // X方向にnピクセル分動かす
 
 #define DED_ZONE 1                            // デッドゾーン/マウス動作を検知するまで
-#define MOUSE_VAL 9                           // マウス移動量
+#define MOUSE_VAL 6                           // マウス移動量
 #define NUTORAL 500                           // 前回移動量の無効化時間(ms)
-#define ACCEL 6                               // 加速度
+#define ACCEL 2                               // 加速度
 
 
 //struct
@@ -108,7 +108,7 @@ void az1uball_read_data_work(struct k_work *work)
 
     float delta_x=0,delta_y=0;
     //移動距離(誤作動防止のためDED_ZONE考慮)
-    if     ( abs((int16_t)buf[1]) > abs(buf[0])+DED_ZONE) delta_x= MOUSE_VAL; //buf[1]=右
+    if     ( abs((int16_t)buf[1]) > abs(buf[0])+DED_ZOkkNE) delta_x= MOUSE_VAL; //buf[1]=右
     else if( abs((int16_t)buf[0]) > abs(buf[1])+DED_ZONE) delta_x=-MOUSE_VAL; //buf[0]=左
     else if( abs((int16_t)buf[3]) > abs(buf[2])+DED_ZONE) delta_y= MOUSE_VAL; //buf[3]=下
     else if( abs((int16_t)buf[2]) > abs(buf[3])+DED_ZONE) delta_y=-MOUSE_VAL; //buf[2]=上
