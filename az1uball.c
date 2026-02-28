@@ -164,9 +164,9 @@ void az1uball_read_data_work(struct k_work *work)
         if (lshift_pressed ){
             scaling /= 3.0f;   //shift
         }
-        for (int i = 0; i < 3; i++) {
-            input_report_rel(data->dev, INPUT_REL_X, delta_x / 3 * scaling, false, K_NO_WAIT);
-            input_report_rel(data->dev, INPUT_REL_Y, delta_y / 3 * scaling, true, K_NO_WAIT);
+        for (int i = 0; i < 3 * scaling; i++) {
+            input_report_rel(data->dev, INPUT_REL_X, delta_x / 3 , false, K_NO_WAIT);
+            input_report_rel(data->dev, INPUT_REL_Y, delta_y / 3 , true, K_NO_WAIT);
         }
     }
     //ボタン押下があれば(レイヤー操作が複雑なのでJのみ)
