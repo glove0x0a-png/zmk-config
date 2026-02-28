@@ -124,7 +124,7 @@ static void az1uball_polling(struct k_timer *timer)
         k_timer_start(&data->polling_timer, NON_ACTIVE_POLL_INTERVAL, NON_ACTIVE_POLL_INTERVAL);
     //最後の操作から5秒経過
     } else if (k_uptime_get() - data->last_activity_time > LOW_POWER_TIMEOUT_MS) {
-        k_timer_start(&data->polling_timer, LOW_POWER_POLL_INTERVAL, LOW_POWER_POLL_INTERVAL);
+        k_timer_start(&data->polling_timer, NON_ACTIVE_POLL_INTERVAL, NON_ACTIVE_POLL_INTERVAL);
     //操作がある状態
     } else {
         k_timer_start(&data->polling_timer, NORMAL_POLL_INTERVAL, NORMAL_POLL_INTERVAL);
