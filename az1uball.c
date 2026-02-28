@@ -114,12 +114,12 @@ static void az1uball_polling(struct k_timer *timer)
 
     //サイクルセット
     k_timer_stop( &data->polling_timer);
-    //高サイクル:操作がある状態
-    if(k_uptime_get() - data->last_activity_time <= LOW_POWER_TIMEOUT_MS){
+    //高サイクル:USB接続
+    if ( zmk_usb_is_powered() ) {
         k_timer_start(&data->polling_timer, NORMAL_POLL_INTERVAL, NORMAL_POLL_INTERVAL);
     }
-    //低サイクル:操作がなくUSBが無接続
-    else if ( !zmk_usb_is_powered() ) {
+    //低サイクル:操作がない状態&USBではない
+    else if(k_uptime_get() - data->last_activity_time > LOW_POWER_TIMEOUT_MS){
         k_timer_start(&data->polling_timer, NON_ACTIVE_POLL_INTERVAL, NON_ACTIVE_POLL_INTERVAL);
     }
     k_work_submit(&data->work);
