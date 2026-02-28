@@ -24,7 +24,7 @@
 #define JIGGLE_DELTA_X 1                      // X方向にnピクセル分動かす
 #define DED_ZONE 0                            // デッドゾーン/マウス動作を検知するまで
 #define MOUSE_VAL 15                          // マウス移動量
-#define ACCEL 1.2                             // 加速度
+#define ACCEL 3                               // 加速度
 #define NUTORAL 500                           // 前回移動量の無効化時間(ms)
 
 //struct
@@ -57,8 +57,10 @@ void az1uball_read_data_work(struct k_work *work)
     else if( abs((int16_t)buf[2]) > abs(buf[3])+DED_ZONE) delta_y=-MOUSE_VAL; //buf[2]=上
     bool  btn_push  = (buf[4] & MSK_SWITCH_STATE) != 0;
     if ( now - data->last_activity_time < NUTORAL ){ //加速度加算
-      if(( data->pre_x > 0 && delta_x > 0 ) || ( data->pre_x < 0 && delta_x < 0 )) delta_x = data->pre_x * ACCEL;
-      if(( data->pre_y > 0 && delta_y > 0 ) || ( data->pre_y < 0 && delta_y < 0 )) delta_y = data->pre_y * ACCEL;
+      if ( data->pre_x > 0 & delta_x > 0 ) delta_x = data->pre_x + ACCEL;
+      if ( data->pre_x < 0 & delta_x < 0 ) delta_x = data->pre_x - ACCEL;
+      if ( data->pre_y > 0 & delta_y > 0 ) delta_y = data->pre_y + ACCEL;
+      if ( data->pre_y < 0 & delta_y < 0 ) delta_y = data->pre_y - ACCEL;
     }
     if( delta_x != 0 && delta_y != 0 ){ //角度計算
         delta_x /= sqrt( delta_x*delta_x + delta_y * delta_y); //cos変換
@@ -114,13 +116,15 @@ static void az1uball_polling(struct k_timer *timer)
 
     //サイクルセット
     k_timer_stop( &data->polling_timer);
-    //高サイクル:操作がある状態
-    if(k_uptime_get() - data->last_activity_time <= LOW_POWER_TIMEOUT_MS){
-        k_timer_start(&data->polling_timer, NORMAL_POLL_INTERVAL, NORMAL_POLL_INTERVAL);
-    }
-    //低サイクル:操作がなくUSBが無接続
-    else if ( !zmk_usb_is_powered() ) {
+    //BLE未接続 & USB無接続
+    if ( !zmk_ble_active_profile_is_connected() && !zmk_usb_is_powered() ) {
         k_timer_start(&data->polling_timer, NON_ACTIVE_POLL_INTERVAL, NON_ACTIVE_POLL_INTERVAL);
+    //最後の操作から5秒経過
+    } else if (k_uptime_get() - data->last_activity_time > LOW_POWER_TIMEOUT_MS) {
+        k_timer_start(&data->polling_timer, NON_ACTIVE_POLL_INTERVAL, NON_ACTIVE_POLL_INTERVAL);
+    //操作がある状態
+    } else {
+        k_timer_start(&data->polling_timer, NORMAL_POLL_INTERVAL, NORMAL_POLL_INTERVAL);
     }
     k_work_submit(&data->work);
     return;
