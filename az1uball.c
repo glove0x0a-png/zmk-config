@@ -21,12 +21,12 @@
 #define NON_ACTIVE_POLL_INTERVAL K_MSEC(2000) // 省電力時:  2000ms (0.5Hz)
 #define LOW_POWER_TIMEOUT_MS 5000             // 5秒間入力がないと省電力モードへ
 
-#define JIGGLE_INTERVAL_MS 180*1000           // ジグラー間隔
+#define JIGGLE_INTERVAL_MS 180*1000           // ジグラー間隔(ms)
 #define JIGGLE_DELTA_X 1                      // X方向にnピクセル分動かす
 
 #define DED_ZONE 1                            // デッドゾーン/マウス動作を検知するまで
 #define MOUSE_VAL 9                           // マウス移動量
-#define NUTORAL K_MSEC(500)                   // 前回移動量の無効化時間
+#define NUTORAL 500                           // 前回移動量の無効化時間(ms)
 #define ACCEL 3                               // 加速度
 
 
