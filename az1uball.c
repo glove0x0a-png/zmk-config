@@ -27,7 +27,7 @@
 #define DED_ZONE 1                            // デッドゾーン/マウス動作を検知するまで
 #define MOUSE_VAL 9                           // マウス移動量
 #define NUTORAL 500                           // 前回移動量の無効化時間(ms)
-#define ACCEL 3                               // 加速度
+#define ACCEL 6                               // 加速度
 
 
 //struct
@@ -177,9 +177,9 @@ void az1uball_read_data_work(struct k_work *work)
         if (lshift_pressed ){
             scaling /= 3.0f;   //shift
         }
-        for (int i = 0; i < 3 * scaling; i++) {
-            input_report_rel(data->dev, INPUT_REL_X, delta_x / 3 , false, K_NO_WAIT);
-            input_report_rel(data->dev, INPUT_REL_Y, delta_y / 3 , true, K_NO_WAIT);
+        for (int i = 0; i < 3; i++) {
+            input_report_rel(data->dev, INPUT_REL_X, delta_x / 3 * scaling, false, K_NO_WAIT);
+            input_report_rel(data->dev, INPUT_REL_Y, delta_y / 3 * scaling, true , K_NO_WAIT);
         }
     }
     //ボタン押下があれば(レイヤー操作が複雑なのでJのみ)
