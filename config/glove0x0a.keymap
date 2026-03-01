@@ -46,6 +46,7 @@
 //2026.03.01 #837 デバッグ:AZ1UBALL:方向検出不良(if右else左else下else上->if右else左 if下else上)
 //2026.03.01 #838 デバッグ:AZ1UBALL:cos/sinの符号不良。
 //2026.03.01 #841 デバッグ:AZ1UBALL:前回移動量の保存条件を変更
+//2026.03.01 #842 デバッグ:AZ1UBALL:前回移動量のクリアを明記
 / {
     //behaviors
     behaviors {
