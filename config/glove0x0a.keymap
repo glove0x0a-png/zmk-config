@@ -47,6 +47,7 @@
 //2026.03.01 #841 デバッグ:AZ1UBALL:前回移動量の保存条件を変更。
 //2026.03.01 #842 デバッグ:AZ1UBALL:前回移動量のクリアを明記。
 //2026.03.01 #843 デバッグ:AZ1UBALL:加速度上限制御。
+//2026.03.01 #847 Ctrlキーを再配置、BLE機能関連のキー再配置
 / {
     //behaviors
     behaviors {
@@ -194,7 +195,7 @@
   &kp  ESC   &F1_F11    &F2_F12    &kp  UP    &kp  F4    &kp  F5    &kp  F6    &kp  F7    &kp  F8    &kp  F9    &kp  F10   &kp  LBKT
   &kp  LGUI  &kp  LALT  &kp  LEFT  &kp  DOWN  &kp  RIGHT &kp  F3    &kp  RBKT  &trans     &kp  HOME  &kp  PG_UP &kp  INT1  &kp  EQUAL
   &trans     &_vol_mute &_vol_dn   &_vol_up   &kp  PSCRN &kp  K_APP &kp  NUHS  &kp  DEL   &kp  END   &kp  PG_DN &kp  SLASH &trans
-  &trans     &trans     &trans     &mkp RCLK  &mo  2     &kp  BSPC             &kp  LCTRL &kp  TAB   &none      &none      &none
+  &trans     &trans     &trans     &mkp RCLK  &mo  2     &kp  BSPC             &kp  LCTRL &kp  TAB   &trans     &trans     &trans
           >;
         };
         //3:Number + Bluetooth 
@@ -203,7 +204,7 @@
   &bt BT_CLR &kp  N1    &kp  N2    &kp  N3    &kp N4     &kp  N5    &kp  N6    &kp  N7    &kp  N8    &kp  N9    &N0_PIPE   &trans
   &trans     &MY_U      &MY_L      &MY_D      &MY_R      &kp  F3    &kp  RBKT  &trans     &SC_U_L    &SC_D_R    &trans     &trans
   &trans     &USB_BLE   &bt  _BT 0 &bt  _BT 1 &bt  _BT 2 &kp  K_APP &kp  NUHS  &kp  DEL   &trans     &trans     &kp  SLASH &trans
-  &trans     &trans     &trans     &trans     &kp  LCTRL &kp  LGUI             &mo  3     &ind_bat   &none      &none      &none
+  &trans     &trans     &trans     &trans     &kp  LCTRL &kp  LGUI             &mo  3     &ind_bat   &trans     &trans     &trans
           >;
         };
     };
