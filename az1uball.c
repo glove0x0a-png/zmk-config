@@ -48,8 +48,8 @@ void az1uball_read_data_work(struct k_work *work)
     i2c_read_dt(&config->i2c, buf, sizeof(buf));
 
     float delta_x=0,delta_y=0; //移動距離(誤作動防止のためDED_ZONE考慮)
-    if     ( abs((int16_t)buf[1]) > abs(buf[0])) delta_x= MOUSE_VAL; //buf[1]=右
-    else if( abs((int16_t)buf[0]) > abs(buf[1])) delta_x=-MOUSE_VAL; //buf[0]=左
+    if     ( abs((int16_t)buf[1]) > abs(buf[0])) delta_x= MOUSE_VAL*2; //buf[1]=右:指の向きで接点が短いので感度2倍
+    else if( abs((int16_t)buf[0]) > abs(buf[1])) delta_x=-MOUSE_VAL*2; //buf[0]=左:同上
     if     ( abs((int16_t)buf[3]) > abs(buf[2])) delta_y= MOUSE_VAL; //buf[3]=下
     else if( abs((int16_t)buf[2]) > abs(buf[3])) delta_y=-MOUSE_VAL; //buf[2]=上
     bool  btn_push  = (buf[4] & MSK_SWITCH_STATE) != 0; //true:押下、false:未押下
