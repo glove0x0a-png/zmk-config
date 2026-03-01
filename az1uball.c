@@ -58,8 +58,8 @@ void az1uball_read_data_work(struct k_work *work)
       if(( data->pre_y > 0 && delta_y > 0 ) || ( data->pre_y < 0 && delta_y < 0 )) delta_y = data->pre_y * ACCEL_VAL;
     }
     if( delta_x != 0 && delta_y != 0 ){ //角度計算
-        delta_x = delta_x * delta_x / sqrt( delta_x*delta_x + delta_y * delta_y); //cos変換
-        delta_y = delta_y * delta_y / sqrt( delta_x*delta_x + delta_y * delta_y); //sin変換
+        delta_x = delta_x * abs(delta_x) / sqrt( delta_x*delta_x + delta_y * delta_y); //cos変換
+        delta_y = delta_y * abs(delta_y) / sqrt( delta_x*delta_x + delta_y * delta_y); //sin変換
     }
     data->pre_x=delta_x; //前回移動量保存。
     data->pre_y=delta_y;

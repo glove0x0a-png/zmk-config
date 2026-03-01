@@ -43,6 +43,7 @@
 //2026.02.28 #828 AZ1UBALLのカスタマイズ。移動量,角度,加速度。
 //2026.02.28 #832 左Fnのレイヤー上段にFXを集約。整理。
 //2026.02.28 #834 デバッグ:AZ1UBALLの加速度不良。
+//2026.03.01 #837 デバッグ:AZ1UBALLの方向検出不良(if右else左else下else上->if右else左 if下else上)
 / {
     //behaviors
     behaviors {
