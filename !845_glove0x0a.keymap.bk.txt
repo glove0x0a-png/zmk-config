@@ -174,16 +174,16 @@
   &kp  ESC   &QUIT_F1   &kp  F2    &kp  UP    &kp  PSCRN &kp  LC(T) &kp  F6    &kp  F7    &kp  F8    &kp  F9    &kp  F10   &kp  LBKT
   &kp  LGUI  &kp  LALT  &kp  LEFT  &kp  DOWN  &kp  RIGHT &kp  F3    &kp  RBKT  &trans     &kp  HOME  &kp  PG_UP &kp  INT1  &kp  EQUAL
   &trans     &kp  LC(W) &_vol_dn   &_vol_up   &kp  F4    &kp  F5    &kp  NUHS  &kp  DEL   &kp  END   &kp  PG_DN &kp  SLASH &trans
-  &trans     &none/*#*/ &none/*#*/ &mkp RCLK  &mo  2     &kp  BSPC             &kp  LCTRL &kp  TAB   &none/*#*/ &none/*#*/ &none/*#*/
+  &trans     &trans     &trans     &mkp RCLK  &mo  2     &kp  BSPC             &ind_bat   &kp  TAB   &none      &none      &none
           >;
         };
         //3:Number + Bluetooth 
         layer_fn3 {
           bindings = <
   &kp  ESC   &kp  N1    &kp  N2    &kp  N3    &kp N4     &kp  N5    &kp  N6    &kp  N7    &kp  N8    &kp  N9    &N0_PIPE   &trans
-  &trans     &bt  _BT 0 &bt  _BT 1 &bt  _BT 2 &bt  _BT 3 &kp  F3    &kp  RBKT  &trans     &SC_U_L    &SC_D_R    &trans     &trans
-  &trans     &out _USB  &out _BLE  &bt BT_CLR &kp F4     &kp  F5    &kp  NUHS  &kp  DEL   &kp  COMMA &kp  DOT   &kp  SLASH &trans
-  &trans     &none/*#*/ &none/*#*/ &trans     &kp  LCTRL &kp  LGUI             &mo  3     &ind_bat   &none/*#*/ &none/*#*/ &none/*#*/
+  &trans     &MY_U      &MY_L      &MY_D      &MY_R      &kp  F3    &kp  RBKT  &trans     &SC_U_L    &SC_D_R    &trans     &trans
+  &trans     &out _USB  &out _BLE  &bt BT_CLR &kp F4     &kp  F5    &kp  NUHS  &kp  DEL   &trans     &trans     &kp  SLASH &trans
+  &trans     &trans     &trans     &trans     &ind_bat   &kp  LGUI  &mo  3     &bt  _BT 0 &bt  _BT 1 &bt  _BT 2 &bt  _BT 3
           >;
         };
     };
