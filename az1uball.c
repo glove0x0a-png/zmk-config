@@ -20,8 +20,9 @@
 #define BLE_POLL_MS   K_MSEC(1000) // 省電力時ポーリング間隔
 #define BLE_SLEEP_MS  5*1000 // BLE時の未入力待ち時間(ms)
 #define JIG_WAIT_MS 180*1000 // ジグラー間隔(ms)
-#define MOUSE_VAL    15      // マウス移動量
-#define ACCEL_VAL     1.2    // 加速度加算倍率
+#define MOUSE_VAL_X  18      // マウス移動量
+#define MOUSE_VAL_Y  12      // マウス移動量
+#define ACCEL_VAL     1.05   // 加速度加算倍率
 #define ACCEL_CANCEL_MS  500 // 前回移動量の無効化時間(ms)
 
 //struct
@@ -48,26 +49,23 @@ void az1uball_read_data_work(struct k_work *work)
     i2c_read_dt(&config->i2c, buf, sizeof(buf));
 
     float delta_x=0,delta_y=0; //移動距離(誤作動防止のためDED_ZONE考慮)
-    if     ( abs((int16_t)buf[1]) > abs(buf[0])) delta_x= MOUSE_VAL*2; //buf[1]=右:指の向きで接点が短いので感度2倍
-    else if( abs((int16_t)buf[0]) > abs(buf[1])) delta_x=-MOUSE_VAL*2; //buf[0]=左:同上
-    if     ( abs((int16_t)buf[3]) > abs(buf[2])) delta_y= MOUSE_VAL; //buf[3]=下
-    else if( abs((int16_t)buf[2]) > abs(buf[3])) delta_y=-MOUSE_VAL; //buf[2]=上
+    if     ( abs((int16_t)buf[1]) > abs(buf[0])) delta_x= MOUSE_VAL_X; //buf[1]=右:指の向きで接点が短いので感度2倍
+    else if( abs((int16_t)buf[0]) > abs(buf[1])) delta_x=-MOUSE_VAL_X; //buf[0]=左:同上
+    if     ( abs((int16_t)buf[3]) > abs(buf[2])) delta_y= MOUSE_VAL_Y; //buf[3]=下
+    else if( abs((int16_t)buf[2]) > abs(buf[3])) delta_y=-MOUSE_VAL_Y; //buf[2]=上
     bool  btn_push  = (buf[4] & MSK_SWITCH_STATE) != 0; //true:押下、false:未押下
     if ( now - data->last_activity_time < ACCEL_CANCEL_MS ){ //加速度加算
       if(( data->pre_x > 0 && delta_x > 0 ) || ( data->pre_x < 0 && delta_x < 0 )) delta_x = data->pre_x * ACCEL_VAL;
       if(( data->pre_y > 0 && delta_y > 0 ) || ( data->pre_y < 0 && delta_y < 0 )) delta_y = data->pre_y * ACCEL_VAL;
     }
-    if( delta_x != 0 && delta_y != 0 ){ //角度計算
-        delta_x = delta_x * abs(delta_x) / sqrt( delta_x*delta_x + delta_y * delta_y); //cos変換
-        delta_y = delta_y * abs(delta_y) / sqrt( delta_x*delta_x + delta_y * delta_y); //sin変換
+    if( delta_x != 0 || delta_y != 0 ){ 
+        delta_x = delta_x * abs(delta_x) / sqrt( delta_x*delta_x + delta_y * delta_y); //角度計算 cos変換 
+        delta_y = delta_y * abs(delta_y) / sqrt( delta_x*delta_x + delta_y * delta_y); //         sin変換
+        data->pre_x=delta_x;//前回移動量保存。
+        data->pre_y=delta_y;
     }
-    if( delta_x != 0 ) data->pre_x=delta_x; //前回移動量保存。
-    if( delta_y != 0 ) data->pre_y=delta_y;
-    if (    delta_x != 0 || delta_y != 0 //マウス操作 or レイヤー操作 or 修飾キー or ボタン状態変化
-         || lshift_pressed 
-         || btn_push != data->sw_pressed){
-        data->last_activity_time = now; //前回操作時間更新
-    }
+    //マウス操作 or レイヤー操作 or 修飾キー or ボタン状態変化
+    if ( delta_x != 0 || delta_y != 0 || lshift_pressed || btn_push != data->sw_pressed) data->last_activity_time = now; //前回操作時間更新
 
     //ボタン押下があれば(レイヤー操作が複雑なのでJのみ)
     if ( btn_push != data->sw_pressed) {
@@ -86,9 +84,9 @@ void az1uball_read_data_work(struct k_work *work)
     } else if (delta_x != 0 || delta_y != 0) { //マウス処理
         if (layer == 3)     scaling *= 3.0f; //レイヤー:高速
         if (lshift_pressed )scaling /= 3.0f; //shift:低速
-        for (int i = 0; i < 2; i++) { //移動を滑らかに
-            input_report_rel(data->dev, INPUT_REL_X, delta_x / 2 * scaling, false, K_NO_WAIT);
-            input_report_rel(data->dev, INPUT_REL_Y, delta_y / 2 * scaling, true , K_NO_WAIT);
+        for (int i = 0; i < 3; i++) { //移動を滑らかに
+            input_report_rel(data->dev, INPUT_REL_X, delta_x / 3 * scaling, false, K_NO_WAIT);
+            input_report_rel(data->dev, INPUT_REL_Y, delta_y / 3 * scaling, true , K_NO_WAIT);
         }
     }
 
