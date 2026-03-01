@@ -63,8 +63,10 @@ void az1uball_read_data_work(struct k_work *work)
         data->pre_x=0; //前回移動量初期化
         data->pre_y=0;
     }
-    if ( delta_x > MOUSE_VAL_MAX_X ) delta_x = MOUSE_VAL_MAX_X; //上限制御
-    if ( delta_y > MOUSE_VAL_MAX_Y ) delta_y = MOUSE_VAL_MAX_Y;
+    if      ( delta_x > MOUSE_VAL_MAX_X ) delta_x = MOUSE_VAL_MAX_X; //上限制御
+    else if ( delta_x <-MOUSE_VAL_MAX_X ) delta_x =-MOUSE_VAL_MAX_X; //上限制御
+    if      ( delta_y > MOUSE_VAL_MAX_Y ) delta_y = MOUSE_VAL_MAX_Y;
+    else if ( delta_y <-MOUSE_VAL_MAX_Y ) delta_y =-MOUSE_VAL_MAX_Y;
     if( delta_x != 0 || delta_y != 0 ){ 
         delta_x = delta_x * abs(delta_x) / sqrt( delta_x*delta_x + delta_y * delta_y); //角度計算 cos変換 
         delta_y = delta_y * abs(delta_y) / sqrt( delta_x*delta_x + delta_y * delta_y); //         sin変換
