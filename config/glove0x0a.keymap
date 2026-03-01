@@ -163,6 +163,7 @@
         };
         //1:jigler-dummyレイヤー
         layer_fn1 { bindings = < &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans >; };
+
         //2:Custom + FKeys + Vol
         layer_fn2 {
           bindings = <

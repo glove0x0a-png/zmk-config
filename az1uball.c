@@ -16,16 +16,13 @@
 #include <zmk/keymap.h>
 
 //define
-#define NORMAL_POLL_INTERVAL K_MSEC(10)       // 通常時: 10ms (100Hz)
-#define LOW_POWER_POLL_INTERVAL K_MSEC(500)   // 省電力時:  500ms (2Hz)
-#define NON_ACTIVE_POLL_INTERVAL K_MSEC(2000) // 省電力時:  2000ms (0.5Hz)
-#define LOW_POWER_TIMEOUT_MS 5000             // 5秒間入力がないと省電力モードへ
-#define JIGGLE_INTERVAL_MS 180*1000           // ジグラー間隔(ms)
-#define JIGGLE_DELTA_X 1                      // X方向にnピクセル分動かす
-#define DED_ZONE 0                            // デッドゾーン/マウス動作を検知するまで
-#define MOUSE_VAL 15                          // マウス移動量
-#define ACCEL 1.2                             // 加速度
-#define NUTORAL 500                           // 前回移動量の無効化時間(ms)
+#define NOR_POLL_MS   K_MSEC(20)   // 通常時ポーリング間隔
+#define BLE_POLL_MS   K_MSEC(1000) // 省電力時ポーリング間隔
+#define BLE_SLEEP_MS  5*1000 // BLE時の未入力待ち時間(ms)
+#define JIG_WAIT_MS 180*1000 // ジグラー間隔(ms)
+#define MOUSE_VAL    15      // マウス移動量
+#define ACCEL_VAL     1.2    // 加速度加算倍率
+#define ACCEL_CANCEL_MS  500 // 前回移動量の無効化時間(ms)
 
 //struct
 struct zmk_behavior_binding binding = {
@@ -51,18 +48,18 @@ void az1uball_read_data_work(struct k_work *work)
     i2c_read_dt(&config->i2c, buf, sizeof(buf));
 
     float delta_x=0,delta_y=0; //移動距離(誤作動防止のためDED_ZONE考慮)
-    if     ( abs((int16_t)buf[1]) > abs(buf[0])+DED_ZONE) delta_x= MOUSE_VAL; //buf[1]=右
-    else if( abs((int16_t)buf[0]) > abs(buf[1])+DED_ZONE) delta_x=-MOUSE_VAL; //buf[0]=左
-    else if( abs((int16_t)buf[3]) > abs(buf[2])+DED_ZONE) delta_y= MOUSE_VAL; //buf[3]=下
-    else if( abs((int16_t)buf[2]) > abs(buf[3])+DED_ZONE) delta_y=-MOUSE_VAL; //buf[2]=上
-    bool  btn_push  = (buf[4] & MSK_SWITCH_STATE) != 0;
-    if ( now - data->last_activity_time < NUTORAL ){ //加速度加算
-      if(( data->pre_x > 0 && delta_x > 0 ) || ( data->pre_x < 0 && delta_x < 0 )) delta_x = data->pre_x * ACCEL;
-      if(( data->pre_y > 0 && delta_y > 0 ) || ( data->pre_y < 0 && delta_y < 0 )) delta_y = data->pre_y * ACCEL;
+    if     ( abs((int16_t)buf[1]) > abs(buf[0])) delta_x= MOUSE_VAL; //buf[1]=右
+    else if( abs((int16_t)buf[0]) > abs(buf[1])) delta_x=-MOUSE_VAL; //buf[0]=左
+    if     ( abs((int16_t)buf[3]) > abs(buf[2])) delta_y= MOUSE_VAL; //buf[3]=下
+    else if( abs((int16_t)buf[2]) > abs(buf[3])) delta_y=-MOUSE_VAL; //buf[2]=上
+    bool  btn_push  = (buf[4] & MSK_SWITCH_STATE) != 0; //true:押下、false:未押下
+    if ( now - data->last_activity_time < ACCEL_CANCEL_MS ){ //加速度加算
+      if(( data->pre_x > 0 && delta_x > 0 ) || ( data->pre_x < 0 && delta_x < 0 )) delta_x = data->pre_x * ACCEL_VAL;
+      if(( data->pre_y > 0 && delta_y > 0 ) || ( data->pre_y < 0 && delta_y < 0 )) delta_y = data->pre_y * ACCEL_VAL;
     }
     if( delta_x != 0 && delta_y != 0 ){ //角度計算
-        delta_x /= sqrt( delta_x*delta_x + delta_y * delta_y); //cos変換
-        delta_y /= sqrt( delta_x*delta_x + delta_y * delta_y); //sin変換
+        delta_x = delta_x * delta_x / sqrt( delta_x*delta_x + delta_y * delta_y); //cos変換
+        delta_y = delta_y * delta_y / sqrt( delta_x*delta_x + delta_y * delta_y); //sin変換
     }
     data->pre_x=delta_x; //前回移動量保存。
     data->pre_y=delta_y;
@@ -80,28 +77,28 @@ void az1uball_read_data_work(struct k_work *work)
         zmk_behavior_invoke_binding(&binding, event, data->sw_pressed);  //Jキー扱い
     }
 
-    if (layer == 2) { //カーソルレイヤー
+    if (layer == 2) { //スクロールレイヤ
         if (abs(delta_x) > abs(delta_y)) delta_y = 0; else delta_x = 0; //縦 or 横のみ抽出
-        if      (delta_y >  1) for(int i=0;i <      delta_y;i++) input_report_rel(data->dev, INPUT_REL_WHEEL, -1, true, K_NO_WAIT);
-        else if (delta_y < -1) for(int i=0;i < -1 * delta_y;i++) input_report_rel(data->dev, INPUT_REL_WHEEL,  1, true, K_NO_WAIT);
-        else if (delta_x >  1) for(int i=0;i <      delta_x;i++) input_report_rel(data->dev, INPUT_REL_HWHEEL, 1, true, K_NO_WAIT);
-        else if (delta_x < -1) for(int i=0;i < -1 * delta_x;i++) input_report_rel(data->dev, INPUT_REL_HWHEEL,-1, true, K_NO_WAIT);
+        if      (delta_y >  1) input_report_rel(data->dev, INPUT_REL_WHEEL, -1, true, K_NO_WAIT);
+        else if (delta_y < -1) input_report_rel(data->dev, INPUT_REL_WHEEL,  1, true, K_NO_WAIT);
+        else if (delta_x >  1) input_report_rel(data->dev, INPUT_REL_HWHEEL, 1, true, K_NO_WAIT);
+        else if (delta_x < -1) input_report_rel(data->dev, INPUT_REL_HWHEEL,-1, true, K_NO_WAIT);
         return;
     } else if (delta_x != 0 || delta_y != 0) { //マウス処理
         if (layer == 3)     scaling *= 3.0f; //レイヤー:高速
         if (lshift_pressed )scaling /= 3.0f; //shift:低速
-        for (int i = 0; i < 3; i++) {
-            input_report_rel(data->dev, INPUT_REL_X, delta_x / 3 * scaling, false, K_NO_WAIT);
-            input_report_rel(data->dev, INPUT_REL_Y, delta_y / 3 * scaling, true , K_NO_WAIT);
+        for (int i = 0; i < 2; i++) { //移動を滑らかに
+            input_report_rel(data->dev, INPUT_REL_X, delta_x / 2 * scaling, false, K_NO_WAIT);
+            input_report_rel(data->dev, INPUT_REL_Y, delta_y / 2 * scaling, true , K_NO_WAIT);
         }
     }
 
     // ジグラーレイヤー:ジグラー操作
-    if ( layer == 1 && now - data->last_activity_time >= JIGGLE_INTERVAL_MS ) {
+    if ( layer == 1 && now - data->last_activity_time >= JIG_WAIT_MS ) {
         data->last_activity_time = now;
-        input_report_rel(data->dev, INPUT_REL_X, JIGGLE_DELTA_X, true, K_NO_WAIT);
+        input_report_rel(data->dev, INPUT_REL_X, 1, true, K_NO_WAIT);
         k_sleep(K_MSEC(10));
-        input_report_rel(data->dev, INPUT_REL_X, -JIGGLE_DELTA_X, true, K_NO_WAIT);
+        input_report_rel(data->dev, INPUT_REL_X, -1, true, K_NO_WAIT);
     }
     return;
 }
@@ -115,12 +112,12 @@ static void az1uball_polling(struct k_timer *timer)
     //サイクルセット
     k_timer_stop( &data->polling_timer);
     //高サイクル:USB接続 || 最終操作から一定時間以内
-    if ( zmk_usb_is_powered() || (k_uptime_get() - data->last_activity_time <= LOW_POWER_TIMEOUT_MS) ) {
-        k_timer_start(&data->polling_timer, NORMAL_POLL_INTERVAL, NORMAL_POLL_INTERVAL);
+    if ( zmk_usb_is_powered() || (k_uptime_get() - data->last_activity_time <= BLE_SLEEP_MS) ) {
+        k_timer_start(&data->polling_timer, NOR_POLL_MS, NOR_POLL_MS);
     }
     //低サイクル:else
     else{
-        k_timer_start(&data->polling_timer, NON_ACTIVE_POLL_INTERVAL, NON_ACTIVE_POLL_INTERVAL);
+        k_timer_start(&data->polling_timer, BLE_POLL_MS, BLE_POLL_MS);
     }
     k_work_submit(&data->work);
     return;
@@ -157,10 +154,10 @@ static int az1uball_init(const struct device *dev)
     i2c_write_dt(&config->i2c, &cmd, sizeof(cmd));
 
 
-    //サイクル：NORMAL_POLL_INTERVAL
+    //サイクル：NOR_POLL_MS
     k_work_init(&data->work          , az1uball_read_data_work);
     k_timer_init( &data->polling_timer, az1uball_polling        , NULL);
-    k_timer_start(&data->polling_timer, NORMAL_POLL_INTERVAL, NORMAL_POLL_INTERVAL);
+    k_timer_start(&data->polling_timer, NOR_POLL_MS, NOR_POLL_MS);
     return 0;
 }
 ///////////////////////////////////////////////////////////////////////////
