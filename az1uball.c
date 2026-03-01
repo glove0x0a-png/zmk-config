@@ -21,9 +21,9 @@
 #define BLE_SLEEP_MS  5*1000 // BLE時の未入力待ち時間(ms)
 #define JIG_WAIT_MS 180*1000 // ジグラー間隔(ms)
 #define MOUSE_VAL_X     18   // マウス移動量
-#define MOUSE_VAL_MAX_X 30   // X最大
+#define MOUSE_VAL_MAX_X 42   // X最大
 #define MOUSE_VAL_Y     12   // マウス移動量
-#define MOUSE_VAL_MAX_Y 20   // Y最大
+#define MOUSE_VAL_MAX_Y 28   // Y最大
 #define ACCEL_VAL     1.2    // 加速度加算倍率
 #define ACCEL_CANCEL_MS  500 // 前回移動量の無効化時間(ms)
 
