@@ -22,7 +22,7 @@
 #define JIG_WAIT_MS 180*1000 // ジグラー間隔(ms)
 #define MOUSE_VAL_X  18      // マウス移動量
 #define MOUSE_VAL_Y  12      // マウス移動量
-#define ACCEL_VAL     1.05   // 加速度加算倍率
+#define ACCEL_VAL     1.2    // 加速度加算倍率
 #define ACCEL_CANCEL_MS  500 // 前回移動量の無効化時間(ms)
 
 //struct
@@ -57,6 +57,9 @@ void az1uball_read_data_work(struct k_work *work)
     if ( now - data->last_activity_time < ACCEL_CANCEL_MS ){ //加速度加算
       if(( data->pre_x > 0 && delta_x > 0 ) || ( data->pre_x < 0 && delta_x < 0 )) delta_x = data->pre_x * ACCEL_VAL;
       if(( data->pre_y > 0 && delta_y > 0 ) || ( data->pre_y < 0 && delta_y < 0 )) delta_y = data->pre_y * ACCEL_VAL;
+    } else {
+        data->pre_x=0; //前回移動量初期化
+        data->pre_y=0;
     }
     if( delta_x != 0 || delta_y != 0 ){ 
         delta_x = delta_x * abs(delta_x) / sqrt( delta_x*delta_x + delta_y * delta_y); //角度計算 cos変換 
