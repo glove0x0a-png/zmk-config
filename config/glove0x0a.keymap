@@ -72,6 +72,13 @@
             bindings = <&kp C_MUTE>, <&kp K_MUTE>;
             mods = <MOD_LSFT>;
         };
+       //QUIT_F1
+       QUIT_F1: QUIT_F1 {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp LA(F4)>, <&kp F1>;
+            mods = <MOD_LSFT>;
+        };
        //F1_F11
        F1_F11: F1_F11 {
             compatible = "zmk,behavior-mod-morph";
