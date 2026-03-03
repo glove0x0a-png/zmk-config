@@ -67,7 +67,7 @@ void az1uball_read_data_work(struct k_work *work)
     else if ( delta_x <-MOUSE_VAL_MAX_X ) delta_x =-MOUSE_VAL_MAX_X; //上限制御
     if      ( delta_y > MOUSE_VAL_MAX_Y ) delta_y = MOUSE_VAL_MAX_Y;
     else if ( delta_y <-MOUSE_VAL_MAX_Y ) delta_y =-MOUSE_VAL_MAX_Y;
-    if( delta_x != 0 || delta_y != 0 ){ 
+    if( delta_x != 0 || delta_y != 0 ){
         delta_x = delta_x * abs(delta_x) / sqrt( delta_x*delta_x + delta_y * delta_y); //角度計算 cos変換 
         delta_y = delta_y * abs(delta_y) / sqrt( delta_x*delta_x + delta_y * delta_y); //         sin変換
         data->pre_x=delta_x;//前回移動量保存。
@@ -81,7 +81,7 @@ void az1uball_read_data_work(struct k_work *work)
         data->sw_pressed = btn_push;
         if( btn_push ){
             if(layer == 3) {
-                binding.behavior_dev="mouse_press";
+                binding.behavior_dev=zmk_behavior_get_binding("mouse_press");
                 binding.param1 = 1;
                 zmk_behavior_invoke_binding(&binding, event, 1);  //マウスクリック
                 zmk_behavior_invoke_binding(&binding, event, 0);
