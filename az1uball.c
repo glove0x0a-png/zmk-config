@@ -7,7 +7,7 @@
 #include <stdlib.h>
 #include <zmk/ble.h> // 追加
 #include <zmk/usb.h>
-#include <zmk/hid.h>   . // HID usage定義用
+#include <zmk/hid.h>   // HID usage定義用
 #include "az1uball.h"
 
 //追加
@@ -81,9 +81,9 @@ void az1uball_read_data_work(struct k_work *work)
         data->sw_pressed = btn_push;
         if( btn_push ){
             if(layer == 3) {
-                input_report_button(data->dev, BUTTON_LEFT, true , K_NO_WAIT);
+                input_report_key(data->dev, INPUT_BTN_0, 1, true, K_NO_WAIT);
                 k_msleep(10);
-                input_report_button(data->dev, BUTTON_LEFT, false, K_NO_WAIT);
+                input_report_key(data->dev, INPUT_BTN_0, 0, true, K_NO_WAIT);
             }
             else
             {
