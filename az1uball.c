@@ -81,11 +81,9 @@ void az1uball_read_data_work(struct k_work *work)
         data->sw_pressed = btn_push;
         if( btn_push ){
             if(layer == 3) {
-                input_report_mouse_button_pressed(ZMK_MOUSE_BUTTON_LEFT);
-                zmk_hid_mouse_report_changed();
-                k_msleep(10); 
-                input_report_mouse_button_released(ZMK_MOUSE_BUTTON_LEFT);// 左クリックを離す
-                zmk_hid_mouse_report_changed();
+                input_report_button(data->dev, BUTTON_LEFT, true , K_NO_WAIT);
+                k_msleep(10);
+                input_report_button(data->dev, BUTTON_LEFT, false, K_NO_WAIT);
             }
             else
             {
