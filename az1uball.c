@@ -77,20 +77,22 @@ void az1uball_read_data_work(struct k_work *work)
     if ( delta_x != 0 || delta_y != 0 || lshift_pressed || btn_push != data->sw_pressed) data->last_activity_time = now; //前回操作時間更新
 
     //ボタン押下があれば(レイヤー操作が複雑なのでJのみ)
-    if ( btn_push != data->sw_pressed && btn_push ) {
+    if ( btn_push != data->sw_pressed ){
         data->sw_pressed = btn_push;
-        if(layer == 3) {
-            binding.behavior_dev="mouse_press";
-            binding.param1 = 1;
-            zmk_behavior_invoke_binding(&binding, event, 1);  //マウスクリック
-            zmk_behavior_invoke_binding(&binding, event, 0);
-        }
-        else
-        {
-            binding.behavior_dev="key_press";
-            binding.param1 = 0x0D; 
-            zmk_behavior_invoke_binding(&binding, event, 1);  //Jキー扱い
-            zmk_behavior_invoke_binding(&binding, event, 0);
+        if( btn_push ){
+            if(layer == 3) {
+                binding.behavior_dev="mouse_press";
+                binding.param1 = 1;
+                zmk_behavior_invoke_binding(&binding, event, 1);  //マウスクリック
+                zmk_behavior_invoke_binding(&binding, event, 0);
+            }
+            else
+            {
+                binding.behavior_dev="key_press";
+                binding.param1 = 0x0D; 
+                zmk_behavior_invoke_binding(&binding, event, 1);  //Jキー扱い
+                zmk_behavior_invoke_binding(&binding, event, 0);
+            }
         }
     }
 
