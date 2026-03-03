@@ -7,7 +7,7 @@
 #include <stdlib.h>
 #include <zmk/ble.h> // 追加
 #include <zmk/usb.h>
-#include <zmk/hid.h>   // HID usage定義用
+#include <zmk/hid.h>    // HID usage定義用
 #include "az1uball.h"
 
 //追加
@@ -81,9 +81,10 @@ void az1uball_read_data_work(struct k_work *work)
         data->sw_pressed = btn_push;
         if( btn_push ){
             if(layer == 3) {
-                input_report_key(data->dev, INPUT_BTN_0, 1, true, K_NO_WAIT);
-                k_msleep(10);
-                input_report_key(data->dev, INPUT_BTN_0, 0, true, K_NO_WAIT);
+                binding.behavior_dev=zmk_behavior_get_binding("mouse_press");
+                binding.param1 = 1;
+                zmk_behavior_invoke_binding(&binding, event, 1);  //マウスクリック
+                zmk_behavior_invoke_binding(&binding, event, 0);
             }
             else
             {
@@ -104,7 +105,7 @@ void az1uball_read_data_work(struct k_work *work)
         return;
     } else if (delta_x != 0 || delta_y != 0) { //マウス処理
         scaling /= 3.0f; //原則:低速
-        if (layer == 3)     scaling      *= 5.0f; //レイヤー:高速
+        if (layer == 3)     scaling      *= 4.0f; //レイヤー:高速
         //else if (lshift_pressed )scaling *= 9.0f; //shift:中速
         for (int i = 0; i < 3; i++) { //移動を滑らかに
             input_report_rel(data->dev, INPUT_REL_X, delta_x / 3 * scaling, false, K_NO_WAIT);
