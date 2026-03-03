@@ -77,10 +77,21 @@ void az1uball_read_data_work(struct k_work *work)
     if ( delta_x != 0 || delta_y != 0 || lshift_pressed || btn_push != data->sw_pressed) data->last_activity_time = now; //前回操作時間更新
 
     //ボタン押下があれば(レイヤー操作が複雑なのでJのみ)
-    if ( btn_push != data->sw_pressed) {
+    if ( btn_push != data->sw_pressed && btn_push ) {
         data->sw_pressed = btn_push;
-        binding.param1 = 0x0D; 
-        zmk_behavior_invoke_binding(&binding, event, data->sw_pressed);  //Jキー扱い
+        if(layer == 3) {
+            binding.behavior_dev="mouse_press";
+            binding.param1 = 1;
+            zmk_behavior_invoke_binding(&binding, event, 1);  //マウスクリック
+            zmk_behavior_invoke_binding(&binding, event, 0);
+        }
+        else
+        {
+            binding.behavior_dev="key_press";
+            binding.param1 = 0x0D; 
+            zmk_behavior_invoke_binding(&binding, event, 1);  //Jキー扱い
+            zmk_behavior_invoke_binding(&binding, event, 0);
+        }
     }
 
     if (layer == 2) { //スクロールレイヤ
@@ -92,8 +103,8 @@ void az1uball_read_data_work(struct k_work *work)
         return;
     } else if (delta_x != 0 || delta_y != 0) { //マウス処理
         scaling /= 3.0f; //原則:低速
-        if (layer == 3)     scaling      *= 9.0f; //レイヤー:高速
-        else if (lshift_pressed )scaling *= 3.0f; //shift:中速
+        if (layer == 3)     scaling      *= 5.0f; //レイヤー:高速
+        //else if (lshift_pressed )scaling *= 9.0f; //shift:中速
         for (int i = 0; i < 3; i++) { //移動を滑らかに
             input_report_rel(data->dev, INPUT_REL_X, delta_x / 3 * scaling, false, K_NO_WAIT);
             input_report_rel(data->dev, INPUT_REL_Y, delta_y / 3 * scaling, true , K_NO_WAIT);

@@ -49,6 +49,7 @@
 //2026.03.01 #843 デバッグ:AZ1UBALL:加速度上限制御。
 //2026.03.01 #847 Ctrlキーを再配置、BLE機能関連のキー再配置
 //2026.03.02 #852 47キーバージョンへ戻し。左下キー削減のリハビリから。
+//2026.03.02 #853 i2c/jiggler/加速度/47キー/マウス基本を低速へ
 / {
     //behaviors
     behaviors {
@@ -219,7 +220,7 @@
   &ESC_CLR   &kp  N1    &kp  N2    &kp  N3    &kp N4     &kp  N5    &kp  N6    &kp  N7    &kp  N8    &kp  N9    &N0_PIPE   &trans
   &trans     &MY_U      &MY_L      &MY_D      &MY_R      &kp  F3    &kp  RBKT  &trans     &SC_U_L    &SC_D_R    &trans     &trans
   &trans     &USB_BLE   &bt  _BT 0 &bt  _BT 1 &bt  _BT 2 &kp  F5    &kp  NUHS  &kp  DEL   &trans     &trans     &kp  SLASH &trans
-  &trans     &trans     &trans     &trans     &kp  LCTRL &kp  LALT             &mo  3     &ind_bat   &trans     &trans     &trans
+  &trans     &trans     &trans     &mkp RCLK  &kp  LCTRL &kp  LALT             &mo  3     &ind_bat   &trans     &trans     &trans
           >;
         };
     };
