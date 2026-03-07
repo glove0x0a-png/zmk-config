@@ -99,16 +99,16 @@
             bindings = <&kp N0>, <&kp PIPE_>;
             mods = <MOD_LSFT>;
         };
-        MY_KEY1: MY_KEY1 {  /* 【(】【'】*/
+        MY_KEY1: MY_KEY1 {  /* 【'】【"】*/
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
-            bindings = <&kp LS(N8)>, <&kp LS(N7)>;
+            bindings = <&kp LS(N7)>, <&kp LS(N2)>;
             mods = <MOD_LSFT>;
         };
-        MY_KEY2: MY_KEY2 {  /*【)】【"】 */
+        MY_KEY2: MY_KEY2 {  /*【&】【|】*/
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
-            bindings = <&kp LS(N9)>, <&kp LS(N2)>;
+            bindings = <&kp LS(N6)>, <&kp PIPE_>;
             mods = <MOD_LSFT>;
         };
         MY_KEY3: MY_KEY3 {  /*【~】【*】 */
@@ -117,16 +117,16 @@
             bindings = <&kp LS(EQUAL)>, <&kp LS(SQT)>;
             mods = <MOD_LSFT>;
         };
-        MY_KEY4: MY_KEY4 {  /*【^】【&】*/
+        MY_KEY4: MY_KEY4 {  /*【^】【(】*/
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
-            bindings = <&kp EQUAL>, <&kp LS(N6)>;
+            bindings = <&kp EQUAL>, <&kp LS(N8)>;
             mods = <MOD_LSFT>;
         };
-        MY_KEY5: MY_KEY5 {  /*【$】【|】*/
+        MY_KEY5: MY_KEY5 {  /*【$】【)】*/
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
-            bindings = <&kp LS(N4)>, <&kp PIPE_>;
+            bindings = <&kp LS(N4)>, <&kp LS(N9)>;
             mods = <MOD_LSFT>;
         };
         USB_BLE: USB_BLE {  /*USB or BLE*/
@@ -236,7 +236,6 @@
   &kp  ESC   &QUIT_F1   &kp  F2    &kp  UP    &kp  PSCRN &kp  LC(T) &kp  F6    &kp  F7    &kp  F8    &F9_F11    &F10_F12   &kp  LBKT
   &kp  LGUI  &kp  LALT  &kp  LEFT  &kp  DOWN  &kp  RIGHT &kp  F3    &kp  RBKT  &trans     &kp  HOME  &kp  PG_UP &kp  INT1  &MY_KEY3
   &trans     &kp  EQUAL &_vol_dn   &_vol_up   &kp  F4    &kp  F5    &kp  NUHS  &kp  DEL   &kp  END   &kp  PG_DN &kp  SLASH &trans
-
   &trans     &trans     &trans     &mkp RCLK  &mo  2     &kp  BSPC             &kp  LCTRL &kp  TAB   &kp  K_APP &MY_KEY4   &MY_KEY5
           >;
         };
