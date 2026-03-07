@@ -13,6 +13,10 @@
 #include <dt-bindings/input/input-event-codes.h>
 
 #define PIPE_ LS(INT3)
+#define LEF_B LS(N8)
+#define RIG_B LS(N9)
+#define SIN_Q LS(N7)
+#define DOB_Q LS(N2)
 
 #define _USB OUT_USB
 #define _BLE OUT_BLE
@@ -83,17 +87,17 @@
             mods = <MOD_LSFT>;
         };
        //F1_F11
-       F1_F11: F1_F11 {
+       F9_F11: F9_F11 {
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
-            bindings = <&kp F1>, <&kp F11>;
+            bindings = <&kp F9>, <&kp F11>;
             mods = <MOD_LSFT>;
         };
        //F2_F12
-       F2_F12: F1_F12 {
+       F10_F12: F10_F12 {
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
-            bindings = <&kp F2>, <&kp F12>;
+            bindings = <&kp F10>, <&kp F12>;
             mods = <MOD_LSFT>;
         };
        //N0 & pipe
@@ -103,6 +107,37 @@
             bindings = <&kp N0>, <&kp PIPE_>;
             mods = <MOD_LSFT>;
         };
+        //special_key
+        MY_KEY1: MY_KEY1 {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp LEF_B>, <&kp SIN_Q>;
+            mods = <MOD_LSFT>;
+        } //【(】【'】
+        MY_KEY2: MY_KEY2 {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp RIG_B>, <&kp DOB_Q>;
+            mods = <MOD_LSFT>;
+        } //【)】【"】
+        MY_KEY3: MY_KEY3 {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp LS(EQUAL)>, <&kp LS(SQT)>;
+            mods = <MOD_LSFT>;
+        } //【~】【*】
+        MY_KEY4: MY_KEY4 {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp EQUAL>, <&kp LS(N6)>;
+            mods = <MOD_LSFT>;
+        } //【^】【&】
+        MY_KEY5: MY_KEY5 {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp LS(N4)>, <&kp PIPE_>;
+            mods = <MOD_LSFT>;
+        } //【$】【|】
        //USB or BLE
        USB_BLE: USB_BLE {
             compatible = "zmk,behavior-mod-morph";
@@ -209,20 +244,22 @@
         //2:Custom + Function Keys + Vol
         layer_fn2 {
           bindings = <
-  &kp  ESC   &QUIT_F1   &kp  F2    &kp  UP    &kp  PSCRN &kp  LC(T) &kp  F6    &kp  F7    &kp  F8    &kp  F9    &kp  F10   &kp  LBKT
-  &kp  LGUI  &kp  LALT  &kp  LEFT  &kp  DOWN  &kp  RIGHT &kp  F3    &kp  RBKT  &trans     &kp  HOME  &kp  PG_UP &kp  INT1  &trans
+  &kp  ESC   &QUIT_F1   &kp  F2    &kp  UP    &kp  PSCRN &kp  LC(T) &kp  F6    &kp  F7    &kp  F8    &F9_F11    &F10_F12   &kp  LBKT
+  &kp  LGUI  &kp  LALT  &kp  LEFT  &kp  DOWN  &kp  RIGHT &kp  F3    &kp  RBKT  &trans     &kp  HOME  &kp  PG_UP &kp  INT1  &MY_KEY3
   &trans     &kp  EQUAL &_vol_dn   &_vol_up   &kp  F4    &kp  F5    &kp  NUHS  &kp  DEL   &kp  END   &kp  PG_DN &kp  SLASH &trans
-  &trans     &trans     &trans     &mkp RCLK  &mo  2     &kp  BSPC             &kp  LCTRL &kp  TAB   &kp  K_APP &kp  F11   &kp  F12
+
+  &trans     &trans     &trans     &mkp RCLK  &mo  2     &kp  BSPC             &kp  LCTRL &kp  TAB   &kp  K_APP &MY_KEY4   &MY_KEY5
           >;
         };
         //3:Number + Bluetooth 
         layer_fn3 {
           bindings = <
   &ESC_CLR   &kp  N1    &kp  N2    &kp  N3    &kp N4     &kp  N5    &kp  N6    &kp  N7    &kp  N8    &kp  N9    &N0_PIPE   &trans
-  &trans     &MY_U      &MY_L      &MY_D      &MY_R      &kp  F3    &kp  RBKT  &trans     &kp  HOME  &kp  PG_UP &trans     &trans
-  &trans     &USB_BLE   &bt  _BT 0 &bt  _BT 1 &bt  _BT 2 &kp  F5    &kp  NUHS  &mkp LCLK  &kp  END   &kp  PG_DN &kp  SLASH &trans
-  &trans     &trans     &trans     &mkp RCLK  &kp  LCTRL &kp  LALT             &mo  3     &SC_U_L    &trans     &SC_D_R    &ind_bat
+  &trans     &MY_U      &MY_L      &MY_D      &MY_R      &kp  F3    &MY_KEY1   &trans     &kp  HOME  &kp  PG_UP &trans     &trans
+  &trans     &USB_BLE   &bt  _BT 0 &bt  _BT 1 &bt  _BT 2 &kp  F5    &MY_KEY2   &mkp LCLK  &kp  END   &kp  PG_DN &kp  SLASH &trans
+  &trans     &trans     &trans     &mkp RCLK  &kp  LCTRL &kp  LALT             &mo  3     &none      &none      &SC_U_L    &SC_D_R
           >;
         };
     };
 };
+//&ind_bat

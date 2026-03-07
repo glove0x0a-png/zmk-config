@@ -43,6 +43,7 @@ void az1uball_read_data_work(struct k_work *work)
     struct az1uball_data *data = CONTAINER_OF(work, struct az1uball_data, work); //az1uball
     const struct az1uball_config *config = data->dev->config; //config
     float scaling = data->scaling_factor; //比率
+
     int layer = zmk_keymap_highest_layer_active(); //現レイヤ
     bool lshift_pressed = zmk_hid_get_explicit_mods() & 0x02;  //左Shift
     struct zmk_behavior_binding_event event = { .position = 0,.timestamp = now,.layer = 0,}; //event
@@ -55,6 +56,7 @@ void az1uball_read_data_work(struct k_work *work)
     else if( abs((int16_t)buf[0]) > abs(buf[1])) delta_x=-MOUSE_VAL_X; //buf[0]=左:同上
     if     ( abs((int16_t)buf[3]) > abs(buf[2])) delta_y= MOUSE_VAL_Y; //buf[3]=下
     else if( abs((int16_t)buf[2]) > abs(buf[3])) delta_y=-MOUSE_VAL_Y; //buf[2]=上
+
     bool  btn_push  = (buf[4] & MSK_SWITCH_STATE) != 0; //true:押下、false:未押下
     if ( now - data->last_activity_time < ACCEL_CANCEL_MS ){ //加速度加算
       if(( data->pre_x > 0 && delta_x > 0 ) || ( data->pre_x < 0 && delta_x < 0 )) delta_x = data->pre_x * ACCEL_VAL;
@@ -63,10 +65,12 @@ void az1uball_read_data_work(struct k_work *work)
         data->pre_x=0; //前回移動量初期化
         data->pre_y=0;
     }
+
     if      ( delta_x > MOUSE_VAL_MAX_X ) delta_x = MOUSE_VAL_MAX_X; //上限制御
     else if ( delta_x <-MOUSE_VAL_MAX_X ) delta_x =-MOUSE_VAL_MAX_X; //上限制御
-    if      ( delta_y > MOUSE_VAL_MAX_Y ) delta_y = MOUSE_VAL_MAX_Y;
-    else if ( delta_y <-MOUSE_VAL_MAX_Y ) delta_y =-MOUSE_VAL_MAX_Y;
+    if      ( delta_y > MOUSE_VAL_MAX_Y ) delta_y = MOUSE_VAL_MAX_Y; //上限制御
+    else if ( delta_y <-MOUSE_VAL_MAX_Y ) delta_y =-MOUSE_VAL_MAX_Y; //上限制御
+
     if( delta_x != 0 || delta_y != 0 ){
         delta_x = delta_x * abs(delta_x) / sqrt( delta_x*delta_x + delta_y * delta_y); //角度計算 cos変換 
         delta_y = delta_y * abs(delta_y) / sqrt( delta_x*delta_x + delta_y * delta_y); //         sin変換
