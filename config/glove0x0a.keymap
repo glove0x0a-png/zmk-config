@@ -52,29 +52,39 @@
 //2026.03.02 #853 i2c/jiggler/加速度/47キー/マウス基本を低速へ
 //2026.03.03 #860   レイヤー3で左クリック
 / {
-    //behaviors
-    behaviors {
 //★macro---------------------------------------------------
+    macros {
         MY_USB: MY_USB {
-            compatible = "zmk,macro";
+            compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
-            bindings = <&out OUT_USB &bt BT_SEL 5 >;
+            bindings
+                = <&macro_tap &out OUT_USB>
+                , <&macro_tap &bt BT_SEL 5 >;
         };
         BLE0: BLE0 {
-            compatible = "zmk,macro";
+            compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
-            bindings = <&out OUT_BLE &bt BT_SEL 0 >;
+            bindings
+                = <&macro_tap &out OUT_BLE>
+                , <&macro_tap &bt BT_SEL 0 >;
         };
         BLE1: BLE1 {
-            compatible = "zmk,macro";
+            compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
-            bindings = <&out OUT_BLE &bt BT_SEL 1 >;
+            bindings
+                = <&macro_tap &out OUT_BLE>
+                , <&macro_tap &bt BT_SEL 1 >;
         };
         BLE2: BLE2 {
-            compatible = "zmk,macro";
+            compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
-            bindings = <&out OUT_BLE &bt BT_SEL 2 >;
+            bindings
+                = <&macro_tap &out OUT_BLE>
+                , <&macro_tap &bt BT_SEL 2 >;
         };
+    };
+    //behaviors
+    behaviors {
 //★mod-morph-----------------------------------------------
         //Shift
         //ボリューム操作(Win->UNIX)
