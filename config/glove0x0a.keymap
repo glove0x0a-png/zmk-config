@@ -75,79 +75,67 @@
             bindings = <&kp C_MUTE>, <&kp K_MUTE>;
             mods = <MOD_LSFT>;
         };
-       //QUIT_F1
-       QUIT_F1: QUIT_F1 {
+       QUIT_F1: QUIT_F1 {  /* QUIT_F1 */
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
             bindings = <&kp LA(F4)>, <&kp F1>;
             mods = <MOD_LSFT>;
         };
-       //F9_F11
-       F9_F11: F9_F11 {
+       F9_F11: F9_F11 {    /* F9_F11 */
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
             bindings = <&kp F9>, <&kp F11>;
             mods = <MOD_LSFT>;
         };
-       //F10_F12
-       F10_F12: F10_F12 {
+       F10_F12: F10_F12 {  /* F10_F12 */
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
             bindings = <&kp F10>, <&kp F12>;
             mods = <MOD_LSFT>;
         };
-       //N0 & pipe
-       N0_PIPE: N0_PIPE {
+       N0_PIPE: N0_PIPE {  /* N0 & pipe */
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
             bindings = <&kp N0>, <&kp PIPE_>;
             mods = <MOD_LSFT>;
         };
-        //special_key
-        //【(】【'】
-        MY_KEY1: MY_KEY1 {
+        MY_KEY1: MY_KEY1 {  /* 【(】【'】*/
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
             bindings = <&kp LS(N8)>, <&kp LS(N7)>;
             mods = <MOD_LSFT>;
-        }
-        //【)】【"】
-        MY_KEY2: MY_KEY2 {
+        };
+        MY_KEY2: MY_KEY2 {  /*【)】【"】 */
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
             bindings = <&kp LS(N9)>, <&kp LS(N2)>;
             mods = <MOD_LSFT>;
-        }
-        //【~】【*】
-        MY_KEY3: MY_KEY3 {
+        };
+        MY_KEY3: MY_KEY3 {  /*【~】【*】 */
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
             bindings = <&kp LS(EQUAL)>, <&kp LS(SQT)>;
             mods = <MOD_LSFT>;
-        }
-        //【^】【&】
-        MY_KEY4: MY_KEY4 {
+        };
+        MY_KEY4: MY_KEY4 {  /*【^】【&】*/
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
             bindings = <&kp EQUAL>, <&kp LS(N6)>;
             mods = <MOD_LSFT>;
-        }
-        //【$】【|】
-        MY_KEY5: MY_KEY5 {
+        };
+        MY_KEY5: MY_KEY5 {  /*【$】【|】*/
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
             bindings = <&kp LS(N4)>, <&kp PIPE_>;
             mods = <MOD_LSFT>;
-        }
-       //USB or BLE
-       USB_BLE: USB_BLE {
+        };
+        USB_BLE: USB_BLE {  /*USB or BLE*/
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
             bindings = <&out _USB>, <&out _BLE>;
             mods = <MOD_LSFT>;
         };
-       //ESC_CLR
-       ESC_CLR: ESC_CLR {
+        ESC_CLR: ESC_CLR {  /*ESC_CLR*/
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
             bindings = <&kp ESC>, <&bt BT_CLR >;
