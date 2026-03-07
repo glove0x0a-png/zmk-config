@@ -13,10 +13,6 @@
 #include <dt-bindings/input/input-event-codes.h>
 
 #define PIPE_ LS(INT3)
-#define LEF_B LS(N8)
-#define RIG_B LS(N9)
-#define SIN_Q LS(N7)
-#define DOB_Q LS(N2)
 
 #define _USB OUT_USB
 #define _BLE OUT_BLE
@@ -86,14 +82,14 @@
             bindings = <&kp LA(F4)>, <&kp F1>;
             mods = <MOD_LSFT>;
         };
-       //F1_F11
+       //F9_F11
        F9_F11: F9_F11 {
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
             bindings = <&kp F9>, <&kp F11>;
             mods = <MOD_LSFT>;
         };
-       //F2_F12
+       //F10_F12
        F10_F12: F10_F12 {
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
@@ -108,36 +104,41 @@
             mods = <MOD_LSFT>;
         };
         //special_key
+        //【(】【'】
         MY_KEY1: MY_KEY1 {
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
-            bindings = <&kp LEF_B>, <&kp SIN_Q>;
+            bindings = <&kp LS(N8)>, <&kp LS(N7)>;
             mods = <MOD_LSFT>;
-        } //【(】【'】
+        }
+        //【)】【"】
         MY_KEY2: MY_KEY2 {
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
-            bindings = <&kp RIG_B>, <&kp DOB_Q>;
+            bindings = <&kp LS(N9)>, <&kp LS(N2)>;
             mods = <MOD_LSFT>;
-        } //【)】【"】
+        }
+        //【~】【*】
         MY_KEY3: MY_KEY3 {
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
             bindings = <&kp LS(EQUAL)>, <&kp LS(SQT)>;
             mods = <MOD_LSFT>;
-        } //【~】【*】
+        }
+        //【^】【&】
         MY_KEY4: MY_KEY4 {
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
             bindings = <&kp EQUAL>, <&kp LS(N6)>;
             mods = <MOD_LSFT>;
-        } //【^】【&】
+        }
+        //【$】【|】
         MY_KEY5: MY_KEY5 {
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
             bindings = <&kp LS(N4)>, <&kp PIPE_>;
             mods = <MOD_LSFT>;
-        } //【$】【|】
+        }
        //USB or BLE
        USB_BLE: USB_BLE {
             compatible = "zmk,behavior-mod-morph";
