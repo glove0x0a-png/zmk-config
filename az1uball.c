@@ -21,9 +21,9 @@
 #define BLE_SLEEP_MS  5*1000 // BLE時の未入力待ち時間(ms)
 #define JIG_WAIT_MS 180*1000 // ジグラー間隔(ms)
 #define MOUSE_VAL_X     18   // マウス移動量
-#define MOUSE_VAL_MAX_X 42   // X最大
+#define MOUSE_VAL_MAX_X 54   // X最大
 #define MOUSE_VAL_Y     12   // マウス移動量
-#define MOUSE_VAL_MAX_Y 28   // Y最大
+#define MOUSE_VAL_MAX_Y 36   // Y最大
 #define ACCEL_VAL     1.2    // 加速度加算倍率
 #define ACCEL_CANCEL_MS  500 // 前回移動量の無効化時間(ms)
 
@@ -98,10 +98,22 @@ void az1uball_read_data_work(struct k_work *work)
 
     if (layer == 2) { //スクロールレイヤ
         if (abs(delta_x) > abs(delta_y)) delta_y = 0; else delta_x = 0; //縦 or 横のみ抽出
-        if      (delta_y >  1) input_report_rel(data->dev, INPUT_REL_WHEEL, -1, true, K_NO_WAIT);
-        else if (delta_y < -1) input_report_rel(data->dev, INPUT_REL_WHEEL,  1, true, K_NO_WAIT);
-        else if (delta_x >  1) input_report_rel(data->dev, INPUT_REL_HWHEEL, 1, true, K_NO_WAIT);
-        else if (delta_x < -1) input_report_rel(data->dev, INPUT_REL_HWHEEL,-1, true, K_NO_WAIT);
+        if      (delta_y >  1) {
+           if (lshift_pressed ) input_report_rel(data->dev, INPUT_REL_HWHEEL, 1, true, K_NO_WAIT);
+           else                 input_report_rel(data->dev, INPUT_REL_WHEEL, -1, true, K_NO_WAIT);
+        }
+        else if (delta_y < -1) {
+           if (lshift_pressed ) input_report_rel(data->dev, INPUT_REL_HWHEEL,-1, true, K_NO_WAIT);
+           else                 input_report_rel(data->dev, INPUT_REL_WHEEL,  1, true, K_NO_WAIT);
+        }
+        else if (delta_x >  1) {
+           if (lshift_pressed ) input_report_rel(data->dev, INPUT_REL_HWHEEL, 1, true, K_NO_WAIT);
+           else                 input_report_rel(data->dev, INPUT_REL_WHEEL, -1, true, K_NO_WAIT);
+        }
+        else if (delta_x < -1) {
+           if (lshift_pressed ) input_report_rel(data->dev, INPUT_REL_HWHEEL,-1, true, K_NO_WAIT);
+           else                 input_report_rel(data->dev, INPUT_REL_WHEEL,  1, true, K_NO_WAIT);
+        }
         return;
     } else if (delta_x != 0 || delta_y != 0) { //マウス処理
         scaling /= 3.0f; //原則:低速
@@ -144,7 +156,7 @@ static void az1uball_polling(struct k_timer *timer)
 }
 
 ///////////////////////////////////////////////////////////////////////////
-// #03-XX.初期処理 / 感度取得
+// #03-XX.初期処理 / 感度取得.
 static float parse_sensitivity(const char *sensitivity) {
     float value;
     char *endptr;
