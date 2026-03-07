@@ -52,6 +52,29 @@
 //2026.03.02 #853 i2c/jiggler/加速度/47キー/マウス基本を低速へ
 //2026.03.03 #860   レイヤー3で左クリック
 / {
+    //macros
+    macros {
+        MY_USB: MY_USB {
+            compatible = "zmk,macros";
+            label = "MY_USB";
+            bindings = <&macro PRESS &out _USB &bt  _BT 5 >;
+        };
+        BLE0: BLE0 {
+            compatible = "zmk,macros";
+            label = "BLE0";
+            bindings = <&macro PRESS &out _BLE &bt  _BT 0 >;
+        };
+        BLE1: BLE1 {
+            compatible = "zmk,macros";
+            label = "BLE1";
+            bindings = <&macro PRESS &out _BLE &bt  _BT 1 >;
+        };
+        BLE2: BLE2 {
+            compatible = "zmk,macros";
+            label = "BLE2";
+            bindings = <&macro PRESS &out _BLE &bt  _BT 2 >;
+        };
+    };
     //behaviors
     behaviors {
 //★mod-morph-----------------------------------------------
@@ -244,7 +267,7 @@
           bindings = <
   &ESC_CLR   &kp  N1    &kp  N2    &kp  N3    &kp N4     &kp  N5    &kp  N6    &kp  N7    &kp  N8    &kp  N9    &N0_PIPE   &trans
   &trans     &MY_U      &MY_L      &MY_D      &MY_R      &kp  F3    &MY_KEY1   &trans     &kp  HOME  &kp  PG_UP &trans     &trans
-  &trans     &USB_BLE   &bt  _BT 0 &bt  _BT 1 &bt  _BT 2 &kp  F5    &MY_KEY2   &mkp LCLK  &kp  END   &kp  PG_DN &kp  SLASH &trans
+  &trans     &MY_USB    &BLE0      &BLE1      &BLE2      &kp  F5    &MY_KEY2   &mkp LCLK  &kp  END   &kp  PG_DN &kp  SLASH &trans
   &trans     &trans     &trans     &mkp RCLK  &kp  LCTRL &kp  LALT             &mo  3     &none      &none      &SC_U_L    &SC_D_R
           >;
         };
