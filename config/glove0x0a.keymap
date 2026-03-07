@@ -58,22 +58,22 @@
         MY_USB: MY_USB {
             compatible = "zmk,macro";
             #binding-cells = <0>;
-            bindings = <&out _USB &bt  _BT 5 >;
+            bindings = <&out OUT_USB &bt BT_SEL 5 >;
         };
         BLE0: BLE0 {
             compatible = "zmk,macro";
             #binding-cells = <0>;
-            bindings = <&out _BLE &bt  _BT 0 >;
+            bindings = <&out OUT_BLE &bt BT_SEL 0 >;
         };
         BLE1: BLE1 {
             compatible = "zmk,macro";
             #binding-cells = <0>;
-            bindings = <&out _BLE &bt  _BT 1 >;
+            bindings = <&out OUT_BLE &bt BT_SEL 1 >;
         };
         BLE2: BLE2 {
             compatible = "zmk,macro";
             #binding-cells = <0>;
-            bindings = <&out _BLE &bt  _BT 2 >;
+            bindings = <&out OUT_BLE &bt BT_SEL 2 >;
         };
 //★mod-morph-----------------------------------------------
         //Shift
