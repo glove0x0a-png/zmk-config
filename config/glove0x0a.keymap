@@ -52,8 +52,9 @@
 //2026.03.02 #853 i2c/jiggler/加速度/47キー/マウス基本を低速へ
 //2026.03.03 #860   レイヤー3で左クリック
 / {
-    //macros
-    macros {
+    //behaviors
+    behaviors {
+//★macro---------------------------------------------------
         MY_USB: MY_USB {
             compatible = "zmk,macro";
             #binding-cells = <0>;
@@ -74,9 +75,6 @@
             #binding-cells = <0>;
             bindings = <&out _BLE &bt  _BT 2 >;
         };
-    };
-    //behaviors
-    behaviors {
 //★mod-morph-----------------------------------------------
         //Shift
         //ボリューム操作(Win->UNIX)
