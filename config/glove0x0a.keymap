@@ -57,22 +57,22 @@
         MY_USB: MY_USB {
             compatible = "zmk,macros";
             label = "MY_USB";
-            bindings = <&macro PRESS &out _USB &bt  _BT 5 >;
+            bindings = <&out _USB &bt  _BT 5 >;
         };
         BLE0: BLE0 {
             compatible = "zmk,macros";
             label = "BLE0";
-            bindings = <&macro PRESS &out _BLE &bt  _BT 0 >;
+            bindings = <&out _BLE &bt  _BT 0 >;
         };
         BLE1: BLE1 {
             compatible = "zmk,macros";
             label = "BLE1";
-            bindings = <&macro PRESS &out _BLE &bt  _BT 1 >;
+            bindings = <&out _BLE &bt  _BT 1 >;
         };
         BLE2: BLE2 {
             compatible = "zmk,macros";
             label = "BLE2";
-            bindings = <&macro PRESS &out _BLE &bt  _BT 2 >;
+            bindings = <&out _BLE &bt  _BT 2 >;
         };
     };
     //behaviors
