@@ -201,7 +201,7 @@
             compatible = "zmk,behavior-status-indicator";
             #binding-cells = <0>;
             behavior-status = "capslock";
-            outputs = <&caps_led>;  // ✅ ラベルと一致
+            outputs = <&led0>;  // ✅ ラベルと一致
         };
 //★タップダンス制御-------------------------------------------------
         CTRL_MO2: CTRL_MO2 {
@@ -252,7 +252,7 @@
     };
     //aliases
     aliases {
-        led-red = &caps_led;     // ✅ DT_ALIAS(led_red) が &caps_led を参照
+        led-red = &led0;     // ✅ DT_ALIAS(led_red) が &led0 を参照
         led-green = &led1;
         led-blue = &led2;
     };
@@ -261,7 +261,7 @@
         compatible = "gpio-leds";
         status = "okay";
 
-        caps_led: capslock_led {
+        led0: led0 {
             gpios = <&gpio0 26 GPIO_ACTIVE_LOW>;  // ✅ P0.26 に接続された赤LED
             label = "CapsLock LED";               // ✅ GPIO識別用ラベル
         };
@@ -307,7 +307,7 @@
   &ESC_CLR   &kp  N1    &kp  N2    &kp  N3    &kp N4     &kp  N5    &kp  N6    &kp  N7    &kp  N8    &kp  N9    &N0_PIPE   &trans
   &trans     &MY_U      &MY_L      &MY_D      &MY_R      &kp  F3    &MY_KEY1   &trans     &SC_U_L    &SC_D_R    &trans     &trans
   &trans     &MY_USB    &BLE0      &BLE1      &BLE2      &kp  F5    &MY_KEY2   &LR_CLICK  &trans     &trans     &trans     &trans
-  &trans     &trans     &trans     &trans     &kp  LALT  &trans                &mo  3     &trans     &trans     &trans     &trans
+  &trans     &trans     &trans     &trans     &kp  LCTRL &trans                &mo  3     &trans     &trans     &trans     &trans
           >;
         };
     };
