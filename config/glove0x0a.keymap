@@ -52,7 +52,8 @@
 //2026.03.02 #853 i2c/jiggler/加速度/47キー/マウス基本を低速へ
 //2026.03.03 #860   レイヤー3で左クリック
 //2026.03.12 #873 物理配置を再調整。D1が不調。
-//2026.03.13 #881 超高速レイヤ追加。tap-danceの自動リリースを削除。(押しっぱなしはホールド/早すぎるリリースは後追いで解除)、レイヤ4は手動でキー設定。
+//2026.03.13 #881 tap-danceの自動リリース削除、押しっぱなしでホールド/即リリースは後追い。
+//2026.03.13 #883   2度押しで、レイヤ⇔Ctrl/クリック動作。
 / {
 //★macro---------------------------------------------------
     macros {
@@ -102,31 +103,25 @@
             bindings = <&kp C_VOL_DN>, <&kp K_VOL_DN>;
             mods = <MOD_LSFT>;
         };
-        _vol_mute: _vol_mute {
-            compatible = "zmk,behavior-mod-morph";
-            #binding-cells = <0>;
-            bindings = <&kp C_MUTE>, <&kp K_MUTE>;
-            mods = <MOD_LSFT>;
-        };
-       QUIT_F1: QUIT_F1 {  /* QUIT_F1 */
+        QUIT_F1: QUIT_F1 {  /* QUIT_F1 */
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
             bindings = <&kp LA(F4)>, <&kp F1>;
             mods = <MOD_LSFT>;
         };
-       F9_F11: F9_F11 {    /* F9_F11 */
+        F9_F11: F9_F11 {    /* F9_F11 */
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
             bindings = <&kp F9>, <&kp F11>;
             mods = <MOD_LSFT>;
         };
-       F10_F12: F10_F12 {  /* F10_F12 */
+        F10_F12: F10_F12 {  /* F10_F12 */
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
             bindings = <&kp F10>, <&kp F12>;
             mods = <MOD_LSFT>;
         };
-       N0_PIPE: N0_PIPE {  /* N0 & pipe */
+        N0_PIPE: N0_PIPE {  /* N0 & pipe */
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
             bindings = <&kp N0>, <&kp PIPE_>;
@@ -150,22 +145,10 @@
             bindings = <&kp LS(EQUAL)>, <&kp LS(SQT)>;
             mods = <MOD_LSFT>;
         };
-        MY_KEY4: MY_KEY4 {  /*【^】【(】*/
+        MY_KEY4: MY_KEY4 {  /*【^】【$】 */
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
-            bindings = <&kp EQUAL>, <&kp LS(N8)>;
-            mods = <MOD_LSFT>;
-        };
-        MY_KEY5: MY_KEY5 {  /*【$】【)】*/
-            compatible = "zmk,behavior-mod-morph";
-            #binding-cells = <0>;
-            bindings = <&kp LS(N4)>, <&kp LS(N9)>;
-            mods = <MOD_LSFT>;
-        };
-        USB_BLE: USB_BLE {  /*USB or BLE*/
-            compatible = "zmk,behavior-mod-morph";
-            #binding-cells = <0>;
-            bindings = <&out _USB>, <&out _BLE>;
+            bindings = <&kp EQUAL>, <&kp LS(N4)>;
             mods = <MOD_LSFT>;
         };
         ESC_CLR: ESC_CLR {  /*ESC_CLR*/
@@ -223,7 +206,7 @@
         CTRL_MO2: CTRL_MO2 {
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
-            tapping-term-ms = <200>;
+            tapping-term-ms = <250>;
             bindings = <
                 &mo 2
                 &kp LCTRL
@@ -241,10 +224,28 @@
         LR_CLICK: LR_CLICK {
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
-            tapping-term-ms = <200>;
+            tapping-term-ms = <250>;
             bindings = <
                 &mkp LCLK
                 &mkp RCLK
+            >;
+        };
+        MY_RBKT: MY_RBKT {
+            compatible = "zmk,behavior-tap-dance";
+            #binding-cells = <0>;
+            tapping-term-ms = <200>;
+            bindings = <
+                &kp RBKT
+                &kp LS(N8)
+            >;
+        };
+        MY_NUHS: MY_NUHS {
+            compatible = "zmk,behavior-tap-dance";
+            #binding-cells = <0>;
+            tapping-term-ms = <200>;
+            bindings = <
+                &kp NUHS
+                &kp LS(N9)
             >;
         };
     };
@@ -284,20 +285,19 @@
           bindings = <
   &kp  TAB   &kp  Q     &kp  W     &kp  E     &kp  R     &kp  T     &kp  Y     &kp  U     &kp  I     &kp  O     &kp  P     &kp  MINUS
   &kp  CAPS  &kp  A     &kp  S     &kp  D     &kp  F     &kp  G     &kp  H     &mo  1     &kp  K     &kp  L     &kp  SEMI  &kp  SQT
-  &kp  LSHFT &kp  Z     &kp  X     &kp  C     &kp  V     &kp  B     &kp  N     &kp  M     &kp  COMMA &kp  DOT   &kp  UP    &kp  ENTER
+  &kp  LSHFT &kp  Z     &kp  X     &kp  C     &kp  V     &kp  B     &kp  N     &kp  M     &kp  COMMA &kp  DOT   &kp  SLASH &kp  ENTER
   &kp  LCTRL &kp  LGUI  &kp  LALT  &LR_CLICK  &CTRL_MO2  &kp  SPACE            &CTRL_MO3  &kp  UP    &kp  LEFT  &kp  DOWN  &kp  RIGHT
           >;
         };
         //1:jigler-dummyレイヤー
         layer_fn1 { bindings = < &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans >; };
-
         //2:Custom + Function Keys + Vol
         layer_fn2 {
           bindings = <
   &kp  ESC   &QUIT_F1   &kp  F2    &kp  UP    &kp  PSCRN &kp  LC(T) &kp  F6    &kp  F7    &kp  F8    &F9_F11    &F10_F12   &kp  LBKT
-  &kp  LGUI  &kp  LALT  &kp  LEFT  &kp  DOWN  &kp  RIGHT &kp  F3    &kp  RBKT  &trans     &kp  HOME  &kp  PG_UP &kp  INT1  &MY_KEY3
-  &trans     &kp  EQUAL &_vol_dn   &_vol_up   &kp  F4    &kp  F5    &kp  NUHS  &kp  DEL   &kp  END   &kp  PG_DN &kp  SLASH &trans
-  &trans     &trans     &trans     &trans     &mo  2     &kp  BSPC             &kp  LCTRL &kp  TAB   &kp  K_APP &MY_KEY4   &MY_KEY5
+  &kp  LGUI  &kp  LALT  &kp  LEFT  &kp  DOWN  &kp  RIGHT &kp  F3    &MY_RBKT   &trans     &kp  HOME  &kp  PG_UP &kp  INT1  &MY_KEY3
+  &trans     &MY_KEY4   &_vol_dn   &_vol_up   &kp  F4    &kp  F5    &MY_NUHS   &kp  DEL   &kp  END   &kp  PG_DN &trans     &trans
+  &trans     &trans     &trans     &trans     &mo  2     &kp  BSPC             &kp  LCTRL &kp  TAB   &kp  K_APP &trans     &trans
           >;
         };
         //3:Number + Bluetooth /マウス高速
@@ -305,10 +305,34 @@
           bindings = <
   &ESC_CLR   &kp  N1    &kp  N2    &kp  N3    &kp N4     &kp  N5    &kp  N6    &kp  N7    &kp  N8    &kp  N9    &N0_PIPE   &trans
   &trans     &MY_U      &MY_L      &MY_D      &MY_R      &kp  F3    &MY_KEY1   &trans     &SC_U_L    &SC_D_R    &trans     &trans
-  &trans     &MY_USB    &BLE0      &BLE1      &BLE2      &kp  F5    &MY_KEY2   &LR_CLICK  &trans     &trans     &kp  SLASH &trans
+  &trans     &MY_USB    &BLE0      &BLE1      &BLE2      &kp  F5    &MY_KEY2   &LR_CLICK  &trans     &trans     &trans     &trans
   &trans     &trans     &trans     &trans     &kp  LCTRL &kp  LALT             &mo  3     &trans     &trans     &trans     &trans
           >;
         };
     };
 };
 //&ind_bat
+//        _vol_mute: _vol_mute {
+//            compatible = "zmk,behavior-mod-morph";
+//            #binding-cells = <0>;
+//            bindings = <&kp C_MUTE>, <&kp K_MUTE>;
+//            mods = <MOD_LSFT>;
+//        };
+//        MY_KEY4: MY_KEY4 {  /*【^】【(】*/
+//            compatible = "zmk,behavior-mod-morph";
+//            #binding-cells = <0>;
+//            bindings = <&kp EQUAL>, <&kp LS(N8)>;
+//            mods = <MOD_LSFT>;
+//        };
+//        MY_KEY5: MY_KEY5 {  /*【$】【)】*/
+//            compatible = "zmk,behavior-mod-morph";
+//            #binding-cells = <0>;
+//            bindings = <&kp LS(N4)>, <&kp LS(N9)>;
+//            mods = <MOD_LSFT>;
+//        };
+//        USB_BLE: USB_BLE {  /*USB or BLE*/
+//            compatible = "zmk,behavior-mod-morph";
+//            #binding-cells = <0>;
+//            bindings = <&out _USB>, <&out _BLE>;
+//            mods = <MOD_LSFT>;
+//        };
