@@ -54,7 +54,8 @@
 //2026.03.03 #860   レイヤー3で左クリック
 //2026.03.12 #873 物理配置を再調整。D1が不調。
 //2026.03.13 #881 tap-danceの自動リリース削除、押しっぱなしでホールド/即リリースは後追い。
-//2026.03.13 #883   2度押しで、レイヤ⇔Ctrl/クリック動作。
+//2026.03.13 #883   2度押しで、レイヤ⇔Ctrl.
+//2026.03.14 #902 Ctrl/OS/ALT削除、Q/A/Zの拡張。
 / {
 //★macro---------------------------------------------------
     macros {
@@ -132,11 +133,46 @@
             bindings = <&kp  SPACE>, <&kp LC(Z)>;
             mods = <MOD_LCTL>;
         };
+        //Qの使い方,CTRL+Qは動作なし。(comboへ)
+        MY_Q: MY_Q {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp Q>, <&none>;
+            mods = <MOD_LCTL>;
+        };
+       //Aの使い方,CTRL+A(長押し)は動作なし。(comboへ)
+        MY_A: MY_A {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp A>, <&mt 0 A >;
+            mods = <MOD_LCTL>;
+        };
+        //Aの使い方,CTRL+Aは動作なし。(layer用、comboへ)
+        MY_ALT: MY_ALT {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp LALT>, <&none>;
+            mods = <MOD_LCTL>;
+        };
         QUIT_F1: QUIT_F1 {  /* QUIT_F1 */
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
             bindings = <&kp LA(F4)>, <&kp F1>;
             mods = <MOD_LSFT>;
+        };
+        //Qの使い方,CTL+Qは動作なし。(comboへ)
+        MY_Q2: MY_Q2 {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&QUIT_F1>, <&none>;
+            mods = <MOD_LCTL>;
+        };
+        //Qの使い方,ALT+Qは動作なし。(comboへ)
+        MY_Q3: MY_Q3 {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&MY_Q2>, <&none>;
+            mods = <MOD_LALT>;
         };
         F9_F11: F9_F11 {    /* F9_F11 */
             compatible = "zmk,behavior-mod-morph";
@@ -303,8 +339,8 @@
 //|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****
         layer_qwerty {
           bindings = <
-  &kp  TAB   &kp Q       &kp  W    &kp  E     &kp  R     &kp  T     &kp  Y     &kp  U     &kp  I     &kp  O     &kp  P     &kp  MINUS
-  &kp  CAPS  &kp A       &kp  S    &kp  D     &kp  F     &kp  G     &kp  H     &mo  1     &kp  K     &kp  L     &kp  SEMI  &kp  SQT
+  &kp  TAB   &MY_Q       &kp  W    &kp  E     &kp  R     &kp  T     &kp  Y     &kp  U     &kp  I     &kp  O     &kp  P     &kp  MINUS
+  &kp  CAPS  &MY_A       &kp  S    &kp  D     &kp  F     &kp  G     &kp  H     &mo  1     &kp  K     &kp  L     &kp  SEMI  &kp  SQT
   &kp  LSHFT &mt LCTRL Z &kp  X    &kp  C     &kp  V     &kp  B     &kp  N     &kp  M     &kp  COMMA &kp  DOT   &kp  SLASH &kp  ENTER
   &kp  LCTRL &kp LGUI    &kp  LALT &mkp LCLK  &mo 2      &MY_SPACE             &CTRL_MO3  &kp  UP    &kp  LEFT  &kp  DOWN  &kp  RIGHT
           >;
@@ -314,8 +350,8 @@
         //2:Custom + Function Keys + Vol
         layer_fn2 {
           bindings = <
-  &kp  ESC   &QUIT_F1    &kp  F2    &kp  UP    &kp  PSCRN &kp  LC(T) &kp  F6    &kp  F7    &kp  F8    &F9_F11    &F10_F12   &kp  LBKT
-  &kp  LGUI  &kp LALT    &kp  LEFT  &kp  DOWN  &kp  RIGHT &kp  F3    &MY_RBKT   &trans     &kp  HOME  &kp  PG_UP &kp  INT1  &MY_KEY3
+  &kp  ESC   &MY_Q3      &kp  F2    &kp  UP    &kp  PSCRN &kp  LC(T) &kp  F6    &kp  F7    &kp  F8    &F9_F11    &F10_F12   &kp  LBKT
+  &kp  LGUI  &MY_ALT     &kp  LEFT  &kp  DOWN  &kp  RIGHT &kp  F3    &MY_RBKT   &trans     &kp  HOME  &kp  PG_UP &kp  INT1  &MY_KEY3
   &trans     &mt_MY_KEY4 LCTRL 0
                          &_vol_dn   &_vol_up   &kp  F4    &kp  F5    &MY_NUHS   &kp  DEL   &kp  END   &kp  PG_DN &trans     &trans
   &trans     &trans      &trans     &mkp RCLK  &mo  2     &kp  BSPC             &kp  LCTRL &kp  TAB   &kp  K_APP &trans     &trans
