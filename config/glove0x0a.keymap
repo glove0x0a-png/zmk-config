@@ -286,7 +286,7 @@
           bindings = <
   &kp  TAB   &kp  Q     &kp  W     &kp  E     &kp  R     &kp  T     &kp  Y     &kp  U     &kp  I     &kp  O     &kp  P     &kp  MINUS
   &kp  CAPS  &kp  A     &kp  S     &kp  D     &kp  F     &kp  G     &kp  H     &mo  1     &kp  K     &kp  L     &kp  SEMI  &kp  SQT
-  &kp  LSHFT &kp  Z     &kp  X     &kp  C     &kp  V     &kp  B     &kp  N     &kp  M     &kp  COMMA &kp  DOT   &kp  SLASH &kp  ENTER
+  &kp  LSHFT &ht KC_Z KC_LCTRL     &kp  X     &kp  C     &kp  V     &kp  B     &kp  N     &kp  M     &kp  COMMA &kp  DOT   &kp  SLASH &kp  ENTER
   &kp  LCTRL &kp  LGUI  &kp  LALT  &LR_CLICK  &CTRL_MO2  &kp  SPACE            &CTRL_MO3  &kp  UP    &kp  LEFT  &kp  DOWN  &kp  RIGHT
           >;
         };
@@ -312,7 +312,6 @@
         };
     };
 };
-
 
 //&ind_bat
 //        _vol_mute: _vol_mute {
