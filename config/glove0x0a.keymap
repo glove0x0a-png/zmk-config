@@ -90,13 +90,13 @@
     //combos
     combos {
         //Z+Q -> Ctrl + Tab
-        MY_Q {
+        Ctrl_TAB {
             timeout-ms = <30>;
             key-positions = <1 25>;
             bindings = <&kp LC(TAB)>;
         };
         //A+Q -> ALT + Tab
-        MY_Q {
+        ALT_TAB {
             timeout-ms = <30>;
             key-positions = <1 13>;
             bindings = <&kp LA(TAB)>;
