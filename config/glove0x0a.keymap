@@ -52,7 +52,7 @@
 //2026.03.02 #853 i2c/jiggler/加速度/47キー/マウス基本を低速へ
 //2026.03.03 #860   レイヤー3で左クリック
 //2026.03.12 #873 物理配置を再調整。D1が不調。
-//2026.03.13 #877 超高速レイヤ追加。tap-danceの自動リリースを削除。(押しっぱなしはホールド/早すぎるリリースは後追いで解除)、レイヤ4は手動でキー設定。
+//2026.03.13 #881 超高速レイヤ追加。tap-danceの自動リリースを削除。(押しっぱなしはホールド/早すぎるリリースは後追いで解除)、レイヤ4は手動でキー設定。
 / {
 //★macro---------------------------------------------------
     macros {
@@ -265,7 +265,7 @@
 //|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****
         layer_qwerty {
           bindings = <
-a  &kp  TAB   &kp  Q     &kp  W     &kp  E     &kp  R     &kp  T     &kp  Y     &kp  U     &kp  I     &kp  O     &kp  P     &kp  MINUS
+  &kp  TAB   &kp  Q     &kp  W     &kp  E     &kp  R     &kp  T     &kp  Y     &kp  U     &kp  I     &kp  O     &kp  P     &kp  MINUS
   &kp  CAPS  &kp  A     &kp  S     &kp  D     &kp  F     &kp  G     &kp  H     &mo  1     &kp  K     &kp  L     &kp  SEMI  &kp  SQT
   &kp  LSHFT &kp  Z     &kp  X     &kp  C     &kp  V     &kp  B     &kp  N     &kp  M     &kp  COMMA &kp  DOT   &kp  UP    &kp  ENTER
   &kp  LCTRL &kp  LGUI  &kp  LALT  &mkp LCLK  &mo  2     &kp  SPACE            &MO_SPED   &kp  UP    &kp  LEFT  &kp  DOWN  &kp  RIGHT
