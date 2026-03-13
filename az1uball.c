@@ -122,6 +122,7 @@ void az1uball_read_data_work(struct k_work *work)
     } else if (delta_x != 0 || delta_y != 0) { //マウス処理
         scaling /= 3.0f; //原則:低速
         if (layer == 3)     scaling      *= 4.0f; //レイヤー:高速
+        if (layer == 4)     scaling      *= 6.0f; //レイヤー:超高速
         //else if (lshift_pressed )scaling *= 9.0f; //shift:中速
         for (int i = 0; i < 3; i++) { //移動を滑らかに
             input_report_rel(data->dev, INPUT_REL_X, delta_x / 3 * scaling, false, K_NO_WAIT);
