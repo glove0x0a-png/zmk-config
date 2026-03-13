@@ -223,7 +223,7 @@
         MO_SPED: MO_SPED {
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
-            tapping-term-ms = <100>;
+            tapping-term-ms = <200>;
             bindings = <
                 &mo 3     // シングルタップ → MO(3)
                 &mo 4     // ダブルタップ → MO(4)
