@@ -52,7 +52,7 @@
 //2026.03.02 #853 i2c/jiggler/加速度/47キー/マウス基本を低速へ
 //2026.03.03 #860   レイヤー3で左クリック
 //2026.03.12 #873 物理配置を再調整。D1が不調。
-//2026.03.13 #876 超高速レイヤ追加。tap-danceの自動リリースを削除。(押しっぱなしはホールド)
+//2026.03.13 #877 超高速レイヤ追加。tap-danceの自動リリースを削除。(押しっぱなしはホールド/早すぎるリリースは後追いで解除)、レイヤ4は手動でキー設定。
 / {
 //★macro---------------------------------------------------
     macros {
@@ -292,7 +292,7 @@
   &trans     &trans     &trans     &mkp RCLK  &kp  LCTRL &kp  LALT             &mo  3     &none      &none      &trans     &trans
           >;
         };
-        //4:Number + Bluetooth /マウス超高速
+        //4:Number + Bluetooth /マウス超高速/レイヤ3のコピペ。
         layer_fn4 {
           bindings = <
   &ESC_CLR   &kp  N1    &kp  N2    &kp  N3    &kp N4     &kp  N5    &kp  N6    &kp  N7    &kp  N8    &kp  N9    &N0_PIPE   &trans
