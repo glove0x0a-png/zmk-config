@@ -93,7 +93,7 @@
         //Z+Q -> Ctrl + Tab
         Ctrl_TAB {
             timeout-ms = <2000>;
-            key-positions = <1 25>
+            key-positions = <1 25>;
             bindings = <&kp LC(TAB)>;
         };
         //A+Q -> ALT + Tab
@@ -133,21 +133,21 @@
             bindings = <&kp  SPACE>, <&kp LC(Z)>;
             mods = <MOD_LCTL>;
         };
-        //Qの使い方,CTRL+Qは動作なし。(comboへ)
+        //Qの使い方,CTRL+Qは動作なし。(comboでTAB)
         MY_Q: MY_Q {
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
             bindings = <&kp Q>, <&none>;
             mods = <MOD_LCTL>;
         };
-       //Aの使い方,CTRL+A(長押し)は動作なし。(comboへ)
+       //Aの使い方,CTRL+A(長押し)は動作なし。(comboでShift)
         MY_A: MY_A {
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
-            bindings = <&kp A>, <&mt 0 A >;
+            bindings = <&kp A>, <&mt 0 LC(A)>;
             mods = <MOD_LCTL>;
         };
-        //Aの使い方,CTRL+Aは動作なし。(layer用、comboへ)
+        //Aの使い方,CTRL+Aは動作なし。(layer用、comboでShift)
         MY_ALT: MY_ALT {
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
@@ -160,14 +160,14 @@
             bindings = <&kp LA(F4)>, <&kp F1>;
             mods = <MOD_LSFT>;
         };
-        //Qの使い方,CTL+Qは動作なし。(comboへ)
+        //Qの使い方,CTL+Qは動作なし。(comboでTAB)
         MY_Q2: MY_Q2 {
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
             bindings = <&QUIT_F1>, <&none>;
             mods = <MOD_LCTL>;
         };
-        //Qの使い方,ALT+Qは動作なし。(comboへ)
+        //Qの使い方,ALT+Qは動作なし。(comboでTAB)
         MY_Q3: MY_Q3 {
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
