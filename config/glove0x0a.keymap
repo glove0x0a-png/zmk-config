@@ -104,18 +104,21 @@
             bindings = <&kp C_VOL_DN>, <&kp K_VOL_DN>;
             mods = <MOD_LSFT>;
         };
+        //Qの使い方,CTL(Zキー)->CTL+Zの代わり
         MY_Q: MY_Q {
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
             bindings = <&kp Q>, <&kp LC(Z)>;
             mods = <MOD_LCTL>;
         };
+        //ALT(Aキー)->ALT+TABの代わり
         MY_Q2: MY_Q2 {
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
             bindings = <&MY_Q>, <&kp TAB>;
-            mods = <MOD_LSFT>;
+            mods = <MOD_LALT>;
         };
+        //Aの使い方,CTL(Zキー)->CTL+Shiftの代わり(Layer用)
         MY_ALT: MY_ALT {
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
