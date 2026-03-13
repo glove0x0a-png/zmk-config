@@ -86,6 +86,13 @@
                 = <&macro_tap &out OUT_BLE>
                 , <&macro_tap &bt BT_SEL 2 >;
         };
+        ALT_TAB: ALT_TAB {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings =
+                <&macro_press &kp LALT>,  // ALT を押す（保持）
+                <&kp TAB>;                // TAB をタップ（ALT+TAB）
+        };
     };
     //behaviors
     behaviors {
@@ -111,12 +118,19 @@
             bindings = <&kp Q>, <&kp LC(Z)>;
             mods = <MOD_LCTL>;
         };
-        //ALT(Aキー)->ALT+TABの代わり
+        //Qの使い方,ALT(Aキー)->ALT+TABの代わり
         MY_Q2: MY_Q2 {
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
-            bindings = <&MY_Q>, <&kp LA(TAB)>;
+            bindings = <&MY_Q>, <&ALT_TAB>;
             mods = <MOD_LALT>;
+        };
+        //Aの使い方,CTL(Zキー)->CTL+Shiftの代わり
+        MY_A: MY_A {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp A>, <&mt LSHFT A >;
+            mods = <MOD_LCTL>;
         };
         //Aの使い方,CTL(Zキー)->CTL+Shiftの代わり(Layer用)
         MY_ALT: MY_ALT {
@@ -296,8 +310,8 @@
 //|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****
         layer_qwerty {
           bindings = <
-  &kp  TAB   &MY_Q2      &kp  W    &kp  E     &kp  R     &kp  T     &kp  Y     &kp  U     &kp  I     &kp  O     &kp  P     &kp  MINUS
-  &kp  CAPS  &mt LSHFT A &kp  S    &kp  D     &kp  F     &kp  G     &kp  H     &mo  1     &kp  K     &kp  L     &kp  SEMI  &kp  SQT
+  &kp  TAB   &MY_Q2     &kp  W    &kp  E     &kp  R     &kp  T     &kp  Y     &kp  U     &kp  I     &kp  O     &kp  P     &kp  MINUS
+  &kp  CAPS  &MY_A      &kp  S    &kp  D     &kp  F     &kp  G     &kp  H     &mo  1     &kp  K     &kp  L     &kp  SEMI  &kp  SQT
   &kp  LSHFT &mt LCTRL Z &kp  X    &kp  C     &kp  V     &kp  B     &kp  N     &kp  M     &kp  COMMA &kp  DOT   &kp  SLASH &kp  ENTER
   &kp  LCTRL &kp  LGUI  &kp  LALT  &mkp LCLK  &mo 2      &kp  SPACE            &CTRL_MO3  &kp  UP    &kp  LEFT  &kp  DOWN  &kp  RIGHT
           >;
