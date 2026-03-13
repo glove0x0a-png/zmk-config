@@ -86,13 +86,6 @@
                 = <&macro_tap &out OUT_BLE>
                 , <&macro_tap &bt BT_SEL 2 >;
         };
-        ALT_TAB: ALT_TAB {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings =
-                <&macro_press &kp LALT>,  // ALT を押す（保持）
-                <&kp TAB>;                // TAB をタップ（ALT+TAB）
-        };
     };
     //behaviors
     behaviors {
@@ -111,19 +104,19 @@
             bindings = <&kp C_VOL_DN>, <&kp K_VOL_DN>;
             mods = <MOD_LSFT>;
         };
-        //Qの使い方,CTL(Zキー)->CTL+Zの代わり
+        //SPACEの使い方,CTL(Zキー)->CTL+Zの代わり
+        MY_SPACE: MY_SPACE {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp  SPACE>, <&kp LC(Z)>;
+            mods = <MOD_LCTL>;
+        };
+        //Qの使い方,CTL(Zキー)->CTL+TABの代わり
         MY_Q: MY_Q {
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
-            bindings = <&kp Q>, <&kp LC(Z)>;
+            bindings = <&kp Q>, <&kp TAB>;
             mods = <MOD_LCTL>;
-        };
-        //Qの使い方,ALT(Aキー)->ALT+TABの代わり
-        MY_Q2: MY_Q2 {
-            compatible = "zmk,behavior-mod-morph";
-            #binding-cells = <0>;
-            bindings = <&MY_Q>, <&ALT_TAB>;
-            mods = <MOD_LALT>;
         };
         //Aの使い方,CTL(Zキー)->CTL+Shiftの代わり
         MY_A: MY_A {
@@ -144,6 +137,20 @@
             #binding-cells = <0>;
             bindings = <&kp LA(F4)>, <&kp F1>;
             mods = <MOD_LSFT>;
+        };
+        //Qの使い方,CTL(Zキー)->CTL+TABの代わり(Layer用)
+        MY_Q2: MY_Q2 {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&QUIT_F1>, <&kp TAB>;
+            mods = <MOD_LCTL>;
+        };
+        //Qの使い方,ALT(Aキー)->ALT+TABの代わり(Layer用)
+        MY_Q3: MY_Q3 {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&MY_Q2>, <&kp TAB>;
+            mods = <MOD_LALT>;
         };
         F9_F11: F9_F11 {    /* F9_F11 */
             compatible = "zmk,behavior-mod-morph";
@@ -310,7 +317,7 @@
 //|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****
         layer_qwerty {
           bindings = <
-  &kp  TAB   &MY_Q2     &kp  W    &kp  E     &kp  R     &kp  T     &kp  Y     &kp  U     &kp  I     &kp  O     &kp  P     &kp  MINUS
+  &kp  TAB   &MY_Q      &kp  W    &kp  E     &kp  R     &kp  T     &kp  Y     &kp  U     &kp  I     &kp  O     &kp  P     &kp  MINUS
   &kp  CAPS  &MY_A      &kp  S    &kp  D     &kp  F     &kp  G     &kp  H     &mo  1     &kp  K     &kp  L     &kp  SEMI  &kp  SQT
   &kp  LSHFT &mt LCTRL Z &kp  X    &kp  C     &kp  V     &kp  B     &kp  N     &kp  M     &kp  COMMA &kp  DOT   &kp  SLASH &kp  ENTER
   &kp  LCTRL &kp  LGUI  &kp  LALT  &mkp LCLK  &mo 2      &kp  SPACE            &CTRL_MO3  &kp  UP    &kp  LEFT  &kp  DOWN  &kp  RIGHT
@@ -321,7 +328,7 @@
         //2:Custom + Function Keys + Vol
         layer_fn2 {
           bindings = <
-  &kp  ESC   &QUIT_F1   &kp  F2    &kp  UP    &kp  PSCRN &kp  LC(T) &kp  F6    &kp  F7    &kp  F8    &F9_F11    &F10_F12   &kp  LBKT
+  &kp  ESC   &MY_Q3     &kp  F2    &kp  UP    &kp  PSCRN &kp  LC(T) &kp  F6    &kp  F7    &kp  F8    &F9_F11    &F10_F12   &kp  LBKT
   &kp  LGUI  &MY_ALT    &kp  LEFT  &kp  DOWN  &kp  RIGHT &kp  F3    &MY_RBKT   &trans     &kp  HOME  &kp  PG_UP &kp  INT1  &MY_KEY3
   &trans     &mt_MY_KEY4 LCTRL 0 &_vol_dn   &_vol_up   &kp  F4    &kp  F5    &MY_NUHS   &kp  DEL   &kp  END   &kp  PG_DN &trans     &trans
   &trans     &trans     &trans     &mkp RCLK  &mo  2     &kp  BSPC             &kp  LCTRL &kp  TAB   &kp  K_APP &trans     &trans
