@@ -52,7 +52,7 @@
 //2026.03.02 #853 i2c/jiggler/加速度/47キー/マウス基本を低速へ
 //2026.03.03 #860   レイヤー3で左クリック
 //2026.03.12 #873 物理配置を再調整。D1が不調。
-//2026.03.13 #875 超高速レイヤ追加。
+//2026.03.13 #876 超高速レイヤ追加。tap-danceの自動リリースを削除。(押しっぱなしはホールド)
 / {
 //★macro---------------------------------------------------
     macros {
@@ -223,7 +223,7 @@
         MO_SPED: MO_SPED {
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
-            tapping-term-ms = <200>;
+            tapping-term-ms = <100>;
             bindings = <
                 &mo 3     // シングルタップ → MO(3)
                 &mo 4     // ダブルタップ → MO(4)
@@ -295,10 +295,10 @@
         //4:Number + Bluetooth /マウス超高速
         layer_fn4 {
           bindings = <
-  &trans     &trans     &trans     &trans     &trans     &trans     &trans     &trans     &trans     &trans     &trans     &trans
-  &trans     &trans     &trans     &trans     &trans     &trans     &trans     &trans     &trans     &trans     &trans     &trans
-  &trans     &trans     &trans     &trans     &trans     &trans     &trans     &trans     &trans     &trans     &trans     &trans
-  &trans     &trans     &trans     &trans     &trans     &trans     &trans     &mo  4     &trans     &trans     &trans     &trans
+  &ESC_CLR   &kp  N1    &kp  N2    &kp  N3    &kp N4     &kp  N5    &kp  N6    &kp  N7    &kp  N8    &kp  N9    &N0_PIPE   &trans
+  &trans     &MY_U      &MY_L      &MY_D      &MY_R      &kp  F3    &MY_KEY1   &trans     &SC_U_L    &SC_D_R    &trans     &trans
+  &trans     &MY_USB    &BLE0      &BLE1      &BLE2      &kp  F5    &MY_KEY2   &mkp LCLK  &trans     &trans     &kp  SLASH &trans
+  &trans     &trans     &trans     &mkp RCLK  &kp  LCTRL &kp  LALT             &mo  4     &none      &none      &trans     &trans
           >;
         };
     };

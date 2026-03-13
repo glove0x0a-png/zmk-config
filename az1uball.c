@@ -84,18 +84,10 @@ void az1uball_read_data_work(struct k_work *work)
     if ( btn_push != data->sw_pressed ){
         data->sw_pressed = btn_push;
         if( btn_push ){
-            if(layer == 3) {
-                binding.behavior_dev=zmk_behavior_get_binding("mouse_press");
-                binding.param1 = 1;
-                zmk_behavior_invoke_binding(&binding, event, 1);  //マウスクリック
-                zmk_behavior_invoke_binding(&binding, event, 0);
-            }
-            else
             {
                 binding.behavior_dev="key_press";
                 binding.param1 = 0x0D; 
-                zmk_behavior_invoke_binding(&binding, event, 1);  //Jキー扱い
-                zmk_behavior_invoke_binding(&binding, event, 0);
+                zmk_behavior_invoke_binding(&binding, event, btn_push);  //Jキー扱い
             }
         }
     }
@@ -122,7 +114,7 @@ void az1uball_read_data_work(struct k_work *work)
     } else if (delta_x != 0 || delta_y != 0) { //マウス処理
         scaling /= 3.0f; //原則:低速
         if (layer == 3)     scaling      *= 4.0f; //レイヤー:高速
-        if (layer == 4)     scaling      *= 6.0f; //レイヤー:超高速
+        if (layer == 4)     scaling      *= 9.0f; //レイヤー:超高速
         //else if (lshift_pressed )scaling *= 9.0f; //shift:中速
         for (int i = 0; i < 3; i++) { //移動を滑らかに
             input_report_rel(data->dev, INPUT_REL_X, delta_x / 3 * scaling, false, K_NO_WAIT);
