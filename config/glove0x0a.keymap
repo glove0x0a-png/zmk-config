@@ -291,6 +291,8 @@
   &trans     &MY_U      &MY_L      &MY_D      &MY_R      &kp  F3    &MY_KEY1   &trans     &SC_U_L    &SC_D_R    &trans     &trans
   &trans     &MY_USB    &BLE0      &BLE1      &BLE2      &kp  F5    &MY_KEY2   &mkp LCLK  &trans     &trans     &kp  SLASH &trans
   &trans     &trans     &trans     &mkp RCLK  &kp  LCTRL &kp  LALT             &mo  3     &none      &none      &trans     &trans
+          >;
+        };
         //4:Number + Bluetooth /マウス超高速
         layer_fn4 {
           bindings = <
