@@ -58,7 +58,7 @@
 //2026.02.23 #764 zmkバージョンアップにより、rgbledをローカルzmkへ統合。OK
 //2026.02.23 #764 ZIGGLER ON/OFFのため、JキーをF13へ。(物理スイッチあり)
 &mt {
-    tapping-term-ms = <400>;
+    tapping-term-ms = <100>;
 };
 / {
 //★macro---------------------------------------------------
@@ -212,32 +212,20 @@
         MY_Z_0: MY_Z_0 {  //Ctrl+Zの長押しに対応するため、Ctrl押下済みならZのまま。未押下状態なら
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
-            bindings = <&mt LCTRL Z >, <&kp LC(Z)>;
+            bindings = <&mt LCTRL Z >, <&kp Z>;
             mods = <MOD_LCTL>;
-        };
-        MY_Q_w0: MY_Q_w0 {  //Alt/Ctrl->TABへ
-            compatible = "zmk,behavior-mod-morph";
-            #binding-cells = <0>;
-            bindings = <&kp Q>, <&kp LA(TAB) >;
-            mods = <MOD_LALT>;
         };
         MY_Q_0: MY_Q_0 {  //Alt/Ctrl->TABへ
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
-            bindings = <&MY_Q_w0>, <&kp LC(TAB) >;
-            mods = <MOD_LCTL>;
-        };
-        MY_Q_w2: MY_Q_w2 {  //Alt/Ctrl+Q->TABへ
-            compatible = "zmk,behavior-mod-morph";
-            #binding-cells = <0>;
-            bindings = <&QUIT_F1>, <&kp LA(TAB) >;
-            mods = <MOD_LALT>;
+            bindings = <&kp Q>, <&kp TAB>;
+            mods = <(MOD_LALT|MOD_LCTL)>;
         };
         MY_Q_2: MY_Q_2 {  //Alt/Ctrl+Q->TABへ
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
-            bindings = <&MY_Q_w2>, <&kp LC(TAB) >;
-            mods = <MOD_LCTL>;
+            bindings = <&QUIT_F1>, <&kp TAB >;
+            mods = <(MOD_LALT|MOD_LCTL)>;
         };
 //★モッドタップ-------------------------------------------------
         mZ: mZ {
