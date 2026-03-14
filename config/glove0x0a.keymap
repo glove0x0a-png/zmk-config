@@ -212,7 +212,7 @@
         MY_Z_0: MY_Z_0 {  //Ctrl+Zの長押しに対応するため、Ctrl押下済みならZのまま。未押下状態なら
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
-            bindings = <&mt LCTRL Z >, <&kp Z>;
+            bindings = <&mt LCTRL Z >, <&kp LC(Z)>;
             mods = <MOD_LCTL>;
         };
         MY_Q_w0: MY_Q_w0 {  //Alt/Ctrl->TABへ
