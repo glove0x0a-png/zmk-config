@@ -230,7 +230,7 @@
         MY_A_0: MY_A_0 {
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
-            bindings = <&A>, <&mt LSHFT A >;
+            bindings = <&kp A>, <&mt LSHFT A >;
             mods = <MOD_LCTL>;
         };
 //★モッドタップ-------------------------------------------------
