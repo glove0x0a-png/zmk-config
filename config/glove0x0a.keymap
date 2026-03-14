@@ -58,7 +58,7 @@
 //2026.02.23 #764 zmkバージョンアップにより、rgbledをローカルzmkへ統合。OK
 //2026.02.23 #764 ZIGGLER ON/OFFのため、JキーをF13へ。(物理スイッチあり)
 &mt {
-    tapping-term-ms = <80>;
+    tapping-term-ms = <100>;
 };
 / {
 //★macro---------------------------------------------------
@@ -230,13 +230,25 @@
         MY_A_0: MY_A_0 {
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
-            bindings = <&kp A>, <&mt LSHFT A >;
+            bindings = <&mt LSHFT A>, <&mt LSHFT A>;
             mods = <MOD_LCTL>;
         };
         MY_A_2: MY_A_2 {
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
             bindings = <&kp LALT>, <&kp LSHFT>;
+            mods = <MOD_LCTL>;
+        };
+        MY_SPAC_w0: MY_SPAC_w0 {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp SPACE>, <&kp LS(A)>;
+            mods = <MOD_LSFT>;
+        };
+        MY_SPAC_0: MY_SPAC_0 {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&MY_SPAC_w0>, <&kp LC(Z)>;
             mods = <MOD_LCTL>;
         };
 //★モッドタップ-------------------------------------------------
@@ -330,7 +342,7 @@
   &kp  TAB   &MY_Q_0    &kp  W    &kp  E     &kp  R     &kp  T     &kp  Y     &kp  U     &kp  I     &kp  O     &kp  P     &kp  MINUS
   &kp  CAPS  &MY_A_0    &kp  S    &kp  D     &kp  F     &kp  G     &kp  H     &mo  1     &kp  K     &kp  L     &kp  SEMI  &kp  SQT
   &kp  LSHFT &MY_Z_0    &kp  X    &kp  C     &kp  V     &kp  B     &kp  N     &kp  M     &kp  COMMA &kp  DOT   &kp  SLASH &kp  ENTER
-  &kp  LCTRL &kp LGUI   &kp  LALT &mkp LCLK  &CTRL_MO2  &kp SPACE             &CTRL_MO3  &kp  UP    &kp  LEFT  &kp  DOWN  &kp  RIGHT
+  &kp  LCTRL &kp LGUI   &kp  LALT &mkp LCLK  &CTRL_MO2  &MY_SPAC_0            &CTRL_MO3  &kp  UP    &kp  LEFT  &kp  DOWN  &kp  RIGHT
           >;
         };
         //1:jigler-dummyレイヤー
