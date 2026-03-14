@@ -34,33 +34,32 @@
 #define HI_L MOVE_X(-200)
 #define HI_R MOVE_X(200)
 
-//
-//2026.02.23 #764 zmkバージョンアップにより、rgbledをローカルzmkへ統合。OK
-//2026.02.23 #XXX ZIGGLER ON/OFFのため、JキーをF13へ。(物理スイッチあり)
-//2026.02.23 #765 I2CのSDA(D4)、SCL(D5)を明示的に指定。
-//2026.02.23 #798 I2Cでマウス、Fn1で速度追加、Fn2でカーソル、ジグラーはレイヤー3へ。
-//2026.02.23 #800 I2Cでマウス、ジグラーはレイヤー1へ。Fn2で速度追加、Fn3でカーソル。レイヤー1は未点灯。
-//2026.02.28 #828 AZ1UBALLのカスタマイズ。移動量,角度,加速度。
-//2026.02.28 #832 左Fnのレイヤー上段にFXを集約。整理。
-//2026.02.28 #834 デバッグ:AZ1UBALL:加速度不良。
-//2026.03.01 #837 デバッグ:AZ1UBALL:方向検出不良(if右else左else下else上->if右else左 if下else上)
-//2026.03.01 #838 デバッグ:AZ1UBALL:cos/sinの符号不良。
-//2026.03.01 #841 デバッグ:AZ1UBALL:前回移動量の保存条件を変更。
-//2026.03.01 #842 デバッグ:AZ1UBALL:前回移動量のクリアを明記。
-//2026.03.01 #843 デバッグ:AZ1UBALL:加速度上限制御。
-//2026.03.01 #847   Ctrlキーを再配置、BLE機能関連のキー再配置
-//2026.03.02 #852   47キーバージョンへ戻し。左下キー削減のリハビリから。
-//2026.03.02 #853 i2c/jiggler/加速度/47キー/マウス基本を低速へ
-//2026.03.03 #860   レイヤー3で左クリック
-//2026.03.12 #873 物理配置を再調整。D1が不調。
-//2026.03.13 #881 tap-danceの自動リリース削除、押しっぱなしでホールド/即リリースは後追い。
+//2026.03.14 #907 Z長押し->Ctrlへ。
+//2026.03.14 #907 fn2度押し->Ctrlへ。
+//2026.03.14 #902 Ctrl/OS/ALT削除、Q/A/Zの拡張。->中止。//                1.CtrlをZにすると、Ctrl+Zを別キーにアサイン。(spaceで以外となんとかなった)//                2.Ctrl+Shiftの手の形から、AにShiftをアサインしたいが、できない。//                  2.1 mod-morphではCtrlがリリースされる。//                  2.2 comboは同時押し判定時間の問題？//                3.QにTABを割り当てたいが、これも修飾キーリリースの問題から中途半端になる。
 //2026.03.13 #883   2度押しで、レイヤ⇔Ctrl.
-//2026.03.14 #902 Ctrl/OS/ALT削除、Q/A/Zの拡張。->中止。
-//                1.CtrlをZにすると、Ctrl+Zを別キーにアサイン。(spaceで以外となんとかなった)
-//                2.Ctrl+Shiftの手の形から、AにShiftをアサインしたいが、できない。
-//                  2.1 mod-morphではCtrlがリリースされる。
-//                  2.2 comboは同時押し判定時間の問題？
-//                3.QにTABを割り当てたいが、これも修飾キーリリースの問題から中途半端になる。
+//2026.03.13 #881 tap-danceの自動リリース削除、押しっぱなしでホールド/即リリースは後追い。
+//2026.03.12 #873 物理配置を再調整。D1が不調。
+//2026.03.03 #860   レイヤー3で左クリック
+//2026.03.02 #853 i2c/jiggler/加速度/47キー/マウス基本を低速へ
+//2026.03.02 #852   47キーバージョンへ戻し。左下キー削減のリハビリから。
+//2026.03.01 #847   Ctrlキーを再配置、BLE機能関連のキー再配置
+//2026.03.01 #843 デバッグ:AZ1UBALL:加速度上限制御。
+//2026.03.01 #842 デバッグ:AZ1UBALL:前回移動量のクリアを明記。
+//2026.03.01 #841 デバッグ:AZ1UBALL:前回移動量の保存条件を変更。
+//2026.03.01 #838 デバッグ:AZ1UBALL:cos/sinの符号不良。
+//2026.03.01 #837 デバッグ:AZ1UBALL:方向検出不良(if右else左else下else上->if右else左 if下else上)
+//2026.02.28 #834 デバッグ:AZ1UBALL:加速度不良。
+//2026.02.28 #832 左Fnのレイヤー上段にFXを集約。整理。
+//2026.02.28 #828 AZ1UBALLのカスタマイズ。移動量,角度,加速度。
+//2026.02.23 #800 I2Cでマウス、ジグラーはレイヤー1へ。Fn2で速度追加、Fn3でカーソル。レイヤー1は未点灯。
+//2026.02.23 #798 I2Cでマウス、Fn1で速度追加、Fn2でカーソル、ジグラーはレイヤー3へ。
+//2026.02.23 #765 I2CのSDA(D4)、SCL(D5)を明示的に指定。
+//2026.02.23 #764 zmkバージョンアップにより、rgbledをローカルzmkへ統合。OK
+//2026.02.23 #764 ZIGGLER ON/OFFのため、JキーをF13へ。(物理スイッチあり)
+&mt {
+    tapping-term-ms = <250>;
+};
 / {
 //★macro---------------------------------------------------
     macros {
@@ -209,6 +208,34 @@
             bindings = <&msc SC_D>, <&msc SC_R>;
             mods = <MOD_LSFT>;
         };
+        //Shift以外は、修飾キーリリースなし。MOD_LCTL
+        MY_Z_0: MY_Z_0 {  //Ctrl+Zの長押しに対応するため、Ctrl押下済みならZのまま。未押下状態なら
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp Z>, <&mt LCTRL Z >;
+            mods = <MOD_LCTL>;
+        };
+        MY_Q_0: MY_Q_0 {  //Alt/Ctrl->TABへ
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp Q>, <&kp TAB >;
+            mods = <(MOD_LCTL | MOD_LALT)>;
+        };
+        MY_Q_2: MY_Q_2 {  //Alt/Ctrl+Q->TABへ
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&QUIT_F1>, <&kp TAB >;
+            mods = <(MOD_LCTL | MOD_LALT)>;
+        };
+//★モッドタップ-------------------------------------------------
+        mZ: mZ {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            flavor = "hold-preferred";
+            tapping-term-ms = <200>;
+            bindings = <&kp>, <&MY_KEY4>;
+            display-name = "Mod-Tap";
+        };
 //★LED制御-------------------------------------------------
         capslock_led: capslock_led {
             compatible = "zmk,behavior-status-indicator";
@@ -253,15 +280,6 @@
                 &kp LS(N9)
             >;
         };
-//★モッドタップ-------------------------------------------------
-        mt_Z: mt_Z {
-            compatible = "zmk,behavior-hold-tap";
-            #binding-cells = <2>;
-            flavor = "hold-preferred";
-            tapping-term-ms = <200>;
-            bindings = <&kp>, <&MY_KEY4>;
-            display-name = "Mod-Tap";
-        };
     };
     //aliases
     aliases {
@@ -297,9 +315,9 @@
 //|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****
         layer_qwerty {
           bindings = <
-  &kp  TAB   &kp Q      &kp  W    &kp  E     &kp  R     &kp  T     &kp  Y     &kp  U     &kp  I     &kp  O     &kp  P     &kp  MINUS
+  &kp  TAB   &MY_Q_0    &kp  W    &kp  E     &kp  R     &kp  T     &kp  Y     &kp  U     &kp  I     &kp  O     &kp  P     &kp  MINUS
   &kp  CAPS  &kp A      &kp  S    &kp  D     &kp  F     &kp  G     &kp  H     &mo  1     &kp  K     &kp  L     &kp  SEMI  &kp  SQT
-  &kp  LSHFT &mt LCTRL Z &kp  X   &kp  C     &kp  V     &kp  B     &kp  N     &kp  M     &kp  COMMA &kp  DOT   &kp  SLASH &kp  ENTER
+  &kp  LSHFT &MY_Z_0    &kp  X   &kp  C     &kp  V     &kp  B     &kp  N     &kp  M     &kp  COMMA &kp  DOT   &kp  SLASH &kp  ENTER
   &kp  LCTRL &kp LGUI   &kp  LALT &mkp LCLK  &CTRL_MO2  &kp SPACE             &CTRL_MO3  &kp  UP    &kp  LEFT  &kp  DOWN  &kp  RIGHT
           >;
         };
@@ -308,9 +326,9 @@
         //2:Custom + Function Keys + Vol
         layer_fn2 {
           bindings = <
-  &kp  ESC   &QUIT_F1   &kp  F2    &kp  UP    &kp  PSCRN &kp  LC(T) &kp  F6    &kp  F7    &kp  F8    &F9_F11    &F10_F12   &kp  LBKT
+  &kp  ESC   &MY_Q_2    &kp  F2    &kp  UP    &kp  PSCRN &kp  LC(T) &kp  F6    &kp  F7    &kp  F8    &F9_F11    &F10_F12   &kp  LBKT
   &kp  LGUI  &kp LALT   &kp  LEFT  &kp  DOWN  &kp  RIGHT &kp  F3    &MY_RBKT   &trans     &kp  HOME  &kp  PG_UP &kp  INT1  &MY_KEY3
-  &trans     &mt_Z LCTRL 0 &_vol_dn &_vol_up  &kp  F4    &kp  F5    &MY_NUHS   &kp  DEL   &kp  END   &kp  PG_DN &trans     &trans
+  &trans     &mZ LCTRL 0 &_vol_dn  &_vol_up  &kp  F4    &kp  F5    &MY_NUHS   &kp  DEL   &kp  END   &kp  PG_DN &trans     &trans
   &trans     &trans     &trans     &mkp RCLK  &mo  2     &kp  BSPC             &kp  LCTRL &kp  TAB   &kp  K_APP &trans     &trans
           >;
         };
