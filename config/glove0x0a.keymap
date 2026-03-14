@@ -233,6 +233,12 @@
             bindings = <&kp A>, <&mt LSHFT A >;
             mods = <MOD_LCTL>;
         };
+        MY_A_2: MY_A_2 {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp LALT>, <&kp LSHFT>;
+            mods = <MOD_LCTL>;
+        };
 //★モッドタップ-------------------------------------------------
         mZ: mZ {
             compatible = "zmk,behavior-hold-tap";
@@ -375,4 +381,4 @@
 //            bindings = <&out _USB>, <&out _BLE>;
 //            mods = <MOD_LSFT>;
 //        };
-//
+//^
