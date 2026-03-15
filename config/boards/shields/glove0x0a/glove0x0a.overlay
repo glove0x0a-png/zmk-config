@@ -14,24 +14,15 @@
         sensitivity = "1x";
     };
 };
-
 &gpio0 {
     ws2812: ws2812 {
         compatible = "worldsemi,ws2812-gpio";
-        label = "WS2812";
+        gpios = <&gpio0 31 GPIO_ACTIVE_HIGH>;   // D16 = P0.31
         chain-length = <47>;
-        in-gpios = <&gpio0 31 GPIO_ACTIVE_HIGH>;   // ★ D16 = P0.31
+        color-mapping = <LED_COLOR_MAPPING_RGB>;
         status = "okay";
     };
 };
-/ {
-    zmk_underglow: zmk_underglow {
-        compatible = "zmk,underglow";
-        status = "okay";
-        strip = <&ws2812>;
-    };
-};
-
 / {
     chosen {
         zmk,input-devices = &az1uball;
@@ -59,6 +50,7 @@
         strip = <&ws2812>;
     };
 };
+
 
 
 
