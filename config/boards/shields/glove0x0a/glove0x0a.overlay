@@ -49,7 +49,14 @@
     leds {
         status = "okay";
     };
+
+    zmk_underglow: zmk_underglow {
+        compatible = "zmk,underglow";
+        status = "okay";
+        strip = <&ws2812>;   // ← C 側はここを参照して実デバイスを取得する
+    };
 };
+
 
 
 

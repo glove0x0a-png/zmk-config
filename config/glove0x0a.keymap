@@ -214,6 +214,30 @@
             bindings = <&QUIT_F1>, <&kp TAB >;
             mods = <(MOD_LALT|MOD_LCTL)>;
         };
+        MY_HOME: MY_HOME {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp HOME>, <&kp LC(HOME) >;
+            mods = <MOD_LGUI>;
+        };
+        MY_END: MY_END {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp END>, <&kp LC(END) >;
+            mods = <MOD_LGUI>;
+        };
+        MY_PG_UP: MY_PG_UP {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp PG_UP>, <&kp LC(PG_UP) >;
+            mods = <MOD_LGUI>;
+        };
+        MY_PG_DN: MY_PG_DN {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp PG_DN>, <&kp LC(PG_DN) >;
+            mods = <MOD_LGUI>;
+        };
         //MY_A_0: MY_A_0 {
         //    compatible = "zmk,behavior-mod-morph";
         //    #binding-cells = <0>;
@@ -339,8 +363,8 @@
         layer_fn2 {
           bindings = <
   &kp  ESC   &MY_Q_2    &kp  F2    &kp  UP    &kp  PSCRN &kp  LC(T) &kp  F6    &kp  F7    &kp  F8    &F9_F11    &F10_F12   &kp  LBKT
-  &kp  LGUI  &kp LALT   &kp  LEFT  &kp  DOWN  &kp  RIGHT &kp  F3    &MY_RBKT   &trans     &kp  HOME  &kp  PG_UP &kp  INT1  &MY_KEY3
-  &trans     &MY_KEY4   &_vol_dn   &_vol_up  &kp  F4    &kp  F5    &MY_NUHS   &kp  DEL   &kp  END   &kp  PG_DN &trans     &trans
+  &kp  LGUI  &kp LALT   &kp  LEFT  &kp  DOWN  &kp  RIGHT &kp  F3    &MY_RBKT   &trans     &MY_HOME   &MY_PG_UP  &kp  INT1  &MY_KEY3
+  &trans     &MY_KEY4   &_vol_dn   &_vol_up   &kp  F4    &kp  F5    &MY_NUHS   &kp  DEL   &MY_END    &MY_PG_DN  &trans     &trans
   &trans     &trans     &trans     &mkp RCLK  &mo  2     &kp  BSPC             &kp  LCTRL &kp  TAB   &kp  K_APP &trans     &trans
           >;
         };
