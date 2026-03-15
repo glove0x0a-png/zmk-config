@@ -36,7 +36,7 @@
 | 4-1 | LEFT  | D4      | gpio0 4    | I2C-SDA            | -                | - |
 | 5-0 | LEFT  | D15     | gpio0 10   | 未使用             | 未使用           | 未使用 |
 | 5-1 | LEFT  | D5      | gpio0 5    | I2C-SCL            | -                | - |
-| 6-0 | LEFT  | D16     | gpio0 31   | 未使用             | 未使用           | 未使用 |
+| 6-0 | LEFT  | D16     | gpio0 31   | WS2812制御         | -                | - |
 | 6-1 | LEFT  | D6      | gpio1 11   | 3行("Shift"～"V")  | 5列("O"～"Left") | 5列:"クリック" |
 | 7-1 | RIGHT | D7      | gpio1 12   | 割り込みピン       | -                | - |
 | 7-2 | RIGHT | D17     | gpio1 3    | 1列("Esc"～"Ctrl") |  1行("T"～"-")      | - |

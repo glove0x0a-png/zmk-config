@@ -36,20 +36,17 @@
     leds {
         status = "okay";
     };
-};
-
-/ {
     ws2812: ws2812 {
         compatible = "worldsemi,ws2812";
         label = "WS2812";
-        chain-length = <47>;   // LED の総数
-        spi-max-frequency = <4000000>;
-        reg = <0>;
+        chain-length = <47>;     // LED の総数
+        data-pin = <31>;         // ★ D16 = P0.31
+        status = "okay";
     };
-};
-
-&led_strip {
-    status = "okay";
-    led-strip = <&ws2812>;
+    led_strip: led_strip {
+        compatible = "zmk,led-strip";
+        status = "okay";
+        led-strip = <&ws2812>;
+    };
 };
 
