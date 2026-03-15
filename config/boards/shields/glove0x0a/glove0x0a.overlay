@@ -50,12 +50,12 @@
         status = "okay";
     };
 
-    // ★ ここに1つだけ
     zmk_underglow: zmk_underglow {
         compatible = "zmk,underglow";
         status = "okay";
         strip = <&ws2812>;
     };
 };
+
 
 
