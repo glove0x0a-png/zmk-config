@@ -14,47 +14,47 @@
         sensitivity = "1x";
     };
 };
+
 &gpio0 {
     ws2812: ws2812 {
         compatible = "worldsemi,ws2812-gpio";
-        gpios = <&gpio0 31 GPIO_ACTIVE_HIGH>;   // D16 = P0.31
+        gpios = <&gpio0 31 GPIO_ACTIVE_HIGH>;
         chain-length = <47>;
         color-mapping = <LED_COLOR_MAPPING_RGB>;
         status = "okay";
     };
 };
-/ {
+
+ / {
     chosen {
         zmk,input-devices = &az1uball;
     };
+
     input-listeners {
         compatible = "zmk,input-listeners";
         listeners = < &az1uball_listener>;
     };
+
     az1uball_listener: az1uball_listener {
         compatible = "zmk,input-listener";
         device  = < &az1uball >;
     };
-    //LED
+
     aliases {
         led-red = &led0;
         led-green = &led1;
         led-blue = &led2;
     };
+
     leds {
         status = "okay";
     };
+
+    // ★ ここに1つだけ
     zmk_underglow: zmk_underglow {
         compatible = "zmk,underglow";
         status = "okay";
         strip = <&ws2812>;
     };
 };
-
-
-
-
-
-
-
 
