@@ -218,7 +218,7 @@
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
             bindings = <&MY_Q_w2>, <&kp LC(TAB) >;
-            mods = <(MOD_LGUI>;
+            mods = <MOD_LGUI>;
         };
         MY_HOME: MY_HOME {
             compatible = "zmk,behavior-mod-morph";
