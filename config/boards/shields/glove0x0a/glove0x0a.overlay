@@ -17,7 +17,7 @@
 
 &gpio0 {
     ws2812: ws2812 {
-        label = "WS2812";
+//        label = "WS2812";
         compatible = "worldsemi,ws2812-gpio";
         in-gpios = <&gpio0 31 GPIO_ACTIVE_HIGH>;
         chain-length = <47>;
@@ -52,6 +52,7 @@
     };
 
 };
+
 
 
 
