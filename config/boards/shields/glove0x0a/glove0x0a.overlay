@@ -18,7 +18,7 @@
 / {
     chosen {
         zmk,input-devices = &az1uball;
-        zmk,underglow = &ws2812;
+//        zmk,underglow = &ws2812;
     };
 
     input-listeners {
@@ -41,16 +41,17 @@
         status = "okay";
     };
 
-    ws2812: ws2812 {
-        label = "WS2812";
-        compatible = "worldsemi,ws2812-gpio";
-        in-gpios = <&gpio0 10 GPIO_ACTIVE_HIGH>;
-        chain-length = <47>;
-        color-mapping = <1 0 2>;
-        status = "okay";
-    };
+//    ws2812: ws2812 {
+//        label = "WS2812";
+//        compatible = "worldsemi,ws2812-gpio";
+//        in-gpios = <&gpio0 10 GPIO_ACTIVE_HIGH>;
+//        chain-length = <47>;
+//        color-mapping = <1 0 2>;
+//        status = "okay";
+//    };
 
 };
+
 
 
 
