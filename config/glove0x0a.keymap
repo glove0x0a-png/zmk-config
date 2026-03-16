@@ -208,11 +208,17 @@
             bindings = <&kp Q>, <&kp TAB>;
             mods = <(MOD_LALT|MOD_LCTL)>;
         };
-        MY_Q_2: MY_Q_2 {  //Alt/Ctrl+Q->TABへ
+        MY_Q_w2: MY_Q_w2 {  //Alt/Ctrl+Q->TABへ
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
             bindings = <&QUIT_F1>, <&kp TAB >;
             mods = <(MOD_LALT|MOD_LCTL)>;
+        };
+        MY_Q_2: MY_Q_2 {  
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&MY_Q_w2>, <&kp LC(TAB) >;
+            mods = <(MOD_LGUI>;
         };
         MY_HOME: MY_HOME {
             compatible = "zmk,behavior-mod-morph";
