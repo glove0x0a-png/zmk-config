@@ -29,6 +29,7 @@
 / {
     chosen {
         zmk,input-devices = &az1uball;
+        zmk,underglow = &ws2812;
     };
 
     input-listeners {
@@ -52,6 +53,7 @@
     };
 
 };
+
 
 
 
