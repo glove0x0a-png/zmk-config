@@ -12,7 +12,7 @@
 #include <dt-bindings/zmk/pointing.h>
 #include <dt-bindings/input/input-event-codes.h>
 
-#define TAP_MS 150
+#define TAP_MS 200
 #define PIPE_ LS(INT3)
 
 #define _USB OUT_USB
@@ -340,6 +340,7 @@
   &kp  ESC   &MY_Q_2    &MY_W_2    &kp  UP    &kp LS(N4) &kp  PSCRN &kp  F6    &kp  F7    &kp  F8    &F9_F11    &F10_F12   &kp  LBKT
   &kp  LGUI  &kp LALT   &kp  LEFT  &kp  DOWN  &kp  RIGHT &kp  F3    &TD_RBKT   &trans     &MY_HOME   &MY_PG_UP  &kp  INT1  &MY_KEY3
   &trans     &kp EQUAL  &_vol_dn   &_vol_up   &kp  F4    &kp  F5    &TD_NUHS   &kp  DEL   &MY_END    &MY_PG_DN  &trans     &trans
+  &trans     &trans     &trans     &mkp RCLK  &mo  2     &kp  BSPC             &kp  LCTRL &kp  TAB   &kp  K_APP &trans     &trans
           >;
         };
         //3:Number + Bluetooth /マウス高速
