@@ -185,7 +185,7 @@
             #binding-cells = <2>;
             flavor = "hold-preferred";
             tapping-term-ms = <HOLD_MS>;
-            bindings = <&kp>, <&MY_R>;
+            bindings = <&MY_R>, <&kp>;
             display-name = "Mod-Tap";
         };
         MY_U: MY_U{
@@ -199,7 +199,7 @@
             #binding-cells = <2>;
             flavor = "hold-preferred";
             tapping-term-ms = <HOLD_MS>;
-            bindings = <&kp>, <&MY_U>;
+            bindings = <&MY_U>, <&kp>;
             display-name = "Mod-Tap";
         };
         MY_L: MY_L{
@@ -213,7 +213,7 @@
             #binding-cells = <2>;
             flavor = "hold-preferred";
             tapping-term-ms = <HOLD_MS>;
-            bindings = <&kp>, <&MY_L>;
+            bindings = <&MY_L>, <&kp>;
             display-name = "Mod-Tap";
         };
         MY_D: MY_D{
@@ -227,7 +227,7 @@
             #binding-cells = <2>;
             flavor = "hold-preferred";
             tapping-term-ms = <HOLD_MS>;
-            bindings = <&kp>, <&MY_D>;
+            bindings = <&MY_D>, <&kp>;
             display-name = "Mod-Tap";
         };
         //スクロール
