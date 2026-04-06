@@ -91,7 +91,6 @@
                 , <&macro_tap &bt BT_SEL 2 >;
         };
     };
-/    //behaviors
     behaviors {
 //★mod-morph-----------------------------------------------
         //ボリューム操作(Win->UNIX)
@@ -270,7 +269,6 @@
             label = "Blue LED";
         };
     };
-
     //keymap
     keymap {
         compatible = "zmk,keymap";
