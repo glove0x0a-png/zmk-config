@@ -84,13 +84,11 @@ void az1uball_read_data_work(struct k_work *work)
     //ボタン押下があれば(レイヤー操作が複雑なのでJのみ)
     if ( btn_push != data->sw_pressed ){
         data->sw_pressed = btn_push;
-        if( btn_push ){
-            {
-                binding.behavior_dev="key_press";
-                binding.param1 = 0x0D; 
-                zmk_behavior_invoke_binding(&binding, event, btn_push);  //Jキー扱い
-            }
-        }
+//        if( btn_push ){
+              binding.behavior_dev="key_press";
+              binding.param1 = 0x0D; 
+              zmk_behavior_invoke_binding(&binding, event, btn_push);  //Jキー扱い
+//        }
     }
 
     if (layer == 2) { //スクロールレイヤ
