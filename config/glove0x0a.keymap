@@ -35,7 +35,7 @@
 #define HI_L MOVE_X(-200)
 #define HI_R MOVE_X(200)
 
-//2026.04.06 #990 
+//2026.04.06 #992 練習開始。F<->CAPS,Z<->Ctrl(D->Z),X<->Shift,SPACE<->Shift
 //2026.03.17 #980 Ctrl + TAB or Q(Shift TAB) / Alt + Q(TAB) or W(Shit+TAB)
 //2026.03.16 #979 Layer1のGUI押下中のHOME/END/PGUP/PGDNをLC()送付&GUIリリース前にESC送信に修正(mod-morph)。
 //2026.03.16 #968 没。めっちゃムズイ。バッテリー監視も無効になる。:WS2812(LED)の有効化/AZ1UBALLから並列で電源供給
@@ -283,7 +283,7 @@
   &kp LSHFT &mt LCTRL Z
                       &mt LSHFT X
                                 &kp C     &kp V     &kp B     &kp N     &kp M     &kp COMMA &kp DOT   &kp SLASH &kp ENTER
-  &kp LCTRL &kp LGUI  &kp LALT  &mkp LCLK &mo 2     &kp SPACE           &CTRL_MO3 &kp UP    &kp LEFT  &kp DOWN  &kp RIGHT
+  &kp LCTRL &kp LGUI  &kp LALT  &mkp LCLK &mo 2     &mt LSHFT SPACE     &CTRL_MO3 &kp UP    &kp LEFT  &kp DOWN  &kp RIGHT
           >;
         };
         //1:jigler-dummyレイヤー
