@@ -309,9 +309,9 @@
         //3:Number + Bluetooth /マウス高速
         layer_fn3 {
           bindings = <
-  &ESC_CLR  &kp  N1   &kp N2    &kp N3    &kp N4    &kp N5    &kp N6    &kp N7    &kp N8    &kp  N9   &N0_PIPE  &trans
-  &trans    &MY_U     &MY_L     &MY_D     &MY_R     &kp F3    &kp RBKT  &trans    &SC_U_L   &SC_D_R   &trans    &trans
-  &trans    &MY_USB   &BLE0     &BLE1     &BLE2     &none     &kp NUHS  &mkp LCLK &trans    &trans    &trans    &trans
+  &ESC_CLR  &kp  N1   &kp N2    &kp N3    &kp N4    &kp N5     &kp N6    &kp N7    &kp N8    &kp  N9   &N0_PIPE  &trans
+  &trans    &MY_U     &MY_L     &MY_D     &MY_R     &kp F3     &kp RBKT  &trans    &SC_U_L   &SC_D_R   &trans    &trans
+  &trans    &MY_USB   &BLE0     &BLE1     &BLE2     &bt BT_CLR &kp NUHS  &mkp LCLK &trans    &trans    &trans    &trans
   &trans    &trans    &trans    &mkp RCLK &kp K_APP &ind_bat            &mo 3     &none     &none     &none     &none
           >;
         };

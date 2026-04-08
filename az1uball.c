@@ -94,8 +94,9 @@ void az1uball_read_data_work(struct k_work *work)
             zmk_behavior_invoke_binding(&binding, event, btn_push);  //PRINTSCREENキー扱い
         } else {
             binding.behavior_dev="key_press";
-            binding.param1 = 0x29; 
-            zmk_behavior_invoke_binding(&binding, event, btn_push);  //ESCキー扱い
+            //binding.param1 = 0x29; //ESCキー扱い
+            binding.param1 = 0x46; 
+            zmk_behavior_invoke_binding(&binding, event, btn_push);
         }
     }
     if (layer == 2) { //スクロールレイヤ
