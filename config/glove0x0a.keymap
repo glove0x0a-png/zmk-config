@@ -113,6 +113,12 @@
             bindings = <&kp C_VOL_DN>, <&kp K_VOL_DN>;
             mods = <MOD_LSFT>;
         };
+        VL_UP_DN: VL_UP_DN {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp C_VOL_UP>, <&kp C_VOL_DN>;
+            mods = <(MOD_LSFT|MOD_LALT|MOD_LCTL)>;
+        };
         //0.SPACE
         MY_SPACE: MY_SPACE {  /*ESC_CLR*/
             compatible = "zmk,behavior-mod-morph";
@@ -296,7 +302,7 @@
           bindings = <
   &kp ESC   &MY_Q_2   &kp F2    &kp UP    &kp F4    &kp F5    &kp F6    &kp F7    &kp F8    &F9_F11   &F10_F12  &kp LBKT
   &kp LGUI  &kp LALT  &kp LEFT  &kp DOWN  &kp RIGHT &kp F3    &kp RBKT  &trans    &MY_HOME  &MY_PG_UP &kp INT1  &kp EQUAL
-  &trans    &kp LGUI  &VOL_DN   &VOL_UP   &kp CAPS  &kp PSCRN &kp NUHS  &kp DEL   &MY_END   &MY_PG_DN &trans    &trans
+  &trans    &kp LGUI  &kp ESC   &VL_UP_DN &kp CAPS  &kp TAB   &kp NUHS  &kp DEL   &MY_END   &MY_PG_DN &trans    &trans
   &trans    &none     &none     &trans    &mo 2     &kp BSPC            &kp K_APP &trans    &trans    &trans    &trans
           >;
         };
