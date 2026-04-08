@@ -117,7 +117,7 @@
         MY_SPACE: MY_SPACE {  /*ESC_CLR*/
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
-            bindings = <&kp SPACE>, <&kp A>;
+            bindings = <&kp SPACE>, <&kp LS(A)>;
             mods = <MOD_LSFT>;
         };
         //0.ESC
