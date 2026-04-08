@@ -88,10 +88,14 @@ void az1uball_read_data_work(struct k_work *work)
             binding.behavior_dev="key_press";
             binding.param1 = 0x0D; 
             zmk_behavior_invoke_binding(&binding, event, btn_push);  //Jキー扱い
-        } else {
+        } else if(layer == 2){
             binding.behavior_dev="key_press";
             binding.param1 = 0x2B; 
-            zmk_behavior_invoke_binding(&binding, event, btn_push);  //Tabキー扱い
+            zmk_behavior_invoke_binding(&binding, event, btn_push);  //TABキー扱い
+        } else {
+            binding.behavior_dev="key_press";
+            binding.param1 = 0x29; 
+            zmk_behavior_invoke_binding(&binding, event, btn_push);  //ESCキー扱い
         }
     }
     if (layer == 2) { //スクロールレイヤ
