@@ -247,13 +247,13 @@
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
             bindings = <&kp RIGHT>, <&kp TAB>;
-            mods = <MOD_LGUI>;
+            mods = <MOD_LSFT>;
         };
         MY_LEFT: MY_LEFT {
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
             bindings = <&kp LEFT>, <&kp LS(TAB) >;
-            mods = <MOD_LGUI>;
+            mods = <MOD_LSFT>;
         };
 //★LED制御-------------------------------------------------
         capslock_led: capslock_led {
