@@ -351,9 +351,9 @@
         //2:Custom + Function Keys + Vol
         layer_fn2 {
           bindings = <
-  &kp  ESC   &MY_Q_2    &kp F2     &kp  UP    &kp LS(N4) &kp  PSCRN &kp  F6    &kp  F7    &kp  F8    &F9_F11    &F10_F12   &kp  LBKT
+  &kp  ESC   &MY_Q_2    &kp F2     &kp  UP    &kp  F4    &kp  F5    &kp  F6    &kp  F7    &kp  F8    &F9_F11    &F10_F12   &kp  LBKT
   &kp  LGUI  &kp LALT   &kp  LEFT  &kp  DOWN  &kp  RIGHT &kp  F3    &TD_RBKT   &trans     &MY_HOME   &MY_PG_UP  &kp  INT1  &MY_KEY3
-  &trans     &kp EQUAL  &_vol_dn   &_vol_up   &kp  F4    &kp  F5    &TD_NUHS   &kp  DEL   &MY_END    &MY_PG_DN  &trans     &trans
+  &trans     &kp EQUAL  &_vol_dn   &_vol_up   &kp LS(N4) &kp  PSCRN &TD_NUHS   &kp  DEL   &MY_END    &MY_PG_DN  &trans     &trans
   &trans     &trans     &trans     &mkp RCLK  &mo  2     &kp  BSPC             &kp  K_APP &kp  TAB   &kp  K_APP &trans     &trans
           >;
         };
@@ -362,7 +362,7 @@
           bindings = <
   &ESC_CLR   &kp  N1    &kp  N2    &kp  N3    &kp N4     &kp  N5    &kp  N6    &kp  N7    &kp  N8    &kp  N9    &N0_PIPE   &trans
   &trans     &MY_U      &MY_L      &MY_D      &MY_R      &kp  F3    &MY_KEY1   &trans     &SC_U_L    &SC_D_R    &trans     &trans
-  &trans     &MY_USB    &BLE0      &BLE1      &BLE2      &kp  F5    &MY_KEY2   &mkp LCLK  &trans     &trans     &trans     &trans
+  &trans     &MY_USB    &BLE0      &BLE1      &BLE2      &kp  PSCRN &MY_KEY2   &mkp LCLK  &trans     &trans     &trans     &trans
   &trans     &trans     &trans     &mkp RCLK  &mkp RCLK  &ind_bat              &mo  3     &trans     &trans     &trans     &trans
           >;
         };
