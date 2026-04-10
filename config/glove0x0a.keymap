@@ -93,25 +93,25 @@
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             bindings
-                = <&kp RBKT &kp NUHS &kp LEFT &kp ESC>;
+                = <&kp RBKT &kp NUHS &kp LEFT>;
         };
         SHFT_89: SHFT_89 {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             bindings
-                = <&kp LS(N8) &kp LS(N9) &kp LEFT &kp ESC>;
+                = <&kp LS(N8) &kp LS(N9) &kp LEFT>;
         };
         SHFT_77: SHFT_77 {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             bindings
-                = <&kp LS(N7) &kp LS(N7) &kp LEFT &kp ESC>;
+                = <&kp LS(N7) &kp LS(N7) &kp LEFT>;
         };
         SHFT_22: SHFT_22 {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             bindings
-                = <&kp LS(N2) &kp LS(N2) &kp LEFT &kp ESC>;
+                = <&kp LS(N2) &kp LS(N2) &kp LEFT>;
         };
     };
 ////behaviors
