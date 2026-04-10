@@ -89,11 +89,17 @@
                 = <&macro_tap &out OUT_BLE>
                 , <&macro_tap &bt BT_SEL 2 >;
         };
-        RBKT_NUHS: RBKT_NUHS {
+        N_RBKT_NUHS: RBKT_NUHS {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             bindings
                 = <&kp RBKT &kp NUHS &kp LEFT>;
+        };
+        S_RBKT_NUHS: RBKT_NUHS {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&kp LS(RBKT) &kp LS(NUHS) &kp LEFT>;
         };
         SHFT_89: SHFT_89 {
             compatible = "zmk,behavior-macro";
@@ -188,6 +194,13 @@
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
             bindings = <&kp N2>, <&SHFT_22>;
+            mods = <MOD_LSFT>;
+        };
+        //NEW_8977:
+        RBKT_NUHS: RBKT_NUHS {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&N_RBKT_NUHS>, <&S_RBKT_NUHS>;
             mods = <MOD_LSFT>;
         };
         //NEW_8977:
