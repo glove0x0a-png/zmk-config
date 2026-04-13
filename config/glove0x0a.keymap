@@ -161,13 +161,14 @@
             #binding-cells = <2>;
             flavor = "hold-preferred";
             tapping-term-ms = <500>;  //ALT+F4の難易度上げ
-            bindings = <&QUIT_F1>, <&kp ESC>;
+            bindings = <&QUIT_F1>, <&kp>;
             display-name = "Mod-Tap";
         };
         MY_Q_2: MY_Q_2 {    //Alt
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
-            bindings = <&hold_Q>, <&kp LS(TAB) >;
+            bindings = <&QUIT_F1>, <&kp >;
+            bindings = <&hold_Q 0 ESC>, <&kp LS(TAB) >;
             mods = <(MOD_LALT|MOD_LCTL)>;
         };
         //9.O
