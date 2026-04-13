@@ -126,7 +126,7 @@
         //ボリューム操作(Win->UNIX)
         VOL_UP: VOL_UP {
             compatible = "zmk,behavior-mod-morph";
-            #binding-cells = <0>;
+            #binding-cells = <0>
             bindings = <&kp C_VOL_UP>, <&kp K_VOL_UP>;
             mods = <MOD_LSFT>;
         };
@@ -334,10 +334,10 @@
 //|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****
         layer_qwerty {
           bindings = <
-  &none     &mt Q TAB   &kp  W     &kp  E     &kp  R     &kp  T     &kp  Y     &kp  U     &kp  I     &kp  O     &kp  P     &kp  MINUS
-  &none     &mt LCTRL A &kp  S     &mt  D Z   &kp  F     &kp  G     &kp  H     &mo  1     &kp  K     &kp  L     &kp  SEMI  &kp  SQT
-  &none     &mt LSHFT Z &mt CAPS X &kp  C     &kp  V     &kp  B     &kp  N     &kp  M     &kp  COMMA &kp  DOT   &kp  SLASH &kp  ENTER
-  &none     &kp LCTRL   &kp  LALT  &mkp LCLK  &mo 2      &kp  SPACE            &CTRL_MO3  &kp  UP    &kp  LEFT  &kp  DOWN  &kp  RIGHT
+  &none     &mt Q TAB      &kp  W     &kp  E     &kp  R     &kp  T     &kp  Y     &kp  U     &kp  I     &kp  O     &kp  P     &kp  MINUS
+  &none     &mt LCTRL A    &kp  S     &mt  Z D   &kp  F     &kp  G     &kp  H     &mo  1     &kp  K     &kp  L     &kp  SEMI  &kp  SQT
+  &none     &mt LSHFT Z    &kp  X     &kp  C     &kp  V     &kp  B     &kp  N     &kp  M     &kp  COMMA &kp  DOT   &kp  SLASH &kp  ENTER
+  &none     &kp LCTRL CAPS &kp  LALT  CAPS &mkp LCLK  &mo 2      &kp  SPACE            &CTRL_MO3  &kp  UP    &kp  LEFT  &kp  DOWN  &kp  RIGHT
           >;
         };
         //1:jigler-dummyレイヤー
@@ -347,7 +347,7 @@
           bindings = <
   &kp  ESC   &MY_Q_2    &kp F2     &kp  UP    &kp  F4    &kp  F5    &kp  F6    &kp  F7    &kp  F8    &F9_F11    &F10_F12   &kp  LBKT
   &kp  LGUI  &kp LALT   &kp  LEFT  &kp  DOWN  &kp  RIGHT &kp  F3    &RBKT_NUHS &trans     &MY_HOME   &MY_PG_UP  &kp  INT1  &MY_KEY3
-  &trans     &kp LGUI   &VOL_DN    &VOL_UP    &kp EQUAL  &kp  PSCRN &NEW_8977  &kp  DEL   &MY_END    &MY_PG_DN  &trans     &trans
+  &trans     &kp LGUI   &VOL_DN    &VOL_UP    &kp  EQUAL &kp  PSCRN &NEW_8977  &kp  DEL   &MY_END    &MY_PG_DN  &trans     &trans
   &trans     &trans     &trans     &mkp RCLK  &mo  2     &kp  BSPC             &kp  K_APP &kp  TAB   &kp  K_APP &trans     &trans
           >;
         };
