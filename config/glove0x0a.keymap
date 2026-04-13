@@ -13,7 +13,7 @@
 #include <dt-bindings/input/input-event-codes.h>
 
 #define HOLD_MS 200  //HOLD-TAPは長くてよい。1.すぐ離せばそのタイミングで短押し、2.同時押しが発生したらHOLD扱い。
-#define TAP_MS  120  //TAP-DANCEはキワキワ。予期せぬ2度押しはストレス。
+#define TAP_MS  150  //TAP-DANCEはキワキワ。予期せぬ2度押しはストレス。
 #define PIPE_ LS(INT3)
 
 #define _USB OUT_USB
