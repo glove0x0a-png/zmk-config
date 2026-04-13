@@ -35,7 +35,7 @@
 #define HI_L MOVE_X(-200)
 #define HI_R MOVE_X(200)
 
-//2026.04.13 #1026 ★hold-tapで他キー押下状態から対象キーが押下された場合、tap扱いへ。対象キー押下状態から他キー押下は、hold扱い(デフォルト)
+//2026.04.13 #1026 ★hold-tapで他キー押下状態から対象キーが押下された場合、tap扱いへ。ただし、修飾キーは除く。対象キー押下状態から他キー押下は、hold扱い(デフォルト)
 //2026.03.17 #980 Ctrl + TAB or Q(Shift TAB) / Alt + Q(TAB) or W(Shit+TAB)
 //2026.03.16 #979 Layer1のGUI押下中のHOME/END/PGUP/PGDNをLC()送付&GUIリリース前にESC送信に修正(mod-morph)。
 //2026.03.16 #968 没。めっちゃムズイ。バッテリー監視も無効になる。:WS2812(LED)の有効化/AZ1UBALLから並列で電源供給
