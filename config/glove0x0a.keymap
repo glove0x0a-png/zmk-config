@@ -270,29 +270,29 @@
         MY_HOME: MY_HOME {
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
-//            bindings = <&kp HOME>, <&kp LC(HOME) >;
-            bindings = <&kp HOME>, <&kp LS(HOME) >;
+            bindings = <&kp HOME>, <&kp LC(HOME) >;
+//            bindings = <&kp HOME>, <&kp LS(HOME) >;
             mods = <MOD_LGUI>;
         };
         MY_END: MY_END {
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
-//            bindings = <&kp END>, <&kp LC(END) >;
-            bindings = <&kp END>, <&kp LS(END) >;
+            bindings = <&kp END>, <&kp LC(END) >;
+//            bindings = <&kp END>, <&kp LS(END) >;
             mods = <MOD_LGUI>;
         };
         MY_PG_UP: MY_PG_UP {
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
-//            bindings = <&kp PG_UP>, <&kp LC(PG_UP) >;
-            bindings = <&kp PG_UP>, <&kp LS(PG_UP) >;
+            bindings = <&kp PG_UP>, <&kp LC(PG_UP) >;
+//            bindings = <&kp PG_UP>, <&kp LS(PG_UP) >;
             mods = <MOD_LGUI>;
         };
         MY_PG_DN: MY_PG_DN {
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
-//            bindings = <&kp PG_DN>, <&kp LC(PG_DN) >;
-            bindings = <&kp PG_DN>, <&kp LS(PG_DN) >;
+            bindings = <&kp PG_DN>, <&kp LC(PG_DN) >;
+//            bindings = <&kp PG_DN>, <&kp LS(PG_DN) >;
             mods = <MOD_LGUI>;
         };
 //★LED制御-------------------------------------------------
