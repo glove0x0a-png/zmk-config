@@ -126,7 +126,7 @@
         //ボリューム操作(Win->UNIX)
         VOL_UP: VOL_UP {
             compatible = "zmk,behavior-mod-morph";
-            #binding-cells = <0>
+            #binding-cells = <0>;
             bindings = <&kp C_VOL_UP>, <&kp K_VOL_UP>;
             mods = <MOD_LSFT>;
         };
@@ -334,10 +334,10 @@
 //|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****
         layer_qwerty {
           bindings = <
-  &none     &mt Q TAB      &kp  W     &kp  E     &kp  R     &kp  T     &kp  Y     &kp  U     &kp  I     &kp  O     &kp  P     &kp  MINUS
-  &none     &mt LCTRL A    &kp  S     &mt  Z D   &kp  F     &kp  G     &kp  H     &mo  1     &kp  K     &kp  L     &kp  SEMI  &kp  SQT
-  &none     &mt LSHFT Z    &kp  X     &kp  C     &kp  V     &kp  B     &kp  N     &kp  M     &kp  COMMA &kp  DOT   &kp  SLASH &kp  ENTER
-  &none     &kp LCTRL CAPS &kp  LALT  CAPS &mkp LCLK  &mo 2      &kp  SPACE            &CTRL_MO3  &kp  UP    &kp  LEFT  &kp  DOWN  &kp  RIGHT
+  &none &mt Q TAB      &kp  W     &kp  E     &kp  R     &kp  T     &kp  Y     &kp  U     &kp  I     &kp  O     &kp  P     &kp  MINUS
+  &none &mt LCTRL A    &kp  S     &mt  Z D   &kp  F     &kp  G     &kp  H     &mo  1     &kp  K     &kp  L     &kp  SEMI  &kp  SQT
+  &none &mt LSHFT Z    &kp  X     &kp  C     &kp  V     &kp  B     &kp  N     &kp  M     &kp  COMMA &kp  DOT   &kp  SLASH &kp  ENTER
+  &none &kp LCTRL CAPS &kp  LALT  CAPS &mkp LCLK  &mo 2      &kp  SPACE            &CTRL_MO3  &kp  UP    &kp  LEFT  &kp  DOWN  &kp  RIGHT
           >;
         };
         //1:jigler-dummyレイヤー
@@ -345,10 +345,10 @@
         //2:Custom + Function Keys + Vol
         layer_fn2 {
           bindings = <
-  &kp  ESC   &MY_Q_2    &kp F2     &kp  UP    &kp  F4    &kp  F5    &kp  F6    &kp  F7    &kp  F8    &F9_F11    &F10_F12   &kp  LBKT
-  &kp  LGUI  &kp LALT   &kp  LEFT  &kp  DOWN  &kp  RIGHT &kp  F3    &RBKT_NUHS &trans     &MY_HOME   &MY_PG_UP  &kp  INT1  &MY_KEY3
-  &trans     &kp LGUI   &VOL_DN    &VOL_UP    &kp  EQUAL &kp  PSCRN &NEW_8977  &kp  DEL   &MY_END    &MY_PG_DN  &trans     &trans
-  &trans     &trans     &trans     &mkp RCLK  &mo  2     &kp  BSPC             &kp  K_APP &kp  TAB   &kp  K_APP &trans     &trans
+  &none &MY_Q_2    &kp F2     &kp  UP    &kp  F4    &kp  F5    &kp  F6    &kp  F7    &kp  F8    &F9_F11    &F10_F12   &kp  LBKT
+  &none &kp LALT   &kp  LEFT  &kp  DOWN  &kp  RIGHT &kp  F3    &RBKT_NUHS &trans     &MY_HOME   &MY_PG_UP  &kp  INT1  &MY_KEY3
+  &none &kp LGUI   &VOL_DN    &VOL_UP    &kp  EQUAL &kp  PSCRN &NEW_8977  &kp  DEL   &MY_END    &MY_PG_DN  &trans     &trans
+  &none &trans     &trans     &mkp RCLK  &mo  2     &kp  BSPC             &kp  K_APP &kp  TAB   &kp  K_APP &trans     &trans
           >;
         };
         //3:Number + Bluetooth /マウス高速
@@ -356,7 +356,7 @@
           bindings = <
   &ESC_CLR   &kp  N1    &MY_N2     &kp  N3    &kp N4     &kp  N5    &kp  N6    &kp  N7    &kp  N8    &kp  N9    &N0_PIPE   &trans
   &trans     &MY_U      &MY_L      &MY_D      &MY_R      &kp  F3    &RBKT_NUHS &trans     &SC_U_L    &SC_D_R    &trans     &trans
-  &trans     &MY_USB    &BLE0      &BLE1      &BLE2      &kp  PSCRN &SHFT_89   &mkp LCLK  &trans     &trans     &trans     &trans
+  &trans     &MY_USB    &BLE0      &BLE1      &BLE2      &ESC_CLR   &SHFT_89   &mkp LCLK  &trans     &trans     &trans     &trans
   &trans     &trans     &trans     &mkp RCLK  &mkp RCLK  &ind_bat              &mo  3     &trans     &trans     &trans     &trans
           >;
         };
