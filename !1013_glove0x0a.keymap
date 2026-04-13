@@ -12,8 +12,8 @@
 #include <dt-bindings/zmk/pointing.h>
 #include <dt-bindings/input/input-event-codes.h>
 
-#define HOLD_MS 200  //HOLD-TAPは長くてよい。1.すぐ離せばそのタイミングで短押し、2.同時押しが発生したらHOLD扱い。
-#define TAP_MS  150  //TAP-DANCEはキワキワ。予期せぬ2度押しはストレス。
+#define TAP_MS 200
+#define HOLD_MS 200
 #define PIPE_ LS(INT3)
 
 #define _USB OUT_USB
@@ -325,10 +325,10 @@
 //|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****
         layer_qwerty {
           bindings = <
-  &kp  TAB        &mt Q TAB        &kp  W     &kp  E     &kp  R     &kp  T     &kp  Y     &kp  U     &kp  I     &kp  O     &kp  P     &kp  MINUS
-  &mt  LCTRL CAPS &mt LCTRL A      &kp  S     &kp  D     &kp  F     &kp  G     &kp  H     &mo  1     &kp  K     &kp  L     &kp  SEMI  &kp  SQT
-  &kp  LSHFT      &mt LSHFT Z      &kp  X     &kp  C     &kp  V     &kp  B     &kp  N     &kp  M     &kp  COMMA &kp  DOT   &kp  SLASH &kp  ENTER
-  &kp  LCTRL      &kp LCTRL        &kp  LALT  &mkp LCLK  &mo 2      &kp  SPACE            &CTRL_MO3  &kp  UP    &kp  LEFT  &kp  DOWN  &kp  RIGHT
+  &kp  TAB   &MY_Q_0    &kp  W     &kp  E     &kp  R     &kp  T     &kp  Y     &kp  U     &kp  I     &kp  O     &kp  P     &kp  MINUS
+  &mt  LCTRL CAPS &kp A &kp  S     &kp  D     &kp  F     &kp  G     &kp  H     &mo  1     &kp  K     &kp  L     &kp  SEMI  &kp  SQT
+  &kp  LSHFT &kp Z      &kp  X     &kp  C     &kp  V     &kp  B     &kp  N     &kp  M     &kp  COMMA &kp  DOT   &kp  SLASH &kp  ENTER
+  &kp  LCTRL &kp LGUI   &kp  LALT  &mkp LCLK  &mo 2      &kp  SPACE            &CTRL_MO3  &kp  UP    &kp  LEFT  &kp  DOWN  &kp  RIGHT
           >;
         };
         //1:jigler-dummyレイヤー
@@ -338,7 +338,7 @@
           bindings = <
   &kp  ESC   &MY_Q_2    &kp F2     &kp  UP    &kp  F4    &kp  F5    &kp  F6    &kp  F7    &kp  F8    &F9_F11    &F10_F12   &kp  LBKT
   &kp  LGUI  &kp LALT   &kp  LEFT  &kp  DOWN  &kp  RIGHT &kp  F3    &RBKT_NUHS &trans     &MY_HOME   &MY_PG_UP  &kp  INT1  &MY_KEY3
-  &trans     &kp LGUI   &VOL_DN    &VOL_UP    &kp EQUAL  &kp  PSCRN &NEW_8977  &kp  DEL   &MY_END    &MY_PG_DN  &trans     &trans
+  &trans     &kp EQUAL  &VOL_DN    &VOL_UP    &kp LS(N4) &kp  PSCRN &NEW_8977  &kp  DEL   &MY_END    &MY_PG_DN  &trans     &trans
   &trans     &trans     &trans     &mkp RCLK  &mo  2     &kp  BSPC             &kp  K_APP &kp  TAB   &kp  K_APP &trans     &trans
           >;
         };
