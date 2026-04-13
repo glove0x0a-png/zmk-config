@@ -128,7 +128,7 @@
             #binding-cells = <2>;
             flavor = "hold-preferred";
             tapping-term-ms = <HOLD_MS>;
-            bindings = <&QUIT_F1>, <&kp>;
+            bindings = <&kp>, <&QUIT_F1>;
             display-name = "Mod-Tap";
         };
         mtZ: mtZ {    //Alt
@@ -177,7 +177,7 @@
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
             bindings = <&QUIT_F1>, <&kp >;
-            bindings = <&hold_Q 0 ESC>, <&kp LS(TAB) >;
+            bindings = <&hold_Q ESC 0>, <&kp LS(TAB) >;
             mods = <(MOD_LALT|MOD_LCTL)>;
         };
         //9.O
