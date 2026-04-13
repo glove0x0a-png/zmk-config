@@ -337,7 +337,7 @@
   &none     &mt LCTRL A &kp  S     &mt  D Z   &kp  F     &kp  G     &kp  H     &mo  1     &kp  K     &kp  L     &kp  SEMI  &kp  SQT
   &none     &mt LSHFT Z &mt CAPS X &kp  C     &kp  V     &kp  B     &kp  N     &kp  M     &kp  COMMA &kp  DOT   &kp  SLASH &kp  ENTER
   &none     &kp LCTRL   &kp  LALT  &mkp LCLK  &mo 2      &kp  SPACE            &CTRL_MO3  &kp  UP    &kp  LEFT  &kp  DOWN  &kp  RIGHT
-          >;/
+          >;
         };
         //1:jigler-dummyレイヤー
         layer_fn1 { bindings = < &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans >; };
