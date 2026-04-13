@@ -349,8 +349,8 @@
           bindings = <
   &none &mt Q TAB      &kp  W     &mt  Z E   &kp  R     &kp  T     &kp  Y     &kp  U     &kp  I     &kp  O     &kp  P     &kp  MINUS
   &none &mt LCTRL A    &kp  S     &kp  D     &kp  F     &kp  G     &kp  H     &mo  1     &kp  K     &kp  L     &kp  MINUS &kp  SQT
-  &none &mt LSHFT Z    &kp  X     &kp  C     &kp  V     &kp  B     &kp  N     &kp  M     &kp  COMMA &kp  DOT   &kp  ENTER &kp  ENTER
-  &none &mt LCTRL CAPS &kp  LALT  &mkp LCLK  &mo 2   &kp  SPACE            &CTRL_MO3  &kp  UP    &kp  LEFT  &kp  DOWN  &kp  RIGHT
+  &none &mt LSHFT Z    &kp  X     &kp  C     &kp  V     &kp  B     &kp  N     &kp  M     &kp  COMMA &kp  UP    &kp  ENTER &kp  ENTER
+  &none &mt LCTRL CAPS &kp  LALT  &mkp LCLK  &mo 2      &kp  SPACE            &CTRL_MO3  &kp  LEFT  &kp  DOWN  &kp  RIGHT &kp  UP
           >;
         };
         //1:jigler-dummyレイヤー
@@ -369,7 +369,7 @@
           bindings = <
   &none &kp  N1    &MY_N2     &kp  N3    &kp N4     &kp  N5    &kp  N6    &kp  N7    &kp  N8    &kp  N9    &N0_PIPE   &trans
   &none &MY_U      &MY_L      &MY_D      &MY_R      &kp  LBKT  &kp  SEMI  &trans     &SC_U_L    &SC_D_R    &trans     &trans
-  &none &mtZ LSHFT 0 &BLE0    &BLE1      &BLE2      &ESC_CLR   &kp  SQT   &mkp LCLK  &trans     &trans     &kp  SLASH &trans
+  &none &mtZ LSHFT 0 &BLE0    &BLE1      &BLE2      &ESC_CLR   &kp  SQT   &mkp LCLK  &trans     &kp  DOT   &kp  SLASH &trans
   &none &trans     &trans     &mkp RCLK  &ind_bat   &none                 &mo  3     &trans     &trans     &trans     &trans
           >;
         };
