@@ -13,7 +13,6 @@
 #include <dt-bindings/input/input-event-codes.h>
 
 #define HOLD_MS 200  //HOLD-TAPは長くてよい。1.すぐ離せばそのタイミングで短押し、2.同時押しが発生したらHOLD扱い。
-#define TAP_MS  150  //TAP-DANCEはキワキワ。予期せぬ2度押しはストレス。
 #define PIPE_ LS(INT3)
 
 #define _USB OUT_USB
@@ -307,7 +306,7 @@
         CAPS_MO2: CAPS_MO2 {
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
-            tapping-term-ms = <TAP_MS>;
+            tapping-term-ms = <300>;     //途中割込みは単独押下？
             bindings = <
                 &mo 2
                 &kp CAPS
@@ -316,7 +315,7 @@
         CTRL_MO3: CTRL_MO3 {
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
-            tapping-term-ms = <TAP_MS>;
+            tapping-term-ms = <200>;
             bindings = <
                 &mo 3
                 &kp LCTRL
