@@ -360,7 +360,7 @@
   &none &mt Q TAB      &kp  W     &mt  Z E   &kp  R     &kp  T     &kp  Y     &kp  U     &kp  I     &kp  O     &kp  P     &kp  MINUS
   &none &mt LCTRL A    &kp  S     &kp  D     &kp  F     &kp  G     &kp  H     &mo  1     &kp  K     &kp  L     &kp  MINUS &kp  SQT
   &none &mt LSHFT Z    &kp  X     &kp  C     &kp  V     &kp  B     &kp  N     &kp  M     &kp  COMMA &kp  UP    &kp  ENTER &kp  ENTER
-  &none &mt LCTRL      &kp  LALT  &mkp LCLK  &CAPS_MO2  &kp  SPACE            &CTRL_MO3  &kp  LEFT  &kp  DOWN  &kp  RIGHT &kp  UP
+  &none &kp LCTRL      &kp  LALT  &mkp LCLK  &CAPS_MO2  &kp  SPACE            &CTRL_MO3  &kp  LEFT  &kp  DOWN  &kp  RIGHT &kp  UP
          >;
         };
         //1:jigler-dummyレイヤー
