@@ -228,6 +228,20 @@
             bindings = <&SHFT_89>, <&SHFT_77>;
             mods = <MOD_LSFT>;
         };
+        //SPACE <-> Z:
+        MY_SPACE: MY_SPACE {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp SPACE>, <&kp Z>;
+            mods = <MOD_LSFT>;
+        };
+        //D <-> Z:
+        MY_kp_D: MY_kp_D {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp D>, <&kp Z>;
+            mods = <MOD_LSFT>;
+        };
 //////////十字キー
         MY_R: MY_R{
             compatible = "zmk,behavior-mod-morph";
@@ -251,7 +265,7 @@
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
             bindings = <&mmv LO_D>, <&mmv HI_D>;
-            mods = <MOD_LSFT>;
+            mods = <MOD_LCTL>;
         };
 //////////スクロール
         SC_U_L: SC_U_L{
@@ -306,7 +320,7 @@
         CAPS_MO2: CAPS_MO2 {
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
-            tapping-term-ms = <300>;     //途中割込みは単独押下？
+            tapping-term-ms = <300>;     //途中割込みは、moの動作。OK。
             bindings = <
                 &mo 2
                 &kp CAPS
@@ -356,10 +370,10 @@
 //|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****
         layer_qwerty {
           bindings = <
-  &none &mt Q TAB      &kp  W     &mt  Z E   &kp  R     &kp  T     &kp  Y     &kp  U     &kp  I     &kp  O     &kp  P     &kp  MINUS
+  &none &mt Q TAB      &kp  W     &kp  E     &kp  R     &kp  T     &kp  Y     &kp  U     &kp  I     &kp  O     &kp  P     &kp  MINUS
   &none &mt LCTRL A    &kp  S     &kp  D     &kp  F     &kp  G     &kp  H     &mo  1     &kp  K     &kp  L     &kp  MINUS &kp  SQT
   &none &mt LSHFT Z    &kp  X     &kp  C     &kp  V     &kp  B     &kp  N     &kp  M     &kp  COMMA &kp  UP    &kp  ENTER &kp  ENTER
-  &none &kp LCTRL      &kp  LALT  &mkp LCLK  &CAPS_MO2  &kp  SPACE            &CTRL_MO3  &kp  LEFT  &kp  DOWN  &kp  RIGHT &kp  UP
+  &none &kp LCTRL      &kp  LALT  &mkp LCLK  &CAPS_MO2  &MY_SPACE             &CTRL_MO3  &kp  LEFT  &kp  DOWN  &kp  RIGHT &kp  UP
          >;
         };
         //1:jigler-dummyレイヤー
@@ -370,7 +384,7 @@
   &none &MY_Q_2    &kp F2     &kp  UP    &kp  F4    &kp  F5    &kp  F6    &kp  F7    &kp  F8    &F9_F11    &F10_F12   &kp LBKT
   &none &kp LALT   &kp  LEFT  &kp  DOWN  &kp  RIGHT &kp  F3    &RBKT_NUHS &trans     &MY_HOME   &MY_PG_UP  &kp  INT1  &MY_KEY3
   &none &kp LSHFT  &VOL_DN    &VOL_UP    &kp  EQUAL &kp LA(F4) &NEW_8977  &kp  DEL   &MY_END    &MY_PG_DN  &kp  SLASH &trans
-  &none &kp LGUI   &trans     &mkp RCLK  &mo  2     &kp  BSPC             &kp  K_APP &kp  TAB   &kp  K_APP &trans     &trans
+  &none &trans     &kp LGUI   &mkp RCLK  &mo  2     &kp  BSPC             &kp  K_APP &kp  TAB   &kp  K_APP &trans     &trans
           >;
         };
         //3:Number + Bluetooth /マウス高速
