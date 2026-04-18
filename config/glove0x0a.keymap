@@ -12,7 +12,8 @@
 #include <dt-bindings/zmk/pointing.h>
 #include <dt-bindings/input/input-event-codes.h>
 
-#define HOLD_MS 150  //HOLD-TAPは短く。1.すぐ離せばそのタイミングで短押し、2.同時押しが発生したらtap扱い。
+#define TAP_MS 200
+#define HOLD_MS 200
 #define PIPE_ LS(INT3)
 
 #define _USB OUT_USB
@@ -34,13 +35,12 @@
 #define HI_L MOVE_X(-200)
 #define HI_R MOVE_X(200)
 
-//2026.04.13 #1047 ★対象キー押下状態から他キー押下は、tap扱い修正。GUIの場所など微調整。
-//2026.04.13 #1026 ★hold-tapで他キー押下状態から対象キーが押下された場合、tap扱いへ。
-//没//2026.03.17 #980 Ctrl + TAB or Q(Shift TAB) / Alt + Q(TAB) or W(Shit+TAB)
+//2026.03.17 #980 Ctrl + TAB or Q(Shift TAB) / Alt + Q(TAB) or W(Shit+TAB)
 //2026.03.16 #979 Layer1のGUI押下中のHOME/END/PGUP/PGDNをLC()送付&GUIリリース前にESC送信に修正(mod-morph)。
 //2026.03.16 #968 没。めっちゃムズイ。バッテリー監視も無効になる。:WS2812(LED)の有効化/AZ1UBALLから並列で電源供給
 //2026.03.14 #921 ダブルタップは250ms(ちょっと余裕がある)
 //2026.03.14 #919 Q、TABへ。mod-morphの修飾キーマスク削除。
+//2026.03.14 #919 hold-tapで他キー割込み時はhold->tap扱いへ
 //2026.03.14 #907 fn2度押し->Ctrlへ。
 //2026.03.13 #881 tap-danceの自動リリース削除、押しっぱなしでホールド/即リリースは後追い。
 //2026.03.12 #873 物理配置を再調整。D1が不調。
@@ -122,23 +122,6 @@
     };
 ////behaviors
     behaviors {
-//★hold-tap-----------------------------------------------
-//        hold_Q: hold_Q {
-//            compatible = "zmk,behavior-hold-tap";
-//            #binding-cells = <2>;
-//            flavor = "hold-preferred";
-//            tapping-term-ms = <HOLD_MS>;
-//            bindings = <&kp>, <&QUIT_F1>;
-//            display-name = "Mod-Tap";
-//        };
-        mtZ: mtZ {    //Alt
-            compatible = "zmk,behavior-hold-tap";
-            #binding-cells = <2>;
-            flavor = "hold-preferred";
-            tapping-term-ms = <HOLD_MS>;
-            bindings = <&kp>, <&MY_USB>;
-            display-name = "Mod-Tap";
-        };
 //★mod-morph-----------------------------------------------
         //ボリューム操作(Win->UNIX)
         VOL_UP: VOL_UP {
@@ -167,17 +150,16 @@
             bindings = <&kp Q>, <&kp LS(TAB)>;
             mods = <(MOD_LALT|MOD_LCTL)>;
         };
-        ESC_F1: ESC_F1 {  /* ESC_F1 */
+        QUIT_F1: QUIT_F1 {  /* QUIT_F1 */
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
-            bindings = <&kp ESC>, <&kp F1>;
+            bindings = <&kp LA(F4)>, <&kp F1>;
             mods = <MOD_LSFT>;
         };
         MY_Q_2: MY_Q_2 {    //Alt
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
-            bindings = <&ESC_F1>, <&kp LS(TAB)>;
-//            bindings = <&kp ESC>, <&kp LS(TAB) >;
+            bindings = <&QUIT_F1>, <&kp TAB >;
             mods = <(MOD_LALT|MOD_LCTL)>;
         };
         //9.O
@@ -228,20 +210,6 @@
             bindings = <&SHFT_89>, <&SHFT_77>;
             mods = <MOD_LSFT>;
         };
-        //SPACE <-> Z:
-        MY_SPACE: MY_SPACE {
-            compatible = "zmk,behavior-mod-morph";
-            #binding-cells = <0>;
-            bindings = <&kp SPACE>, <&kp LS(Z)>;
-            mods = <MOD_LSFT>;
-        };
-        //D <-> Z:
-        MY_kp_D: MY_kp_D {
-            compatible = "zmk,behavior-mod-morph";
-            #binding-cells = <0>;
-            bindings = <&kp D>, <&kp Z>;
-            mods = <MOD_LCTL>;
-        };
 //////////十字キー
         MY_R: MY_R{
             compatible = "zmk,behavior-mod-morph";
@@ -265,7 +233,7 @@
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
             bindings = <&mmv LO_D>, <&mmv HI_D>;
-            mods = <MOD_LCTL>;
+            mods = <MOD_LSFT>;
         };
 //////////スクロール
         SC_U_L: SC_U_L{
@@ -285,28 +253,24 @@
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
             bindings = <&kp HOME>, <&kp LC(HOME) >;
-//            bindings = <&kp HOME>, <&kp LS(HOME) >;
             mods = <MOD_LGUI>;
         };
         MY_END: MY_END {
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
             bindings = <&kp END>, <&kp LC(END) >;
-//            bindings = <&kp END>, <&kp LS(END) >;
             mods = <MOD_LGUI>;
         };
         MY_PG_UP: MY_PG_UP {
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
             bindings = <&kp PG_UP>, <&kp LC(PG_UP) >;
-//            bindings = <&kp PG_UP>, <&kp LS(PG_UP) >;
             mods = <MOD_LGUI>;
         };
         MY_PG_DN: MY_PG_DN {
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
             bindings = <&kp PG_DN>, <&kp LC(PG_DN) >;
-//            bindings = <&kp PG_DN>, <&kp LS(PG_DN) >;
             mods = <MOD_LGUI>;
         };
 //★LED制御-------------------------------------------------
@@ -317,19 +281,10 @@
             outputs = <&caps_led>;  // ✅ ラベルと一致
         };
 //★タップダンス制御-------------------------------------------------
-        CAPS_MO2: CAPS_MO2 {
-            compatible = "zmk,behavior-tap-dance";
-            #binding-cells = <0>;
-            tapping-term-ms = <300>;     //途中割込みは、moの動作。OK。
-            bindings = <
-                &mo 2
-                &kp CAPS
-            >;
-        };
         CTRL_MO3: CTRL_MO3 {
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
-            tapping-term-ms = <200>;
+            tapping-term-ms = <TAP_MS>;
             bindings = <
                 &mo 3
                 &kp LCTRL
@@ -370,34 +325,30 @@
 //|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****
         layer_qwerty {
           bindings = <
-&mt Q TAB      &kp  W     &kp  E     &kp  R     &kp  T     &kp  Y     &kp  U     &kp  I     &kp  O     &kp  P    
-&mt LCTRL A    &kp  S     &MY_kp_D   &kp  F     &kp  G     &kp  H     &mo  1     &kp  K     &mt  L DOT &kp  MINUS
-&mt LSHFT Z    &kp  X     &kp  C     &kp  V     &kp  B     &kp  N     &kp  M     &kp  COMMA &kp  UP    &kp  ENTER
-&kp LCTRL      &kp  LALT  &mkp LCLK  &CAPS_MO2  &MY_SPACE             &CTRL_MO3  &kp  LEFT  &kp  DOWN  &kp  RIGHT
-         >;
+  &kp  TAB   &MY_Q_0    &kp  W     &kp  E     &kp  R     &kp  T     &kp  Y     &kp  U     &kp  I     &kp  O     &kp  P     &kp  MINUS
+  &mt  LCTRL CAPS &kp A &kp  S     &kp  D     &kp  F     &kp  G     &kp  H     &mo  1     &kp  K     &kp  L     &kp  SEMI  &kp  SQT
+  &kp  LSHFT &kp Z      &kp  X     &kp  C     &kp  V     &kp  B     &kp  N     &kp  M     &kp  COMMA &kp  DOT   &kp  SLASH &kp  ENTER
+  &kp  LCTRL &kp LGUI   &kp  LALT  &mkp LCLK  &mo 2      &kp  SPACE            &CTRL_MO3  &kp  UP    &kp  LEFT  &kp  DOWN  &kp  RIGHT
+          >;
         };
         //1:jigler-dummyレイヤー
         layer_fn1 { bindings = < &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans >; };
         //2:Custom + Function Keys + Vol
         layer_fn2 {
           bindings = <
-&MY_Q_2    &kp F2     &mt LG(UP) UP
-                                 &kp  F4    &kp  F5    &kp  F6    &kp  F7    &kp  F8    &F9_F11    &F10_F12   
-&kp LALT   &mt LG(LEFT) LEFT  
-                      &mt LG(DOWN) DOWN 
-                                 &mt LG(RIGHT) RIGHT
-                                            &kp  F3    &RBKT_NUHS &trans     &MY_HOME   &MY_PG_UP  &kp  INT1  
-&kp LSHFT  &VOL_DN    &VOL_UP    &kp  EQUAL &kp LA(F4) &NEW_8977  &kp  DEL   &MY_END    &MY_PG_DN  &kp  SLASH 
-&trans     &trans     &mkp RCLK  &mo  2     &kp  BSPC             &kp  K_APP &kp  TAB   &kp  K_APP &trans     
+  &kp  ESC   &MY_Q_2    &kp F2     &kp  UP    &kp  F4    &kp  F5    &kp  F6    &kp  F7    &kp  F8    &F9_F11    &F10_F12   &kp  LBKT
+  &kp  LGUI  &kp LALT   &kp  LEFT  &kp  DOWN  &kp  RIGHT &kp  F3    &RBKT_NUHS &trans     &MY_HOME   &MY_PG_UP  &kp  INT1  &MY_KEY3
+  &trans     &kp EQUAL  &VOL_DN    &VOL_UP    &kp LS(N4) &kp  PSCRN &NEW_8977  &kp  DEL   &MY_END    &MY_PG_DN  &trans     &trans
+  &trans     &trans     &trans     &mkp RCLK  &mo  2     &kp  BSPC             &kp  K_APP &kp  TAB   &kp  K_APP &trans     &trans
           >;
         };
         //3:Number + Bluetooth /マウス高速
         layer_fn3 {
           bindings = <
-&kp  N1    &MY_N2     &kp  N3    &kp N4     &kp  N5    &kp  N6    &kp  N7    &kp  N8    &kp  N9    &N0_PIPE  
-&MY_U      &MY_L      &MY_D      &MY_R      &kp  LBKT  &kp  SEMI  &trans     &SC_U_L    &SC_D_R    &trans    
-&mtZ LSHFT 0 &BLE0    &BLE1      &BLE2      &ESC_CLR   &kp  SQT   &mkp LCLK  &trans     &trans     &kp  SLASH
-&kp LGUI   &trans     &mkp RCLK  &ind_bat   &none                 &mo  3     &trans     &trans     &trans    
+  &ESC_CLR   &kp  N1    &MY_N2     &kp  N3    &kp N4     &kp  N5    &kp  N6    &kp  N7    &kp  N8    &kp  N9    &N0_PIPE   &trans
+  &trans     &MY_U      &MY_L      &MY_D      &MY_R      &kp  F3    &RBKT_NUHS &trans     &SC_U_L    &SC_D_R    &trans     &trans
+  &trans     &MY_USB    &BLE0      &BLE1      &BLE2      &kp  PSCRN &SHFT_89   &mkp LCLK  &trans     &trans     &trans     &trans
+  &trans     &trans     &trans     &mkp RCLK  &mkp RCLK  &ind_bat              &mo  3     &trans     &trans     &trans     &trans
           >;
         };
     };
@@ -435,7 +386,6 @@
         //    mods = <MOD_LCTL>;
         //};
         //MY_A_2: MY_A_2 {
-
         //    compatible = "zmk,behavior-mod-morph";
         //    #binding-cells = <0>;
         //    bindings = <&kp LALT>, <&kp LSHFT>;
@@ -531,4 +481,36 @@
         //        &kp NUHS
         //        &kp LS(N9)
         //    >;
+        //};
+        //holdR: holdR {
+        //    compatible = "zmk,behavior-hold-tap";
+        //    #binding-cells = <2>;
+        //    flavor = "hold-preferred";
+        //    tapping-term-ms = <HOLD_MS>;
+        //    bindings = <&MY_R>, <&kp>;
+        //    display-name = "Mod-Tap";
+        //};
+        //holdU: holdU {
+        //    compatible = "zmk,behavior-hold-tap";
+        //    #binding-cells = <2>;
+        //    flavor = "hold-preferred";
+        //    tapping-term-ms = <HOLD_MS>;
+        //    bindings = <&MY_U>, <&kp>;
+        //    display-name = "Mod-Tap";
+        //};
+        //holdL: holdL {
+        //    compatible = "zmk,behavior-hold-tap";
+        //    #binding-cells = <2>;
+        //    flavor = "hold-preferred";
+        //    tapping-term-ms = <HOLD_MS>;
+        //    bindings = <&MY_L>, <&kp>;
+        //    display-name = "Mod-Tap";
+        //};
+        //holdD: holdD {
+        //    compatible = "zmk,behavior-hold-tap";
+        //    #binding-cells = <2>;
+        //    flavor = "hold-preferred";
+        //    tapping-term-ms = <HOLD_MS>;
+        //    bindings = <&MY_D>, <&kp>;
+        //    display-name = "Mod-Tap";
         //};
