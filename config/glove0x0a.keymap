@@ -34,8 +34,8 @@
 #define HI_L MOVE_X(-200)
 #define HI_R MOVE_X(200)
 
-//2026.04.13 #1039 
-//2026.04.13 #1026 ★hold-tapで他キー押下状態から対象キーが押下された場合、tap扱いへ。対象キー押下状態から他キー押下は、hold扱い(デフォルト)
+//2026.04.13 #1047 ★対象キー押下状態から他キー押下は、tap扱い修正。GUIの場所など微調整。
+//2026.04.13 #1026 ★hold-tapで他キー押下状態から対象キーが押下された場合、tap扱いへ。
 //没//2026.03.17 #980 Ctrl + TAB or Q(Shift TAB) / Alt + Q(TAB) or W(Shit+TAB)
 //2026.03.16 #979 Layer1のGUI押下中のHOME/END/PGUP/PGDNをLC()送付&GUIリリース前にESC送信に修正(mod-morph)。
 //2026.03.16 #968 没。めっちゃムズイ。バッテリー監視も無効になる。:WS2812(LED)の有効化/AZ1UBALLから並列で電源供給
@@ -370,10 +370,10 @@
 //|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****
         layer_qwerty {
           bindings = <
-  &none &mt Q TAB      &kp  W     &kp  E     &kp  R     &kp  T     &kp  Y     &kp  U     &kp  I     &kp  O     &kp  P     &kp  MINUS
-  &none &mt LCTRL A    &kp  S     &MY_kp_D   &kp  F     &kp  G     &kp  H     &mo  1     &kp  K     &mt  L DOT &kp  MINUS &kp  SQT
-  &none &mt LSHFT Z    &kp  X     &kp  C     &kp  V     &kp  B     &kp  N     &kp  M     &kp  COMMA &kp  UP    &kp  ENTER &kp  ENTER
-  &none &kp LCTRL      &kp  LALT  &mkp LCLK  &CAPS_MO2  &MY_SPACE             &CTRL_MO3  &kp  LEFT  &kp  DOWN  &kp  RIGHT &kp  UP
+&mt Q TAB      &kp  W     &kp  E     &kp  R     &kp  T     &kp  Y     &kp  U     &kp  I     &kp  O     &kp  P    
+&mt LCTRL A    &kp  S     &MY_kp_D   &kp  F     &kp  G     &kp  H     &mo  1     &kp  K     &mt  L DOT &kp  MINUS
+&mt LSHFT Z    &kp  X     &kp  C     &kp  V     &kp  B     &kp  N     &kp  M     &kp  COMMA &kp  UP    &kp  ENTER
+&kp LCTRL      &kp  LALT  &mkp LCLK  &CAPS_MO2  &MY_SPACE             &CTRL_MO3  &kp  LEFT  &kp  DOWN  &kp  RIGHT
          >;
         };
         //1:jigler-dummyレイヤー
@@ -381,23 +381,23 @@
         //2:Custom + Function Keys + Vol
         layer_fn2 {
           bindings = <
-  &none &MY_Q_2    &kp F2     &mt LG(UP) UP
-                                         &kp  F4    &kp  F5    &kp  F6    &kp  F7    &kp  F8    &F9_F11    &F10_F12   &kp LBKT
-  &none &kp LALT   &mt LG(LEFT) LEFT  
-                              &mt LG(DOWN) DOWN 
-                                         &mt LG(RIGHT) RIGHT
-                                                    &kp  F3    &RBKT_NUHS &trans     &MY_HOME   &MY_PG_UP  &kp  INT1  &MY_KEY3
-  &none &kp LSHFT  &VOL_DN    &VOL_UP    &kp  EQUAL &kp LA(F4) &NEW_8977  &kp  DEL   &MY_END    &MY_PG_DN  &kp  SLASH &trans
-  &none &trans     &trans     &mkp RCLK  &mo  2     &kp  BSPC             &kp  K_APP &kp  TAB   &kp  K_APP &trans     &trans
+&MY_Q_2    &kp F2     &mt LG(UP) UP
+                                 &kp  F4    &kp  F5    &kp  F6    &kp  F7    &kp  F8    &F9_F11    &F10_F12   
+&kp LALT   &mt LG(LEFT) LEFT  
+                      &mt LG(DOWN) DOWN 
+                                 &mt LG(RIGHT) RIGHT
+                                            &kp  F3    &RBKT_NUHS &trans     &MY_HOME   &MY_PG_UP  &kp  INT1  
+&kp LSHFT  &VOL_DN    &VOL_UP    &kp  EQUAL &kp LA(F4) &NEW_8977  &kp  DEL   &MY_END    &MY_PG_DN  &kp  SLASH 
+&trans     &trans     &mkp RCLK  &mo  2     &kp  BSPC             &kp  K_APP &kp  TAB   &kp  K_APP &trans     
           >;
         };
         //3:Number + Bluetooth /マウス高速
         layer_fn3 {
           bindings = <
-  &none &kp  N1    &MY_N2     &kp  N3    &kp N4     &kp  N5    &kp  N6    &kp  N7    &kp  N8    &kp  N9    &N0_PIPE   &trans
-  &none &MY_U      &MY_L      &MY_D      &MY_R      &kp  LBKT  &kp  SEMI  &trans     &SC_U_L    &SC_D_R    &trans     &trans
-  &none &mtZ LSHFT 0 &BLE0    &BLE1      &BLE2      &ESC_CLR   &kp  SQT   &mkp LCLK  &trans     &trans     &kp  SLASH &trans
-  &none &kp LGUI   &trans     &mkp RCLK  &ind_bat   &none                 &mo  3     &trans     &trans     &trans     &trans
+&kp  N1    &MY_N2     &kp  N3    &kp N4     &kp  N5    &kp  N6    &kp  N7    &kp  N8    &kp  N9    &N0_PIPE  
+&MY_U      &MY_L      &MY_D      &MY_R      &kp  LBKT  &kp  SEMI  &trans     &SC_U_L    &SC_D_R    &trans    
+&mtZ LSHFT 0 &BLE0    &BLE1      &BLE2      &ESC_CLR   &kp  SQT   &mkp LCLK  &trans     &trans     &kp  SLASH
+&kp LGUI   &trans     &mkp RCLK  &ind_bat   &none                 &mo  3     &trans     &trans     &trans    
           >;
         };
     };
