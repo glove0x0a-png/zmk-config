@@ -12,7 +12,7 @@
 #include <dt-bindings/zmk/pointing.h>
 #include <dt-bindings/input/input-event-codes.h>
 
-#define HOLD_MS 150  //HOLD-TAPは短く。1.すぐ離せばそのタイミングで短押し、2.同時押しが発生したらtap扱い。
+#define HOLD_MS 300
 #define PIPE_ LS(INT3)
 
 #define _USB OUT_USB
@@ -61,7 +61,7 @@
 / {
 //★macro---------------------------------------------------
     macros {
-        MY_USB: MY_USB {
+        BLE_USB: BLE_USB {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             bindings
@@ -136,7 +136,7 @@
             #binding-cells = <2>;
             flavor = "hold-preferred";
             tapping-term-ms = <HOLD_MS>;
-            bindings = <&kp>, <&MY_USB>;
+            bindings = <&kp>, <&BLE_USB>;
             display-name = "Mod-Tap";
         };
 //★mod-morph-----------------------------------------------
@@ -154,7 +154,7 @@
             mods = <MOD_LSFT>;
         };
         //0.ESC
-        ESC_CLR: ESC_CLR {  /*ESC_CLR*/
+        BLE_ESC: BLE_ESC {  /*BLE_ESC*/
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
             bindings = <&kp ESC>, <&bt BT_CLR >;
@@ -239,7 +239,7 @@
         MY_kp_D: MY_kp_D {
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
-            bindings = <&kp D>, <&kp Z>;
+            bindings = <&kp D>, <&kp X>;
             mods = <MOD_LCTL>;
         };
 //////////十字キー
@@ -370,10 +370,10 @@
 //|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****|----|*****
         layer_qwerty {
           bindings = <
-  &none &mt Q TAB      &kp  W     &kp  E     &kp  R     &kp  T     &kp  Y     &kp  U     &kp  I     &kp  O     &kp  P     &kp  MINUS
-  &none &mt LCTRL A    &kp  S     &MY_kp_D   &kp  F     &kp  G     &kp  H     &mo  1     &kp  K     &mt  L DOT &kp  MINUS &kp  SQT
-  &none &mt LSHFT Z    &kp  X     &kp  C     &kp  V     &kp  B     &kp  N     &kp  M     &kp  COMMA &kp  UP    &kp  ENTER &kp  ENTER
-  &none &kp LCTRL      &kp  LALT  &mkp LCLK  &CAPS_MO2  &MY_SPACE             &CTRL_MO3  &kp  LEFT  &kp  DOWN  &kp  RIGHT &kp  UP
+&none &mt Q TAB   &kp  W     &kp  E     &kp  R     &kp  T     &kp  Y     &kp  U     &kp  I     &kp  O     &kp  MINUS &none
+&none &mt LCTRL A &kp  S     &MY_kp_D   &kp  F     &kp  G     &kp  H     &mo  1     &kp  K     &kp  L     &kp  SEMI  &none
+&none &kp LSHFT   &kp  Z     &kp  C     &kp  V     &kp  B     &kp  N     &kp  M     &kp  COMMA &kp  UP    &kp  ENTER &none
+&none &kp LCTRL   &kp  LALT  &mkp LCLK  &CAPS_MO2  &MY_SPACE             &CTRL_MO3  &kp  LEFT  &kp  DOWN  &kp  RIGHT &none
          >;
         };
         //1:jigler-dummyレイヤー
@@ -381,23 +381,20 @@
         //2:Custom + Function Keys + Vol
         layer_fn2 {
           bindings = <
-  &none &MY_Q_2    &kp F2     &mt LG(UP) UP
-                                         &kp  F4    &kp  F5    &kp  F6    &kp  F7    &kp  F8    &F9_F11    &F10_F12   &kp LBKT
-  &none &kp LALT   &mt LG(LEFT) LEFT  
-                              &mt LG(DOWN) DOWN 
-                                         &mt LG(RIGHT) RIGHT
-                                                    &kp  F3    &RBKT_NUHS &trans     &MY_HOME   &MY_PG_UP  &kp  INT1  &MY_KEY3
-  &none &kp LSHFT  &VOL_DN    &VOL_UP    &kp  EQUAL &kp LA(F4) &NEW_8977  &kp  DEL   &MY_END    &MY_PG_DN  &kp  SLASH &trans
-  &none &trans     &trans     &mkp RCLK  &mo  2     &kp  BSPC             &kp  K_APP &kp  TAB   &kp  K_APP &trans     &trans
+&none &MY_Q_2     &kp F2     &mt LG(UP) UP &kp F4  &kp  F5    &kp  F6    &kp  F7    &kp  F8    &kp F9     &kp  P     &none
+&none &kp LALT &mt LG(LEFT) LEFT &mt LG(DOWN) DOWN &mt LG(RIGHT) RIGHT
+                                                   &kp  F3    &RBKT_NUHS &trans     &kp  HOME  &kp  PG_UP &kp  INT1  &none
+&none &trans      &kp X      &kp  EQUAL &kp LGUI   &kp LA(F4) &NEW_8977  &kp  DEL   &kp  END   &kp  PG_DN &kp  SLASH &none
+&none &trans      &trans     &BLE_ESC   &none /**/ &kp  BSPC             &kp  K_APP &kp  F10   &kp  F11   &kp  F12   &none
           >;
         };
         //3:Number + Bluetooth /マウス高速
         layer_fn3 {
           bindings = <
-  &none &kp  N1    &MY_N2     &kp  N3    &kp N4     &kp  N5    &kp  N6    &kp  N7    &kp  N8    &kp  N9    &N0_PIPE   &trans
-  &none &MY_U      &MY_L      &MY_D      &MY_R      &kp  LBKT  &kp  SEMI  &trans     &SC_U_L    &SC_D_R    &trans     &trans
-  &none &mtZ LSHFT 0 &BLE0    &BLE1      &BLE2      &ESC_CLR   &kp  SQT   &mkp LCLK  &trans     &trans     &kp  SLASH &trans
-  &none &kp LGUI   &trans     &mkp RCLK  &ind_bat   &none                 &mo  3     &trans     &trans     &trans     &trans
+&none &kp  N1     &MY_N2     &kp  N3    &kp N4     &kp  N5    &kp  N6    &kp  N7    &kp  N8    &kp  N9    &N0_PIPE   &none
+&none &MY_U       &MY_L      &MY_D      &MY_R      &none /**/ &kp  SQT   &trans     &SC_U_L    &SC_D_R    &kp  SQT   &none
+&none &trans      &BLE0      &BLE1      &BLE2      &BLE_USB   &kp  LBKT  &mkp LCLK  &trans     &kp DOT    &kp  SLASH &none
+&none &kp LGUI    &trans     &mkp RCLK  &ind_bat   &none /**/            &none /**/ &ind_bat   &VOL_DN    &VOL_UP    &none
           >;
         };
     };
