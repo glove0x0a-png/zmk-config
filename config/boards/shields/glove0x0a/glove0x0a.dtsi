@@ -90,6 +90,7 @@ RC( 8, 1) RC( 8, 2) RC( 8, 3) RC( 8, 0) RC(3, 5)          RC(3,11) RC(3, 8) RC(3
             , <&key_physical_attrs 100 100  700  300       0     0     0>
             , <&key_physical_attrs 100 100  800  300       0     0     0>
             , <&key_physical_attrs 100 100  900  300       0     0     0>
+        ;
     };
 };
 &xiao_i2c {
