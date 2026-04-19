@@ -34,7 +34,7 @@ struct zmk_behavior_binding binding = {
     .param2 = 0,
 };
 
-//bool Ctrl_flg = false;
+bool Ctrl_flg = false;
 
 ///////////////////////////////////////////////////////////////////////////
 // #01.心臓部
@@ -49,6 +49,20 @@ void az1uball_read_data_work(struct k_work *work)
     int layer = zmk_keymap_highest_layer_active(); //現レイヤ
     bool lshift_pressed = zmk_hid_get_explicit_mods() & 0x02;  //左Shift
     bool lCtrl_pressed = zmk_hid_get_explicit_mods() & 0x01;  //左Ctr
+    if( lCtrl_pressed ){
+        if (!Ctrl_flg )
+        {
+            Ctrl_flg = true;
+            for (int i = 0; i < 50; i++) input_report_rel(data->dev, INPUT_REL_Y,-1, true , K_NO_WAIT);
+            for (int i = 0; i <100; i++) input_report_rel(data->dev, INPUT_REL_Y, 1, true , K_NO_WAIT);
+            for (int i = 0; i < 50; i++) input_report_rel(data->dev, INPUT_REL_Y,-1, true , K_NO_WAIT);
+            for (int i = 0; i < 50; i++) input_report_rel(data->dev, INPUT_REL_X,-1, true , K_NO_WAIT);
+            for (int i = 0; i <100; i++) input_report_rel(data->dev, INPUT_REL_X, 1, true , K_NO_WAIT);
+            for (int i = 0; i < 50; i++) input_report_rel(data->dev, INPUT_REL_X,-1, true , K_NO_WAIT);
+        }
+    } else Ctrl_flg = false;
+
+
     struct zmk_behavior_binding_event event = { .position = 0,.timestamp = now,.layer = 0,}; //event
 
     //i2c_read
@@ -82,18 +96,6 @@ void az1uball_read_data_work(struct k_work *work)
     }
     //マウス操作 or レイヤー操作 or 修飾キー or ボタン状態変化
     if ( delta_x != 0 || delta_y != 0 || lshift_pressed || lCtrl_pressed || btn_push != data->sw_pressed) data->last_activity_time = now; //前回操作時間更新
-
-//    if( lCtrl_pressed ){
-//        if (!Ctrl_flg && ( delta_x != 0 || delta_y != 0 ) ) //Ctrl押下+マウス検知+初回だけ
-//        {
-//            Ctrl_flg = true;
-//            for (int i = 0; i < 20; i++) input_report_rel(data->dev, INPUT_REL_Y, 2, true , K_NO_WAIT);
-//            for (int i = 0; i < 10; i++) input_report_rel(data->dev, INPUT_REL_Y,-2, true , K_NO_WAIT);
-//            for (int i = 0; i < 10; i++) input_report_rel(data->dev, INPUT_REL_X,-2, true , K_NO_WAIT);
-//            for (int i = 0; i < 20; i++) input_report_rel(data->dev, INPUT_REL_X, 2, true , K_NO_WAIT);
-//            for (int i = 0; i < 10; i++) input_report_rel(data->dev, INPUT_REL_X,-2, true , K_NO_WAIT);
-//        }
-//    } else Ctrl_flg = false;
 
     //ボタン押下があれば(レイヤー操作が複雑なのでJのみ)
     if ( btn_push != data->sw_pressed ){
