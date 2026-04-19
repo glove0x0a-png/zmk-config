@@ -19,10 +19,10 @@
 #define _BLE OUT_BLE
 #define _BT  BT_SEL
 
-#define SC_U SCRL_UP
-#define SC_D SCRL_DOWN
-#define SC_L SCRL_LEFT
-#define SC_R SCRL_RIGHT
+//#define SC_U SCRL_UP
+//#define SC_D SCRL_DOWN
+//#define SC_L SCRL_LEFT
+//#define SC_R SCRL_RIGHT
 
 #define DUMM MOVE_Y(-1)
 #define LO_U MOVE_Y(-1000)
@@ -118,6 +118,24 @@
             #binding-cells = <0>;
             bindings
                 = <&kp LS(N2) &kp LS(N2) &kp LEFT>;
+        };
+        MY_SC_L: MY_SC_L {
+            label = "CTRL_SCRL_LEFT";
+            #binding-cells = <0>;
+            bindings = <
+                &macro_press   KC_LCTRL
+                &msc SCRL_LEFT
+                &macro_release KC_LCTRL
+            >;
+        };
+        MY_SC_R: MY_SC_R {
+            label = "CTRL_SCRL_RIGHT";
+            #binding-cells = <0>;
+            bindings = <
+                &macro_press   KC_LCTRL
+                &msc SCRL_RIGHT
+                &macro_release KC_LCTRL
+            >;
         };
     };
 ////behaviors
@@ -226,13 +244,13 @@
         SC_U_L: SC_U_L{
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
-            bindings = <&msc SC_U>, <&msc LC(SC_L)>;
+            bindings = <&msc SC_U>, <&MY_SC_L>;
             mods = <MOD_LSFT>;
         };
         SC_D_R: SC_D_R{
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
-            bindings = <&msc SC_D>, <&msc LC(SC_R)>;
+            bindings = <&msc SC_D>, <&MY_SC_R>;
             mods = <MOD_LSFT>;
         };
 //★LED制御-------------------------------------------------
