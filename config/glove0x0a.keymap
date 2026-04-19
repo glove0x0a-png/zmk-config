@@ -240,13 +240,12 @@
             compatible = "zmk,behavior-status-indicator";
             #binding-cells = <0>;
             behavior-status = "capslock";
-            outputs = <&caps_led>;  // ✅ ラベルと一致
         };
 //★タップダンス制御-------------------------------------------------
         CAPS_MO2: CAPS_MO2 {
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
-            tapping-term-ms = <150>;     //途中割込みは、moの動作。OK。
+            tapping-term-ms = <200>;     //途中割込みは、moの動作。OK。
             bindings = <
                 &mo 2
                 &kp CAPS
