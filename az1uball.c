@@ -34,7 +34,7 @@ struct zmk_behavior_binding binding = {
     .param2 = 0,
 };
 
-bool Ctrl_flg = false;
+bool Fast_flg = false;
 
 ///////////////////////////////////////////////////////////////////////////
 // #01.心臓部
@@ -47,21 +47,16 @@ void az1uball_read_data_work(struct k_work *work)
     float scaling = data->scaling_factor; //比率
 
     int layer = zmk_keymap_highest_layer_active(); //現レイヤ
-    bool lshift_pressed = zmk_hid_get_explicit_mods() & 0x02;  //左Shift
-    bool lCtrl_pressed = zmk_hid_get_explicit_mods() & 0x01;  //左Ctr
-    if( lCtrl_pressed ){
-        if (!Ctrl_flg )
+    if( layer == 4 ){
+        if (!Fast_flg )
         {
-            Ctrl_flg = true;
+            Fast_flg = true;
             for (int i = 0; i < 50; i++) input_report_rel(data->dev, INPUT_REL_Y,-1, true , K_NO_WAIT);
-            for (int i = 0; i <100; i++) input_report_rel(data->dev, INPUT_REL_Y, 1, true , K_NO_WAIT);
-            for (int i = 0; i < 50; i++) input_report_rel(data->dev, INPUT_REL_Y,-1, true , K_NO_WAIT);
-            for (int i = 0; i < 50; i++) input_report_rel(data->dev, INPUT_REL_X,-1, true , K_NO_WAIT);
-            for (int i = 0; i <100; i++) input_report_rel(data->dev, INPUT_REL_X, 1, true , K_NO_WAIT);
-            for (int i = 0; i < 50; i++) input_report_rel(data->dev, INPUT_REL_X,-1, true , K_NO_WAIT);
         }
-    } else Ctrl_flg = false;
+    } else Fast_flg = false;
 
+    bool lshift_pressed = zmk_hid_get_explicit_mods() & 0x02;  //左Shift
+//    bool lCtrl_pressed = zmk_hid_get_explicit_mods() & 0x01;  //左Ctr
 
     struct zmk_behavior_binding_event event = { .position = 0,.timestamp = now,.layer = 0,}; //event
 
@@ -95,7 +90,8 @@ void az1uball_read_data_work(struct k_work *work)
         data->pre_y=delta_y;
     }
     //マウス操作 or レイヤー操作 or 修飾キー or ボタン状態変化
-    if ( delta_x != 0 || delta_y != 0 || lshift_pressed || lCtrl_pressed || btn_push != data->sw_pressed) data->last_activity_time = now; //前回操作時間更新
+    //if ( delta_x != 0 || delta_y != 0 || lshift_pressed || lCtrl_pressed || btn_push != data->sw_pressed) data->last_activity_time = now; //前回操作時間更新
+if ( delta_x != 0 || delta_y != 0 || lshift_pressed || btn_push != data->sw_pressed) data->last_activity_time = now; //前回操作時間更新
 
     //ボタン押下があれば(レイヤー操作が複雑なのでJのみ)
     if ( btn_push != data->sw_pressed ){
@@ -159,7 +155,7 @@ void az1uball_read_data_work(struct k_work *work)
     } else if (delta_x != 0 || delta_y != 0) { //マウス処理
         scaling /= 3.0f; //原則:低速
         if (layer == 3)     scaling      *= 4.0f; //レイヤー:高速
-        else if ( lCtrl_pressed )scaling *= 9.0f; //Ctrl:超高速
+        else if (layer == 4) scaling *= 9.0f; //Ctrl:超高速
         for (int i = 0; i < 3; i++) { //移動を滑らかに
             input_report_rel(data->dev, INPUT_REL_X, delta_x / 3 * scaling, false, K_NO_WAIT);
             input_report_rel(data->dev, INPUT_REL_Y, delta_y / 3 * scaling, true , K_NO_WAIT);

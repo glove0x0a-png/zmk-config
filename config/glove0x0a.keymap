@@ -257,7 +257,7 @@
             tapping-term-ms = <200>;
             bindings = <
                 &mo 3
-                &kp LCTRL
+                &mo 4
             >;
         };
     };
@@ -313,16 +313,18 @@
                                              &kp  F3    &RBKT_NUHS &trans     &kp  HOME  &kp  PG_UP &kp  INT1
 &trans      &kp X      &kp  EQUAL &kp LGUI   &kp LA(F4) &NEW_8977  &kp  DEL   &kp  END   &kp  PG_DN &kp  SLASH
 &trans      &trans     &kp  PSCRN &none /**/ &kp  BSPC             &kp  K_APP &kp  F10   &kp  F11   &kp  F12
-    >;
-  };
+          >;
+        };
   //3:Number + Bluetooth /マウス高速
-  layer_fn3 {
-    bindings = <
+        layer_fn3 {
+          bindings = <
 &kp  N1     &MY_N2     &kp  N3    &kp N4     &kp  N5    &kp  N6    &kp  N7    &kp  N8    &kp  N9    &N0_PIPE
 &MY_U       &MY_L      &MY_D      &MY_R      &BLE_ESC   &kp  SQT   &trans     &SC_U_L    &SC_D_R    &trans
 &trans      &BLE0      &BLE1      &BLE2      &BLE_USB   &kp  LBKT  &mkp LCLK  &trans     &kp DOT    &kp  SLASH
 &trans      &trans     &mkp RCLK  &none /**/ &none /**/            &none /**/ &ind_bat   &VOL_DN    &VOL_UP
           >;
         };
+        //4:マウス高速レイヤ
+        layer_fn4 { bindings = < &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans >; };
     };
 };
