@@ -28,7 +28,7 @@ RC( 6, 1) RC( 6, 2) RC( 6, 3) RC( 6, 0) RC(3, 4)          RC(3, 9) RC(3, 6) RC(3
         interrupt-gpios = <&gpio1 12 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN) >;
         wakeup-source;
         gpios
-          = <&gpio0 28  GPIO_ACTIVE_HIGH>
+          = <&gpio1 15  GPIO_ACTIVE_HIGH>
           , <&gpio1 13  GPIO_ACTIVE_HIGH>
           , <&gpio1  5  GPIO_ACTIVE_HIGH>
           , <&gpio1 14  GPIO_ACTIVE_HIGH>
