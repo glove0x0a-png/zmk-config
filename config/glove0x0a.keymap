@@ -4,13 +4,14 @@
 #include <dt-bindings/zmk/outputs.h>
 #include <dt-bindings/zmk/rgb.h>
 #include <behaviors/rgbled_widget.dtsi>
-#include <dt-bindings/zmk/pointing.h>
-#include <dt-bindings/input/input-event-codes.h>
 
 //define
 //ロータリーエンコーダ：マウスのスクロール量
 #define ZMK_POINTING_DEFAULT_MOVE_VAL 1500
 #define ZMK_POINTING_DEFAULT_SCRL_VAL 60
+
+#include <dt-bindings/zmk/pointing.h>
+#include <dt-bindings/input/input-event-codes.h>
 
 #define HOLD_MS 300
 #define PIPE_ LS(INT3)
@@ -124,7 +125,7 @@
             #binding-cells = <0>;
             bindings = <
                 &macro_press   KC_LCTRL
-                &msc SCRL_LEFT
+                &msc 0x0F //SCRL_LEFT
                 &macro_release KC_LCTRL
             >;
         };
@@ -133,7 +134,7 @@
             #binding-cells = <0>;
             bindings = <
                 &macro_press   KC_LCTRL
-                &msc SCRL_RIGHT
+                &msc 0x10 //SCRL_RIGHT
                 &macro_release KC_LCTRL
             >;
         };
