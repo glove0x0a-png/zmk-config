@@ -20,10 +20,10 @@
 #define _BLE OUT_BLE
 #define _BT  BT_SEL
 
-//#define SC_U SCRL_UP
-//#define SC_D SCRL_DOWN
-//#define SC_L SCRL_LEFT
-//#define SC_R SCRL_RIGHT
+#define SC_U SCRL_UP
+#define SC_D SCRL_DOWN
+#define SC_L SCRL_LEFT
+#define SC_R SCRL_RIGHT
 
 #define DUMM MOVE_Y(-1)
 #define LO_U MOVE_Y(-1000)
@@ -125,7 +125,7 @@
             #binding-cells = <0>;
             bindings = <
                 &macro_press   KC_LCTRL
-                &msc 0x0F //SCRL_LEFT
+                &msc SC_L
                 &macro_release KC_LCTRL
             >;
         };
@@ -134,7 +134,7 @@
             #binding-cells = <0>;
             bindings = <
                 &macro_press   KC_LCTRL
-                &msc 0x10 //SCRL_RIGHT
+                &msc SC_R
                 &macro_release KC_LCTRL
             >;
         };
@@ -273,7 +273,7 @@
         CTRL_MO3: CTRL_MO3 {
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
-            tapping-term-ms = <150>;
+            tapping-term-ms = <200>;
             bindings = <
                 &mo 3
                 &kp LCTRL
