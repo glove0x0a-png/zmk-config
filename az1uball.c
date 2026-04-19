@@ -84,37 +84,38 @@ void az1uball_read_data_work(struct k_work *work)
     //ボタン押下があれば(レイヤー操作が複雑なのでJのみ)
     if ( btn_push != data->sw_pressed ){
         data->sw_pressed = btn_push;
-        if (layer < 2) { //スクロールレイヤ
+//        if (layer < 2) { //スクロールレイヤ
             binding.behavior_dev="key_press";
             binding.param1 = 0x0D; 
             zmk_behavior_invoke_binding(&binding, event, btn_push);  //Jキー扱い
-        } else if(layer == 2){
-            binding.behavior_dev="key_press";
-            binding.param1 = 0x46; 
-            zmk_behavior_invoke_binding(&binding, event, btn_push);  //PRINTSCREENキー扱い
-        } else {
-            binding.behavior_dev="key_press";
-            //binding.param1 = 0x29; //ESCキー扱い
-            binding.param1 = 0x46; 
-            zmk_behavior_invoke_binding(&binding, event, btn_push);
-        }
+//        } else if(layer == 2){
+//            binding.behavior_dev="key_press";
+//            binding.param1 = 0x46; 
+//            zmk_behavior_invoke_binding(&binding, event, btn_push);  //PRINTSCREENキー扱い
+//        } else {
+//            binding.behavior_dev="key_press";
+//            //binding.param1 = 0x29; //ESCキー扱い
+//            binding.param1 = 0x46; 
+//            zmk_behavior_invoke_binding(&binding, event, btn_push);
+//        }
     }
     if (layer == 2) { //スクロールレイヤ
         if (abs(delta_x) > abs(delta_y)) delta_y = 0; else delta_x = 0; //縦 or 横のみ抽出
+        binding.behavior_dev="key_press";
+        binding.param1 = 0xE0;
         if      (delta_y >  1) {
-           if (lshift_pressed ) input_report_rel(data->dev, INPUT_REL_HWHEEL, 1, true, K_NO_WAIT);
-           else                 input_report_rel(data->dev, INPUT_REL_WHEEL, -1, true, K_NO_WAIT);
-        }
-        else if (delta_y < -1) {
-           if (lshift_pressed ) input_report_rel(data->dev, INPUT_REL_HWHEEL,-1, true, K_NO_WAIT);
-           else                 input_report_rel(data->dev, INPUT_REL_WHEEL,  1, true, K_NO_WAIT);
-        }
-        else if (delta_x >  1) {
-           if (lshift_pressed ) input_report_rel(data->dev, INPUT_REL_HWHEEL, 1, true, K_NO_WAIT);
-           else                 input_report_rel(data->dev, INPUT_REL_WHEEL, -1, true, K_NO_WAIT);
+           if (lshift_pressed ){
+               zmk_behavior_invoke_binding(&binding, event, 1);
+               input_report_rel(data->dev, INPUT_REL_HWHEEL, 1, true, K_NO_WAIT);
+               zmk_behavior_invoke_binding(&binding, event, 0);
+           }
         }
         else if (delta_x < -1) {
-           if (lshift_pressed ) input_report_rel(data->dev, INPUT_REL_HWHEEL,-1, true, K_NO_WAIT);
+           if (lshift_pressed ) {
+               zmk_behavior_invoke_binding(&binding, event, 1);
+               input_report_rel(data->dev, INPUT_REL_HWHEEL,-1, true, K_NO_WAIT);
+               zmk_behavior_invoke_binding(&binding, event, 0);
+           }
            else                 input_report_rel(data->dev, INPUT_REL_WHEEL,  1, true, K_NO_WAIT);
         }
         return;
