@@ -34,7 +34,7 @@ struct zmk_behavior_binding binding = {
     .param2 = 0,
 };
 
-bool Ctrl_flg = false;
+//bool Ctrl_flg = false;
 
 ///////////////////////////////////////////////////////////////////////////
 // #01.心臓部
@@ -83,18 +83,17 @@ void az1uball_read_data_work(struct k_work *work)
     //マウス操作 or レイヤー操作 or 修飾キー or ボタン状態変化
     if ( delta_x != 0 || delta_y != 0 || lshift_pressed || lCtrl_pressed || btn_push != data->sw_pressed) data->last_activity_time = now; //前回操作時間更新
 
-    if( lCtrl_pressed ){
-        if (!Ctrl_flg && ( delta_x != 0 || delta_y != 0 ) ) //Ctrl押下+マウス検知+初回だけ
-        {
-            Ctrl_flg = true;
-            for (int i = 0; i < 10; i++) input_report_rel(data->dev, INPUT_REL_Y,-2, true , K_NO_WAIT);
-            for (int i = 0; i < 20; i++) input_report_rel(data->dev, INPUT_REL_Y, 2, true , K_NO_WAIT);
-            for (int i = 0; i < 10; i++) input_report_rel(data->dev, INPUT_REL_Y,-2, true , K_NO_WAIT);
-            for (int i = 0; i < 10; i++) input_report_rel(data->dev, INPUT_REL_X,-2, true , K_NO_WAIT);
-            for (int i = 0; i < 20; i++) input_report_rel(data->dev, INPUT_REL_X, 2, true , K_NO_WAIT);
-            for (int i = 0; i < 10; i++) input_report_rel(data->dev, INPUT_REL_X,-2, true , K_NO_WAIT);
-        }
-    } else Ctrl_flg = false;
+//    if( lCtrl_pressed ){
+//        if (!Ctrl_flg && ( delta_x != 0 || delta_y != 0 ) ) //Ctrl押下+マウス検知+初回だけ
+//        {
+//            Ctrl_flg = true;
+//            for (int i = 0; i < 20; i++) input_report_rel(data->dev, INPUT_REL_Y, 2, true , K_NO_WAIT);
+//            for (int i = 0; i < 10; i++) input_report_rel(data->dev, INPUT_REL_Y,-2, true , K_NO_WAIT);
+//            for (int i = 0; i < 10; i++) input_report_rel(data->dev, INPUT_REL_X,-2, true , K_NO_WAIT);
+//            for (int i = 0; i < 20; i++) input_report_rel(data->dev, INPUT_REL_X, 2, true , K_NO_WAIT);
+//            for (int i = 0; i < 10; i++) input_report_rel(data->dev, INPUT_REL_X,-2, true , K_NO_WAIT);
+//        }
+//    } else Ctrl_flg = false;
 
     //ボタン押下があれば(レイヤー操作が複雑なのでJのみ)
     if ( btn_push != data->sw_pressed ){
