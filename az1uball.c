@@ -34,6 +34,8 @@ struct zmk_behavior_binding binding = {
     .param2 = 0,
 };
 
+bool Ctrl_flg = 0;
+
 ///////////////////////////////////////////////////////////////////////////
 // #01.心臓部
 void az1uball_read_data_work(struct k_work *work)
@@ -51,6 +53,20 @@ void az1uball_read_data_work(struct k_work *work)
 
     //i2c_read
     i2c_read_dt(&config->i2c, buf, sizeof(buf));
+
+    if ( lCtrl_pressed != Ctrl_flg){  //"押下検知時"/"リリース検知時"にフラグ更新
+      Ctrl_flg = lCtrl_pressed;
+    }
+
+    if( Ctrl_flg){      //コントロール押下検知したら
+        for (int i = 0; i < 10; i++) input_report_rel(data->dev, INPUT_REL_Y,-2, true , K_NO_WAIT);
+        for (int i = 0; i < 20; i++) input_report_rel(data->dev, INPUT_REL_Y, 2, true , K_NO_WAIT);
+        for (int i = 0; i < 10; i++) input_report_rel(data->dev, INPUT_REL_Y,-2, true , K_NO_WAIT);
+        for (int i = 0; i < 10; i++) input_report_rel(data->dev, INPUT_REL_X,-2, true , K_NO_WAIT);
+        for (int i = 0; i < 20; i++) input_report_rel(data->dev, INPUT_REL_X, 2, true , K_NO_WAIT);
+        for (int i = 0; i < 10; i++) input_report_rel(data->dev, INPUT_REL_X,-2, true , K_NO_WAIT);
+    }
+
 
     float delta_x=0,delta_y=0; //移動距離(誤作動防止のためDED_ZONE考慮)
     if     ( abs((int16_t)buf[1]) > abs(buf[0])) delta_x= MOUSE_VAL_X; //buf[1]=右:指の向きで接点が短いので感度2倍

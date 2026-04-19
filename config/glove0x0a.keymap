@@ -124,18 +124,18 @@
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             bindings = <
-                &macro_press   KC_LCTRL
+                &macro_press LCTRL
                 &msc SC_L
-                &macro_release KC_LCTRL
+                &macro_release LCTRL
             >;
         };
         MY_SC_R: MY_SC_R {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             bindings = <
-                &macro_press   KC_LCTRL
+                &macro_press LCTRL
                 &msc SC_R
-                &macro_release KC_LCTRL
+                &macro_release LCTRL
             >;
         };
     };
