@@ -120,24 +120,24 @@
             bindings
                 = <&kp LS(N2) &kp LS(N2) &kp LEFT>;
         };
-        MY_SC_L: MY_SC_L {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings = <
-                &macro_press LCTRL
-                &msc SC_L
-                &macro_release LCTRL
-            >;
-        };
-        MY_SC_R: MY_SC_R {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings = <
-                &macro_press LCTRL
-                &msc SC_R
-                &macro_release LCTRL
-            >;
-        };
+        //MY_SC_L: MY_SC_L {
+        //    compatible = "zmk,behavior-macro";
+        //    #binding-cells = <0>;
+        //    bindings = <
+        //        &macro_press LCTRL
+        //        &msc SC_L
+        //        &macro_release LCTRL
+        //    >;
+        //};
+        //MY_SC_R: MY_SC_R {
+        //    compatible = "zmk,behavior-macro";
+        //    #binding-cells = <0>;
+        //    bindings = <
+        //        &macro_press LCTRL
+        //        &msc SC_R
+        //        &macro_release LCTRL
+        //    >;
+        //};
     };
 ////behaviors
     behaviors {
@@ -245,13 +245,13 @@
         SC_U_L: SC_U_L{
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
-            bindings = <&msc SC_U>, <&MY_SC_L>;
+            bindings = <&msc SC_U>, <&msc SC_L>;
             mods = <MOD_LSFT>;
         };
         SC_D_R: SC_D_R{
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
-            bindings = <&msc SC_D>, <&MY_SC_R>;
+            bindings = <&msc SC_D>, <&msc SC_R>;
             mods = <MOD_LSFT>;
         };
 //★LED制御-------------------------------------------------
