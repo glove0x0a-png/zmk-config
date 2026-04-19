@@ -120,7 +120,7 @@
                 = <&kp LS(N2) &kp LS(N2) &kp LEFT>;
         };
         MY_SC_L: MY_SC_L {
-            label = "CTRL_SCRL_LEFT";
+            compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             bindings = <
                 &macro_press   KC_LCTRL
@@ -129,7 +129,7 @@
             >;
         };
         MY_SC_R: MY_SC_R {
-            label = "CTRL_SCRL_RIGHT";
+            compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             bindings = <
                 &macro_press   KC_LCTRL
