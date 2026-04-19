@@ -226,13 +226,13 @@
         SC_U_L: SC_U_L{
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
-            bindings = <&msc SC_U>, <&msc SC_L>;
+            bindings = <&msc SC_U>, <&msc LC(SC_L)>;
             mods = <MOD_LSFT>;
         };
         SC_D_R: SC_D_R{
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
-            bindings = <&msc SC_D>, <&msc SC_R>;
+            bindings = <&msc SC_D>, <&msc LC(SC_R)>;
             mods = <MOD_LSFT>;
         };
 //★LED制御-------------------------------------------------
