@@ -34,7 +34,7 @@ struct zmk_behavior_binding binding = {
     .param2 = 0,
 };
 
-bool Ctrl_flg = 0;
+bool Ctrl_flg = false;
 
 ///////////////////////////////////////////////////////////////////////////
 // #01.心臓部
@@ -86,7 +86,7 @@ void az1uball_read_data_work(struct k_work *work)
     if( lCtrl_pressed ){
         if (!Ctrl_flg && ( delta_x != 0 || delta_y != 0 ) ) //Ctrl押下+マウス検知+初回だけ
         {
-            Ctrl_flg = true:
+            Ctrl_flg = true;
             for (int i = 0; i < 10; i++) input_report_rel(data->dev, INPUT_REL_Y,-2, true , K_NO_WAIT);
             for (int i = 0; i < 20; i++) input_report_rel(data->dev, INPUT_REL_Y, 2, true , K_NO_WAIT);
             for (int i = 0; i < 10; i++) input_report_rel(data->dev, INPUT_REL_Y,-2, true , K_NO_WAIT);
@@ -94,7 +94,7 @@ void az1uball_read_data_work(struct k_work *work)
             for (int i = 0; i < 20; i++) input_report_rel(data->dev, INPUT_REL_X, 2, true , K_NO_WAIT);
             for (int i = 0; i < 10; i++) input_report_rel(data->dev, INPUT_REL_X,-2, true , K_NO_WAIT);
         }
-    } else Ctrl_flg = false:
+    } else Ctrl_flg = false;
 
     //ボタン押下があれば(レイヤー操作が複雑なのでJのみ)
     if ( btn_push != data->sw_pressed ){
