@@ -322,7 +322,7 @@
                                   &mt LG(RIGHT) RIGHT
                                              &kp  F3    &RBKT_NUHS &trans     &kp  HOME  &kp  PG_UP &kp  INT1
 &mt LC(LSHFT) LSHFT
-            &kp X      &kp LA(F4) &kp  EQUAL &kp CAPS   &NEW_8977  &kp  DEL   &kp  END   &kp  PG_DN &kp  SLASH
+            &kp CAPS   &kp LA(F4) &kp X      &kp  EQUAL &NEW_8977  &kp  DEL   &kp  END   &kp  PG_DN &kp  SLASH
 &trans      &trans     &kp  PSCRN &none /**/ &kp  BSPC             &kp  K_APP &kp  F10   &kp  F11   &kp  F12
           >;
         };
