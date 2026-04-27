@@ -14,6 +14,7 @@
 #include <dt-bindings/input/input-event-codes.h>
 
 #define HOLD_MS 300
+#define DANCE_MS 200
 #define PIPE_ LS(INT3)
 
 #define _USB OUT_USB
@@ -242,16 +243,19 @@
             behavior-status = "capslock";
         };
 //★タップダンス制御-------------------------------------------------
-        td: td {
+        GUI_MO2: GUI_MO2 {
             compatible = "zmk,behavior-tap-dance";
-            #binding-cells = <2>;
-            tapping-term-ms = <200>;
-            bindings = <&mo>, <&kp>;
+            #binding-cells = <0>;
+            tapping-term-ms = <DANCE_MS>;     //途中割込みは、moの動作。OK。
+            bindings = <
+                &mo 2
+                &kp LGUI
+            >;
         };
         CAPS_MO2: CAPS_MO2 {
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
-            tapping-term-ms = <200>;     //途中割込みは、moの動作。OK。
+            tapping-term-ms = <DANCE_MS>;     //途中割込みは、moの動作。OK。
             bindings = <
                 &mo 2
                 &kp CAPS
@@ -260,7 +264,7 @@
         CTRL_MO3: CTRL_MO3 {
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
-            tapping-term-ms = <200>;
+            tapping-term-ms = <DANCE_MS>;
             bindings = <
                 &mo 3
                 &mo 4
@@ -303,7 +307,7 @@
 &mt Q TAB   &kp  W     &kp  E     &kp  R     &kp  T     &kp  Y     &kp  U     &kp  I     &kp  O     &kp  MINUS
 &mt LCTRL A &kp  S     &MY_kp_D   &kp  F     &kp  G     &kp  H     &mo  1     &kp  K     &kp  L     &kp  SEMI
 &kp LSHFT   &kp  Z     &kp  C     &kp  V     &kp  B     &kp  N     &kp  M     &kp  COMMA &kp  UP    &kp  ENTER
-&kp LCTRL   &kp  LALT  &mkp LCLK  &td 2 LGUI  &kp  SPACE            &CTRL_MO3  &kp  LEFT  &kp  DOWN  &kp  RIGHT
+&kp LCTRL   &kp  LALT  &mkp LCLK  &GUI_MO2  &kp  SPACE            &CTRL_MO3  &kp  LEFT  &kp  DOWN  &kp  RIGHT
          >;
         };
         //1:jigler-dummyレイヤー
@@ -318,7 +322,7 @@
                                   &mt LG(RIGHT) RIGHT
                                              &kp  F3    &RBKT_NUHS &trans     &kp  HOME  &kp  PG_UP &kp  INT1
 &mt LC(LSHFT) LSHFT
-            &kp X      &kp LA(F4) &kp CAPS   &kp X      &NEW_8977  &kp  DEL   &kp  END   &kp  PG_DN &kp  SLASH
+            &kp X      &kp LA(F4) &kp  EQUAL &kp CAPS   &NEW_8977  &kp  DEL   &kp  END   &kp  PG_DN &kp  SLASH
 &trans      &trans     &kp  PSCRN &none /**/ &kp  BSPC             &kp  K_APP &kp  F10   &kp  F11   &kp  F12
           >;
         };
