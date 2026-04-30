@@ -257,7 +257,7 @@
             tapping-term-ms = <DANCE_MS>;
             bindings = <
                 &mo 3
-                &MO34
+                &mo 4
             >;
         };
     };
