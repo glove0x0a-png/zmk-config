@@ -48,13 +48,13 @@ void az1uball_read_data_work(struct k_work *work)
     float scaling = data->scaling_factor; //比率
 
     int layer = zmk_keymap_highest_layer_active(); //現レイヤ
-    //if( layer == 4 ){
-    //    if (!Fast_flg )
-    //    {
-    //        Fast_flg = true;
-    //        for (int i = 0; i < 30; i++) input_report_rel(data->dev, INPUT_REL_Y,-1, true , K_NO_WAIT);
-    //    }
-    //} else Fast_flg = false;
+    if( layer == 4 ){
+        if (!Fast_flg )
+        {
+            Fast_flg = true;
+            for (int i = 0; i < 30; i++) input_report_rel(data->dev, INPUT_REL_Y,-1, true , K_NO_WAIT);
+        }
+    } else Fast_flg = false;
 
     bool lshift_pressed = zmk_hid_get_explicit_mods() & 0x02;  //左Shift
     //bool lCtrl_pressed = zmk_hid_get_explicit_mods() & 0x01;  //左Ctr
