@@ -35,7 +35,7 @@ struct zmk_behavior_binding binding = {
 };
 
 bool Fast_flg = false;
-bool GUI_flg = false;
+//bool GUI_flg = false;
 
 ///////////////////////////////////////////////////////////////////////////
 // #01.心臓部
@@ -48,25 +48,32 @@ void az1uball_read_data_work(struct k_work *work)
     float scaling = data->scaling_factor; //比率
 
     int layer = zmk_keymap_highest_layer_active(); //現レイヤ
-    if( layer == 4 ){
-        if (!Fast_flg )
-        {
-            Fast_flg = true;
-            for (int i = 0; i < 30; i++) input_report_rel(data->dev, INPUT_REL_Y,-1, true , K_NO_WAIT);
-        }
-    } else Fast_flg = false;
+    //if( layer == 4 ){
+    //    if (!Fast_flg )
+    //    {
+    //        Fast_flg = true;
+    //        for (int i = 0; i < 30; i++) input_report_rel(data->dev, INPUT_REL_Y,-1, true , K_NO_WAIT);
+    //    }
+    //} else Fast_flg = false;
 
     bool lshift_pressed = zmk_hid_get_explicit_mods() & 0x02;  //左Shift
-//    bool lCtrl_pressed = zmk_hid_get_explicit_mods() & 0x01;  //左Ctr
-    bool lgui_pressed = zmk_hid_get_explicit_mods() & 0x08;  //左GUI
+    //bool lCtrl_pressed = zmk_hid_get_explicit_mods() & 0x01;  //左Ctr
+//    bool lgui_pressed = zmk_hid_get_explicit_mods() & 0x08;  //左GUI
 
-    if( lgui_pressed ){
-        if (!GUI_flg )
-        {
-            GUI_flg = true;
-            for (int i = 0; i < 30; i++) input_report_rel(data->dev, INPUT_REL_X,-1, true , K_NO_WAIT);
-        }
-    } else GUI_flg = false;
+    //if( lgui_pressed ){
+    //    if (!GUI_flg )
+    //    {
+    //        GUI_flg = true;
+    //        for (int i = 0; i < 30; i++) input_report_rel(data->dev, INPUT_REL_X,-1, true , K_NO_WAIT);
+    //    }
+    //} else GUI_flg = false;
+    //if( lshift_pressed && lCtrl_pressed ){
+    //    if (!Fast_flg )
+    //    {
+    //        Fast_flg = true;
+    //        for (int i = 0; i < 30; i++) input_report_rel(data->dev, INPUT_REL_Y,-1, true , K_NO_WAIT);
+    //    }
+    //} else Fast_flg = false;
 
     struct zmk_behavior_binding_event event = { .position = 0,.timestamp = now,.layer = 0,}; //event
 
