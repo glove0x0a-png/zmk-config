@@ -307,7 +307,7 @@
 &mt Q TAB   &kp  W     &kp  E     &kp  R     &kp  T     &kp  Y     &kp  U     &kp  I     &kp  O     &kp  MINUS
 &mt LCTRL A &kp  S     &MY_kp_D   &kp  F     &kp  G     &kp  H     &mo  1     &kp  K     &kp  L     &kp  SEMI
 &kp LSHFT   &kp  Z     &kp  C     &kp  V     &kp  B     &kp  N     &kp  M     &kp  COMMA &kp  UP    &kp  ENTER
-&kp LCTRL   &kp  LALT  &mkp LCLK  &GUI_MO2  &kp  SPACE            &CTRL_MO3  &kp  LEFT  &kp  DOWN  &kp  RIGHT
+&kp LCTRL   &kp  LALT  &mkp LCLK  &CAPS_MO2  &kp  SPACE            &CTRL_MO3  &kp  LEFT  &kp  DOWN  &kp  RIGHT
          >;
         };
         //1:jigler-dummyレイヤー
@@ -315,14 +315,10 @@
         //2:Custom + Function Keys + Vol
         layer_fn2 {
           bindings = <
-&MY_Q_2     &kp F2     &mt LG(UP) UP
-                                  &kp F4     &kp  F5    &kp  F6    &kp  F7    &kp  F8    &kp F9     &kp  P
-&kp LALT    &mt LG(LEFT) LEFT
-                       &mt LG(DOWN) DOWN
-                                  &mt LG(RIGHT) RIGHT
+&MY_Q_2     &kp F2  &mt LG(UP) UP &kp F4     &kp  F5    &kp  F6    &kp  F7    &kp  F8    &kp F9     &kp  P
+&kp LALT &mt LG(LEFT) LEFT &mt LG(DOWN) DOWN &mt LG(RIGHT) RIGHT
                                              &kp  F3    &RBKT_NUHS &trans     &kp  HOME  &kp  PG_UP &kp  INT1
-&mt LC(LSHFT) LSHFT
-            &kp CAPS   &kp LA(F4) &kp X      &kp  EQUAL &NEW_8977  &kp  DEL   &kp  END   &kp  PG_DN &kp  SLASH
+&mt LC(LSHFT) LSHFT &kp X  &none  &kp X      &kp  EQUAL &NEW_8977  &kp  DEL   &kp  END   &kp  PG_DN &kp  SLASH
 &trans      &trans     &kp  PSCRN &none /**/ &kp  BSPC             &kp  K_APP &kp  F10   &kp  F11   &kp  F12
           >;
         };
@@ -331,8 +327,7 @@
           bindings = <
 &kp  N1     &MY_N2     &kp  N3    &kp N4     &kp  N5    &kp  N6    &kp  N7    &kp  N8    &kp  N9    &N0_PIPE
 &MY_U       &MY_L      &MY_D      &MY_R      &BLE_ESC   &kp  SQT   &trans     &SC_U_L    &SC_D_R    &trans
-&mt LC(LSHFT) LSHFT   
-            &BLE0      &BLE1      &BLE2      &BLE_USB   &kp  LBKT  &mkp LCLK  &trans     &kp DOT    &kp  SLASH
+&mt LC(LSHFT) LSHFT &BLE0  &BLE1  &BLE2      &BLE_USB   &kp  LBKT  &mkp LCLK  &trans     &kp DOT    &kp  SLASH
 &trans      &trans     &mkp RCLK  &none /**/ &none /**/            &none /**/ &ind_bat   &VOL_DN    &VOL_UP
           >;
         };
@@ -341,9 +336,8 @@
           bindings = <
 &kp  N1     &MY_N2     &kp  N3    &kp N4     &kp  N5    &kp  N6    &kp  N7    &kp  N8    &kp  N9    &N0_PIPE
 &MY_U       &MY_L      &MY_D      &MY_R      &BLE_ESC   &kp  SQT   &trans     &SC_U_L    &SC_D_R    &trans
-&mt LC(LSHFT) LSHFT   
-            &BLE0      &BLE1      &BLE2      &BLE_USB   &kp  LBKT  &mkp LCLK  &trans     &kp DOT    &kp  SLASH
-&trans      &trans     &mkp RCLK  &none /**/ &none /**/            &none /**/ &ind_bat   &VOL_DN    &VOL_UP
+&mt LC(LSHFT) LSHFT &BLE0  &BLE1  &BLE2      &BLE_USB   &kp  LBKT  &mkp LCLK  &trans     &kp DOT    &kp  SLASH
+&trans      &trans     &mkp RCLK  &kp LGUI   &none /**/            &none /**/ &ind_bat   &VOL_DN    &VOL_UP
           >;
         };
     };
