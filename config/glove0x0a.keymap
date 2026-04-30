@@ -27,7 +27,7 @@
 #define HI_R MOVE_X(200)
 
 //■■Keymap*******************************************************************************************
-//2026.04.30 #1087
+//2026.04.30 #1089 【没】MO3 + MO4同時発火で、レイヤー4のtransをレイヤー3へ。→マクロで押しっぱなしの動作ができない。
 //2026.03.14 #921  ダブルタップは250ms(ちょっと余裕がある)
 //2026.03.14 #907  fn2度押し->レイヤー3 -> 4へ。
 //2026.03.12 #873  物理配置を再調整。D1が不調。
@@ -36,11 +36,11 @@
 //2026.03.01 #847  Ctrlキーを再配置、BLE機能関連のキー再配置
 //2026.02.28 #832  左Fnのレイヤー上段にFXを集約。整理。
 //■■az1uball*******************************************************************************************
+//2026.04.30 #1089 『az1uball.c』          レイヤー4検知時にマウス移動。視覚的に確認可能にした。
 //2026.03.01 #843  『az1uball.c』          デバッグ:AZ1UBALL:加速度上限制御。//2026.03.01 #842 デバッグ:AZ1UBALL:前回移動量のクリアを明記。//2026.03.01 #841 デバッグ:AZ1UBALL:前回移動量の保存条件を変更。//2026.03.01 #838 デバッグ:AZ1UBALL:cos/sinの符号不良。//2026.03.01 #837 デバッグ:AZ1UBALL:方向検出不良(if右else左else下else上->if右else左 if下else上)//2026.02.28 #834 デバッグ:AZ1UBALL:加速度不良。
 //2026.02.28 #828  『az1uball.c』          I2C & AZ1UBALLのカスタマイズ。移動量,角度,加速度。
 //■■ziggler*******************************************************************************************
 //2026.04.30 #1084 『az1uball.c』          ZIGGLER = mo 1 レイヤ & ON/OFF 物理スイッチ。
-
 //■■カスタムbehavior*******************************************************************************************
 //2026.04.13 #1026 『behavior_hold_tap.c』 hold-tapで他キー押下状態から対象キーが押下された場合、tap扱いへ。対象キー押下状態から他キー押下は、hold扱い(デフォルト)
 //2026.03.14 #919  『behavior_mod_morph.c』Q、TABへ。mod-morphの修飾キーマスク削除。例) ALT + Q(ALT時TAB)→ALT + TABへ。
@@ -110,14 +110,6 @@
             #binding-cells = <0>;
             bindings
                 = <&kp LS(N2) &kp LS(N2) &kp LEFT>;
-        };
-        MO34: MO34 {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings = <
-                &mo 3
-                &mo 4
-            >;
         };
     };
 ////behaviors
@@ -327,6 +319,12 @@
             >;
         };
         //4:Number + Bluetooth /マウス超高速 …Layer3のコピー
-        layer_fn4    { bindings = < &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans >; };
+        layer_fn4    { bindings = <
+&kp  N1     &MY_N2     &kp  N3    &kp N4     &kp  N5    &kp  N6    &kp  N7    &kp  N8    &kp  N9    &N0_PIPE
+&MY_U       &MY_L      &MY_D      &MY_R      &BLE_ESC   &kp  SQT   &trans     &SC_U_L    &SC_D_R    &trans
+&mt LC(LSHFT) LSHFT &BLE0  &BLE1  &BLE2      &BLE_USB   &kp  LBKT  &mkp LCLK  &trans     &kp DOT    &kp  SLASH
+&trans      &trans     &mkp RCLK  &kp LGUI   &none /**/            &none /**/ &ind_bat   &VOL_DN    &VOL_UP
+            >;
+        };
     };
 };
