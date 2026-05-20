@@ -45,7 +45,7 @@
 //■■ziggler*******************************************************************************************
 //2026.04.30 #1084 『az1uball.c』          ZIGGLER = mo 1 レイヤ & ON/OFF 物理スイッチ。
 //■■カスタムbehavior*******************************************************************************************
-//2026.05.20 #1101 『behavior_hold_tap.c』 1.他キー割込み時はtap扱い。2.LALTのみhold扱い。
+//2026.05.20 #1101 『behavior_hold_tap.c』 1.他キー割込み時はtap扱い。2.LALTのみhold扱い。3.Layer3の高速を加速。
 //2026.04.13 #1026 『behavior_hold_tap.c』 【没】hold-tapで他キー押下状態から対象キーが押下された場合、tap扱いへ。対象キー押下状態から他キー押下は、hold扱い(デフォルト)
 //2026.03.14 #919  『behavior_mod_morph.c』Q、TABへ。mod-morphの修飾キーマスク削除。例) ALT + Q(ALT時TAB)→ALT + TABへ。
 //2026.03.13 #881  『behavior_tap_dance.c』tap-danceの自動リリース削除、押しっぱなしでホールド/即リリースは後追い。
@@ -306,50 +306,29 @@
         compatible = "zmk,keymap";
         //0:normal
         layer_qwerty { bindings = <
-&mt Q TAB     &kp  W     &kp  E     &kp  R     &kp  T     &kp  Y     &kp  U     &kp  I     &kp  O     &mt  P MINUS
-&mt LCTRL A   &kp  S     &MY_kp_D   &kp  F     &kp  G     &kp  H     &mo  1     &kp  K     &kp  L     &kp  SEMI
-&SHIFT_GUI    &kp  Z     &mt  X C   &kp  V     &kp  B     &kp  N     &kp  M     &kp  COMMA &kp  UP    &kp  ENTER
-&kp LCTRL     &kp  LALT  &mkp LCLK  &mo  2     &kp  SPACE            &mo  3     &kp  LEFT  &kp  DOWN  &kp  RIGHT
+&mt Q TAB           &kp W    &kp  E    &kp R     &kp T     &kp  Y     &kp  U    &kp I     &kp O     &kp  MINUS
+&mt LCTRL A         &kp S    &MY_kp_D  &kp F     &kp G     &kp  H     &mo  1    &kp K     &kp L     &kp  SEMI
+&SHIFT_GUI          &kp Z    &kp  C    &kp V     &kp B     &kp  N     &kp  M    &kp COMMA &kp UP    &kp  ENTER
+&kp LCTRL           &kp LALT &mkp LCLK &mo 2     &kp SPACE            &mo  3    &kp LEFT  &kp DOWN  &kp  RIGHT
           >;
         };
         //1:jigler-dummyレイヤー
         layer_fn1    { bindings = < &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans >; };
         //2:Custom + Function Keys + Vol
         layer_fn2    { bindings = <
-&MY_Q_2       &kp F2     &kp UP     &kp F4     &kp  F5    &kp  F6    &kp  F7    &kp  F8    &kp F9     &kp  P
-&mt LALT CAPS &kp LEFT   &kp DOWN   &kp RIGHT  &kp  F3    &RBKT_NUHS &trans     &kp  HOME  &kp  PG_UP &kp  INT1
-&mt LC(LSHFT) LSHFT
-              &kp X      &VOL_DN    &VOL_UP    &kp  EQUAL &NEW_8977  &kp  DEL   &kp  END   &kp  PG_DN &kp  SLASH
-&trans        &trans     &kp  PSCRN &none /**/ &kp  BSPC             &kp  K_APP &kp  F10   &kp  F11   &kp  F12
+&MY_Q_2             &kp F2   &kp UP    &kp F4    &kp F5    &kp  F6    &kp F7    &kp F8    &kp F9    &kp  P
+&mt LALT CAPS       &kp LEFT &kp DOWN  &kp RIGHT &kp F3    &RBKT_NUHS &trans    &kp HOME  &kp PG_UP &kp  INT1
+&mt LC(LSHFT) LSHFT &kp X    &VOL_DN   &VOL_UP   &kp EQUAL &NEW_8977  &kp DEL   &kp END   &kp PG_DN &kp  SLASH
+&trans              &trans   &kp PSCRN &mo 2     &kp BSPC             &kp K_APP &kp F10   &kp F11   &kp  F12
             >;
         };
         //3:Number + Bluetooth /マウス高速
         layer_fn3    { bindings = <
-&kp  N1       &MY_N2     &kp  N3    &kp N4     &kp  N5    &kp  N6    &kp  N7    &kp  N8    &kp  N9    &N0_PIPE
-&MY_U         &MY_L      &MY_D      &MY_R      &BLE_ESC   &kp  SQT   &trans     &SC_U_L    &SC_D_R    &trans
-&mt LC(LSHFT) LSHFT
-              &kp X      &VOL_DN    &VOL_UP    &BLE_USB   &kp  LBKT  &mkp LCLK  &trans     &kp DOT    &kp  SLASH
-&trans        &trans     &mkp RCLK  &kp LGUI   &ind_bat              &none /**/ &BLE0      &BLE1      &BLE2
+&kp  N1             &MY_N2   &kp  N3   &kp N4    &kp  N5   &kp  N6    &kp  N7   &kp N8    &kp N9    &N0_PIPE
+&MY_U               &MY_L    &MY_D     &MY_R     &BLE_ESC  &kp  SQT   &trans    &SC_U_L   &SC_D_R   &trans
+&mt LC(LSHFT) LSHFT &kp X    &VOL_DN   &VOL_UP   &BLE_USB  &kp  LBKT  &mkp LCLK &trans    &kp DOT   &kp  SLASH
+&trans              &trans   &mkp RCLK &kp K_APP &ind_bat             &mo  3    &BLE0     &BLE1     &BLE2
             >;
         };
     };
 };
-
-//0
-//&mt Q TAB   &kp  W     &kp  E     &kp  R     &kp  T     &kp  Y     &kp  U     &kp  I     &kp  O     &kp  MINUS
-//&kp LSHFT   &kp  Z     &kp  C     &kp  V     &kp  B     &kp  N     &kp  M     &kp  COMMA &kp  UP    &kp  ENTER
-//&kp LCTRL   &kp  LALT  &mkp LCLK  &CAPS_MO2  &kp  SPACE            &MY_O3_04  &kp  LEFT  &kp  DOWN  &kp  RIGHT
-//2
-//&kp LALT &mt LG(LEFT) LEFT &mt LG(DOWN) DOWN &mt LG(RIGHT) RIGHT
-//&mt LC(LSHFT) LSHFT &kp X  &none  &kp X      &kp  EQUAL &NEW_8977  &kp  DEL   &kp  END   &kp  PG_DN &kp  SLASH
-//3
-//&mt LC(LSHFT) LSHFT &BLE0  &BLE1  &BLE2      &BLE_USB   &kp  LBKT  &mkp LCLK  &trans     &kp DOT    &kp  SLASH
-//&trans      &trans     &mkp RCLK  &kp LGUI   &none /**/            &none /**/ &ind_bat   &VOL_DN    &VOL_UP
-//4:Number + Bluetooth /マウス超高速 …Layer3のコピー
-//        layer_fn4    { bindings = <
-//&kp  N1     &MY_N2     &kp  N3    &kp N4     &kp  N5    &kp  N6    &kp  N7    &kp  N8    &kp  N9    &N0_PIPE
-//&MY_U       &MY_L      &MY_D      &MY_R      &BLE_ESC   &kp  SQT   &trans     &SC_U_L    &SC_D_R    &trans
-//&mt LC(LSHFT) LSHFT &BLE0  &BLE1  &BLE2      &BLE_USB   &kp  LBKT  &mkp LCLK  &trans     &kp DOT    &kp  SLASH
-//&trans      &trans     &mkp RCLK  &kp LGUI   &none /**/            &none /**/ &ind_bat   &VOL_DN    &VOL_UP
-//            >;
-//        };

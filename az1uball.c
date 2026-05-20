@@ -59,24 +59,17 @@ void az1uball_read_data_work(struct k_work *work)
 
     bool lshift_pressed = zmk_hid_get_explicit_mods() & 0x02;  //左Shift
 
-
-//    bool lCtrl_pressed = zmk_hid_get_explicit_mods() & 0x01;  //左Ctr
+    bool lCtrl_pressed = zmk_hid_get_explicit_mods() & 0x01;  //左Ctr
     bool lgui_pressed = zmk_hid_get_explicit_mods() & 0x08;  //左GUI
-    if( lgui_pressed ){
+    if( lgui_pressed || (lshift_pressed && lCtrl_pressed )){
         if (!First_flg )
         {
             First_flg = true;
             direction *= -1;
-            for (int i = 0; i < 20; i++) input_report_rel(data->dev, INPUT_REL_Y, direction, true , K_NO_WAIT);
+            for (int i = 0; i < 10; i++) input_report_rel(data->dev, INPUT_REL_Y, direction, true , K_NO_WAIT);
         }
     } else First_flg = false;
-    //if( lshift_pressed && lCtrl_pressed ){
-    //    if (!First_flg )
-    //    {
-    //        First_flg = true;
-    //        for (int i = 0; i < 30; i++) input_report_rel(data->dev, INPUT_REL_Y,-1, true , K_NO_WAIT);
-    //    }
-    //} else First_flg = false;
+
 
     struct zmk_behavior_binding_event event = { .position = 0,.timestamp = now,.layer = 0,}; //event
 
