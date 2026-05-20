@@ -35,6 +35,7 @@ struct zmk_behavior_binding binding = {
 };
 
 bool First_flg = false;
+int  direction = -1;
 //bool GUI_flg = false;
 
 ///////////////////////////////////////////////////////////////////////////
@@ -65,7 +66,8 @@ void az1uball_read_data_work(struct k_work *work)
         if (!First_flg )
         {
             First_flg = true;
-            for (int i = 0; i < 20; i++) input_report_rel(data->dev, INPUT_REL_Y,-1, true , K_NO_WAIT);
+            direction *= -1;
+            for (int i = 0; i < 20; i++) input_report_rel(data->dev, INPUT_REL_Y, direction, true , K_NO_WAIT);
         }
     } else First_flg = false;
     //if( lshift_pressed && lCtrl_pressed ){
