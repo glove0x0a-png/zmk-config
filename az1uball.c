@@ -59,9 +59,9 @@ void az1uball_read_data_work(struct k_work *work)
 
     bool lshift_pressed = zmk_hid_get_explicit_mods() & 0x02;  //左Shift
 
-    bool lCtrl_pressed = zmk_hid_get_explicit_mods() & 0x01;  //左Ctr
-    bool lgui_pressed = zmk_hid_get_explicit_mods() & 0x08;  //左GUI
-    if( lgui_pressed || (lshift_pressed && lCtrl_pressed )){
+    bool rCtrl_pressed = zmk_hid_get_explicit_mods() & 0x20;  //右Ctr
+    bool lgui_pressed = zmk_hid_get_explicit_mods()  & 0x08;   //左GUI
+    if( lgui_pressed || rCtrl_pressed ){
         if (!First_flg )
         {
             First_flg = true;
