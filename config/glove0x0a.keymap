@@ -192,7 +192,7 @@
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
             bindings = <&kp D>, <&kp X>;
-            mods = <MOD_LCTL|MOD_RCTL>;
+            mods = <(MOD_LCTL|MOD_RCTL)>;
         };
 //////////十字キー
         MY_R: MY_R{
