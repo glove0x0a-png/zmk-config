@@ -16,6 +16,7 @@
 #define HOLD_MS 300
 #define DANCE_MS 200
 #define PIPE_ LS(INT3)
+#define LS_   LSHFT
 
 #define LO_U MOVE_Y(-1000)
 #define LO_D MOVE_Y(1000)
@@ -142,13 +143,7 @@
             mods = <MOD_LSFT>;
         };
         //1.Q
-        MY_Q_0: MY_Q_0 {  //Alt or Ctrl
-            compatible = "zmk,behavior-mod-morph";
-            #binding-cells = <0>;
-            bindings = <&kp Q>, <&kp LS(TAB)>;
-            mods = <(MOD_LALT|MOD_LCTL|MOD_RCTL)>;
-        };
-        ESC_F1: ESC_F1 {  /* ESC_F1 */
+        MY_Q_2_1: MY_Q_2_1 {
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
             bindings = <&kp ESC>, <&kp F1>;
@@ -157,7 +152,7 @@
         MY_Q_2: MY_Q_2 {    //Alt
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
-            bindings = <&ESC_F1>, <&kp LS(TAB)>;
+            bindings = <&MY_Q_2_1>, <&kp LS(TAB)>;
             mods = <(MOD_LALT|MOD_LCTL|MOD_RCTL)>;
         };
         N0_PIPE: N0_PIPE {  /* N0 & pipe */
@@ -239,7 +234,7 @@
             behavior-status = "capslock";
         };
 //★タップダンス制御-------------------------------------------------
-        GUI_MO2: GUI_MO2 {
+        td_MO2_GUI: td_MO2_GUI {
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
             tapping-term-ms = <DANCE_MS>;     //途中割込みは、moの動作。OK。
@@ -248,7 +243,7 @@
                 &kp LGUI
             >;
         };
-        CAPS_MO2: CAPS_MO2 {
+        td_MO2_CAPS: td_MO2_CAPS {
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
             tapping-term-ms = <DANCE_MS>;     //途中割込みは、moの動作。OK。
@@ -257,7 +252,7 @@
                 &kp CAPS
             >;
         };
-        MY_O3_04: MY_O3_04 {
+        td_MY_O3_04: td_MY_O3_04 {
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
             tapping-term-ms = <DANCE_MS>;
@@ -266,12 +261,12 @@
                 &mo 4
             >;
         };
-        SHIFT_GUI: SHIFT_GUI {
+        td_SHIFT_GUI: td_SHIFT_GUI {
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
             tapping-term-ms = <DANCE_MS>;
             bindings = <
-                &kp LSHFT
+                &kp LS_
                 &kp LGUI
             >;
         };
@@ -308,28 +303,45 @@
         compatible = "zmk,keymap";
         //0:normal
         layer_qwerty { bindings = <
-&mt Q         TAB   &kp W    &kp  E    &kp R     &kp T     &kp  Y     &kp  U    &kp I     &kp O     &kp  MINUS
-&mt RCTRL     A     &kp S    &MY_kp_D  &kp F     &kp G     &kp  H     &mo  1    &kp K     &kp L     &kp  SEMI
-&SHIFT_GUI          &kp Z    &kp  C    &kp V     &kp B     &kp  N     &kp  M    &kp COMMA &kp UP    &kp  ENTER
-&kp LCTRL           &kp LALT &mkp LCLK &mo 2     &kp SPACE            &mo  3    &kp LEFT  &kp DOWN  &kp  RIGHT
+&mt Q       TAB  &kp W    &kp  E    &kp R     &kp T     &kp  Y     &kp  U    &kp I     &kp O     &kp  MINUS
+&mt RCTRL   A    &kp S    &MY_kp_D  &kp F     &kp G     &kp  H     &mo  1    &kp K     &kp L     &kp  SEMI
+&td_SHIFT_GUI    &kp Z    &kp  C    &kp V     &kp B     &kp  N     &kp  M    &kp COMMA &kp UP    &kp  ENTER
+&kp LCTRL        &kp LALT &mkp LCLK &mo 2     &kp SPACE            &mo  3    &kp LEFT  &kp DOWN  &kp  RIGHT
           >;
         };
         //1:jigler-dummyレイヤー
-        layer_fn1    { bindings = < &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans >; };
+        layer_fn1    { bindings = < &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+&trans           &trans   &trans    &mo 4     &trans               &mo  5    &trans    &trans    &trans >; };
         //2:Custom + Function Keys + Vol
         layer_fn2    { bindings = <
-&MY_Q_2             &kp F2   &kp UP    &kp F4    &kp F5    &kp  F6    &kp F7    &kp F8    &kp F9    &kp  P
-&mt LALT      CAPS  &kp LEFT &kp DOWN  &kp RIGHT &kp F3    &RBKT_NUHS &trans    &kp HOME  &kp PG_UP &kp  INT1
-&mt Rc(LSHFT) LSHFT &kp X    &VOL_DN   &VOL_UP   &kp EQUAL &NEW_8977  &kp DEL   &kp END   &kp PG_DN &kp  SLASH
-&trans              &trans   &kp PSCRN &mo 2     &kp BSPC             &kp K_APP &kp F10   &kp F11   &kp  F12
+&MY_Q_2          &kp F2   &kp UP    &kp F4    &kp F5    &kp  F6    &kp F7    &kp F8    &kp F9    &kp  P
+&mt LALT    CAPS &kp LEFT &kp DOWN  &kp RIGHT &kp F3    &RBKT_NUHS &trans    &kp HOME  &kp PG_UP &kp  INT1
+&mt Rc(LS_) LS_  &kp X    &VOL_DN   &VOL_UP   &kp EQUAL &NEW_8977  &kp DEL   &kp END   &kp PG_DN &kp  SLASH
+&trans           &trans   &kp PSCRN &mo 2     &kp BSPC             &kp K_APP &kp F10   &kp F11   &kp  F12
             >;
         };
         //3:Number + Bluetooth /マウス高速
         layer_fn3    { bindings = <
-&kp N1              &MY_N2   &kp  N3   &kp N4    &kp  N5   &kp  N6    &kp  N7   &kp N8    &kp N9    &N0_PIPE
-&MY_U               &MY_L    &MY_D     &MY_R     &BLE_ESC  &kp  SQT   &trans    &SC_U_L   &SC_D_R   &trans
-&mt Rc(LSHFT) LSHFT &kp X    &VOL_DN   &VOL_UP   &BLE_USB  &kp  LBKT  &mkp LCLK &trans    &kp DOT   &kp  SLASH
-&trans              &trans   &mkp RCLK &kp K_APP &ind_bat             &mo  3    &BLE0     &BLE1     &BLE2
+&kp N1           &MY_N2   &kp  N3   &kp N4    &kp  N5   &kp  N6    &kp  N7   &kp N8    &kp N9    &N0_PIPE
+&MY_U            &MY_L    &MY_D     &MY_R     &BLE_ESC  &kp  SQT   &trans    &SC_U_L   &SC_D_R   &trans
+&mt Rc(LS_) LS_  &kp X    &VOL_DN   &VOL_UP   &BLE_USB  &kp  LBKT  &mkp LCLK &trans    &kp DOT   &kp  SLASH
+&trans           &trans   &mkp RCLK &kp K_APP &ind_bat             &mo  3    &BLE0     &BLE1     &BLE2
+            >;
+        };
+        //4:Custom + Function Keys + Vol
+        layer_fn4    { bindings = <
+&MY_Q_2          &kp F2   &kp UP    &kp F4    &kp F5    &kp  F6    &kp F7    &kp F8    &kp F9    &kp  P
+&mt LALT    CAPS &kp LEFT &kp DOWN  &kp RIGHT &kp F3    &RBKT_NUHS &trans    &kp HOME  &kp PG_UP &kp  INT1
+&mt Rc(LS_) LS_  &kp X    &VOL_DN   &VOL_UP   &kp EQUAL &NEW_8977  &kp DEL   &kp END   &kp PG_DN &kp  SLASH
+&trans           &trans   &kp PSCRN &mo 4     &kp BSPC             &kp K_APP &kp F10   &kp F11   &kp  F12
+            >;
+        };
+        //5:Number + Bluetooth /マウス高速
+        layer_fn5    { bindings = <
+&kp N1           &MY_N2   &kp  N3   &kp N4    &kp  N5   &kp  N6    &kp  N7   &kp N8    &kp N9    &N0_PIPE
+&MY_U            &MY_L    &MY_D     &MY_R     &BLE_ESC  &kp  SQT   &trans    &SC_U_L   &SC_D_R   &trans
+&mt Rc(LS_) LS_  &kp X    &VOL_DN   &VOL_UP   &BLE_USB  &kp  LBKT  &mkp LCLK &trans    &kp DOT   &kp  SLASH
+&trans           &trans   &mkp RCLK &kp K_APP &ind_bat             &mo  5    &BLE0     &BLE1     &BLE2
             >;
         };
     };

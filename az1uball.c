@@ -49,18 +49,10 @@ void az1uball_read_data_work(struct k_work *work)
     float scaling = data->scaling_factor; //比率
 
     int layer = zmk_keymap_highest_layer_active(); //現レイヤ
-//    if( layer == 4 ){
-//        if (!First_flg )
-//        {
-//            First_flg = true;
-//            for (int i = 0; i < 30; i++) input_report_rel(data->dev, INPUT_REL_Y,-1, true , K_NO_WAIT);
-//        }
-//    } else First_flg = false;
-
+                                //    if( layer == 4 ){//        if (!First_flg )//        {//            First_flg = true;//            for (int i = 0; i < 30; i++) input_report_rel(data->dev, INPUT_REL_Y,-1, true , K_NO_WAIT);//        }//    } else First_flg = false;
     bool lshift_pressed = zmk_hid_get_explicit_mods() & 0x02;  //左Shift
-
-    bool rCtrl_pressed = zmk_hid_get_explicit_mods() & 0x10;  //右Ctr
-    bool lgui_pressed = zmk_hid_get_explicit_mods()  & 0x08;   //左GUI
+    bool rCtrl_pressed  = zmk_hid_get_explicit_mods() & 0x10;  //右Ctr
+    bool lgui_pressed   = zmk_hid_get_explicit_mods()  & 0x08;   //左GUI
     if( lgui_pressed || rCtrl_pressed ){
         if (!First_flg )
         {
@@ -109,21 +101,14 @@ if ( delta_x != 0 || delta_y != 0 || lshift_pressed || btn_push != data->sw_pres
     //ボタン押下があれば(レイヤー操作が複雑なのでJのみ)
     if ( btn_push != data->sw_pressed ){
         data->sw_pressed = btn_push;
-        if (layer < 2) { //スクロールレイヤ
+        if (layer == 0 || layer == 1 ) { //スクロールレイヤ
             binding.behavior_dev="key_press";
             binding.param1 = 0x0D; 
             zmk_behavior_invoke_binding(&binding, event, btn_push);  //Jキー扱い
-        } else if(layer == 2){
-            binding.behavior_dev="key_press";
-            binding.param1 = 0x3E; //F5
-            zmk_behavior_invoke_binding(&binding, event, btn_push);
-        } else {
-            binding.behavior_dev="key_press";
-            binding.param1 = 0x3E; //F5
-            zmk_behavior_invoke_binding(&binding, event, btn_push);
         }
+                                  //        else if(layer == 2){//            binding.behavior_dev="key_press";//            binding.param1 = 0x3E; //F5//            zmk_behavior_invoke_binding(&binding, event, btn_push);//        } else {//            binding.behavior_dev="key_press";//            binding.param1 = 0x3E; //F5//            zmk_behavior_invoke_binding(&binding, event, btn_push);//        }
     }
-    if (layer == 2) { //スクロールレイヤ
+    if (layer == 2 || layer == 4 ) { //スクロールレイヤ
         if (abs(delta_x) > abs(delta_y)) delta_y = 0; else delta_x = 0; //縦 or 横のみ抽出
         binding.behavior_dev="key_press";
         binding.param1 = 0xE0;
@@ -167,9 +152,8 @@ if ( delta_x != 0 || delta_y != 0 || lshift_pressed || btn_push != data->sw_pres
         return;
     } else if (delta_x != 0 || delta_y != 0) { //マウス処理
         scaling /= 3.0f; //原則:低速
-//        if (layer == 3)     scaling      *= 4.0f; //レイヤー:高速
-        if (layer == 3)     scaling      *= 6.0f; //レイヤー:高速
-        else if (layer == 4) scaling *= 9.0f; //Ctrl:超高速
+        if (layer == 3 || layer == 5 )     scaling      *= 6.0f; //レイヤー:高速
+                        //        if (layer == 3)     scaling      *= 4.0f; //レイヤー:高速 //        else if (layer == 4) scaling *= 9.0f; //Ctrl:超高速
         for (int i = 0; i < 3; i++) { //移動を滑らかに
             input_report_rel(data->dev, INPUT_REL_X, delta_x / 3 * scaling, false, K_NO_WAIT);
             input_report_rel(data->dev, INPUT_REL_Y, delta_y / 3 * scaling, true , K_NO_WAIT);
