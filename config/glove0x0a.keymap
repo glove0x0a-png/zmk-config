@@ -30,14 +30,15 @@
 #define Rc(keycode) APPLY_MODS(MOD_RCTL, keycode)
 
 //■■Keymap*******************************************************************************************
-//2026.05.30 #1112 W長押しでWin。Layer1のQキーにBLE_CLRを統合。基本:ESC, 【ALT,Ctrl】:LS(TAB), 【LGUI】:F1, 【LSFT】:BT_CLR
+//2026.05.30 #1113 W長押しでWin。Layer1のQキーにBLE_CLRを統合。基本:ESC, 【ALT,Ctrl】:LS(TAB), 【LGUI】:F1, 【LSFT】:BT_CLR
+//           #1113 Layer 4=Layre 2,Layer5=Layer=3。ただし、zigglerがON & LEDカラーが異なる。
 //2026.05.20 #1101 CAPSとLALTを左小指に集約。ただし、LALTに限ってhold-tapのキー割込み時はLALT優先。
 //2026.03.12 #873  物理配置を再調整。D1が不調。
 //2026.03.03 #860  レイヤー3でMキーで、左クリック
 //2026.03.01 #847  Ctrlキーを再配置、BLE機能関連のキー再配置
 //2026.02.28 #832  左Fnのレイヤー上段にFXを集約。整理。
 //■■az1uball*******************************************************************************************
-//2026.05.30 #1112 『az1uball.c』          RCTR検知でマウス移動。
+//2026.05.30 #1113 『az1uball.c』          RCTR検知でマウス移動。
 //2026.05.20 #1101 『az1uball.c』          GUI検知時にマウス移動。
 //2026.03.01 #843  『az1uball.c』          デバッグ:AZ1UBALL:加速度上限制御。//2026.03.01 #842 デバッグ:AZ1UBALL:前回移動量のクリアを明記。//2026.03.01 #841 デバッグ:AZ1UBALL:前回移動量の保存条件を変更。//2026.03.01 #838 デバッグ:AZ1UBALL:cos/sinの符号不良。//2026.03.01 #837 デバッグ:AZ1UBALL:方向検出不良(if右else左else下else上->if右else左 if下else上)//2026.02.28 #834 デバッグ:AZ1UBALL:加速度不良。
 //2026.02.28 #828  『az1uball.c』          I2C & AZ1UBALLのカスタマイズ。移動量,角度,加速度。
@@ -261,10 +262,10 @@
         compatible = "zmk,keymap";
         //0:normal
         layer_qwerty { bindings = <
-&mt Q       TAB  &mt LGUI W &kp  E    &kp R     &kp T       &kp  Y     &kp  U    &kp I     &kp O     &kp  MINUS
-&mt RCTRL   A    &kp S      &MY_kp_D  &kp F     &kp G       &kp  H     &mo  1    &kp K     &kp L     &kp  SEMI
-&kp LS_          &kp Z      &kp  C    &kp V     &kp B       &kp  N     &kp  M    &kp COMMA &kp UP    &kp  ENTER
-&kp LCTRL        &kp LALT   &mkp LCLK &mo 2     &kp SPACE              &mo  3    &kp LEFT  &kp DOWN  &kp  RIGHT
+&mt Q       TAB  &mt LGUI W &kp  E    &kp R     &kp T     &kp  Y     &kp  U    &kp I     &kp O     &kp  MINUS
+&mt RCTRL   A    &kp S      &MY_kp_D  &kp F     &kp G     &kp  H     &mo  1    &kp K     &kp L     &kp  SEMI
+&kp LS_          &kp Z      &kp  C    &kp V     &kp B     &kp  N     &kp  M    &kp COMMA &kp UP    &kp  ENTER
+&kp LCTRL        &kp LALT   &mkp LCLK &mo 2     &kp SPACE            &mo  3    &kp LEFT  &kp DOWN  &kp  RIGHT
           >;
         };
         //1:jigler-dummyレイヤー
@@ -272,34 +273,34 @@
 &trans           &trans   &trans    &mo 4     &trans               &mo  5    &trans    &trans    &trans >; };
         //2:Custom + Function Keys + Vol
         layer_fn2    { bindings = <
-&MY_Q_2          &kp F2     &kp UP    &kp F4    &kp F5      &kp  F6    &kp F7    &kp F8    &kp F9    &kp  P
-&mt LALT    CAPS &kp LEFT   &kp DOWN  &kp RIGHT &kp F3      &RBKT_NUHS &trans    &kp HOME  &kp PG_UP &kp  INT1
-&mt Rc(LS_) LS_  &kp X      &VOL_DN   &VOL_UP   &kp EQUAL   &NEW_8977  &kp DEL   &kp END   &kp PG_DN &kp  SLASH
-&trans           &trans     &kp PSCRN &mo 2     &kp BSPC               &kp K_APP &kp F10   &kp F11   &kp  F12
+&MY_Q_2          &kp F2     &kp UP    &kp F4    &kp F5    &kp  F6    &kp F7    &kp F8    &kp F9    &kp  P
+&mt LALT    CAPS &kp LEFT   &kp DOWN  &kp RIGHT &kp F3    &RBKT_NUHS &trans    &kp HOME  &kp PG_UP &kp  INT1
+&mt Rc(LS_) LS_  &kp X      &VOL_DN   &VOL_UP   &kp EQUAL &NEW_8977  &kp DEL   &kp END   &kp PG_DN &kp  SLASH
+&trans           &trans     &kp PSCRN &mo 2     &kp BSPC             &kp K_APP &kp F10   &kp F11   &kp  F12
             >;
         };
         //3:Number + Bluetooth /マウス高速
         layer_fn3    { bindings = <
-&kp N1           &MY_N2     &kp  N3   &kp N4    &kp  N5     &kp  N6    &kp  N7   &kp N8    &kp N9    &N0_PIPE
-&MY_U            &MY_L      &MY_D     &MY_R     &kp BLE_USB &kp  SQT   &trans    &SC_U_L   &SC_D_R   &trans
-&mt Rc(LS_) LS_  &kp X      &VOL_DN   &VOL_UP   &kp EQUAL   &kp  LBKT  &mkp LCLK &trans    &kp DOT   &kp  SLASH
-&trans           &trans     &mkp RCLK &kp K_APP &ind_bat               &mo  3    &BLE0     &BLE1     &BLE2
+&kp N1           &MY_N2     &kp  N3   &kp N4    &kp  N5   &kp  N6    &kp  N7   &kp N8    &kp N9    &N0_PIPE
+&MY_U            &MY_L      &MY_D     &MY_R     &BLE_USB  &kp  SQT   &trans    &SC_U_L   &SC_D_R   &trans
+&mt Rc(LS_) LS_  &kp X      &VOL_DN   &VOL_UP   &kp EQUAL &kp  LBKT  &mkp LCLK &trans    &kp DOT   &kp  SLASH
+&trans           &trans     &mkp RCLK &kp K_APP &ind_bat             &mo  3    &BLE0     &BLE1     &BLE2
             >;
         };
         //4:Custom + Function Keys + Vol
         layer_fn4    { bindings = <
-&MY_Q_2          &kp F2     &kp UP    &kp F4    &kp F5      &kp  F6    &kp F7    &kp F8    &kp F9    &kp  P
-&mt LALT    CAPS &kp LEFT   &kp DOWN  &kp RIGHT &kp F3      &RBKT_NUHS &trans    &kp HOME  &kp PG_UP &kp  INT1
-&mt Rc(LS_) LS_  &kp X      &VOL_DN   &VOL_UP   &kp EQUAL   &NEW_8977  &kp DEL   &kp END   &kp PG_DN &kp  SLASH
-&trans           &trans     &kp PSCRN &mo 2     &kp BSPC               &kp K_APP &kp F10   &kp F11   &kp  F12
+&MY_Q_2          &kp F2     &kp UP    &kp F4    &kp F5    &kp  F6    &kp F7    &kp F8    &kp F9    &kp  P
+&mt LALT    CAPS &kp LEFT   &kp DOWN  &kp RIGHT &kp F3    &RBKT_NUHS &trans    &kp HOME  &kp PG_UP &kp  INT1
+&mt Rc(LS_) LS_  &kp X      &VOL_DN   &VOL_UP   &kp EQUAL &NEW_8977  &kp DEL   &kp END   &kp PG_DN &kp  SLASH
+&trans           &trans     &kp PSCRN &mo 2     &kp BSPC             &kp K_APP &kp F10   &kp F11   &kp  F12
             >;
         };
         //5:Number + Bluetooth /マウス高速
         layer_fn5    { bindings = <
-&kp N1           &MY_N2     &kp  N3   &kp N4    &kp  N5     &kp  N6    &kp  N7   &kp N8    &kp N9    &N0_PIPE
-&MY_U            &MY_L      &MY_D     &MY_R     &kp BLE_USB &kp  SQT   &trans    &SC_U_L   &SC_D_R   &trans
-&mt Rc(LS_) LS_  &kp X      &VOL_DN   &VOL_UP   &kp EQUAL   &kp  LBKT  &mkp LCLK &trans    &kp DOT   &kp  SLASH
-&trans           &trans     &mkp RCLK &kp K_APP &ind_bat               &mo  3    &BLE0     &BLE1     &BLE2
+&kp N1           &MY_N2     &kp  N3   &kp N4    &kp  N5   &kp  N6    &kp  N7   &kp N8    &kp N9    &N0_PIPE
+&MY_U            &MY_L      &MY_D     &MY_R     &BLE_USB  &kp  SQT   &trans    &SC_U_L   &SC_D_R   &trans
+&mt Rc(LS_) LS_  &kp X      &VOL_DN   &VOL_UP   &kp EQUAL &kp  LBKT  &mkp LCLK &trans    &kp DOT   &kp  SLASH
+&trans           &trans     &mkp RCLK &kp K_APP &ind_bat             &mo  3    &BLE0     &BLE1     &BLE2
             >;
         };
     };
