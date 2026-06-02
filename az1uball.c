@@ -40,7 +40,7 @@ bool First_flg = false;
 int  direction = -1;
 //bool GUI_flg = false;
 
-//extern struct az1uball_data az1uball_data_0;
+extern struct az1uball_data az1uball_data_0;
 
 //void zmk_pm_disable(void);
 //void zmk_pm_enable(void);
