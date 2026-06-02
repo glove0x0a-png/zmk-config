@@ -43,6 +43,8 @@ int  direction = -1;
 //void zmk_pm_disable(void);
 //void zmk_pm_enable(void);
 
+static int az1uball_event_handler(const zmk_event_t *eh);
+
 ///////////////////////////////////////////////////////////////////////////
 // #01.心臓部
 void az1uball_read_data_work(struct k_work *work)
@@ -230,35 +232,6 @@ static void az1uball_set_poll_mode(struct az1uball_data *data, uint8_t mode)
     }
 }
 
-
-///////////////////////////////////////////////////////////////////////////
-// #03.割込み検知
-static int az1uball_event_handler(const zmk_event_t *eh)
-{
-    const struct zmk_position_state_changed *ev =
-        as_zmk_position_state_changed(eh);
-
-    if (!ev) {
-        return 0;
-    }
-
-    /* 押下時のみ処理 */
-    if (ev->state) {
-        struct az1uball_data *data = &az1uball_data_0;
-        data->last_activity_time = k_uptime_get();
-        az1uball_set_poll_mode(data, POLL_MODE_NOR);
-//        if (data->jiggler_on) {
-//            /* ジグラーON → BLE_POLL_MS に戻す */
-//            az1uball_set_poll_mode(data, POLL_MODE_BLE);
-//        } else {
-//            /* 通常 → NOR_POLL_MS */
-//            az1uball_set_poll_mode(data, POLL_MODE_NOR);
-//        }
-    }
-
-    return 0;
-}
-
 ///////////////////////////////////////////////////////////////////////////
 // #04.ジグラー関数
 static void az1uball_jiggler_work(struct k_work *work)
@@ -369,4 +342,32 @@ void zmk_wake(void)
 //        az1uball_set_poll_mode(data, POLL_MODE_NOR);
 //    }
 
+}
+
+///////////////////////////////////////////////////////////////////////////
+// #03.割込み検知
+static int az1uball_event_handler(const zmk_event_t *eh)
+{
+    const struct zmk_position_state_changed *ev =
+        as_zmk_position_state_changed(eh);
+
+    if (!ev) {
+        return 0;
+    }
+
+    /* 押下時のみ処理 */
+    if (ev->state) {
+        struct az1uball_data *data = &az1uball_data_0;
+        data->last_activity_time = k_uptime_get();
+        az1uball_set_poll_mode(data, POLL_MODE_NOR);
+//        if (data->jiggler_on) {
+//            /* ジグラーON → BLE_POLL_MS に戻す */
+//            az1uball_set_poll_mode(data, POLL_MODE_BLE);
+//        } else {
+//            /* 通常 → NOR_POLL_MS */
+//            az1uball_set_poll_mode(data, POLL_MODE_NOR);
+//        }
+    }
+
+    return 0;
 }
