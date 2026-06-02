@@ -40,8 +40,6 @@ bool First_flg = false;
 int  direction = -1;
 //bool GUI_flg = false;
 
-extern struct az1uball_data az1uball_data_0;
-
 //void zmk_pm_disable(void);
 //void zmk_pm_enable(void);
 
@@ -369,3 +367,5 @@ ZMK_SUBSCRIPTION(az1uball, zmk_position_state_changed);
                           NULL);
 
 DT_INST_FOREACH_STATUS_OKAY(AZ1UBALL_DEFINE)
+
+extern struct az1uball_data az1uball_data_0;
