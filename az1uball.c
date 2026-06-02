@@ -13,6 +13,8 @@
 
 //追加
 #include <zmk/events/position_state_changed.h>
+#include <zmk/events/idle_state_changed.h>
+#include <zmk/events/sleep_state_changed.h>
 #include <zmk/event_manager.h>
 #include <zmk/behavior.h>
 #include <zmk/keymap.h>
@@ -371,3 +373,38 @@ static int az1uball_event_handler(const zmk_event_t *eh)
 
     return 0;
 }
+///////////////////////////////////////////////////////////////////////////
+// #03.スリープ状態
+static int az1uball_pm_event_handler(const zmk_event_t *eh)
+{
+    /* Idle 状態変化 */
+    if (as_zmk_idle_state_changed(eh)) {
+        const struct zmk_idle_state_changed *ev = as_zmk_idle_state_changed(eh);
+
+        if (ev->state == ZMK_IDLE_STATE_IDLE) {
+            /* Idle → Sleep に入る直前 */
+            zmk_sleep();
+        } else {
+            /* Idle → Active に戻った */
+            zmk_wake();
+        }
+    }
+
+    /* Sleep 状態変化 */
+    if (as_zmk_sleep_state_changed(eh)) {
+        const struct zmk_sleep_state_changed *ev = as_zmk_sleep_state_changed(eh);
+
+        if (ev->state == ZMK_SLEEP_STATE_SLEEP) {
+            /* Light Sleep に入った */
+            zmk_sleep();
+        } else {
+            /* Wake（Light/Deep どちらからでも） */
+            zmk_wake();
+        }
+    }
+
+    return 0;
+}
+ZMK_LISTENER(az1uball_pm, az1uball_pm_event_handler);
+ZMK_SUBSCRIPTION(az1uball_pm, zmk_idle_state_changed);
+ZMK_SUBSCRIPTION(az1uball_pm, zmk_sleep_state_changed);
