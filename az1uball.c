@@ -230,34 +230,6 @@ static void az1uball_set_poll_mode(struct az1uball_data *data, uint8_t mode)
     }
 }
 
-///////////////////////////////////////////////////////////////////////////
-// #02.3 ポーリング停止 スリープ時(CONFIG_ZMK_IDLE_TIMEOUT)
-void zmk_sleep(void)
-{
-    struct az1uball_data *data = &az1uball_data_0;
-    if (data->jiggler_on) {
-        /* ジグラー ON → 超低頻度ポーリング（4分） */
-        az1uball_set_poll_mode(data, POLL_MODE_JIG);
-    } else {
-        /* ジグラー OFF → ポーリング停止（deep sleep 可能） */
-        k_timer_stop(&data->polling_timer);
-    }
-}
-///////////////////////////////////////////////////////////////////////////
-// #02.4 ポーリング再開
-void zmk_wake(void)
-{
-    struct az1uball_data *data = &az1uball_data_0;
-    az1uball_set_poll_mode(data, POLL_MODE_NOR);
-//    if (data->jiggler_on) {
-//        /* ジグラー ON → BLE_POLL_MS に戻す */
-//        az1uball_set_poll_mode(data, POLL_MODE_BLE);
-//    } else {
-//        /* ジグラー OFF → 通常ポーリング */
-//        az1uball_set_poll_mode(data, POLL_MODE_NOR);
-//    }
-
-}
 
 ///////////////////////////////////////////////////////////////////////////
 // #03.割込み検知
@@ -369,3 +341,32 @@ ZMK_SUBSCRIPTION(az1uball, zmk_position_state_changed);
 DT_INST_FOREACH_STATUS_OKAY(AZ1UBALL_DEFINE)
 
 extern struct az1uball_data az1uball_data_0;
+
+///////////////////////////////////////////////////////////////////////////
+// #02.3 ポーリング停止 スリープ時(CONFIG_ZMK_IDLE_TIMEOUT)
+void zmk_sleep(void)
+{
+    struct az1uball_data *data = &az1uball_data_0;
+    if (data->jiggler_on) {
+        /* ジグラー ON → 超低頻度ポーリング（4分） */
+        az1uball_set_poll_mode(data, POLL_MODE_JIG);
+    } else {
+        /* ジグラー OFF → ポーリング停止（deep sleep 可能） */
+        k_timer_stop(&data->polling_timer);
+    }
+}
+///////////////////////////////////////////////////////////////////////////
+// #02.4 ポーリング再開
+void zmk_wake(void)
+{
+    struct az1uball_data *data = &az1uball_data_0;
+    az1uball_set_poll_mode(data, POLL_MODE_NOR);
+//    if (data->jiggler_on) {
+//        /* ジグラー ON → BLE_POLL_MS に戻す */
+//        az1uball_set_poll_mode(data, POLL_MODE_BLE);
+//    } else {
+//        /* ジグラー OFF → 通常ポーリング */
+//        az1uball_set_poll_mode(data, POLL_MODE_NOR);
+//    }
+
+}
