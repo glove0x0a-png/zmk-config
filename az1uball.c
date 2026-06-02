@@ -9,7 +9,7 @@
 #include <zmk/usb.h>
 #include <zmk/hid.h>    // HID usage定義用
 #include "az1uball.h"
-#include <zmk/pm.h>
+//#include <zmk/pm.h>
 
 //追加
 #include <zmk/events/position_state_changed.h>
@@ -42,8 +42,8 @@ int  direction = -1;
 
 extern struct az1uball_data az1uball_data_0;
 
-void zmk_pm_disable(void);
-void zmk_pm_enable(void);
+//void zmk_pm_disable(void);
+//void zmk_pm_enable(void);
 
 ///////////////////////////////////////////////////////////////////////////
 // #01.心臓部
@@ -172,13 +172,13 @@ void az1uball_read_data_work(struct k_work *work)
     /* layer=1 → ジグラー ON */
     if (layer == 1 && !data->jiggler_on) {
         data->jiggler_on = true;
-        zmk_pm_disable();                                             /* deep sleep を禁止（light sleep のみ許可） */
         k_work_schedule(&data->jiggler_work, JIG_WAIT_MS);    /* ジグラー開始*/
+        //deep sleepは常時許可。ジグラー中は有効にならないけど。  zmk_pm_disable(); /* deep sleep を禁止（light sleep のみ許可） */
     }
     /* layer!=1 → ジグラー OFF */
     if (layer != 1 && data->jiggler_on) {
         data->jiggler_on = false;
-        zmk_pm_enable();                                              /* deep sleep 再許可 */
+        //zmk_pm_enable();  /* deep sleep 再許可 */
         k_work_cancel_delayable(&data->jiggler_work);                 /* ジグラー停止 */
     }
 
