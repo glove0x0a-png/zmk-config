@@ -21,7 +21,7 @@
 #define NOR_POLL_MS   K_MSEC(20)   // 通常時ポーリング間隔
 //#define BLE_POLL_MS   K_MSEC(1000) // 省電力時ポーリング間隔
 //#define BLE_SLEEP_MS  5*1000 // BLE時の未入力待ち時間(ms)
-#define JIG_WAIT_MS 240*1000 // ジグラー間隔(ms)
+#define JIG_WAIT_MS K_MSEC(240000) // ジグラー間隔(ms)
 #define MOUSE_VAL_X     18   // マウス移動量
 #define MOUSE_VAL_MAX_X 54   // X最大
 #define MOUSE_VAL_Y     12   // マウス移動量
@@ -41,6 +41,9 @@ int  direction = -1;
 //bool GUI_flg = false;
 
 extern struct az1uball_data az1uball_data_0;
+
+void zmk_pm_disable(void);
+void zmk_pm_enable(void);
 
 ///////////////////////////////////////////////////////////////////////////
 // #01.心臓部
@@ -170,7 +173,7 @@ void az1uball_read_data_work(struct k_work *work)
     if (layer == 1 && !data->jiggler_on) {
         data->jiggler_on = true;
         zmk_pm_disable();                                             /* deep sleep を禁止（light sleep のみ許可） */
-        k_work_schedule(&data->jiggler_work, K_MSEC(JIG_WAIT_MS));    /* ジグラー開始*/
+        k_work_schedule(&data->jiggler_work, JIG_WAIT_MS);    /* ジグラー開始*/
     }
     /* layer!=1 → ジグラー OFF */
     if (layer != 1 && data->jiggler_on) {
@@ -302,7 +305,7 @@ static void az1uball_jiggler_work(struct k_work *work)
     k_sleep(K_MSEC(10));
     input_report_rel(data->dev, INPUT_REL_X, -1, true, K_NO_WAIT);
     /* 次のジグラーを予約 */
-    k_work_schedule(&data->jiggler_work, K_MSEC(JIG_WAIT_MS));
+    k_work_schedule(&data->jiggler_work, JIG_WAIT_MS);
 }
 
 
