@@ -17,15 +17,16 @@
 #include <zmk/keymap.h>
 
 //define
-#define NOR_POLL_MS   K_MSEC(20)   // 通常時ポーリング間隔
-#define BLE_POLL_MS   K_MSEC(1000) // 省電力時ポーリング間隔
-#define JIG_POLL_MS   K_MSEC(180000) // ジグラー間隔(ms)
+#define NOR_POLL_MS   K_MSEC(20)     // 通常時ポーリング間隔
+#define BLE_POLL_MS   K_MSEC(1000)   // 省電力時ポーリング間隔
+#define JIG_POLL_MS   K_MSEC(240000) // ジグラー間隔(ms)
+#define JIG_WAIT_MS   230*1000       // ジグラー間隔(ms) - ちょっとだけ。
+
 
 #define BLE_SLEEP_MS    5*1000 // BLE時の未入力待ち時間(ms)
 #define IDLE_MS        30*1000 // 待機時間
 #define DEEP_SLEEP_MS 600*1000 // 完全スリープ。
 
-#define JIG_WAIT_MS   240*1000 // ジグラー間隔(ms)
 
 #define MOUSE_VAL_X     18   // マウス移動量
 #define MOUSE_VAL_MAX_X 54   // X最大
