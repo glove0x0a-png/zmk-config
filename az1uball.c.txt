@@ -195,7 +195,7 @@ static void az1uball_polling(struct k_timer *timer)
         k_timer_start(&data->polling_timer, NOR_POLL_MS, NOR_POLL_MS);
     }
     //idle時間経過で、超低速ポーリング。※マウス操作なしで30秒経過
-    else if (k_uptime_get() - data->last_jig_time >= IDLE_MS){
+    else if (k_uptime_get() - data->last_activity_time >= IDLE_MS){
         k_timer_start(&data->polling_timer, JIG_POLL_MS, JIG_POLL_MS);
     }
     //完全停止・ポーリングしない。
@@ -288,7 +288,7 @@ static int az1uball_event_handler(const zmk_event_t *eh)
         //キー押下時時は高速ポーリング復帰
         k_timer_start(&data->polling_timer, NOR_POLL_MS, NOR_POLL_MS);
         //最終操作時間更新
-        &data->last_activity_time = k_uptime_get();
+        data->last_activity_time = k_uptime_get();
     }
     return 0;
 }
