@@ -9,21 +9,24 @@
 #include <zmk/usb.h>
 #include <zmk/hid.h>    // HID usage定義用
 #include "az1uball.h"
-//#include <zmk/pm.h>
 
 //追加
 #include <zmk/events/position_state_changed.h>
-#include <zmk/events/idle_state_changed.h>
-#include <zmk/events/sleep_state_changed.h>
 #include <zmk/event_manager.h>
 #include <zmk/behavior.h>
 #include <zmk/keymap.h>
 
 //define
 #define NOR_POLL_MS   K_MSEC(20)   // 通常時ポーリング間隔
-//#define BLE_POLL_MS   K_MSEC(1000) // 省電力時ポーリング間隔
-//#define BLE_SLEEP_MS  5*1000 // BLE時の未入力待ち時間(ms)
-#define JIG_WAIT_MS K_MSEC(240000) // ジグラー間隔(ms)
+#define BLE_POLL_MS   K_MSEC(1000) // 省電力時ポーリング間隔
+#define JIG_POLL_MS   K_MSEC(180000) // ジグラー間隔(ms)
+
+#define BLE_SLEEP_MS    5*1000 // BLE時の未入力待ち時間(ms)
+#define IDLE_MS        30*1000 // 待機時間
+#define DEEP_SLEEP_MS 600*1000 // 完全スリープ。
+
+#define JIG_WAIT_MS   240*1000 // ジグラー間隔(ms)
+
 #define MOUSE_VAL_X     18   // マウス移動量
 #define MOUSE_VAL_MAX_X 54   // X最大
 #define MOUSE_VAL_Y     12   // マウス移動量
@@ -41,11 +44,6 @@ struct zmk_behavior_binding binding = {
 bool First_flg = false;
 int  direction = -1;
 //bool GUI_flg = false;
-
-//void zmk_pm_disable(void);
-//void zmk_pm_enable(void);
-
-static int az1uball_event_handler(const zmk_event_t *eh);
 
 ///////////////////////////////////////////////////////////////////////////
 // #01.心臓部
@@ -84,7 +82,7 @@ void az1uball_read_data_work(struct k_work *work)
     else if( abs((int16_t)buf[2]) > abs(buf[3])) delta_y=-MOUSE_VAL_Y; //buf[2]=上
 
     bool  btn_push  = (buf[4] & MSK_SWITCH_STATE) != 0; //true:押下、false:未押下
-    if ( now - data->last_activity_time < ACCEL_CANCEL_MS ){ //加速度加算
+    if ( now - data->last_activity_time < ACCEL_CANCEL_MS ){ //加速度加算・最後の操作あり
       if(( data->pre_x > 0 && delta_x > 0 ) || ( data->pre_x < 0 && delta_x < 0 )) delta_x = data->pre_x * ACCEL_VAL;
       if(( data->pre_y > 0 && delta_y > 0 ) || ( data->pre_y < 0 && delta_y < 0 )) delta_y = data->pre_y * ACCEL_VAL;
     } else {
@@ -103,10 +101,8 @@ void az1uball_read_data_work(struct k_work *work)
         data->pre_x=delta_x;//前回移動量保存。
         data->pre_y=delta_y;
     }
-
-    //マウス操作 or レイヤー操作 or 修飾キー or ボタン状態変化
-    //if ( delta_x != 0 || delta_y != 0 || lshift_pressed || lCtrl_pressed || btn_push != data->sw_pressed) data->last_activity_time = now; //前回操作時間更新
-    if ( delta_x != 0 || delta_y != 0 || lshift_pressed || btn_push != data->sw_pressed) data->last_activity_time = now; //前回操作時間更新
+    //マウス操作
+    if ( delta_x != 0 || delta_y != 0 || btn_push != data->sw_pressed) data->last_activity_time = now; //前回操作時間更新
 
     //ボタン押下があれば(レイヤー操作が複雑なのでJのみ)
     if ( btn_push != data->sw_pressed ){
@@ -170,92 +166,48 @@ void az1uball_read_data_work(struct k_work *work)
         }
     }
 
-    // ジグラーレイヤー:ジグラー操作
-    /* layer=1 → ジグラー ON */
-    if (layer == 1 && !data->jiggler_on) {
-        data->jiggler_on = true;
-        k_work_schedule(&data->jiggler_work, JIG_WAIT_MS);    /* ジグラー開始*/
-        //deep sleepは常時許可。ジグラー中は有効にならないけど。  zmk_pm_disable(); /* deep sleep を禁止（light sleep のみ許可） */
+    //★ジグラーレイヤー:ジグラー操作(Layer1なら、4分ごとに必ず実行・独立)
+    if ( layer == 1 && now - data->last_jig_time >= JIG_WAIT_MS ) {
+        data->last_jig_time = k_uptime_get();
+        input_report_rel(data->dev, INPUT_REL_X, 1, true, K_NO_WAIT);
+        k_sleep(K_MSEC(10));
+        input_report_rel(data->dev, INPUT_REL_X, -1, true, K_NO_WAIT);
     }
-    /* layer!=1 → ジグラー OFF */
-    if (layer != 1 && data->jiggler_on) {
-        data->jiggler_on = false;
-        //zmk_pm_enable();  /* deep sleep 再許可 */
-        k_work_cancel_delayable(&data->jiggler_work);                 /* ジグラー停止 */
-    }
-
     return;
 }
 
 ///////////////////////////////////////////////////////////////////////////
-// #02.1 ポーリング
+// #02.ポーリング
 static void az1uball_polling(struct k_timer *timer)
 {
     struct az1uball_data *data = CONTAINER_OF(timer, struct az1uball_data, polling_timer);
 
-    /* ポーリングモードに応じて再スケジュール */
-    switch (data->poll_mode) {
-    case POLL_MODE_NOR:
+    //サイクルセット
+    k_timer_stop( &data->polling_timer);
+
+    //高サイクル:USB接続 || マウス操作から一定時間以内
+    if ( zmk_usb_is_powered() || (k_uptime_get() - data->last_activity_time <= BLE_SLEEP_MS) ) {
         k_timer_start(&data->polling_timer, NOR_POLL_MS, NOR_POLL_MS);
-        break;
-
-//    case POLL_MODE_BLE:
-//        k_timer_start(&data->polling_timer, BLE_POLL_MS, BLE_POLL_MS);
-//        break;
-//
-    case POLL_MODE_JIG:
-        k_timer_start(&data->polling_timer, JIG_WAIT_MS, JIG_WAIT_MS);
-        break;
     }
-
-    /* I2C 読み取りワークを実行 */
+    //idle時間経過で、超低速ポーリング。※マウス操作なしで30秒経過
+    else if (k_uptime_get() - data->last_activity_time >= IDLE_MS){
+        k_timer_start(&data->polling_timer, JIG_POLL_MS, JIG_POLL_MS);
+    }
+    //完全停止・ポーリングしない。
+    else if (layer != 1 && k_uptime_get() - data->last_activity_time >= DEEP_SLEEP_MS){
+        ;
+    }
+    //
+    //低サイクル:else
+    else{
+        k_timer_start(&data->polling_timer, BLE_POLL_MS, BLE_POLL_MS);
+    }
     k_work_submit(&data->work);
+    return;
 }
 
 ///////////////////////////////////////////////////////////////////////////
-// #02.2 ポーリング切り替え関数
-static void az1uball_set_poll_mode(struct az1uball_data *data, uint8_t mode)
-{
-    data->poll_mode = mode;
-    k_timer_stop(&data->polling_timer);
-
-    switch (mode) {
-    case POLL_MODE_NOR:
-        k_timer_start(&data->polling_timer, NOR_POLL_MS, NOR_POLL_MS);
-        break;
-
-//    case POLL_MODE_BLE:
-//        k_timer_start(&data->polling_timer, BLE_POLL_MS, BLE_POLL_MS);
-//        break;
-//
-    case POLL_MODE_JIG:
-        k_timer_start(&data->polling_timer, JIG_WAIT_MS, JIG_WAIT_MS);
-        break;
-    }
-}
-
-///////////////////////////////////////////////////////////////////////////
-// #04.ジグラー関数
-static void az1uball_jiggler_work(struct k_work *work)
-{
-    struct k_work_delayable *dwork = k_work_delayable_from_work(work);
-    struct az1uball_data *data = CONTAINER_OF(dwork, struct az1uball_data, jiggler_work);
-
-    if (!data->jiggler_on) {
-        return;
-    }
-
-    /* マウスジグラー動作 */
-    input_report_rel(data->dev, INPUT_REL_X, 1, true, K_NO_WAIT);
-    k_sleep(K_MSEC(10));
-    input_report_rel(data->dev, INPUT_REL_X, -1, true, K_NO_WAIT);
-    /* 次のジグラーを予約 */
-    k_work_schedule(&data->jiggler_work, JIG_WAIT_MS);
-}
-
-
-///////////////////////////////////////////////////////////////////////////
-// #05-XX.初期処理 / 感度取得.
+// #03-XX.初期処理 / 感度取得.
 static float parse_sensitivity(const char *sensitivity) {
     float value;
     char *endptr;
@@ -267,7 +219,7 @@ static float parse_sensitivity(const char *sensitivity) {
     return value;
 }
 ///////////////////////////////////////////////////////////////////////////
-// #05 初期処理
+// #03 初期処理
 static int az1uball_init(const struct device *dev)
 {
     struct       az1uball_data   *data   = dev->data;
@@ -277,26 +229,24 @@ static int az1uball_init(const struct device *dev)
     data->dev = dev; //構造体セット
     data->sw_pressed = false;
     data->last_activity_time = k_uptime_get();
+    data->last_jig_time = k_uptime_get();
     data->scaling_factor = parse_sensitivity(config->sensitivity);
     data->pre_x=0;
     data->pre_y=0;
-    data->jiggler_on = false;
-    data->poll_mode = POLL_MODE_NOR;
-    device_is_ready(config->i2c.bus); //i2c_初期化
+
+    device_is_ready(config->i2c.bus); //i2c_初期
     i2c_write_dt(&config->i2c, &cmd, sizeof(cmd));
-    k_work_init(&data->work          , az1uball_read_data_work);/* work/timer 初期化 */
+
+
+    //サイクル：NOR_POLL_MS
+    k_work_init(&data->work          , az1uball_read_data_work);
     k_timer_init( &data->polling_timer, az1uball_polling        , NULL);
-    k_work_init_delayable(&data->jiggler_work, az1uball_jiggler_work);  /* ★ ジグラー用遅延ワーク初期化 */
-    k_timer_start(&data->polling_timer, NOR_POLL_MS, NOR_POLL_MS);      /* 初期ポーリング開始 */
+    k_timer_start(&data->polling_timer, NOR_POLL_MS, NOR_POLL_MS);
     return 0;
 }
-
 ///////////////////////////////////////////////////////////////////////////
 // 11.DEFINE
 ///////////////////////////////////////////////////////////////////////////
-ZMK_LISTENER(az1uball, az1uball_event_handler);
-ZMK_SUBSCRIPTION(az1uball, zmk_position_state_changed);
-
 #define AZ1UBALL_DEFINE(n)                                             \
     static struct az1uball_data az1uball_data_##n;                     \
     static const struct az1uball_config az1uball_config_##n = {        \
@@ -314,97 +264,26 @@ ZMK_SUBSCRIPTION(az1uball, zmk_position_state_changed);
                           NULL);
 
 DT_INST_FOREACH_STATUS_OKAY(AZ1UBALL_DEFINE)
-
 extern struct az1uball_data az1uball_data_0;
 
 ///////////////////////////////////////////////////////////////////////////
-// #02.3 ポーリング停止 スリープ時(CONFIG_ZMK_IDLE_TIMEOUT)
-void zmk_sleep(void)
-{
-    struct az1uball_data *data = &az1uball_data_0;
-    if (data->jiggler_on) {
-        /* ジグラー ON → 超低頻度ポーリング（4分） */
-        az1uball_set_poll_mode(data, POLL_MODE_JIG);
-    } else {
-        /* ジグラー OFF → ポーリング停止（deep sleep 可能） */
-        k_timer_stop(&data->polling_timer);
-    }
-}
-///////////////////////////////////////////////////////////////////////////
-// #02.4 ポーリング再開
-void zmk_wake(void)
-{
-    struct az1uball_data *data = &az1uball_data_0;
-    az1uball_set_poll_mode(data, POLL_MODE_NOR);
-//    if (data->jiggler_on) {
-//        /* ジグラー ON → BLE_POLL_MS に戻す */
-//        az1uball_set_poll_mode(data, POLL_MODE_BLE);
-//    } else {
-//        /* ジグラー OFF → 通常ポーリング */
-//        az1uball_set_poll_mode(data, POLL_MODE_NOR);
-//    }
-
-}
-
-///////////////////////////////////////////////////////////////////////////
-// #03.割込み検知
+// #21.割込み検知
 static int az1uball_event_handler(const zmk_event_t *eh)
 {
-    const struct zmk_position_state_changed *ev =
-        as_zmk_position_state_changed(eh);
-
+    const struct zmk_position_state_changed *ev = as_zmk_position_state_changed(eh);
     if (!ev) {
         return 0;
     }
-
     /* 押下時のみ処理 */
     if (ev->state) {
         struct az1uball_data *data = &az1uball_data_0;
-        data->last_activity_time = k_uptime_get();
-        az1uball_set_poll_mode(data, POLL_MODE_NOR);
-//        if (data->jiggler_on) {
-//            /* ジグラーON → BLE_POLL_MS に戻す */
-//            az1uball_set_poll_mode(data, POLL_MODE_BLE);
-//        } else {
-//            /* 通常 → NOR_POLL_MS */
-//            az1uball_set_poll_mode(data, POLL_MODE_NOR);
-//        }
+        //サイクルセット
+        k_timer_stop( &data->polling_timer);
+        //キー押下時だけなら、低頻度ポーリングで復帰。
+        k_timer_start(&data->polling_timer, BLE_POLL_MS, BLE_POLL_MS);
     }
-
     return 0;
 }
-///////////////////////////////////////////////////////////////////////////
-// #03.スリープ状態
-static int az1uball_pm_event_handler(const zmk_event_t *eh)
-{
-    /* Idle 状態変化 */
-    if (as_zmk_idle_state_changed(eh)) {
-        const struct zmk_idle_state_changed *ev = as_zmk_idle_state_changed(eh);
 
-        if (ev->state == ZMK_IDLE_STATE_IDLE) {
-            /* Idle → Sleep に入る直前 */
-            zmk_sleep();
-        } else {
-            /* Idle → Active に戻った */
-            zmk_wake();
-        }
-    }
-
-    /* Sleep 状態変化 */
-    if (as_zmk_sleep_state_changed(eh)) {
-        const struct zmk_sleep_state_changed *ev = as_zmk_sleep_state_changed(eh);
-
-        if (ev->state == ZMK_SLEEP_STATE_SLEEP) {
-            /* Light Sleep に入った */
-            zmk_sleep();
-        } else {
-            /* Wake（Light/Deep どちらからでも） */
-            zmk_wake();
-        }
-    }
-
-    return 0;
-}
-ZMK_LISTENER(az1uball_pm, az1uball_pm_event_handler);
-ZMK_SUBSCRIPTION(az1uball_pm, zmk_idle_state_changed);
-ZMK_SUBSCRIPTION(az1uball_pm, zmk_sleep_state_changed);
+ZMK_LISTENER(az1uball, az1uball_event_handler);
+ZMK_SUBSCRIPTION(az1uball, zmk_position_state_changed);
