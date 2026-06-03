@@ -56,6 +56,7 @@ void az1uball_read_data_work(struct k_work *work)
     float scaling = data->scaling_factor; //比率
 
     int layer = zmk_keymap_highest_layer_active(); //現レイヤ
+    data->layer = layer;
                                 //    if( layer == 4 ){//        if (!First_flg )//        {//            First_flg = true;//            for (int i = 0; i < 30; i++) input_report_rel(data->dev, INPUT_REL_Y,-1, true , K_NO_WAIT);//        }//    } else First_flg = false;
     bool lshift_pressed = zmk_hid_get_explicit_mods() & 0x02;  //左Shift
     bool rCtrl_pressed  = zmk_hid_get_explicit_mods() & 0x10;  //右Ctr
@@ -194,7 +195,7 @@ static void az1uball_polling(struct k_timer *timer)
         k_timer_start(&data->polling_timer, JIG_POLL_MS, JIG_POLL_MS);
     }
     //完全停止・ポーリングしない。
-    else if (layer != 1 && k_uptime_get() - data->last_activity_time >= DEEP_SLEEP_MS){
+    else if (&data->layer != 1 && k_uptime_get() - data->last_activity_time >= DEEP_SLEEP_MS){
         ;
     }
     //
@@ -233,6 +234,7 @@ static int az1uball_init(const struct device *dev)
     data->scaling_factor = parse_sensitivity(config->sensitivity);
     data->pre_x=0;
     data->pre_y=0;
+    data->layer=0;
 
     device_is_ready(config->i2c.bus); //i2c_初期
     i2c_write_dt(&config->i2c, &cmd, sizeof(cmd));
