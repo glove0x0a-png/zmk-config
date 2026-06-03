@@ -19,8 +19,8 @@
 //define
 #define NOR_POLL_MS   K_MSEC(20)     // 通常時ポーリング間隔
 #define BLE_POLL_MS   K_MSEC(1000)   // 省電力時ポーリング間隔
-#define JIG_POLL_MS   K_MSEC(240000) // ジグラー間隔(ms)
-#define JIG_WAIT_MS   240*1000       // ジグラー間隔(ms)
+#define JIG_POLL_MS   K_MSEC(120000) // ジグラー間隔(ms)
+#define JIG_WAIT_MS   120*1000       // ジグラー間隔(ms)
 
 
 #define BLE_SLEEP_MS    5*1000 // BLE時の未入力待ち時間(ms)
@@ -173,9 +173,8 @@ void az1uball_read_data_work(struct k_work *work)
     //★ジグラーレイヤー:ジグラー操作(Layer1なら、4分ごとに必ず実行・独立)
     if ( data->layer == 1 && now - data->last_jig_time >= JIG_WAIT_MS ) {
         data->last_jig_time = k_uptime_get();
-        input_report_rel(data->dev, INPUT_REL_X, 2, true, K_NO_WAIT);
-        k_sleep(K_MSEC(20));
-        input_report_rel(data->dev, INPUT_REL_X, -2, true, K_NO_WAIT);
+        direction *= -1;
+        input_report_rel(data->dev, INPUT_REL_X, direction * 100, true, K_NO_WAIT);
     }
     return;
 }
@@ -283,9 +282,6 @@ static int az1uball_event_handler(const zmk_event_t *eh)
     if (!ev) {
         return 0;
     }
-    if (ev->position == 9999){
-        return 0;
-    }
     /* 押下時のみ処理 */
     if (ev->state) {
         struct az1uball_data *data = &az1uball_data_0;
@@ -295,6 +291,7 @@ static int az1uball_event_handler(const zmk_event_t *eh)
         k_timer_start(&data->polling_timer, NOR_POLL_MS, NOR_POLL_MS);
         //最終操作時間更新
         data->last_activity_time = k_uptime_get();
+        data->last_jig_time      = k_uptime_get();
     }
     return 0;
 }
