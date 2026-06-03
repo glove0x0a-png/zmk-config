@@ -289,9 +289,9 @@
         //2:Custom + Function Keys + Vol
         layer_fn2    { bindings = <
 &MY_Q_2          &kp F2     &kp UP    &kp F4    &kp F5    &kp  F6    &kp F7    &kp F8    &kp F9    &kp  P
-&MY_U            &MY_L      &MY_D     &MY_R     &BLE_USB  &kp  SQT   &trans    &SC_U_L   &SC_D_R   &trans
+&mt LALT    CAPS &kp LEFT   &kp DOWN  &kp RIGHT &kp F3    &RBKT_NUHS &trans    &kp HOME  &kp PG_UP &kp  INT1
 &mt Rc(LS_) LS_  &kp X      &VOL_DN   &VOL_UP   &kp EQUAL &NEW_8977  &kp DEL   &kp END   &kp PG_DN &kp  SLASH
-&trans           &tog 1     &kp PSCRN &mo 2     &kp BSPC             &kp K_APP &kp F10   &kp F11   &kp  F12
+&trans           &tog 1     &kp PSCRN &none     &kp BSPC             &kp K_APP &kp F10   &kp F11   &kp  F12
             >;
         };
         //3:Number + Bluetooth /マウス高速
@@ -299,7 +299,7 @@
 &kp N1           &MY_N2     &kp  N3   &kp N4    &kp  N5   &kp  N6    &kp  N7   &kp N8    &kp N9    &N0_PIPE
 &MY_U            &MY_L      &MY_D     &MY_R     &BLE_USB  &kp  SQT   &trans    &SC_U_L   &SC_D_R   &trans
 &mt Rc(LS_) LS_  &kp X      &VOL_DN   &VOL_UP   &kp EQUAL &kp  LBKT  &mkp LCLK &trans    &kp DOT   &kp  SLASH
-&trans           &trans     &mkp RCLK &kp K_APP &ind_bat             &mo  3    &BLE0     &BLE1     &BLE2
+&trans           &trans     &mkp RCLK &kp K_APP &ind_bat             &none     &BLE0     &BLE1     &BLE2
             >;
         };
         //4:Custom + Function Keys + Vol
@@ -307,7 +307,7 @@
 &MY_Q_2          &kp F2     &kp UP    &kp F4    &kp F5    &kp  F6    &kp F7    &kp F8    &kp F9    &kp  P
 &mt LALT    CAPS &kp LEFT   &kp DOWN  &kp RIGHT &kp F3    &RBKT_NUHS &trans    &kp HOME  &kp PG_UP &kp  INT1
 &mt Rc(LS_) LS_  &kp X      &VOL_DN   &VOL_UP   &kp EQUAL &NEW_8977  &kp DEL   &kp END   &kp PG_DN &kp  SLASH
-&trans           &tog 1     &kp PSCRN &mo 4     &kp BSPC             &kp K_APP &kp F10   &kp F11   &kp  F12
+&trans           &tog 1     &kp PSCRN &none     &kp BSPC             &kp K_APP &kp F10   &kp F11   &kp  F12
             >;
         };
         //5:Number + Bluetooth /マウス高速
@@ -315,7 +315,7 @@
 &kp N1           &MY_N2     &kp  N3   &kp N4    &kp  N5   &kp  N6    &kp  N7   &kp N8    &kp N9    &N0_PIPE
 &MY_U            &MY_L      &MY_D     &MY_R     &BLE_USB  &kp  SQT   &trans    &SC_U_L   &SC_D_R   &trans
 &mt Rc(LS_) LS_  &kp X      &VOL_DN   &VOL_UP   &kp EQUAL &kp  LBKT  &mkp LCLK &trans    &kp DOT   &kp  SLASH
-&trans           &trans     &mkp RCLK &kp K_APP &ind_bat             &mo  5    &BLE0     &BLE1     &BLE2
+&trans           &trans     &mkp RCLK &kp K_APP &ind_bat             &none     &BLE0     &BLE1     &BLE2
             >;
         };
     };
