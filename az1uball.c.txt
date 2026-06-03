@@ -25,7 +25,7 @@
 
 #define BLE_SLEEP_MS    5*1000 // BLE時の未入力待ち時間(ms)
 #define IDLE_MS        30*1000 // 待機時間
-#define DEEP_SLEEP_MS 600*1000 // 完全スリープ。
+#define DEEP_SLEEP_MS 300*1000 // 完全スリープ。
 
 
 #define MOUSE_VAL_X     18   // マウス移動量
@@ -194,13 +194,13 @@ static void az1uball_polling(struct k_timer *timer)
     if ( zmk_usb_is_powered() || (k_uptime_get() - data->last_activity_time <= BLE_SLEEP_MS) ) {
         k_timer_start(&data->polling_timer, NOR_POLL_MS, NOR_POLL_MS);
     }
-    //idle時間経過で、超低速ポーリング。※マウス操作なしで30秒経過
+    //完全停止・ポーリングしない。キー割込みでのみ復帰。
+    else if (data->layer != 1 && k_uptime_get() - data->last_activity_time >= DEEP_SLEEP_MS){
+        ;
+    }
+    //idle時間経過で、超低速ポーリング。※キー操作・マウス操作なしで30秒経過
     else if (k_uptime_get() - data->last_activity_time >= IDLE_MS){
         k_timer_start(&data->polling_timer, JIG_POLL_MS, JIG_POLL_MS);
-    }
-    //完全停止・ポーリングしない。
-    else if (&data->layer != 1 && k_uptime_get() - data->last_activity_time >= DEEP_SLEEP_MS){
-        ;
     }
     //
     //低サイクル:else
