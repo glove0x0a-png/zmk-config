@@ -191,7 +191,7 @@
         MY_SPACE: MY_SPACE {
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
-            bindings = <&MY_SPACE_1>, <&kp LS(Z);
+            bindings = <&MY_SPACE_1>, <&kp LS(Z)>;
             mods = <MOD_LSFT>;
         };
 //////////十字キー
