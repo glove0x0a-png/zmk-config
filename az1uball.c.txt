@@ -44,7 +44,7 @@ struct zmk_behavior_binding binding = {
 
 bool First_flg = false;
 int  direction = -1;
-//bool GUI_flg = false;
+extern volatile bool zmk_sleep_inhibit; //スリープ抑止フラグ
 
 ///////////////////////////////////////////////////////////////////////////
 // #01.心臓部
@@ -53,15 +53,15 @@ void az1uball_read_data_work(struct k_work *work)
     uint8_t buf[5]; //buf
     uint32_t now = k_uptime_get(); //実行時刻
     struct az1uball_data *data = CONTAINER_OF(work, struct az1uball_data, work); //az1uball
+    data->layer = zmk_keymap_highest_layer_active(); //現レイヤ
+    zmk_sleep_inhibit = ( data->layer == 1 ); //レイヤー1ならスリープ抑止
+
     const struct az1uball_config *config = data->dev->config; //config
     float scaling = data->scaling_factor; //比率
 
-    int layer = zmk_keymap_highest_layer_active(); //現レイヤ
-    data->layer = layer;
-                                //    if( layer == 4 ){//        if (!First_flg )//        {//            First_flg = true;//            for (int i = 0; i < 30; i++) input_report_rel(data->dev, INPUT_REL_Y,-1, true , K_NO_WAIT);//        }//    } else First_flg = false;
     bool lshift_pressed = zmk_hid_get_explicit_mods() & 0x02;  //左Shift
     bool rCtrl_pressed  = zmk_hid_get_explicit_mods() & 0x10;  //右Ctr
-    bool lgui_pressed   = zmk_hid_get_explicit_mods()  & 0x08;   //左GUI
+    bool lgui_pressed   = zmk_hid_get_explicit_mods() & 0x08;   //左GUI
     if( lgui_pressed || rCtrl_pressed ){
         if (!First_flg )
         {
@@ -113,14 +113,13 @@ void az1uball_read_data_work(struct k_work *work)
     //ボタン押下があれば(レイヤー操作が複雑なのでJのみ)
     if ( btn_push != data->sw_pressed ){
         data->sw_pressed = btn_push;
-        if (layer == 0 || layer == 1 ) { //スクロールレイヤ
+        if (data->layer == 0 || data->layer == 1 ) { //スクロールレイヤ
             binding.behavior_dev="key_press";
             binding.param1 = 0x0D; 
             zmk_behavior_invoke_binding(&binding, event, btn_push);  //Jキー扱い
         }
-                                  //        else if(layer == 2){//            binding.behavior_dev="key_press";//            binding.param1 = 0x3E; //F5//            zmk_behavior_invoke_binding(&binding, event, btn_push);//        } else {//            binding.behavior_dev="key_press";//            binding.param1 = 0x3E; //F5//            zmk_behavior_invoke_binding(&binding, event, btn_push);//        }
     }
-    if (layer == 2 || layer == 4 ) { //スクロールレイヤ
+    if (data->layer == 2 || data->layer == 4 ) { //スクロールレイヤ
         if (abs(delta_x) > abs(delta_y)) delta_y = 0; else delta_x = 0; //縦 or 横のみ抽出
         binding.behavior_dev="key_press";
         binding.param1 = 0xE0;
@@ -164,8 +163,7 @@ void az1uball_read_data_work(struct k_work *work)
         return;
     } else if (delta_x != 0 || delta_y != 0) { //マウス処理
         scaling /= 3.0f; //原則:低速
-        if (layer == 3 || layer == 5 )     scaling      *= 6.0f; //レイヤー:高速
-                        //        if (layer == 3)     scaling      *= 4.0f; //レイヤー:高速 //        else if (layer == 4) scaling *= 9.0f; //Ctrl:超高速
+        if (data->layer == 3 || data->layer == 5 )     scaling      *= 6.0f; //レイヤー:高速
         for (int i = 0; i < 3; i++) { //移動を滑らかに
             input_report_rel(data->dev, INPUT_REL_X, delta_x / 3 * scaling, false, K_NO_WAIT);
             input_report_rel(data->dev, INPUT_REL_Y, delta_y / 3 * scaling, true , K_NO_WAIT);
@@ -173,15 +171,11 @@ void az1uball_read_data_work(struct k_work *work)
     }
 
     //★ジグラーレイヤー:ジグラー操作(Layer1なら、4分ごとに必ず実行・独立)
-    if ( layer == 1 && now - data->last_jig_time >= JIG_WAIT_MS ) {
+    if ( data->layer == 1 && now - data->last_jig_time >= JIG_WAIT_MS ) {
         data->last_jig_time = k_uptime_get();
         input_report_rel(data->dev, INPUT_REL_X, 1, true, K_NO_WAIT);
         k_sleep(K_MSEC(10));
         input_report_rel(data->dev, INPUT_REL_X, -1, true, K_NO_WAIT);
-
-        //イベント発火
-        raise_zmk_position_state_changed((struct zmk_position_state_changed){.position = 9999,.state = true ,.timestamp = k_uptime_get()});
-        raise_zmk_position_state_changed((struct zmk_position_state_changed){.position = 9999,.state = false,.timestamp = k_uptime_get()});
     }
     return;
 }
@@ -195,11 +189,15 @@ static void az1uball_polling(struct k_timer *timer)
     //サイクルセット
     k_timer_stop( &data->polling_timer);
 
-    //高サイクル:USB接続 || キー操作・マウス操作から一定時間以内
-    if ( zmk_usb_is_powered() || (k_uptime_get() - data->last_activity_time <= BLE_SLEEP_MS) ) {
+    //高サイクル:USB接続
+    if ( zmk_usb_is_powered() ){
         k_timer_start(&data->polling_timer, NOR_POLL_MS, NOR_POLL_MS);
     }
-    //完全停止・ポーリングしない。キー割込みでのみ復帰。
+    //高サイクル:キー操作・マウス操作から一定時間以内
+    else if ( k_uptime_get() - data->last_activity_time <= BLE_SLEEP_MS ) {
+        k_timer_start(&data->polling_timer, NOR_POLL_MS, NOR_POLL_MS);
+    }
+    //完全停止：キー割込みでのみ復帰。…多分無意味。ポーリングを生かしてジグラーだけ動作させても、deep sleepが優先された。
     else if (data->layer != 1 && k_uptime_get() - data->last_activity_time >= DEEP_SLEEP_MS){
         ;
     }
@@ -208,7 +206,7 @@ static void az1uball_polling(struct k_timer *timer)
         k_timer_start(&data->polling_timer, JIG_POLL_MS, JIG_POLL_MS);
     }
     //
-    //低サイクル:else
+    //低サイクル:else 上記以外(BLE接続、キー・マウス操作から5秒～30秒以内)
     else{
         k_timer_start(&data->polling_timer, BLE_POLL_MS, BLE_POLL_MS);
     }
