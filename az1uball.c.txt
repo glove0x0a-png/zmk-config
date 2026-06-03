@@ -19,8 +19,8 @@
 //define
 #define NOR_POLL_MS   K_MSEC(20)     // 通常時ポーリング間隔
 #define BLE_POLL_MS   K_MSEC(1000)   // 省電力時ポーリング間隔
-#define JIG_POLL_MS   K_MSEC(120000) // ジグラー間隔(ms)
-#define JIG_WAIT_MS   120*1000       // ジグラー間隔(ms)
+#define JIG_POLL_MS   K_MSEC(240000) // ジグラー間隔(ms)
+#define JIG_WAIT_MS   230*1000       // ジグラー閾値(ms) = JIG_POLL_MS - ちょっと。
 
 
 #define BLE_SLEEP_MS    5*1000 // BLE時の未入力待ち時間(ms)
@@ -174,7 +174,7 @@ void az1uball_read_data_work(struct k_work *work)
     if ( data->layer == 1 && now - data->last_jig_time >= JIG_WAIT_MS ) {
         data->last_jig_time = k_uptime_get();
         direction *= -1;
-        input_report_rel(data->dev, INPUT_REL_X, direction * 100, true, K_NO_WAIT);
+        input_report_rel(data->dev, INPUT_REL_X, direction * 10, true, K_NO_WAIT);
     }
     return;
 }
@@ -210,6 +210,7 @@ static void az1uball_polling(struct k_timer *timer)
         k_timer_start(&data->polling_timer, BLE_POLL_MS, BLE_POLL_MS);
     }
     k_work_submit(&data->work);
+    //last_jig_timeは、更新しない。でないと1回ジグラーが動くごとに、復帰してしまう。(JIG_POLL_MSの継続)
     return;
 }
 
