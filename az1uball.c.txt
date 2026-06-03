@@ -20,7 +20,7 @@
 #define NOR_POLL_MS   K_MSEC(20)     // 通常時ポーリング間隔
 #define BLE_POLL_MS   K_MSEC(1000)   // 省電力時ポーリング間隔
 #define JIG_POLL_MS   K_MSEC(240000) // ジグラー間隔(ms)
-#define JIG_WAIT_MS   230*1000       // ジグラー間隔(ms) - ちょっとだけ。
+#define JIG_WAIT_MS   240*1000       // ジグラー間隔(ms)
 
 
 #define BLE_SLEEP_MS    5*1000 // BLE時の未入力待ち時間(ms)
@@ -84,7 +84,7 @@ void az1uball_read_data_work(struct k_work *work)
     else if( abs((int16_t)buf[2]) > abs(buf[3])) delta_y=-MOUSE_VAL_Y; //buf[2]=上
 
     bool  btn_push  = (buf[4] & MSK_SWITCH_STATE) != 0; //true:押下、false:未押下
-    if ( now - data->last_activity_time < ACCEL_CANCEL_MS ){ //加速度加算・最後の操作あり
+    if ( now - data->last_jig_time < ACCEL_CANCEL_MS ){ //加速度加算・最後の操作あり
       if(( data->pre_x > 0 && delta_x > 0 ) || ( data->pre_x < 0 && delta_x < 0 )) delta_x = data->pre_x * ACCEL_VAL;
       if(( data->pre_y > 0 && delta_y > 0 ) || ( data->pre_y < 0 && delta_y < 0 )) delta_y = data->pre_y * ACCEL_VAL;
     } else {
@@ -104,7 +104,10 @@ void az1uball_read_data_work(struct k_work *work)
         data->pre_y=delta_y;
     }
     //マウス操作
-    if ( delta_x != 0 || delta_y != 0 || btn_push != data->sw_pressed) data->last_activity_time = now; //前回操作時間更新
+    if ( delta_x != 0 || delta_y != 0 || btn_push != data->sw_pressed){
+        data->last_activity_time = now; //前回操作時間更新
+        data->last_jig_time      = now;
+    }
 
     //ボタン押下があれば(レイヤー操作が複雑なのでJのみ)
     if ( btn_push != data->sw_pressed ){
@@ -187,12 +190,12 @@ static void az1uball_polling(struct k_timer *timer)
     //サイクルセット
     k_timer_stop( &data->polling_timer);
 
-    //高サイクル:USB接続 || マウス操作から一定時間以内
+    //高サイクル:USB接続 || キー操作・マウス操作から一定時間以内
     if ( zmk_usb_is_powered() || (k_uptime_get() - data->last_activity_time <= BLE_SLEEP_MS) ) {
         k_timer_start(&data->polling_timer, NOR_POLL_MS, NOR_POLL_MS);
     }
     //idle時間経過で、超低速ポーリング。※マウス操作なしで30秒経過
-    else if (k_uptime_get() - data->last_activity_time >= IDLE_MS){
+    else if (k_uptime_get() - data->last_jig_time >= IDLE_MS){
         k_timer_start(&data->polling_timer, JIG_POLL_MS, JIG_POLL_MS);
     }
     //完全停止・ポーリングしない。
@@ -282,8 +285,10 @@ static int az1uball_event_handler(const zmk_event_t *eh)
         struct az1uball_data *data = &az1uball_data_0;
         //サイクルセット
         k_timer_stop( &data->polling_timer);
-        //キー押下時だけなら、低頻度ポーリングで復帰。
-        k_timer_start(&data->polling_timer, BLE_POLL_MS, BLE_POLL_MS);
+        //キー押下時時は高速ポーリング復帰
+        k_timer_start(&data->polling_timer, NOR_POLL_MS, NOR_POLL_MS);
+        //最終操作時間更新
+        &data->last_activity_time = k_uptime_get();
     }
     return 0;
 }
