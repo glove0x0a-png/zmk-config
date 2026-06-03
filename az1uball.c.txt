@@ -98,7 +98,7 @@ void az1uball_read_data_work(struct k_work *work)
     else if ( delta_y <-MOUSE_VAL_MAX_Y ) delta_y =-MOUSE_VAL_MAX_Y; //上限制御
 
     if( delta_x != 0 || delta_y != 0 ){
-        froat mag = sqrt( delta_x*delta_x + delta_y * delta_y);
+        float mag = sqrt( delta_x*delta_x + delta_y * delta_y);
         delta_x = delta_x * fabsf(delta_x) / mag; //角度計算 cos変換 
         delta_y = delta_y * fabsf(delta_y) / mag; //         sin変換
         data->pre_x=delta_x;//前回移動量保存。
