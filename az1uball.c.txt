@@ -84,7 +84,7 @@ void az1uball_read_data_work(struct k_work *work)
     else if( abs((int16_t)buf[2]) > abs(buf[3])) delta_y=-MOUSE_VAL_Y; //buf[2]=上
 
     bool  btn_push  = (buf[4] & MSK_SWITCH_STATE) != 0; //true:押下、false:未押下
-    if ( now - data->last_jig_time < ACCEL_CANCEL_MS ){ //加速度加算・最後の操作あり
+    if ( now - data->last_activity_time < ACCEL_CANCEL_MS ){ //加速度加算・最後の操作あり
       if(( data->pre_x > 0 && delta_x > 0 ) || ( data->pre_x < 0 && delta_x < 0 )) delta_x = data->pre_x * ACCEL_VAL;
       if(( data->pre_y > 0 && delta_y > 0 ) || ( data->pre_y < 0 && delta_y < 0 )) delta_y = data->pre_y * ACCEL_VAL;
     } else {
@@ -98,8 +98,9 @@ void az1uball_read_data_work(struct k_work *work)
     else if ( delta_y <-MOUSE_VAL_MAX_Y ) delta_y =-MOUSE_VAL_MAX_Y; //上限制御
 
     if( delta_x != 0 || delta_y != 0 ){
-        delta_x = delta_x * abs(delta_x) / sqrt( delta_x*delta_x + delta_y * delta_y); //角度計算 cos変換 
-        delta_y = delta_y * abs(delta_y) / sqrt( delta_x*delta_x + delta_y * delta_y); //         sin変換
+        froat mag = sqrt( delta_x*delta_x + delta_y * delta_y);
+        delta_x = delta_x * fabsf(delta_x) / mag; //角度計算 cos変換 
+        delta_y = delta_y * fabsf(delta_y) / mag; //         sin変換
         data->pre_x=delta_x;//前回移動量保存。
         data->pre_y=delta_y;
     }
@@ -177,6 +178,10 @@ void az1uball_read_data_work(struct k_work *work)
         input_report_rel(data->dev, INPUT_REL_X, 1, true, K_NO_WAIT);
         k_sleep(K_MSEC(10));
         input_report_rel(data->dev, INPUT_REL_X, -1, true, K_NO_WAIT);
+
+        //イベント発火
+        raise_zmk_position_state_changed((struct zmk_position_state_changed){.position = 9999,.state = true ,.timestamp = k_uptime_get()});
+        raise_zmk_position_state_changed((struct zmk_position_state_changed){.position = 9999,.state = false,.timestamp = k_uptime_get()});
     }
     return;
 }
@@ -278,6 +283,9 @@ static int az1uball_event_handler(const zmk_event_t *eh)
 {
     const struct zmk_position_state_changed *ev = as_zmk_position_state_changed(eh);
     if (!ev) {
+        return 0;
+    }
+    if (ev->position == 9999){
         return 0;
     }
     /* 押下時のみ処理 */
