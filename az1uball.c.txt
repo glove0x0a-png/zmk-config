@@ -173,9 +173,9 @@ void az1uball_read_data_work(struct k_work *work)
     //★ジグラーレイヤー:ジグラー操作(Layer1なら、4分ごとに必ず実行・独立)
     if ( data->layer == 1 && now - data->last_jig_time >= JIG_WAIT_MS ) {
         data->last_jig_time = k_uptime_get();
-        input_report_rel(data->dev, INPUT_REL_X, 1, true, K_NO_WAIT);
-        k_sleep(K_MSEC(10));
-        input_report_rel(data->dev, INPUT_REL_X, -1, true, K_NO_WAIT);
+        input_report_rel(data->dev, INPUT_REL_X, 2, true, K_NO_WAIT);
+        k_sleep(K_MSEC(20));
+        input_report_rel(data->dev, INPUT_REL_X, -2, true, K_NO_WAIT);
     }
     return;
 }
