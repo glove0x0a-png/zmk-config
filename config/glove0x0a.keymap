@@ -13,7 +13,7 @@
 #include <dt-bindings/zmk/pointing.h>
 #include <dt-bindings/input/input-event-codes.h>
 
-#define HOLD_MS 200
+#define HOLD_MS 150
 #define DANCE_MS 200
 #define PIPE_ LS(INT3)
 #define LS_   LSHFT
@@ -123,14 +123,6 @@
     };
 ////behaviors
     behaviors {
-//mt独自
-        mt2: mt2 {
-            compatible = "zmk,behavior-hold-tap";
-            #binding-cells = <2>;
-            tapping-term-ms = <150>;   // ← ここで短く設定
-            flavor = "balanced";
-            bindings = <&kp LS_ &kp Z>;
-        };
 //★mod-morph-----------------------------------------------
         //ボリューム操作(Win->UNIX)
         VOL_UP: VOL_UP {
@@ -290,7 +282,7 @@
         layer_qwerty { bindings = <
 &mt Q       TAB  &mt LGUI W &kp  E    &kp R     &kp T     &kp  Y     &kp  U    &kp I     &kp O     &kp  MINUS
 &mt RCTRL   A    &kp S      &kp  D    &kp F     &kp G     &kp  H     &none     &kp K     &kp L     &kp  SEMI
-&mt2 0 0         &kp X      &kp  C    &kp V     &kp B     &kp  N     &kp  M    &kp COMMA &kp UP    &kp  ENTER
+&mt LS_     Z    &kp X      &kp  C    &kp V     &kp B     &kp  N     &kp  M    &kp COMMA &kp UP    &kp  ENTER
 &kp LCTRL        &kp LALT   &mkp LCLK &mo 2     &kp SPACE            &mo  3    &kp LEFT  &kp DOWN  &kp  RIGHT
           >;
         };
@@ -317,7 +309,7 @@
         layer_fn4    { bindings = <
 &MY_Q_2          &kp F2     &kp UP    &kp F4    &kp F5    &kp  F6    &kp F7    &kp F8    &kp F9    &kp  P
 &mt LALT    CAPS &kp LEFT   &kp DOWN  &kp RIGHT &kp F3    &RBKT_NUHS &trans    &kp HOME  &kp PG_UP &kp  INT1
-&mt Rc(LS_) LS_  &kp Z      &VOL_DN   &VOL_UP   &kp EQUAL &NEW_8977  &kp DEL   &kp END   &kp PG_DN &kp  SLASH
+&kp LS_          &kp Z      &VOL_DN   &VOL_UP   &kp EQUAL &NEW_8977  &kp DEL   &kp END   &kp PG_DN &kp  SLASH
 &trans           &tog 1     &kp PSCRN &none     &kp BSPC             &kp K_APP &kp F10   &kp F11   &kp  F12
             >;
         };
