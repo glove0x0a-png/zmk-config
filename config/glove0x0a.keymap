@@ -127,8 +127,9 @@
         mt2: mt2 {
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
-            tapping-term-ms = <120>;   // ← ここで短く設定
+            tapping-term-ms = <150>;   // ← ここで短く設定
             flavor = "balanced";
+            bindings = <&kp LS_>, <&kp Z>;
         };
 //★mod-morph-----------------------------------------------
         //ボリューム操作(Win->UNIX)
@@ -288,8 +289,8 @@
         //0:normal
         layer_qwerty { bindings = <
 &mt Q       TAB  &mt LGUI W &kp  E    &kp R     &kp T     &kp  Y     &kp  U    &kp I     &kp O     &kp  MINUS
-&mt RCTRL   A    &kp S      &MY_kp_D  &kp F     &kp G     &kp  H     &none     &kp K     &kp L     &kp  SEMI
-&mt2 LS_    Z    &kp X      &kp  C    &kp V     &kp B     &kp  N     &kp  M    &kp COMMA &kp UP    &kp  ENTER
+&mt RCTRL   A    &kp S      &kp  D    &kp F     &kp G     &kp  H     &none     &kp K     &kp L     &kp  SEMI
+&mt2             &kp X      &kp  C    &kp V     &kp B     &kp  N     &kp  M    &kp COMMA &kp UP    &kp  ENTER
 &kp LCTRL        &kp LALT   &mkp LCLK &mo 2     &kp SPACE            &mo  3    &kp LEFT  &kp DOWN  &kp  RIGHT
           >;
         };
