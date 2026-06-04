@@ -50,6 +50,7 @@
 //2026.06.03 #1130 『az1uball.c』          ポーリングを節電方式に。
 //2026.04.30 #1084 『az1uball.c』          ZIGGLER = mo 1 レイヤ & ON/OFF 物理スイッチ。
 //■■カスタムbehavior*******************************************************************************************
+//2026.06.04 #1146 『behavior_hold_tap.c』 zキーとshift同居。これに伴い、A-Z→A-Zの場合にtap扱いへ。
 //2026.05.20 #1101 『behavior_hold_tap.c』 1.他キー割込み時はtap扱い。2.LALTのみhold扱い。3.Layer3の高速を加速。
 //2026.03.14 #919  『behavior_mod_morph.c』Q、TABへ。mod-morphの修飾キー(CTRL/ALT)マスク削除。例) ALT + Q(ALT時TAB)→ALT + TABへ。GUIはESC割込み追加。
 //2026.03.13 #881  『behavior_tap_dance.c』tap-danceの自動リリース削除、押しっぱなしでホールド/即リリースは後追い。
@@ -125,7 +126,7 @@
 //mt独自
         mt2: mt2 {
             compatible = "zmk,behavior-hold-tap";
-            label = "MT2";
+            #binding-cells = <2>;
             tapping-term-ms = <120>;   // ← ここで短く設定
             flavor = "balanced";
         };
