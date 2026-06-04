@@ -38,11 +38,13 @@
 //2026.03.01 #847  Ctrlキーを再配置、BLE機能関連のキー再配置
 //2026.02.28 #832  左Fnのレイヤー上段にFXを集約。整理。
 //■■az1uball*******************************************************************************************
+//2026.06.03 #1145 『az1uball.c』          キー検知の際に、画面描写がすぐ行われるように、polling周期を最速へ。
 //2026.05.30 #1113 『az1uball.c』          R_CTR検知でマウス移動。
 //2026.05.20 #1101 『az1uball.c』          GUI検知時にマウス移動。
 //2026.03.01 #843  『az1uball.c』          デバッグ:AZ1UBALL:加速度上限制御。//2026.03.01 #842 デバッグ:AZ1UBALL:前回移動量のクリアを明記。//2026.03.01 #841 デバッグ:AZ1UBALL:前回移動量の保存条件を変更。//2026.03.01 #838 デバッグ:AZ1UBALL:cos/sinの符号不良。//2026.03.01 #837 デバッグ:AZ1UBALL:方向検出不良(if右else左else下else上->if右else左 if下else上)//2026.02.28 #834 デバッグ:AZ1UBALL:加速度不良。
 //2026.02.28 #828  『az1uball.c』          I2C & AZ1UBALLのカスタマイズ。移動量,角度,加速度。
 //■■ziggler*******************************************************************************************
+//2026.06.03 #1145 『az1uball.c』          ジグラー周期で必ず動作するように、マウス幅を10へ(往復)。周期 > 閾値となるように調整。割込み時もジグラー見送り。
 //2026.06.03 #1136 『activity.c』          deep sleep無効モード実装。
 //2026.06.03 #1136 『az1uball.c』          keymap・節電のため、layer 1をtogに変更。deep sleep無効モード実装。(以前は常に割込みが効いていたので、deep sleepを抑止できてたっぽい)
 //2026.06.03 #1130 『az1uball.c』          ポーリングを節電方式に。
@@ -120,6 +122,13 @@
     };
 ////behaviors
     behaviors {
+//mt独自
+        mt2: mt2 {
+            compatible = "zmk,behavior-hold-tap";
+            label = "MT2";
+            tapping-term-ms = <120>;   // ← ここで短く設定
+            flavor = "balanced";
+        };
 //★mod-morph-----------------------------------------------
         //ボリューム操作(Win->UNIX)
         VOL_UP: VOL_UP {
@@ -279,7 +288,7 @@
         layer_qwerty { bindings = <
 &mt Q       TAB  &mt LGUI W &kp  E    &kp R     &kp T     &kp  Y     &kp  U    &kp I     &kp O     &kp  MINUS
 &mt RCTRL   A    &kp S      &MY_kp_D  &kp F     &kp G     &kp  H     &none     &kp K     &kp L     &kp  SEMI
-&kp LS_          &kp Z      &kp  C    &kp V     &kp B     &kp  N     &kp  M    &kp COMMA &kp UP    &kp  ENTER
+&mt2 LS_    Z    &kp X      &kp  C    &kp V     &kp B     &kp  N     &kp  M    &kp COMMA &kp UP    &kp  ENTER
 &kp LCTRL        &kp LALT   &mkp LCLK &mo 2     &kp SPACE            &mo  3    &kp LEFT  &kp DOWN  &kp  RIGHT
           >;
         };
@@ -290,7 +299,7 @@
         layer_fn2    { bindings = <
 &MY_Q_2          &kp F2     &kp UP    &kp F4    &kp F5    &kp  F6    &kp F7    &kp F8    &kp F9    &kp  P
 &mt LALT    CAPS &kp LEFT   &kp DOWN  &kp RIGHT &kp F3    &RBKT_NUHS &trans    &kp HOME  &kp PG_UP &kp  INT1
-&mt Rc(LS_) LS_  &kp X      &VOL_DN   &VOL_UP   &kp EQUAL &NEW_8977  &kp DEL   &kp END   &kp PG_DN &kp  SLASH
+&mt Rc(LS_) LS_  &kp Z      &VOL_DN   &VOL_UP   &kp EQUAL &NEW_8977  &kp DEL   &kp END   &kp PG_DN &kp  SLASH
 &trans           &tog 1     &kp PSCRN &none     &kp BSPC             &kp K_APP &kp F10   &kp F11   &kp  F12
             >;
         };
@@ -298,7 +307,7 @@
         layer_fn3    { bindings = <
 &kp N1           &MY_N2     &kp  N3   &kp N4    &kp  N5   &kp  N6    &kp  N7   &kp N8    &kp N9    &N0_PIPE
 &MY_U            &MY_L      &MY_D     &MY_R     &BLE_USB  &kp  SQT   &trans    &SC_U_L   &SC_D_R   &trans
-&mt Rc(LS_) LS_  &kp X      &VOL_DN   &VOL_UP   &kp EQUAL &kp  LBKT  &mkp LCLK &trans    &kp DOT   &kp  SLASH
+&mt Rc(LS_) LS_  &kp Z      &VOL_DN   &VOL_UP   &kp EQUAL &kp  LBKT  &mkp LCLK &trans    &kp DOT   &kp  SLASH
 &trans           &trans     &mkp RCLK &kp K_APP &ind_bat             &none     &BLE0     &BLE1     &BLE2
             >;
         };
@@ -306,7 +315,7 @@
         layer_fn4    { bindings = <
 &MY_Q_2          &kp F2     &kp UP    &kp F4    &kp F5    &kp  F6    &kp F7    &kp F8    &kp F9    &kp  P
 &mt LALT    CAPS &kp LEFT   &kp DOWN  &kp RIGHT &kp F3    &RBKT_NUHS &trans    &kp HOME  &kp PG_UP &kp  INT1
-&mt Rc(LS_) LS_  &kp X      &VOL_DN   &VOL_UP   &kp EQUAL &NEW_8977  &kp DEL   &kp END   &kp PG_DN &kp  SLASH
+&mt Rc(LS_) LS_  &kp Z      &VOL_DN   &VOL_UP   &kp EQUAL &NEW_8977  &kp DEL   &kp END   &kp PG_DN &kp  SLASH
 &trans           &tog 1     &kp PSCRN &none     &kp BSPC             &kp K_APP &kp F10   &kp F11   &kp  F12
             >;
         };
@@ -314,7 +323,7 @@
         layer_fn5    { bindings = <
 &kp N1           &MY_N2     &kp  N3   &kp N4    &kp  N5   &kp  N6    &kp  N7   &kp N8    &kp N9    &N0_PIPE
 &MY_U            &MY_L      &MY_D     &MY_R     &BLE_USB  &kp  SQT   &trans    &SC_U_L   &SC_D_R   &trans
-&mt Rc(LS_) LS_  &kp X      &VOL_DN   &VOL_UP   &kp EQUAL &kp  LBKT  &mkp LCLK &trans    &kp DOT   &kp  SLASH
+&mt Rc(LS_) LS_  &kp Z      &VOL_DN   &VOL_UP   &kp EQUAL &kp  LBKT  &mkp LCLK &trans    &kp DOT   &kp  SLASH
 &trans           &trans     &mkp RCLK &kp K_APP &ind_bat             &none     &BLE0     &BLE1     &BLE2
             >;
         };
