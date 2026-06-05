@@ -20,13 +20,13 @@
 //define
 #define NOR_POLL_MS   K_MSEC(20)     // 通常時ポーリング間隔
 #define BLE_POLL_MS   K_MSEC(1000)   // 省電力時ポーリング間隔
-#define JIG_POLL_MS   K_MSEC(230000) // ジグラー間隔(ms)  (4分 - 待機時間10秒)
-#define JIG_WAIT_MS   229*1000       // ジグラー閾値(ms) = JIG_POLL_MS - ちょっと。
+#define JIG_POLL_MS   K_MSEC(240000) // ジグラー間隔(ms)
+#define JIG_WAIT_MS   239*1000       // ジグラー閾値(ms) = JIG_POLL_MS - ちょっと。
 
 
 #define BLE_SLEEP_MS    5*1000 // BLE時の未入力待ち時間(ms)
 #define IDLE_MS        10*1000 // 待機突入時間
-#define DEEP_SLEEP_MS 180*1000 // 完全スリープ。
+//                                                                   #define DEEP_SLEEP_MS 300*1000 // 止める必要なし・止めてもスリープに入る
 
 
 #define MOUSE_VAL_X     18   // マウス移動量
@@ -68,9 +68,9 @@ void az1uball_read_data_work(struct k_work *work)
         {
             data->First_flg = true;
             direction *= -1;
-            for (int i = 0; i < 4; i++) {
+            for (int i = 0; i < 5; i++) {
                 input_report_rel(data->dev, INPUT_REL_Y, direction, true , K_NO_WAIT);
-                k_sleep(K_MSEC( 2));
+                k_sleep(K_MSEC( 5));
             }
         }
     }
@@ -202,9 +202,9 @@ static void az1uball_polling(struct k_timer *timer)
         k_timer_start(&data->polling_timer, NOR_POLL_MS, NOR_POLL_MS);
     }
     //完全停止：キー割込みでのみ復帰。…多分無意味。ポーリングを生かしてジグラーだけ動作させても、deep sleepが優先された。
-    else if (data->layer != 1 && k_uptime_get() - data->last_activity_time >= DEEP_SLEEP_MS){
-        ;
-    }
+    //else if (data->layer != 1 && k_uptime_get() - data->last_activity_time >= DEEP_SLEEP_MS){
+    //    ;
+    //}
     //idle時間経過で、超低速ポーリング。※キー操作・マウス操作なしで30秒経過
     else if (k_uptime_get() - data->last_activity_time >= IDLE_MS){
         k_timer_start(&data->polling_timer, JIG_POLL_MS, JIG_POLL_MS);
