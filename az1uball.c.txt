@@ -67,9 +67,13 @@ void az1uball_read_data_work(struct k_work *work)
         {
             data->First_flg = true;
             direction *= -1;
-            for (int i = 0; i < 10; i++) input_report_rel(data->dev, INPUT_REL_Y, direction, true , K_NO_WAIT);
+            for (int i = 0; i < 10; i++) {
+                input_report_rel(data->dev, INPUT_REL_Y, direction, true , K_NO_WAIT);
+                k_sleep(K_MSEC(10));
+            }
         }
-    } else data->First_flg = false;
+    }
+    data->First_flg = false;
 
 
     struct zmk_behavior_binding_event event = { .position = 0,.timestamp = now,.layer = 0,}; //event
