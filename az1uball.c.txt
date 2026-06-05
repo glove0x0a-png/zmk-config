@@ -316,4 +316,4 @@ static int az1uball_event_handler(const zmk_event_t *eh)
 }
 
 ZMK_LISTENER(az1uball, az1uball_event_handler);
-ZMK_SUBSCRIPTION(az1uball, zmk_position_state_changed);
+ZMK_SUBSCRIPTION(az1uball, zmk_keycode_state_changed);
