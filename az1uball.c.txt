@@ -279,25 +279,39 @@ extern struct az1uball_data az1uball_data_0;
 // #21.割込み検知
 static int az1uball_event_handler(const zmk_event_t *eh)
 {
-    const struct zmk_position_state_changed *ev = as_zmk_position_state_changed(eh);
+    const struct zmk_keycode_state_changed *ev = as_zmk_keycode_state_changed(eh);
     if (!ev) {
         return 0;
     }
-    /* 押下時のみ処理 */
-    if (ev->state) {
-        struct az1uball_data *data = &az1uball_data_0;
-        if ( zmk_keymap_highest_layer_active() > 1     //レイヤー変更 or
-             || zmk_hid_get_explicit_mods() & 0x10     //右Ctr        or
-             || zmk_hid_get_explicit_mods() & 0x08 ){  //左GUI
-            //サイクルセット
-            k_timer_stop( &data->polling_timer);
-            //高速ポーリング復帰
-            k_timer_start(&data->polling_timer, NOR_POLL_MS, NOR_POLL_MS);
-            //最終操作時間更新
-            data->last_activity_time = k_uptime_get();
-            data->last_jig_time      = k_uptime_get();
-        }
+
+    // 押下時のみ処理
+    if (!ev->state) {
+        return 0;
     }
+
+    struct az1uball_data *data = &az1uball_data_0;
+
+    /* ① 右Ctrl or 左GUI → 時間更新なしで高速ポーリング */
+    bool rctrl = zmk_hid_get_explicit_mods() & 0x10;
+    bool lgui  = zmk_hid_get_explicit_mods() & 0x08;
+
+    if (rctrl || lgui) {
+        k_timer_stop(&data->polling_timer);
+        k_timer_start(&data->polling_timer, NOR_POLL_MS, NOR_POLL_MS);
+        return 0;   // ★ 時間更新しない
+    }
+
+    /* ③ ESC 押下 → 時間更新ありで高速ポーリング */
+    bool is_ESC = (ev->usage_page == USAGE_PAGE_KEYBOARD && ev->keycode    == KEY_ESC);
+    if (is_ESC) {
+        k_timer_stop(&data->polling_timer);
+        k_timer_start(&data->polling_timer, NOR_POLL_MS, NOR_POLL_MS);
+
+        data->last_activity_time = k_uptime_get();
+        data->last_jig_time      = k_uptime_get();
+        return 0;
+    }
+
     return 0;
 }
 
