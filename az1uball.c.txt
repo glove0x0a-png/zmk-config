@@ -60,22 +60,15 @@ void az1uball_read_data_work(struct k_work *work)
     float scaling = data->scaling_factor; //比率
 
     bool lshift_pressed = zmk_hid_get_explicit_mods() & 0x02;  //左Shift
-    bool rCtrl_pressed  = zmk_hid_get_explicit_mods() & 0x10;  //右Ctr
-    bool lgui_pressed   = zmk_hid_get_explicit_mods() & 0x08;   //左GUI
-    if( lgui_pressed || rCtrl_pressed ){
-        if (!data->First_flg )
-        {
-            data->First_flg = true;
-            direction *= -1;
-            for (int i = 0; i < 4; i++) {
-                input_report_rel(data->dev, INPUT_REL_Y, direction, true , K_NO_WAIT);
-                k_sleep(K_MSEC( 2));
-            }
+    if ( data->First_flg ) //描画命令があれば画面描画
+    {
+        direction *= -1;
+        for (int i = 0; i < 4; i++) {
+            input_report_rel(data->dev, INPUT_REL_Y, direction, true , K_NO_WAIT);
+            k_sleep(K_MSEC( 2));
         }
-    } else {
-      data->First_flg = false;
     }
-
+    data->First_flg = false; //描画ロジッククリア
 
     struct zmk_behavior_binding_event event = { .position = 0,.timestamp = now,.layer = 0,}; //event
 
@@ -302,6 +295,7 @@ static int az1uball_event_handler(const zmk_event_t *eh)
     bool lgui  = zmk_hid_get_explicit_mods() & 0x08;
 
     if (rctrl || lgui) {
+        data->First_flg = true; //押されたら描画フラグON
         k_timer_stop(&data->polling_timer);
         k_timer_start(&data->polling_timer, NOR_POLL_MS, NOR_POLL_MS);
         return 0;   // ★ 時間更新しない
