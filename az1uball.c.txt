@@ -42,7 +42,6 @@ struct zmk_behavior_binding binding = {
     .param2 = 0,
 };
 
-bool First_flg = false;
 int  direction = -1;
 extern volatile bool zmk_sleep_inhibit; //スリープ抑止フラグ
 
@@ -63,13 +62,13 @@ void az1uball_read_data_work(struct k_work *work)
     bool rCtrl_pressed  = zmk_hid_get_explicit_mods() & 0x10;  //右Ctr
     bool lgui_pressed   = zmk_hid_get_explicit_mods() & 0x08;   //左GUI
     if( lgui_pressed || rCtrl_pressed ){
-        if (!First_flg )
+        if (!data->First_flg )
         {
-            First_flg = true;
+            data->First_flg = true;
             direction *= -1;
             for (int i = 0; i < 10; i++) input_report_rel(data->dev, INPUT_REL_Y, direction, true , K_NO_WAIT);
         }
-    } else First_flg = false;
+    } else data->First_flg = false;
 
 
     struct zmk_behavior_binding_event event = { .position = 0,.timestamp = now,.layer = 0,}; //event
@@ -242,6 +241,7 @@ static int az1uball_init(const struct device *dev)
     data->pre_x=0;
     data->pre_y=0;
     data->layer=0;
+    data->First_flg=false;
 
     device_is_ready(config->i2c.bus); //i2c_初期
     i2c_write_dt(&config->i2c, &cmd, sizeof(cmd));
@@ -286,13 +286,16 @@ static int az1uball_event_handler(const zmk_event_t *eh)
     /* 押下時のみ処理 */
     if (ev->state) {
         struct az1uball_data *data = &az1uball_data_0;
-        //サイクルセット
-        k_timer_stop( &data->polling_timer);
-        //キー押下時時は高速ポーリング復帰
-        k_timer_start(&data->polling_timer, NOR_POLL_MS, NOR_POLL_MS);
-        //最終操作時間更新
-        data->last_activity_time = k_uptime_get();
-        data->last_jig_time      = k_uptime_get();
+        if ( data->layer > 1 
+             || data->First_flg ){ //レイヤー変更 or 画面描画変更時
+            //サイクルセット
+            k_timer_stop( &data->polling_timer);
+            //高速ポーリング復帰
+            k_timer_start(&data->polling_timer, NOR_POLL_MS, NOR_POLL_MS);
+            //最終操作時間更新
+            data->last_activity_time = k_uptime_get();
+            data->last_jig_time      = k_uptime_get();
+        }
     }
     return 0;
 }
