@@ -246,6 +246,19 @@
             #binding-cells = <0>;
             behavior-status = "capslock";
         };
+//★TAP DANCE-----------------------------------------------
+        td_mod3_ESC: td_mod3_ESC {
+            compatible = "zmk,behavior-tap-dance";
+            #binding-cells = <0>;
+            tapping-term-ms = <DANCE_MS>;
+            bindings = <&mo 3>, <&kp ESC>;
+        };
+        td_mod5_ESC: td_mod5_ESC {
+            compatible = "zmk,behavior-tap-dance";
+            #binding-cells = <0>;
+            tapping-term-ms = <DANCE_MS>;
+            bindings = <&mo 5>, <&kp ESC>;
+        };
     };
     //aliases
     aliases {
@@ -282,12 +295,12 @@
 &mt Q       TAB  &mt LGUI W &kp  E    &kp R     &kp T     &kp  Y     &kp  U    &kp I     &kp O     &kp  MINUS
 &mt RCTRL   A    &kp S      &MY_kp_D  &kp F     &kp G     &kp  H     &none     &kp K     &kp L     &kp  SEMI
 &kp LS_          &kp Z      &kp  C    &kp V     &kp B     &kp  N     &kp  M    &kp COMMA &kp UP    &kp  ENTER
-&kp LCTRL        &kp LALT   &mkp LCLK &mo 2     &kp SPACE            &mo  3    &kp LEFT  &kp DOWN  &kp  RIGHT
+&kp LCTRL        &kp LALT   &mkp LCLK &mo 2     &kp SPACE            &td_mod3_ESC  &kp LEFT  &kp DOWN  &kp  RIGHT
           >;
         };
         //1:jigler-dummyレイヤー
         layer_fn1    { bindings = < &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-&trans           &trans   &trans    &mo 4     &trans               &mo  5    &trans    &trans    &trans >; };
+&trans           &trans   &trans    &mo 4     &trans               &td_mod5_ESC   &trans    &trans    &trans >; };
         //2:Custom + Function Keys + Vol
         layer_fn2    { bindings = <
 &MY_Q_2          &kp F2     &kp UP    &kp F4    &kp F5    &kp  F6    &kp F7    &kp F8    &kp F9    &kp  P
