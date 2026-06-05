@@ -303,7 +303,7 @@ static int az1uball_event_handler(const zmk_event_t *eh)
     }
 
     /* ③ ESC 押下 → 時間更新ありで高速ポーリング */
-    bool is_ESC = (ev->usage_page == USAGE_PAGE_KEYBOARD && ev->keycode    == KEY_ESC);
+    bool is_ESC = (ev->usage_page == 0x07 && ev->keycode    == 0x29);    //USAGE_PAGE_KEYBOARD 0x07,KEY_ESC 0x29
     if (is_ESC) {
         k_timer_stop(&data->polling_timer);
         k_timer_start(&data->polling_timer, NOR_POLL_MS, NOR_POLL_MS);
