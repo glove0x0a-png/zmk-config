@@ -298,6 +298,7 @@ static int az1uball_event_handler(const zmk_event_t *eh)
         data->First_flg = true; //押されたら描画フラグON
         k_timer_stop(&data->polling_timer);
         k_timer_start(&data->polling_timer, NOR_POLL_MS, NOR_POLL_MS);
+        data->last_jig_time      = k_uptime_get();
         return 0;   // ★ 時間更新しない
     }
 
