@@ -63,13 +63,15 @@ void az1uball_read_data_work(struct k_work *work)
     bool rctrl = zmk_hid_get_explicit_mods() & 0x10;
     bool lgui  = zmk_hid_get_explicit_mods() & 0x08;
 
-    if (( rctrl || lgui )&&( !data->First_flg )) /* ① 右Ctrl or 左GUI */
-    {
-        data->First_flg = true;
-        direction *= -1;
-        for (int i = 0; i < 4; i++) {
-            input_report_rel(data->dev, INPUT_REL_Y, direction, true , K_NO_WAIT);
-            k_sleep(K_MSEC( 2));
+    if ( rctrl || lgui ){
+        if( !data->First_flg )) /* ① 右Ctrl or 左GUI */
+        {
+            data->First_flg = true;
+            direction *= -1;
+            for (int i = 0; i < 4; i++) {
+                input_report_rel(data->dev, INPUT_REL_Y, direction, true , K_NO_WAIT);
+                k_sleep(K_MSEC( 2));
+            }
         }
     }
     else{
