@@ -63,7 +63,6 @@ void az1uball_read_data_work(struct k_work *work)
     bool rctrl = zmk_hid_get_explicit_mods() & 0x10;
     bool lgui  = zmk_hid_get_explicit_mods() & 0x08;
 
-    
     if (( rctrl || lgui )&&( !data->First_flg )) /* ① 右Ctrl or 左GUI */
     {
         data->First_flg = true;
@@ -297,13 +296,13 @@ static int az1uball_event_handler(const zmk_event_t *eh)
 
     bool is_ESC = (ev->usage_page == 0x07 && ev->keycode    == 0x29);    //USAGE_PAGE_KEYBOARD 0x07,KEY_ESC 0x29
 
-    /* ② ESC 押下  */
-    else if (is_ESC) {
+    /* ESC 押下  */
+    if (is_ESC) {
         data->last_activity_time = k_uptime_get();  //★時間更新する -> 次のポーリングでサイクルは高頻度へリセット。
     }
 
     k_timer_stop(&data->polling_timer);
-    k_timer_start(&data->polling_timer, NOR_POLL_MS, NOR_POLL_MS);  //1回はポーリング起動(この時点でジグラー間隔をリセット)
+    k_timer_start(&data->polling_timer, NOR_POLL_MS, NOR_POLL_MS);  //1回はポーリング起動(起点リセット・ESC以外はもう一度超低頻度スタート)
 
     return 0;
 }
