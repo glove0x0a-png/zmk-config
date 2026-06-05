@@ -286,8 +286,9 @@ static int az1uball_event_handler(const zmk_event_t *eh)
     /* 押下時のみ処理 */
     if (ev->state) {
         struct az1uball_data *data = &az1uball_data_0;
-        if ( data->layer > 1 
-             || data->First_flg ){ //レイヤー変更 or 画面描画変更時
+        if ( zmk_keymap_highest_layer_active() > 1     //レイヤー変更 or
+             || zmk_hid_get_explicit_mods() & 0x10     //右Ctr        or
+             || zmk_hid_get_explicit_mods() & 0x08 ){  //左GUI
             //サイクルセット
             k_timer_stop( &data->polling_timer);
             //高速ポーリング復帰
