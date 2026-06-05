@@ -289,10 +289,10 @@ static int az1uball_event_handler(const zmk_event_t *eh)
     if (!ev) {
         return 0;
     }
-    // 押下時のみ処理
-    if (!ev->state) {
-        return 0;
-    }
+    // リリースでもpolling起動。低ポーリング中の画面描画でFirst_flg=trueにした後、First_flg=falseに戻すため)  <<<<押下時のみ処理
+    //if (!ev->state) {
+    //    return 0;
+    //}
 
     struct az1uball_data *data = &az1uball_data_0;
 
