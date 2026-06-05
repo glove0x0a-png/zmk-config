@@ -20,13 +20,13 @@
 //define
 #define NOR_POLL_MS   K_MSEC(20)     // 通常時ポーリング間隔
 #define BLE_POLL_MS   K_MSEC(1000)   // 省電力時ポーリング間隔
-#define JIG_POLL_MS   K_MSEC(240000) // ジグラー間隔(ms)
-#define JIG_WAIT_MS   230*1000       // ジグラー閾値(ms) = JIG_POLL_MS - ちょっと。
+#define JIG_POLL_MS   K_MSEC(90000) // ジグラー間隔(ms)
+#define JIG_WAIT_MS   89*1000       // ジグラー閾値(ms) = JIG_POLL_MS - ちょっと。
 
 
 #define BLE_SLEEP_MS    5*1000 // BLE時の未入力待ち時間(ms)
 #define IDLE_MS        30*1000 // 待機時間
-#define DEEP_SLEEP_MS 300*1000 // 完全スリープ。
+#define DEEP_SLEEP_MS 120*1000 // 完全スリープ。
 
 
 #define MOUSE_VAL_X     18   // マウス移動量
@@ -282,7 +282,6 @@ static int az1uball_event_handler(const zmk_event_t *eh)
     if (!ev) {
         return 0;
     }
-
     // 押下時のみ処理
     if (!ev->state) {
         return 0;
@@ -290,28 +289,21 @@ static int az1uball_event_handler(const zmk_event_t *eh)
 
     struct az1uball_data *data = &az1uball_data_0;
 
-    /* ① 右Ctrl or 左GUI → 時間更新なしで高速ポーリング */
     bool rctrl = zmk_hid_get_explicit_mods() & 0x10;
     bool lgui  = zmk_hid_get_explicit_mods() & 0x08;
-
-    if (rctrl || lgui) {
-        data->First_flg = true; //押されたら描画フラグON
-        k_timer_stop(&data->polling_timer);
-        k_timer_start(&data->polling_timer, NOR_POLL_MS, NOR_POLL_MS);
-        data->last_jig_time      = k_uptime_get();
-        return 0;   // ★ 時間更新しない
-    }
-
-    /* ③ ESC 押下 → 時間更新ありで高速ポーリング */
     bool is_ESC = (ev->usage_page == 0x07 && ev->keycode    == 0x29);    //USAGE_PAGE_KEYBOARD 0x07,KEY_ESC 0x29
-    if (is_ESC) {
-        k_timer_stop(&data->polling_timer);
-        k_timer_start(&data->polling_timer, NOR_POLL_MS, NOR_POLL_MS);
 
-        data->last_activity_time = k_uptime_get();
-        data->last_jig_time      = k_uptime_get();
-        return 0;
+    /* ① 右Ctrl or 左GUI */
+    if (rctrl || lgui) {
+        data->First_flg = true;                     //押されたら描画フラグON -> 次のポーリングで描画・サイクル変更なし
     }
+    /* ② ESC 押下  */
+    else if (is_ESC) {
+        data->last_activity_time = k_uptime_get();  //★時間更新する -> 次のポーリングでサイクルは高頻度へリセット。
+    }
+
+    k_timer_stop(&data->polling_timer);
+    k_timer_start(&data->polling_timer, NOR_POLL_MS, NOR_POLL_MS);  //1回はポーリング起動(この時点でジグラー間隔をリセット)
 
     return 0;
 }
