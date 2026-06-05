@@ -20,13 +20,13 @@
 //define
 #define NOR_POLL_MS   K_MSEC(20)     // 通常時ポーリング間隔
 #define BLE_POLL_MS   K_MSEC(1000)   // 省電力時ポーリング間隔
-#define JIG_POLL_MS   K_MSEC(90000) // ジグラー間隔(ms)
-#define JIG_WAIT_MS   89*1000       // ジグラー閾値(ms) = JIG_POLL_MS - ちょっと。
+#define JIG_POLL_MS   K_MSEC(230000) // ジグラー間隔(ms)  (4分 - 待機時間10秒)
+#define JIG_WAIT_MS   229*1000       // ジグラー閾値(ms) = JIG_POLL_MS - ちょっと。
 
 
 #define BLE_SLEEP_MS    5*1000 // BLE時の未入力待ち時間(ms)
-#define IDLE_MS        30*1000 // 待機時間
-#define DEEP_SLEEP_MS 120*1000 // 完全スリープ。
+#define IDLE_MS        10*1000 // 待機突入時間
+#define DEEP_SLEEP_MS 180*1000 // 完全スリープ。
 
 
 #define MOUSE_VAL_X     18   // マウス移動量
