@@ -13,7 +13,7 @@
 #include <dt-bindings/zmk/pointing.h>
 #include <dt-bindings/input/input-event-codes.h>
 
-#define HOLD_MS 150
+#define HOLD_MS 240
 #define DANCE_MS 200
 #define PIPE_ LS(INT3)
 #define LS_   LSHFT
