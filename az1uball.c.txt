@@ -11,7 +11,8 @@
 #include "az1uball.h"
 
 //追加
-#include <zmk/events/position_state_changed.h>
+//#include <zmk/events/position_state_changed.h>
+#include <zmk/events/keycode_state_changed.h>
 #include <zmk/event_manager.h>
 #include <zmk/behavior.h>
 #include <zmk/keymap.h>
