@@ -64,7 +64,7 @@ void az1uball_read_data_work(struct k_work *work)
     bool lgui  = zmk_hid_get_explicit_mods() & 0x08;
 
     if ( rctrl || lgui ){
-        if( !data->First_flg )) /* ① 右Ctrl or 左GUI */
+        if( !data->First_flg ) /* ① 右Ctrl or 左GUI */
         {
             data->First_flg = true;
             direction *= -1;
