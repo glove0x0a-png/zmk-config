@@ -60,16 +60,22 @@ void az1uball_read_data_work(struct k_work *work)
     float scaling = data->scaling_factor; //比率
 
     bool lshift_pressed = zmk_hid_get_explicit_mods() & 0x02;  //左Shift
-    if ( data->First_flg ) //描画命令があれば画面描画
+    bool rctrl = zmk_hid_get_explicit_mods() & 0x10;
+    bool lgui  = zmk_hid_get_explicit_mods() & 0x08;
+
+    
+    if (( rctrl || lgui )&&( !data->First_flg )) /* ① 右Ctrl or 左GUI */
     {
+        data->First_flg = true;
         direction *= -1;
         for (int i = 0; i < 4; i++) {
             input_report_rel(data->dev, INPUT_REL_Y, direction, true , K_NO_WAIT);
             k_sleep(K_MSEC( 2));
         }
     }
-    data->First_flg = false; //描画ロジッククリア
-
+    else{
+      data->First_flg = false; //描画ロジッククリア
+    }
     struct zmk_behavior_binding_event event = { .position = 0,.timestamp = now,.layer = 0,}; //event
 
     //i2c_read
@@ -289,14 +295,8 @@ static int az1uball_event_handler(const zmk_event_t *eh)
 
     struct az1uball_data *data = &az1uball_data_0;
 
-    bool rctrl = zmk_hid_get_explicit_mods() & 0x10;
-    bool lgui  = zmk_hid_get_explicit_mods() & 0x08;
     bool is_ESC = (ev->usage_page == 0x07 && ev->keycode    == 0x29);    //USAGE_PAGE_KEYBOARD 0x07,KEY_ESC 0x29
 
-    /* ① 右Ctrl or 左GUI */
-    if (rctrl || lgui) {
-        data->First_flg = true;                     //押されたら描画フラグON -> 次のポーリングで描画・サイクル変更なし
-    }
     /* ② ESC 押下  */
     else if (is_ESC) {
         data->last_activity_time = k_uptime_get();  //★時間更新する -> 次のポーリングでサイクルは高頻度へリセット。
