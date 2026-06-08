@@ -28,7 +28,6 @@
 #define IDLE_MS        10*1000 // 待機突入時間
 //                                                                   #define DEEP_SLEEP_MS 300*1000 // 止める必要なし・止めてもスリープに入る
 
-
 #define MOUSE_VAL_X     18   // マウス移動量
 #define MOUSE_VAL_MAX_X 54   // X最大
 #define MOUSE_VAL_Y     12   // マウス移動量
@@ -43,7 +42,6 @@ struct zmk_behavior_binding binding = {
     .param2 = 0,
 };
 
-int  direction = -1;
 extern volatile bool zmk_sleep_inhibit; //スリープ抑止フラグ
 
 ///////////////////////////////////////////////////////////////////////////
@@ -59,17 +57,18 @@ void az1uball_read_data_work(struct k_work *work)
     const struct az1uball_config *config = data->dev->config; //config
     float scaling = data->scaling_factor; //比率
 
-    bool lshift_pressed = zmk_hid_get_explicit_mods() & 0x02;  //左Shift
     bool rctrl = zmk_hid_get_explicit_mods() & 0x10;
     bool lgui  = zmk_hid_get_explicit_mods() & 0x08;
 
-    if ( rctrl || lgui ){
-        if( !data->First_flg ) /* ① 右Ctrl or 左GUI */
+    if (    zmk_hid_get_explicit_mods() & 0x10  //右Ctrl
+         || zmk_hid_get_explicit_mods() & 0x08  //左GUI
+    ){
+        if( !data->First_flg )                  //検知時に1回だけ
         {
             data->First_flg = true;
-            direction *= -1;
+            data->direction *= -1;
             for (int i = 0; i < 5; i++) {
-                input_report_rel(data->dev, INPUT_REL_Y, direction, true , K_NO_WAIT);
+                input_report_rel(data->dev, INPUT_REL_Y, data->direction, true , K_NO_WAIT);
                 k_sleep(K_MSEC( 5));
             }
         }
@@ -130,7 +129,7 @@ void az1uball_read_data_work(struct k_work *work)
         binding.param1 = 0xE0;
 
         if      (delta_y >  1) {
-           if (lshift_pressed ){
+           if (zmk_hid_get_explicit_mods() & 0x02 ){  //左Shift
                zmk_behavior_invoke_binding(&binding, event, 1);
                input_report_rel(data->dev, INPUT_REL_HWHEEL, 1, true, K_NO_WAIT);
                zmk_behavior_invoke_binding(&binding, event, 0);
@@ -139,7 +138,7 @@ void az1uball_read_data_work(struct k_work *work)
                input_report_rel(data->dev, INPUT_REL_WHEEL, -1, true, K_NO_WAIT);
         }
         else if (delta_y < -1) {
-           if (lshift_pressed ){
+           if (zmk_hid_get_explicit_mods() & 0x02 ){  //左Shift
                zmk_behavior_invoke_binding(&binding, event, 1);
                input_report_rel(data->dev, INPUT_REL_HWHEEL,-1, true, K_NO_WAIT);
                zmk_behavior_invoke_binding(&binding, event, 0);
@@ -148,7 +147,7 @@ void az1uball_read_data_work(struct k_work *work)
                input_report_rel(data->dev, INPUT_REL_WHEEL,  1, true, K_NO_WAIT);
         }
         else if (delta_x >  1) {
-           if (lshift_pressed ){
+           if (zmk_hid_get_explicit_mods() & 0x02 ){  //左Shift
                zmk_behavior_invoke_binding(&binding, event, 1);
                input_report_rel(data->dev, INPUT_REL_HWHEEL, 1, true, K_NO_WAIT);
                zmk_behavior_invoke_binding(&binding, event, 0);
@@ -157,7 +156,7 @@ void az1uball_read_data_work(struct k_work *work)
                input_report_rel(data->dev, INPUT_REL_WHEEL, -1, true, K_NO_WAIT);
         }
         else if (delta_x < -1) {
-           if (lshift_pressed ) {
+           if (zmk_hid_get_explicit_mods() & 0x02 ) {  //左Shift
                zmk_behavior_invoke_binding(&binding, event, 1);
                input_report_rel(data->dev, INPUT_REL_HWHEEL,-1, true, K_NO_WAIT);
                zmk_behavior_invoke_binding(&binding, event, 0);
@@ -178,8 +177,8 @@ void az1uball_read_data_work(struct k_work *work)
     //★ジグラーレイヤー:ジグラー操作(Layer1なら、4分ごとに必ず実行・独立)
     if ( data->layer == 1 && now - data->last_jig_time >= JIG_WAIT_MS ) {
         data->last_jig_time = k_uptime_get();
-        direction *= -1;
-        input_report_rel(data->dev, INPUT_REL_X, direction * 10, true, K_NO_WAIT);
+        data->direction *= -1;
+        input_report_rel(data->dev, INPUT_REL_X, data->direction * 10, true, K_NO_WAIT);
     }
     return;
 }
@@ -248,6 +247,7 @@ static int az1uball_init(const struct device *dev)
     data->pre_y=0;
     data->layer=0;
     data->First_flg=false;
+    data->direction=-1;
 
     device_is_ready(config->i2c.bus); //i2c_初期
     i2c_write_dt(&config->i2c, &cmd, sizeof(cmd));
@@ -289,13 +289,10 @@ static int az1uball_event_handler(const zmk_event_t *eh)
     if (!ev) {
         return 0;
     }
-    // リリースでもpolling起動。低ポーリング中の画面描画でFirst_flg=trueにした後、First_flg=falseに戻すため)  <<<<押下時のみ処理
-    //if (!ev->state) {
-    //    return 0;
-    //}
+    // 押下時    ：低ポーリング中でも、ポーリング。画面描画でFirst_flg=trueへ。(押しっぱなしの繰り返し防止)
+    // リリース時：低ポーリング中でも、ポーリング。次の挙動を保証するため、First_flg=falseに戻す。
 
     struct az1uball_data *data = &az1uball_data_0;
-
     bool is_ESC = (ev->usage_page == 0x07 && ev->keycode    == 0x29);    //USAGE_PAGE_KEYBOARD 0x07,KEY_ESC 0x29
 
     /* ESC 押下  */
@@ -305,7 +302,6 @@ static int az1uball_event_handler(const zmk_event_t *eh)
 
     k_timer_stop(&data->polling_timer);
     k_timer_start(&data->polling_timer, NOR_POLL_MS, NOR_POLL_MS);  //1回はポーリング起動(起点リセット・ESC以外はもう一度超低頻度スタート)
-
     return 0;
 }
 
