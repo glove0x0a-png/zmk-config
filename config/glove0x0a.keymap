@@ -55,7 +55,7 @@
 //2026.06.03 #1130 『az1uball.c』          ポーリングを節電方式に。
 //2026.04.30 #1084 『az1uball.c』          ZIGGLER = mo 1 レイヤ & ON/OFF 物理スイッチ。
 //■■カスタムbehavior*******************************************************************************************
-//2026.06.08 #1174 『behavior_tap_dance.c』mo3とESCをタップダンスで実装。ほかキー割込み時にmo3,5を優先。
+//2026.06.08 #1175 『behavior_tap_dance.c』mo3とESCをタップダンスで実装。ほかキー割込み時にmo3,5を優先。
 //2026.05.20 #1101 『behavior_hold_tap.c』 1.他キー割込み時はtap扱い。2.LALTのみhold扱い。3.Layer3の高速比率を3->6へ。
 //2026.03.14 #919  『behavior_mod_morph.c』Q、TABへ。mod-morphの修飾キー(CTRL/ALT)マスク削除。例) ALT + Q(ALT時TAB)→ALT + TABへ。GUIはESC割込み追加。
 //2026.03.13 #881  『behavior_tap_dance.c』tap-danceの自動リリース削除、押しっぱなしでホールド/即リリースは後追い。
@@ -310,7 +310,7 @@
         layer_fn2    { bindings = <
 &TAB_F1_ESC_BtCL &kp F2     &kp UP    &kp F4    &kp F5    &kp  F6    &kp F7    &kp F8    &kp F9    &kp  P
 &mt LALT    CAPS &kp LEFT   &kp DOWN  &kp RIGHT &kp F3    &RBKT_NUHS &trans    &kp HOME  &kp PG_UP &kp  INT1
-&kp Rc(LS_) LS_  &VOL_DN    &kp X     &VOL_UP   &kp EQUAL &NEW_8977  &kp DEL   &kp END   &kp PG_DN &kp  SLASH
+&mt Rc(LS_) LS_  &VOL_DN    &kp X     &VOL_UP   &kp EQUAL &NEW_8977  &kp DEL   &kp END   &kp PG_DN &kp  SLASH
 &trans           &tog 1     &kp PSCRN &none     &kp BSPC             &kp K_APP &kp F10   &kp F11   &kp  F12
             >;
         };
@@ -318,7 +318,7 @@
         layer_fn3    { bindings = <
 &kp N1           &MY_N2     &kp  N3   &kp N4    &kp  N5   &kp  N6    &kp  N7   &kp N8    &kp N9    &N0_PIPE
 &MY_U            &MY_L      &MY_D     &MY_R     &BLE_USB  &kp  SQT   &trans    &SC_U_L   &SC_D_R   &trans
-&kp Rc(LS_) LS_  &VOL_DN    &kp X     &VOL_UP   &kp EQUAL &kp  LBKT  &mkp LCLK &trans    &kp DOT   &kp  SLASH
+&mt Rc(LS_) LS_  &VOL_DN    &kp X     &VOL_UP   &kp EQUAL &kp  LBKT  &mkp LCLK &trans    &kp DOT   &kp  SLASH
 &trans           &trans     &mkp RCLK &kp K_APP &ind_bat             &none     &BLE0     &BLE1     &BLE2
             >;
         };
@@ -326,7 +326,7 @@
         layer_fn4    { bindings = <
 &TAB_F1_ESC_BtCL &kp F2     &kp UP    &kp F4    &kp F5    &kp  F6    &kp F7    &kp F8    &kp F9    &kp  P
 &mt LALT    CAPS &kp LEFT   &kp DOWN  &kp RIGHT &kp F3    &RBKT_NUHS &trans    &kp HOME  &kp PG_UP &kp  INT1
-&kp Rc(LS_) LS_  &VOL_DN    &kp X     &VOL_UP   &kp EQUAL &NEW_8977  &kp DEL   &kp END   &kp PG_DN &kp  SLASH
+&mt Rc(LS_) LS_  &VOL_DN    &kp X     &VOL_UP   &kp EQUAL &NEW_8977  &kp DEL   &kp END   &kp PG_DN &kp  SLASH
 &trans           &tog 1     &kp PSCRN &none     &kp BSPC             &kp K_APP &kp F10   &kp F11   &kp  F12
             >;
         };
@@ -334,7 +334,7 @@
         layer_fn5    { bindings = <
 &kp N1           &MY_N2     &kp  N3   &kp N4    &kp  N5   &kp  N6    &kp  N7   &kp N8    &kp N9    &N0_PIPE
 &MY_U            &MY_L      &MY_D     &MY_R     &BLE_USB  &kp  SQT   &trans    &SC_U_L   &SC_D_R   &trans
-&kp Rc(LS_) LS_  &VOL_DN    &kp X     &VOL_UP   &kp EQUAL &kp  LBKT  &mkp LCLK &trans    &kp DOT   &kp  SLASH
+&mt Rc(LS_) LS_  &VOL_DN    &kp X     &VOL_UP   &kp EQUAL &kp  LBKT  &mkp LCLK &trans    &kp DOT   &kp  SLASH
 &trans           &trans     &mkp RCLK &kp K_APP &ind_bat             &none     &BLE0     &BLE1     &BLE2
             >;
         };
