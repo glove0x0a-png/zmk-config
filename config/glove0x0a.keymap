@@ -273,13 +273,13 @@
         BLE0_2: BLE0_2{
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
-            bindings = <&kp BLE0>, <&kp BLE2>;
+            bindings = <&BLE0>, <&BLE2>;
             mods = <MOD_LSFT>;
         };
         BLE1_3: BLE1_3{
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
-            bindings = <&kp BLE1>, <&kp BLE3>;
+            bindings = <&BLE1>, <&BLE3>;
             mods = <MOD_LSFT>;
         };
 //★LED制御-------------------------------------------------
@@ -377,5 +377,6 @@
         };
     };
 };
+//CSTC
 //CSTC
 //CSTC
