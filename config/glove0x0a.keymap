@@ -298,20 +298,20 @@
         //0:normal
         layer_qwerty { bindings = <
 &mt Q       TAB  &mt LGUI W &kp  E    &kp R     &kp T     &kp  Y     &kp  U    &kp I     &kp O     &kp  MINUS
-&mt RCTRL   A    &kp S      &MY_kp_D  &kp F     &kp G     &kp  H     &none     &kp K     &kp L     &kp  SEMI
+&mt RCTRL   A    &kp S      &MY_kp_D  &kp F     &kp G     &kp  H     &none     &kp K     &mt ESC L &kp  SEMI
 &kp LS_          &kp Z      &kp  C    &kp V     &kp B     &kp  N     &kp  M    &kp COMMA &kp UP    &kp  ENTER
-&kp LCTRL        &kp LALT   &mkp LCLK &mo 2     &kp SPACE &kp SPACE  &mo3_ESC  &kp LEFT  &kp DOWN  &kp  RIGHT
+&kp LCTRL        &kp LALT   &mkp LCLK &mo 2     &kp SPACE            &mo 3     &kp LEFT  &kp DOWN  &kp  RIGHT
           >;
         };
         //1:jigler-dummyレイヤー
         layer_fn1    { bindings = < &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-&trans           &trans    &trans    &mo 4      &trans               &mo5_ESC  &trans    &trans    &trans >; };
+&trans           &trans    &trans    &mo 4      &trans               &mo 5     &trans    &trans    &trans >; };
         //2:Custom + Function Keys + Vol
         layer_fn2    { bindings = <
 &TAB_F1_ESC_BtCL &kp F2     &kp UP    &kp F4    &kp F5    &kp  F6    &kp F7    &kp F8    &kp F9    &kp  P
 &mt LALT    CAPS &kp LEFT   &kp DOWN  &kp RIGHT &kp F3    &RBKT_NUHS &trans    &kp HOME  &kp PG_UP &kp  INT1
 &mt Rc(LS_) LS_  &VOL_DN    &kp X     &VOL_UP   &kp EQUAL &NEW_8977  &kp DEL   &kp END   &kp PG_DN &kp  SLASH
-&trans           &tog 1     &kp PSCRN &none     &kp BSPC  &kp BSPC   &kp K_APP &kp F10   &kp F11   &kp  F12
+&trans           &tog 1     &kp PSCRN &none     &kp BSPC             &kp K_APP &kp F10   &kp F11   &kp  F12
             >;
         };
         //3:Number + Bluetooth /マウス高速
@@ -319,7 +319,7 @@
 &kp N1           &MY_N2     &kp  N3   &kp N4    &kp  N5   &kp  N6    &kp  N7   &kp N8    &kp N9    &N0_PIPE
 &MY_U            &MY_L      &MY_D     &MY_R     &BLE_USB  &kp  SQT   &trans    &SC_U_L   &SC_D_R   &trans
 &mt Rc(LS_) LS_  &VOL_DN    &kp X     &VOL_UP   &kp EQUAL &kp  LBKT  &mkp LCLK &trans    &kp DOT   &kp  SLASH
-&trans           &trans     &mkp RCLK &kp K_APP &ind_bat  &ind_bat   &none     &BLE0     &BLE1     &BLE2
+&trans           &trans     &mkp RCLK &kp K_APP &ind_bat             &none     &BLE0     &BLE1     &BLE2
             >;
         };
         //4:Custom + Function Keys + Vol
@@ -327,7 +327,7 @@
 &TAB_F1_ESC_BtCL &kp F2     &kp UP    &kp F4    &kp F5    &kp  F6    &kp F7    &kp F8    &kp F9    &kp  P
 &mt LALT    CAPS &kp LEFT   &kp DOWN  &kp RIGHT &kp F3    &RBKT_NUHS &trans    &kp HOME  &kp PG_UP &kp  INT1
 &mt Rc(LS_) LS_  &VOL_DN    &kp X     &VOL_UP   &kp EQUAL &NEW_8977  &kp DEL   &kp END   &kp PG_DN &kp  SLASH
-&trans           &tog 1     &kp PSCRN &none     &kp BSPC  &kp BSPC   &kp K_APP &kp F10   &kp F11   &kp  F12
+&trans           &tog 1     &kp PSCRN &none     &kp BSPC             &kp K_APP &kp F10   &kp F11   &kp  F12
             >;
         };
         //5:Number + Bluetooth /マウス高速
@@ -335,10 +335,9 @@
 &kp N1           &MY_N2     &kp  N3   &kp N4    &kp  N5   &kp  N6    &kp  N7   &kp N8    &kp N9    &N0_PIPE
 &MY_U            &MY_L      &MY_D     &MY_R     &BLE_USB  &kp  SQT   &trans    &SC_U_L   &SC_D_R   &trans
 &mt Rc(LS_) LS_  &VOL_DN    &kp X     &VOL_UP   &kp EQUAL &kp  LBKT  &mkp LCLK &trans    &kp DOT   &kp  SLASH
-&trans           &trans     &mkp RCLK &kp K_APP &ind_bat  &ind_bat   &none     &BLE0     &BLE1     &BLE2
+&trans           &trans     &mkp RCLK &kp K_APP &ind_bat             &none     &BLE0     &BLE1     &BLE2
             >;
         };
     };
 };
-
-
+//CSTC
