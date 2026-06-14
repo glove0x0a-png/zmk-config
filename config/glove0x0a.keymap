@@ -337,12 +337,12 @@
 &mt Q       TAB  &mt LGUI W &kp  E    &kp R     &kp T     &kp  Y     &kp  U    &kp I     &kp O     &mt  ESC MINUS
 &mt RCTRL   A    &kp S      &MY_kp_D  &kp F     &kp G     &kp  H     &none     &kp K     &kp L     &kp  SEMI
 &kp LS_          &kp Z      &kp  C    &kp V     &kp B     &kp  N     &kp  M    &kp COMMA &kp UP    &kp  ENTER
-&kp LCTRL        &kp LALT   &mkp LCLK &mo 2     &kp SPACE &kp SPACE  &mod 3    &kp LEFT  &kp DOWN  &kp  RIGHT
+&kp LCTRL        &kp LALT   &mkp LCLK &mo 2     &kp SPACE &kp SPACE  &mo  3    &kp LEFT  &kp DOWN  &kp  RIGHT
           >;
         };
         //1:jigler-dummyレイヤー
         layer_fn1    { bindings = < &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-&trans           &trans    &trans    &mo 4      &trans    &trans     &mod 5    &trans    &trans    &trans >; };
+&trans           &trans    &trans    &mo 4      &trans    &trans     &mo  5    &trans    &trans    &trans >; };
         //2:Custom + Function Keys + Vol
         layer_fn2    { bindings = <
 &TAB_F1_ESC_BtCL &kp F2     &kp UP    &kp F4    &kp F5    &kp  F6    &F7_F10   &F8_F11   &F9_F12   &kp  P
@@ -379,6 +379,7 @@
 };
 
 
+//SPRIT
 //SPRIT
 //SPRIT
 //SPRIT
