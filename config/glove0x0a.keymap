@@ -95,6 +95,13 @@
                 = <&macro_tap &out OUT_BLE>
                 , <&macro_tap &bt BT_SEL 2 >;
         };
+        BLE3: BLE3{
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_tap &out OUT_BLE>
+                , <&macro_tap &bt BT_SEL 3 >;
+        };
         N_RBKT_NUHS: N_RBKT_NUHS {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
@@ -245,6 +252,36 @@
             bindings = <&msc SCRL_DOWN>, <&msc SCRL_RIGHT>;
             mods = <MOD_LSFT>;
         };
+        F7_F10: F7_F10{
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp F7>, <&kp F10>;
+            mods = <MOD_LSFT>;
+        };
+        F8_F11: F8_F11{
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp F8>, <&kp F11>;
+            mods = <MOD_LSFT>;
+        };
+        F9_F12: F9_F12{
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp F9>, <&kp F12>;
+            mods = <MOD_LSFT>;
+        };
+        BLE0_2: BLE0_2{
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&BLE0>, <&BLE2>;
+            mods = <MOD_LSFT>;
+        };
+        BLE1_3: BLE1_3{
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&BLE1>, <&BLE3>;
+            mods = <MOD_LSFT>;
+        };
 //★LED制御-------------------------------------------------
         capslock_led: capslock_led {
             compatible = "zmk,behavior-status-indicator";
@@ -342,6 +379,7 @@
 };
 
 
+//SPRIT
 //SPRIT
 //SPRIT
 //SPRIT
