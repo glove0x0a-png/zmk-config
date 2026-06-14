@@ -95,6 +95,13 @@
                 = <&macro_tap &out OUT_BLE>
                 , <&macro_tap &bt BT_SEL 2 >;
         };
+        BLE3: BLE3{
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings
+                = <&macro_tap &out OUT_BLE>
+                , <&macro_tap &bt BT_SEL 3 >;
+        };
         N_RBKT_NUHS: N_RBKT_NUHS {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
@@ -245,6 +252,36 @@
             bindings = <&msc SCRL_DOWN>, <&msc SCRL_RIGHT>;
             mods = <MOD_LSFT>;
         };
+        F7_F10: F7_F10{
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp F7>, <&kp F10>;
+            mods = <MOD_LSFT>;
+        };
+        F8_F11: F8_F11{
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp F8>, <&kp F11>;
+            mods = <MOD_LSFT>;
+        };
+        F9_F12: F9_F12{
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp F9>, <&kp F12>;
+            mods = <MOD_LSFT>;
+        };
+        BLE0_2: BLE0_2{
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp BLE0>, <&kp BLE2>;
+            mods = <MOD_LSFT>;
+        };
+        BLE1_3: BLE1_3{
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp BLE1>, <&kp BLE3>;
+            mods = <MOD_LSFT>;
+        };
 //★LED制御-------------------------------------------------
         capslock_led: capslock_led {
             compatible = "zmk,behavior-status-indicator";
@@ -297,54 +334,48 @@
         compatible = "zmk,keymap";
         //0:normal
         layer_qwerty { bindings = <
-&mt Q       TAB  &mt LGUI W &kp  E    &kp R     &kp T     &kp  Y     &kp  U    &kp I     &kp O     &kp  MINUS
+&mt Q       TAB  &mt LGUI W &kp  E    &kp R     &kp T     &kp  Y     &kp  U    &kp I     &kp O     &mt  ESC MINUS
 &mt RCTRL   A    &kp S      &MY_kp_D  &kp F     &kp G     &kp  H     &none     &kp K     &kp L     &kp  SEMI
 &kp LS_          &kp Z      &kp  C    &kp V     &kp B     &kp  N     &kp  M    &kp COMMA &kp UP    &kp  ENTER
-&kp LCTRL        &kp LALT   &mkp LCLK &mo 2     &kp SPACE &kp SPACE  &mo3_ESC  &kp LEFT  &kp DOWN  &kp  RIGHT
+&kp LCTRL        &kp LALT   &mkp LCLK &mo 2     &kp SPACE            &mo 3     &kp LEFT  &kp DOWN  &kp  RIGHT
           >;
         };
         //1:jigler-dummyレイヤー
         layer_fn1    { bindings = < &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-&trans           &trans    &trans    &mo 4      &trans               &mo5_ESC  &trans    &trans    &trans >; };
+&trans           &trans    &trans    &mo 4      &trans               &mo 5     &trans    &trans    &trans >; };
         //2:Custom + Function Keys + Vol
         layer_fn2    { bindings = <
-&TAB_F1_ESC_BtCL &kp F2     &kp UP    &kp F4    &kp F5    &kp  F6    &kp F7    &kp F8    &kp F9    &kp  P
+&TAB_F1_ESC_BtCL &kp F2     &kp UP    &kp F4    &kp F5    &kp  F6    &F7_F10   &F8_F11   &F9_F12   &kp  P
 &mt LALT    CAPS &kp LEFT   &kp DOWN  &kp RIGHT &kp F3    &RBKT_NUHS &trans    &kp HOME  &kp PG_UP &kp  INT1
 &mt Rc(LS_) LS_  &VOL_DN    &kp X     &VOL_UP   &kp EQUAL &NEW_8977  &kp DEL   &kp END   &kp PG_DN &kp  SLASH
-&trans           &tog 1     &kp PSCRN &none     &kp BSPC  &kp BSPC   &kp K_APP &kp F10   &kp F11   &kp  F12
+&trans           &tog 1     &kp PSCRN &none     &kp BSPC             &kp K_APP &trans    &trans    &trans 
             >;
         };
         //3:Number + Bluetooth /マウス高速
         layer_fn3    { bindings = <
-&kp N1           &MY_N2     &kp  N3   &kp N4    &kp  N5   &kp  N6    &kp  N7   &kp N8    &kp N9    &N0_PIPE
-&MY_U            &MY_L      &MY_D     &MY_R     &BLE_USB  &kp  SQT   &trans    &SC_U_L   &SC_D_R   &trans
+&kp N1           &MY_N2     &kp  N3   &kp N4    &kp N5    &kp  N6    &kp  N7   &kp N8    &kp N9    &N0_PIPE
+&MY_U            &MY_L      &MY_D     &MY_R     &kp F3    &kp  SQT   &trans    &SC_U_L   &SC_D_R   &trans
 &mt Rc(LS_) LS_  &VOL_DN    &kp X     &VOL_UP   &kp EQUAL &kp  LBKT  &mkp LCLK &trans    &kp DOT   &kp  SLASH
-&trans           &trans     &mkp RCLK &kp K_APP &ind_bat  &ind_bat   &none     &BLE0     &BLE1     &BLE2
+&trans           &trans     &mkp RCLK &kp K_APP &ind_bat             &none     &BLE_USB  &BLE0_2   &BLE1_3
             >;
         };
         //4:Custom + Function Keys + Vol
         layer_fn4    { bindings = <
-&TAB_F1_ESC_BtCL &kp F2     &kp UP    &kp F4    &kp F5    &kp  F6    &kp F7    &kp F8    &kp F9    &kp  P
+&TAB_F1_ESC_BtCL &kp F2     &kp UP    &kp F4    &kp F5    &kp  F6    &F7_F10   &F8_F11   &F9_F12   &kp  P
 &mt LALT    CAPS &kp LEFT   &kp DOWN  &kp RIGHT &kp F3    &RBKT_NUHS &trans    &kp HOME  &kp PG_UP &kp  INT1
 &mt Rc(LS_) LS_  &VOL_DN    &kp X     &VOL_UP   &kp EQUAL &NEW_8977  &kp DEL   &kp END   &kp PG_DN &kp  SLASH
-&trans           &tog 1     &kp PSCRN &none     &kp BSPC  &kp BSPC   &kp K_APP &kp F10   &kp F11   &kp  F12
+&trans           &tog 1     &kp PSCRN &none     &kp BSPC             &kp K_APP &trans    &trans    &trans 
             >;
         };
         //5:Number + Bluetooth /マウス高速
         layer_fn5    { bindings = <
-&kp N1           &MY_N2     &kp  N3   &kp N4    &kp  N5   &kp  N6    &kp  N7   &kp N8    &kp N9    &N0_PIPE
-&MY_U            &MY_L      &MY_D     &MY_R     &BLE_USB  &kp  SQT   &trans    &SC_U_L   &SC_D_R   &trans
+&kp N1           &MY_N2     &kp  N3   &kp N4    &kp N5    &kp  N6    &kp  N7   &kp N8    &kp N9    &N0_PIPE
+&MY_U            &MY_L      &MY_D     &MY_R     &kp F3    &kp  SQT   &trans    &SC_U_L   &SC_D_R   &trans
 &mt Rc(LS_) LS_  &VOL_DN    &kp X     &VOL_UP   &kp EQUAL &kp  LBKT  &mkp LCLK &trans    &kp DOT   &kp  SLASH
-&trans           &trans     &mkp RCLK &kp K_APP &ind_bat  &ind_bat  &none     &BLE0     &BLE1     &BLE2
+&trans           &trans     &mkp RCLK &kp K_APP &ind_bat             &none     &BLE_USB  &BLE0_2   &BLE1_3
             >;
         };
     };
 };
-
-
-//SPRIT
-//SPRIT
-//SPRIT
-//SPRIT
-//SPRIT
-//SPRIT
+//CSTC
+//CSTC

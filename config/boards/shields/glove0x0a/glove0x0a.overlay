@@ -1,7 +1,11 @@
-#include "glove0x0a_right.dtsi"
+#include "glove0x0a.dtsi"
 #include <dt-bindings/led/led.h>
 #include <zephyr/dt-bindings/input/input-event-codes.h>
-//右手用
+
+&xiao_serial {
+    status = "disabled";
+};
+
 &xiao_i2c {
     az1uball: az1uball@a {
         compatible = "zmk,az1uball";
@@ -11,18 +15,10 @@
     };
 };
 
-&kscan_right {
-    status = "okay";
-};
-
-&right_transform {
-    status = "okay";
-};
-
 / {
     chosen {
         zmk,input-devices = &az1uball;
-        zmk,split-role = "central";
+//        zmk,underglow = &ws2812;
     };
 
     input-listeners {
@@ -44,7 +40,18 @@
     leds {
         status = "okay";
     };
+
+//    ws2812: ws2812 {
+//        label = "WS2812";
+//        compatible = "worldsemi,ws2812-gpio";
+//        in-gpios = <&gpio0 10 GPIO_ACTIVE_HIGH>;
+//        chain-length = <47>;
+//        color-mapping = <1 0 2>;
+//        status = "okay";
+//    };
+
 };
+
 
 
 
