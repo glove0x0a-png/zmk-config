@@ -30,7 +30,7 @@
 
         /* XIAO BLE Plus の物理ピン割り当てに合わせて 20 本を列挙する
            コメントは D番号 / 実チップピン を示す */
-        gpios =
+        input-gpios =
             <&gpio0  2 GPIO_ACTIVE_HIGH>, /*  0: D0  P0.02 */
             <&gpio0  3 GPIO_ACTIVE_HIGH>, /*  1: D1  P0.03 */
             <&gpio0 28 GPIO_ACTIVE_HIGH>, /*  2: D2  P0.28 */
