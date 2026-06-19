@@ -30,26 +30,26 @@
 
         /* HIGH→LOW を押下とみなすため GPIO_ACTIVE_LOW を使用 */
         input-gpios =
-            <&gpio0  2 GPIO_ACTIVE_LOW | GPIO_PULL_UP>, /*  0: D0  P0.02 */
-            <&gpio0  3 GPIO_ACTIVE_LOW | GPIO_PULL_UP>, /*  1: D1  P0.03 */
-            <&gpio0 28 GPIO_ACTIVE_LOW | GPIO_PULL_UP>, /*  2: D2  P0.28 */
-            <&gpio0 29 GPIO_ACTIVE_LOW | GPIO_PULL_UP>, /*  3: D3  P0.29 */
-            <&gpio0  4 GPIO_ACTIVE_LOW | GPIO_PULL_UP>, /*  4: D4  P0.04 (I2C SDA) */
-            <&gpio0  5 GPIO_ACTIVE_LOW | GPIO_PULL_UP>, /*  5: D5  P0.05 (I2C SCL) */
-            <&gpio1 11 GPIO_ACTIVE_LOW | GPIO_PULL_UP>, /*  6: D6  P1.11 */
-            <&gpio1 12 GPIO_ACTIVE_LOW | GPIO_PULL_UP>, /*  7: D7  P1.12 */
-            <&gpio1 13 GPIO_ACTIVE_LOW | GPIO_PULL_UP>, /*  8: D8  P1.13 */
-            <&gpio1 14 GPIO_ACTIVE_LOW | GPIO_PULL_UP>, /*  9: D9  P1.14 */
-            <&gpio1 15 GPIO_ACTIVE_LOW | GPIO_PULL_UP>, /* 10: D10 P1.15 */
-            <&gpio0  6 GPIO_ACTIVE_LOW | GPIO_PULL_UP>, /* 11: D11 P0.06 */
-            <&gpio0  7 GPIO_ACTIVE_LOW | GPIO_PULL_UP>, /* 12: D12 P0.07 */
-            <&gpio0  8 GPIO_ACTIVE_LOW | GPIO_PULL_UP>, /* 13: D13 P0.08 */
-            <&gpio0  9 GPIO_ACTIVE_LOW | GPIO_PULL_UP>, /* 14: D14 P0.09 */
-            <&gpio0 10 GPIO_ACTIVE_LOW | GPIO_PULL_UP>, /* 15: D15 P0.10 */
-            <&gpio0 31 GPIO_ACTIVE_LOW | GPIO_PULL_UP>, /* 16: D16 P0.31 */
-            <&gpio0 30 GPIO_ACTIVE_LOW | GPIO_PULL_UP>, /* 17: D17 P0.30 */
-            <&gpio0 26 GPIO_ACTIVE_LOW | GPIO_PULL_UP>, /* 18: D18 P0.26 */
-            <&gpio1  7 GPIO_ACTIVE_LOW | GPIO_PULL_UP>; /* 19: D19 P1.07 */
+            <&gpio0  2 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>, /*  0: D0  P0.02 */
+            <&gpio0  3 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>, /*  1: D1  P0.03 */
+            <&gpio0 28 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>, /*  2: D2  P0.28 */
+            <&gpio0 29 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>, /*  3: D3  P0.29 */
+            <&gpio0  4 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>, /*  4: D4  P0.04 (I2C SDA) */
+            <&gpio0  5 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>, /*  5: D5  P0.05 (I2C SCL) */
+            <&gpio1 11 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>, /*  6: D6  P1.11 */
+            <&gpio1 12 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>, /*  7: D7  P1.12 */
+            <&gpio1 13 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>, /*  8: D8  P1.13 */
+            <&gpio1 14 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>, /*  9: D9  P1.14 */
+            <&gpio1 15 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>, /* 10: D10 P1.15 */
+            <&gpio0  6 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>, /* 11: D11 P0.06 */
+            <&gpio0  7 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>, /* 12: D12 P0.07 */
+            <&gpio0  8 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>, /* 13: D13 P0.08 */
+            <&gpio0  9 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>, /* 14: D14 P0.09 */
+            <&gpio0 10 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>, /* 15: D15 P0.10 */
+            <&gpio0 31 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>, /* 16: D16 P0.31 */
+            <&gpio0 30 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>, /* 17: D17 P0.30 */
+            <&gpio0 26 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>, /* 18: D18 P0.26 */
+            <&gpio1  7 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>; /* 19: D19 P1.07 */
     };
 
     glove0x0a_left_layout: glove0x0a_left_layout {
