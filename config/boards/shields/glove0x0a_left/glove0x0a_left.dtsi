@@ -5,41 +5,52 @@
 #include <dt-bindings/led/led.h>
 #include <input/processors.dtsi>
 #include <zephyr/dt-bindings/input/input-event-codes.h>
-//左手用Peripheral
 
 / {
     chosen {
         zmk,physical-layout = &glove0x0a_left_layout;
     };
 
+    /* 左手: 20キーのダイレクトスキャン (direct scan) */
     left_transform: matrix_transform_left {
         compatible = "zmk,matrix-transform";
-        rows = <4>;
-        columns = <5>;
+        rows = <20>;
+        columns = <1>;
         map = <
-           RC( 0, 4) RC( 0, 5) RC( 0, 6) RC( 0, 7) RC(0, 8)
-           RC( 1, 4) RC( 1, 5) RC( 1, 6) RC( 1, 7) RC(1, 8)
-           RC( 2, 4) RC( 2, 5) RC( 2, 6) RC( 2, 7) RC(2, 8)
-           RC( 3, 4) RC( 3, 5) RC( 3, 6) RC( 3, 7) RC(3, 8)
+            RC(0,0)  RC(1,0)  RC(2,0)  RC(3,0)  RC(4,0)
+            RC(5,0)  RC(6,0)  RC(7,0)  RC(8,0)  RC(9,0)
+            RC(10,0) RC(11,0) RC(12,0) RC(13,0) RC(14,0)
+            RC(15,0) RC(16,0) RC(17,0) RC(18,0) RC(19,0)
         >;
     };
 
     kscan_left: kscan {
-        compatible = "zmk,kscan-gpio-charlieplex";
-        interrupt-gpios = <&gpio1 11 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN) >;  /*D06*/
+        compatible = "zmk,kscan-gpio-direct";
         wakeup-source;
-        gpios
-          =
-            <&gpio0  2  GPIO_ACTIVE_HIGH> /*0:D00*/
-          , <&gpio0  3  GPIO_ACTIVE_HIGH> /*1:D01*/
-          , <&gpio0 28  GPIO_ACTIVE_HIGH> /*2:D02*/
-          , <&gpio0 29  GPIO_ACTIVE_HIGH> /*3:D03*/
-          , <&gpio1 12  GPIO_ACTIVE_HIGH> /*4:D07*/
-          , <&gpio1 13  GPIO_ACTIVE_HIGH> /*5:D08*/
-          , <&gpio1 14  GPIO_ACTIVE_HIGH> /*6:D09*/
-          , <&gpio1 07  GPIO_ACTIVE_HIGH> /*7:D09-D10,D19*/
-          , <&gpio1 15  GPIO_ACTIVE_HIGH> /*8:D10*/
-        ;
+
+        /* XIAO BLE Plus の物理ピン割り当てに合わせて 20 本を列挙する
+           コメントは D番号 / 実チップピン を示す */
+        gpios =
+            <&gpio0  2 GPIO_ACTIVE_HIGH>, /*  0: D0  P0.02 */
+            <&gpio0  3 GPIO_ACTIVE_HIGH>, /*  1: D1  P0.03 */
+            <&gpio0 28 GPIO_ACTIVE_HIGH>, /*  2: D2  P0.28 */
+            <&gpio0 29 GPIO_ACTIVE_HIGH>, /*  3: D3  P0.29 */
+            <&gpio0  4 GPIO_ACTIVE_HIGH>, /*  4: D4  P0.04 (I2C SDA) */
+            <&gpio0  5 GPIO_ACTIVE_HIGH>, /*  5: D5  P0.05 (I2C SCL) */
+            <&gpio1 11 GPIO_ACTIVE_HIGH>, /*  6: D6  P1.11 */
+            <&gpio1 12 GPIO_ACTIVE_HIGH>, /*  7: D7  P1.12 */
+            <&gpio1 13 GPIO_ACTIVE_HIGH>, /*  8: D8  P1.13 */
+            <&gpio1 14 GPIO_ACTIVE_HIGH>, /*  9: D9  P1.14 */
+            <&gpio1 15 GPIO_ACTIVE_HIGH>, /* 10: D10 P1.15 */
+            <&gpio0  6 GPIO_ACTIVE_HIGH>, /* 11: D11 P0.06 */
+            <&gpio0  7 GPIO_ACTIVE_HIGH>, /* 12: D12 P0.07 */
+            <&gpio0  8 GPIO_ACTIVE_HIGH>, /* 13: D13 P0.08 */
+            <&gpio0  9 GPIO_ACTIVE_HIGH>, /* 14: D14 P0.09 */
+            <&gpio0 10 GPIO_ACTIVE_HIGH>, /* 15: D15 P0.10 */
+            <&gpio0 31 GPIO_ACTIVE_HIGH>, /* 16: D16 P0.31 */
+            <&gpio0 30 GPIO_ACTIVE_HIGH>, /* 17: D17 P0.30 */
+            <&gpio0 26 GPIO_ACTIVE_HIGH>, /* 18: D18 P0.26 */
+            <&gpio1  7 GPIO_ACTIVE_HIGH>; /* 19: D19 P1.07 */
     };
 
     glove0x0a_left_layout: glove0x0a_left_layout {
@@ -48,7 +59,7 @@
         transform = <&left_transform>;
         kscan = <&kscan_left>;
 
-        keys  //                     w   h    x    y     rot    rx    ry
+        keys
             = <&key_physical_attrs 100 100    0    0       0     0     0>
             , <&key_physical_attrs 100 100  100    0       0     0     0>
             , <&key_physical_attrs 100 100  200    0       0     0     0>
@@ -71,4 +82,9 @@
             , <&key_physical_attrs 200 100  400  300       0     0     0>
         ;
     };
+};
+
+/* D4/D5 が I2C0 に割り当てられている場合、内部 I2C を無効化して GPIO として使用する */
+&i2c0 {
+    status = "disabled";
 };
