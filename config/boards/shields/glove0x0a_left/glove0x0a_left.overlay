@@ -13,7 +13,7 @@
 
 / {
     chosen {
-        zmk,split-role = "peripheral";
+        //zmk,split-role = "peripheral";
     };
 
     aliases {
