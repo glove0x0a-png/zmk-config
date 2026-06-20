@@ -30,29 +30,36 @@
 
         /* HIGH→LOW を押下とみなすため GPIO_ACTIVE_LOW を使用 */
         input-gpios =
-         /*   <&gpio0 16 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>, *//*  0: 表面上 P0.16 */
-         /*   <&gpio1 00 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>, *//*  0: 表面中 P1.00 */
-         /*   <&gpio1 10 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>, *//*  0: 表面下 P1.10 */
-            <&gpio0  2 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>, /*  0: D0  P0.02 */
-            <&gpio0  6 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>, /*  1: D11 P0.06 */
-            <&gpio0  3 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>, /*  2: D1  P0.03 */
-            <&gpio0  7 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>, /*  3: D12 P0.07 */
-            <&gpio0 28 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>, /*  4: D2  P0.28 */
-            <&gpio0  8 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>, /*  5: D13 P0.08 */
-            <&gpio0 29 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>, /*  6: D3  P0.29 */
-            <&gpio0  9 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>, /*  7: D14 P0.09 */
-            <&gpio0  4 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>, /*  8: D4  P0.04 (I2C SDA) */
-            <&gpio0 10 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>, /*  9: D15 P0.10 */
-            <&gpio0  5 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>, /* 10: D5  P0.05 (I2C SCL) */
-            <&gpio0 31 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>, /* 11: D16 P0.31 */
-            <&gpio1 11 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>, /* 12: D6  P1.11 */
-            <&gpio1 12 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>, /* 13: D7  P1.12 */
-            <&gpio0 30 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>, /* 14: D17 P0.30 */
-            <&gpio1 13 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>, /* 15: D8  P1.13 */
-            <&gpio0 26 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>, /* 16: D18 P0.26 */
-            <&gpio1 14 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>, /* 17: D9  P1.14 */
-            <&gpio1  7 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>, /* 18: D19 P1.07 */
-            <&gpio1 15 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>; /* 19: D10 P1.15 */
+            <&gpio0  2 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> /*  0: D0  P0.02 */
+            <&gpio0  6 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> /*  1: D11 P0.06 */
+            <&gpio0  3 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> /*  2: D1  P0.03 */
+            <&gpio0  7 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> /*  3: D12 P0.07 */
+            <&gpio0 28 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> /*  4: D2  P0.28 */
+            <&gpio0  8 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> /*  5: D13 P0.08 */
+            <&gpio0 29 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> /*  6: D3  P0.29 */
+            <&gpio0  9 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> /*  7: D14 P0.09 */
+            <&gpio0  4 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> /*  8: D4  P0.04 */
+            <&gpio0 10 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> /*  9: D15 P0.10 */
+            <&gpio0  5 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> /* 10: D5  P0.05 */
+            <&gpio0 31 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> /* 11: D16 P0.31 */
+            <&gpio1 11 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> /* 12: D6  P1.11 */
+            <&gpio1 12 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> /* 13: D7  P1.12 */
+            <&gpio0 30 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> /* 14: D17 P0.30 */
+            <&gpio1 13 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> /* 15: D8  P1.13 */
+            <&gpio0 26 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> /* 16: D18 P0.26 */
+            <&gpio1 14 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> /* 17: D9  P1.14 */
+            <&gpio1  7 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> /* 18: D19 P1.07 */
+            <&gpio1 15 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)> /* 19: D10 P1.15 */
+        ;
+
+        /* ★ ここで全ピンを GPIO として明示的に有効化する */
+        pinctrl-0 = <
+            &d0_gpio &d11_gpio &d1_gpio &d12_gpio &d2_gpio
+            &d13_gpio &d3_gpio &d14_gpio &d4_gpio &d15_gpio
+            &d5_gpio &d16_gpio &d6_gpio &d7_gpio &d17_gpio
+            &d8_gpio &d18_gpio &d9_gpio &d19_gpio &d10_gpio
+        >;
+        pinctrl-names = "default";
     };
 
     glove0x0a_left_layout: glove0x0a_left_layout {
@@ -61,45 +68,44 @@
         transform = <&left_transform>;
         kscan = <&kscan_left>;
 
-        keys
-            = <&key_physical_attrs 100 100    0    0       0     0     0>
-            , <&key_physical_attrs 100 100  100    0       0     0     0>
-            , <&key_physical_attrs 100 100  200    0       0     0     0>
-            , <&key_physical_attrs 100 100  300    0       0     0     0>
-            , <&key_physical_attrs 100 100  400    0       0     0     0>
+        keys = <
+            &key_physical_attrs 100 100    0    0  0 0 0
+            &key_physical_attrs 100 100  100    0  0 0 0
+            &key_physical_attrs 100 100  200    0  0 0 0
+            &key_physical_attrs 100 100  300    0  0 0 0
+            &key_physical_attrs 100 100  400    0  0 0 0
 
-            , <&key_physical_attrs 100 100    0  100       0     0     0>
-            , <&key_physical_attrs 100 100  100  100       0     0     0>
-            , <&key_physical_attrs 100 100  200  100       0     0     0>
-            , <&key_physical_attrs 100 100  300  100       0     0     0>
-            , <&key_physical_attrs 100 100  400  100       0     0     0>
+            &key_physical_attrs 100 100    0  100  0 0 0
+            &key_physical_attrs 100 100  100  100  0 0 0
+            &key_physical_attrs 100 100  200  100  0 0 0
+            &key_physical_attrs 100 100  300  100  0 0 0
+            &key_physical_attrs 100 100  400  100  0 0 0
 
-            , <&key_physical_attrs 100 100    0  200       0     0     0>
-            , <&key_physical_attrs 100 100  100  200       0     0     0>
-            , <&key_physical_attrs 100 100  200  200       0     0     0>
-            , <&key_physical_attrs 100 100  300  200       0     0     0>
-            , <&key_physical_attrs 100 100  400  200       0     0     0>
+            &key_physical_attrs 100 100    0  200  0 0 0
+            &key_physical_attrs 100 100  100  200  0 0 0
+            &key_physical_attrs 100 100  200  200  0 0 0
+            &key_physical_attrs 100 100  300  200  0 0 0
+            &key_physical_attrs 100 100  400  200  0 0 0
 
-            , <&key_physical_attrs 100 100    0  300       0     0     0>
-            , <&key_physical_attrs 100 100  100  300       0     0     0>
-            , <&key_physical_attrs 100 100  200  300       0     0     0>
-            , <&key_physical_attrs 100 100  300  300       0     0     0>
-            , <&key_physical_attrs 200 100  400  300       0     0     0>
-        ;
+            &key_physical_attrs 100 100    0  300  0 0 0
+            &key_physical_attrs 100 100  100  300  0 0 0
+            &key_physical_attrs 100 100  200  300  0 0 0
+            &key_physical_attrs 100 100  300  300  0 0 0
+            &key_physical_attrs 200 100  400  300  0 0 0
+        >;
     };
 };
 
 /* D4/D5 を GPIO として安全に使うための設定 */
 &i2c0 {
     status = "disabled";
-
-    /* default と sleep の 2 つが必要 */
     pinctrl-0 = <&i2c0_default>;
     pinctrl-1 = <&i2c0_sleep>;
     pinctrl-names = "default", "sleep";
 };
 
 &pinctrl {
+    /* I2C 無効化 */
     i2c0_default: i2c0_default {
         group1 {
             psels = <NRF_PSEL(TWIM_SDA, 0, 4)>,
@@ -115,4 +121,26 @@
             bias-pull-up;
         };
     };
+
+    /* ★ D0〜D19 をすべて GPIO として宣言 */
+    d0_gpio:  d0_gpio  { group1 { psels = <NRF_PSEL(GPIO, 0,  2)>; }; };
+    d11_gpio: d11_gpio { group1 { psels = <NRF_PSEL(GPIO, 0,  6)>; }; };
+    d1_gpio:  d1_gpio  { group1 { psels = <NRF_PSEL(GPIO, 0,  3)>; }; };
+    d12_gpio: d12_gpio { group1 { psels = <NRF_PSEL(GPIO, 0,  7)>; }; };
+    d2_gpio:  d2_gpio  { group1 { psels = <NRF_PSEL(GPIO, 0, 28)>; }; };
+    d13_gpio: d13_gpio { group1 { psels = <NRF_PSEL(GPIO, 0,  8)>; }; };
+    d3_gpio:  d3_gpio  { group1 { psels = <NRF_PSEL(GPIO, 0, 29)>; }; };
+    d14_gpio: d14_gpio { group1 { psels = <NRF_PSEL(GPIO, 0,  9)>; }; };
+    d4_gpio:  d4_gpio  { group1 { psels = <NRF_PSEL(GPIO, 0,  4)>; }; };
+    d15_gpio: d15_gpio { group1 { psels = <NRF_PSEL(GPIO, 0, 10)>; }; };
+    d5_gpio:  d5_gpio  { group1 { psels = <NRF_PSEL(GPIO, 0,  5)>; }; };
+    d16_gpio: d16_gpio { group1 { psels = <NRF_PSEL(GPIO, 0, 31)>; }; };
+    d6_gpio:  d6_gpio  { group1 { psels = <NRF_PSEL(GPIO, 1, 11)>; }; };
+    d7_gpio:  d7_gpio  { group1 { psels = <NRF_PSEL(GPIO, 1, 12)>; }; };
+    d17_gpio: d17_gpio { group1 { psels = <NRF_PSEL(GPIO, 0, 30)>; }; };
+    d8_gpio:  d8_gpio  { group1 { psels = <NRF_PSEL(GPIO, 1, 13)>; }; };
+    d18_gpio: d18_gpio { group1 { psels = <NRF_PSEL(GPIO, 0, 26)>; }; };
+    d9_gpio:  d9_gpio  { group1 { psels = <NRF_PSEL(GPIO, 1, 14)>; }; };
+    d19_gpio: d19_gpio { group1 { psels = <NRF_PSEL(GPIO, 1,  7)>; }; };
+    d10_gpio: d10_gpio { group1 { psels = <NRF_PSEL(GPIO, 1, 15)>; }; };
 };
