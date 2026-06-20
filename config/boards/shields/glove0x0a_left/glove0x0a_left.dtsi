@@ -97,3 +97,13 @@
 &i2s0 {
     status = "disabled";
 };
+/* D11,D17,D18 を GPIOとして安全に使うための設定 */
+&led0 {
+    status = "disabled";
+};
+&led2 {
+    status = "disabled";
+};
+&led2 {
+    status = "disabled";
+};
