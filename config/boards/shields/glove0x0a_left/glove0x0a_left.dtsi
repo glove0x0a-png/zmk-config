@@ -97,6 +97,3 @@
 &i2s0 {
     status = "disabled";
 };
-&uicr {
-    trace-pins = <0>;  // TRACE 無効化
-};

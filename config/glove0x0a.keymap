@@ -30,6 +30,9 @@
 #define Rc(keycode) APPLY_MODS(MOD_RCTL, keycode)
 
 //■■dtsi*********************************************************************************************
+//2026.06.21 #1215 『disable_trace.c』     ☑1.XIAO BLE plusのうち、3.3VへPULL UPできない/スキャンに使用できないピンを修正。
+//2026.06.20 #1208                         ☑1.キーマップ修正右→左、左手でLED利用(CapsLock)。
+//2026.06.20 #1202 『glove0x0a_left.dtsi』 ☑1.左右でコンパイル、右手はCSTSを使用、左はX4Aを利用。
 //2026.06.20 #1200 『glove0x0a_left.dtsi』 ☑1.direct scan
 //                                         ☑2.XIAO BLE plus、表面のpinを入力で使う
 //                                         ☑3.左右でコンパイル、右手はCSTSを使用、左はまだ
@@ -393,6 +396,7 @@
         };
     };
 };
+//SPRIT
 //SPRIT
 //SPRIT
 //SPRIT
