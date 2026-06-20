@@ -1,6 +1,4 @@
 #include "glove0x0a_right.dtsi"
-#include <dt-bindings/led/led.h>
-#include <zephyr/dt-bindings/input/input-event-codes.h>
 //右手用
 &xiao_i2c {
     az1uball: az1uball@a {
