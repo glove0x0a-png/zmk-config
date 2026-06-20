@@ -46,8 +46,8 @@
             <&gpio1 13 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>, /* 15: D8  P1.13 */
             <&gpio0 26 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>, /* 16: D18 P0.26 */
             <&gpio1 14 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>, /* 17: D9  P1.14 */
-            <&gpio1  7 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>; /* 18: D19 P1.07 */
-            <&gpio1 15 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>, /* 19: D10 P1.15 */
+            <&gpio1  7 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>, /* 18: D19 P1.07 */
+            <&gpio1 15 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>; /* 19: D10 P1.15 */
     };
 
     glove0x0a_left_layout: glove0x0a_left_layout {
