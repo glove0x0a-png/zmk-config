@@ -27,7 +27,7 @@
         input-gpios =
          /*   <&gpio0 16 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>, *//*  0: 表面上 P0.16 */
          /*   <&gpio1 00 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>, *//*  0: 表面中 P1.00 */
-            <&gpio1 10 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>, /*  0: 表面下 P1.10 */
+         /*   <&gpio1 10 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>, *//*  0: 表面下 P1.10 */
             <&gpio0  2 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>, /*  0: D0  P0.02 */
             <&gpio0  3 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>, /*  1: D1  P0.03 */
             <&gpio0 28 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>, /*  2: D2  P0.28 */
