@@ -29,6 +29,11 @@
 
 #define Rc(keycode) APPLY_MODS(MOD_RCTL, keycode)
 
+//■■dtsi*********************************************************************************************
+//2026.06.20 #1200 『glove0x0a_left.dtsi』 ☑1.direct scan
+//                                         ☑2.XIAO BLE plus、表面のpinを入力で使う
+//                                         ☑3.左右でコンパイル、右手はCSTSを使用、左はまだ
+//                                         ☑4.USB-Cの5V給電(外両端-GND,次のピン-5V)
 //■■Keymap*******************************************************************************************
 //2026.06.06 #1172  Layer=2,4              mtを200msへ。shiftをCTRL+shiftへ。他レイヤーはshiftのみ。
 //2026.05.30 #1113  Layer=0                W長押しでWin。
@@ -344,7 +349,6 @@
 &mt RCTRL   A    &kp S      &MY_kp_D  &kp F     &kp G     &kp  H     &none     &kp K     &kp L     &kp  SEMI
 &kp LS_          &kp Z      &kp  C    &kp V     &kp B     &kp  N     &kp  M    &kp COMMA &kp UP    &kp  ENTER
 &kp LCTRL        &kp LALT   &mkp LCLK &mo 2     &kp SPACE            &mo  3    &kp LEFT  &kp DOWN  &kp  RIGHT
-
           >;
         };
         //1:jigler-dummyレイヤー
@@ -367,6 +371,11 @@
 &mt LALT    CAPS &kp LEFT   &kp DOWN  &kp RIGHT &kp F3
 &trans           &VOL_DN    &kp X     &VOL_UP   &kp EQUAL
 &trans           &tog 1     &kp PSCRN &none     &kp BSPC
+/*右手*/
+&TAB_F1_ESC_BtCL &kp F2     &kp UP    &kp F4    &kp F5    &kp  F6    &F7_F10   &F8_F11   &F9_F12   &kp  P
+&mt LALT    CAPS &kp LEFT   &kp DOWN  &kp RIGHT &kp F3    &RBKT_NUHS &trans    &kp HOME  &kp PG_UP &kp  INT1
+&trans           &VOL_DN    &kp X     &VOL_UP   &kp EQUAL &NEW_8977  &kp DEL   &kp END   &kp PG_DN &kp  SLASH
+&trans           &tog 1     &kp PSCRN &none     &kp BSPC             &kp K_APP &trans    &trans    &trans
             >;
         };
         //3:Number + Bluetooth /マウス高速
@@ -376,6 +385,11 @@
 &MY_U            &MY_L      &MY_D     &MY_R     &kp F3
 &trans           &VOL_DN    &kp X     &VOL_UP   &kp EQUAL
 &trans           &trans     &mkp RCLK &kp K_APP &ind_bat
+/*右手*/
+&kp N1           &MY_N2     &kp  N3   &kp N4    &kp N5    &kp  N6    &kp  N7   &kp N8    &kp N9    &N0_PIPE
+&MY_U            &MY_L      &MY_D     &MY_R     &kp F3    &kp  SQT   &trans    &SC_U_L   &SC_D_R   &trans
+&trans           &VOL_DN    &kp X     &VOL_UP   &kp EQUAL &kp  LBKT  &mkp LCLK &trans    &kp DOT   &kp  SLASH
+&trans           &trans     &mkp RCLK &kp K_APP &ind_bat             &none     &BLE_USB  &BLE0_2   &BLE1_3
             >;
         };
 
@@ -386,6 +400,11 @@
 &mt LALT    CAPS &kp LEFT   &kp DOWN  &kp RIGHT &kp F3
 &trans           &VOL_DN    &kp X     &VOL_UP   &kp EQUAL
 &trans           &tog 1     &kp PSCRN &none     &kp BSPC
+/*右手*/
+&TAB_F1_ESC_BtCL &kp F2     &kp UP    &kp F4    &kp F5    &kp  F6    &F7_F10   &F8_F11   &F9_F12   &kp  P
+&mt LALT    CAPS &kp LEFT   &kp DOWN  &kp RIGHT &kp F3    &RBKT_NUHS &trans    &kp HOME  &kp PG_UP &kp  INT1
+&trans           &VOL_DN    &kp X     &VOL_UP   &kp EQUAL &NEW_8977  &kp DEL   &kp END   &kp PG_DN &kp  SLASH
+&trans           &tog 1     &kp PSCRN &none     &kp BSPC             &kp K_APP &trans    &trans    &trans
             >;
         };
         //5:Number + Bluetooth /マウス高速
@@ -395,17 +414,13 @@
 &MY_U            &MY_L      &MY_D     &MY_R     &kp F3
 &trans           &VOL_DN    &kp X     &VOL_UP   &kp EQUAL
 &trans           &trans     &mkp RCLK &kp K_APP &ind_bat
+/*右手*/
+&kp N1           &MY_N2     &kp  N3   &kp N4    &kp N5    &kp  N6    &kp  N7   &kp N8    &kp N9    &N0_PIPE
+&MY_U            &MY_L      &MY_D     &MY_R     &kp F3    &kp  SQT   &trans    &SC_U_L   &SC_D_R   &trans
+&trans           &VOL_DN    &kp X     &VOL_UP   &kp EQUAL &kp  LBKT  &mkp LCLK &trans    &kp DOT   &kp  SLASH
+&trans           &trans     &mkp RCLK &kp K_APP &ind_bat             &none     &BLE_USB  &BLE0_2   &BLE1_3
             >;
         };
     };
 };
-//SPRIT
-//SPRIT
-//SPRIT
-//SPRIT
-//SPRIT
-//SPRIT
-//SPRIT
-//SPRIT
-//SPRIT
 //SPRIT
