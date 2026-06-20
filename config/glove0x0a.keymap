@@ -30,6 +30,7 @@
 #define Rc(keycode) APPLY_MODS(MOD_RCTL, keycode)
 
 //■■dtsi*********************************************************************************************
+//2026.06.21 #1217 『glove0x0a_left.dtsi』 ☑LED制御ピンを入力用に定義。
 //2026.06.21 #1215 『disable_trace.c』     ☑1.XIAO BLE plusのうち、3.3VへPULL UPできない/スキャンに使用できないピンを修正。
 //2026.06.20 #1208                         ☑1.キーマップ修正右→左、左手でLED利用(CapsLock)。
 //2026.06.20 #1202 『glove0x0a_left.dtsi』 ☑1.左右でコンパイル、右手はCSTSを使用、左はX4Aを利用。
@@ -396,6 +397,7 @@
         };
     };
 };
+//SPRIT
 //SPRIT
 //SPRIT
 //SPRIT

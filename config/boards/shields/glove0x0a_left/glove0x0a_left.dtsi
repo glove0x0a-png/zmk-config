@@ -101,9 +101,14 @@
 &led0 {
     status = "disabled";
 };
-&led2 {
+&led1 {
     status = "disabled";
 };
 &led2 {
     status = "disabled";
+};
+&aliases {
+    led-blue = <0>;
+    led-green = <0>;
+    led-blue = <0>;
 };
