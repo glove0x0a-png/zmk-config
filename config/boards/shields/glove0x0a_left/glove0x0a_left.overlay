@@ -1,4 +1,6 @@
 #include "glove0x0a_left.dtsi"
+#include <dt-bindings/led/led.h>
+#include <zephyr/dt-bindings/input/input-event-codes.h>
 
 //左手用
 &kscan_left {
@@ -11,7 +13,16 @@
 
 / {
     chosen {
-        zmk,split-role = "peripheral";
+        //zmk,split-role = "peripheral";
     };
-    
+
+    aliases {
+        led-red = &led0;
+        led-green = &led1;
+        led-blue = &led2;
+    };
+
+    leds {
+        status = "okay";
+    };
 };
