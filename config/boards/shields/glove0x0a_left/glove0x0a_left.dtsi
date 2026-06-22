@@ -28,6 +28,7 @@
     kscan_left: kscan {
         compatible = "zmk,kscan-gpio-matrix";
         wakeup-source;
+        diode-direction = "col2row";
 
         /* 行（Row）: 出力 */
         row-gpios =
@@ -38,11 +39,11 @@
 
         /* 列（Column）: 入力（プルアップ） */
         col-gpios =
-            <&gpio0  2 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>, /* Col1: D0 P0.02 */
-            <&gpio0  3 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>, /* Col2: D1 P0.03 */
-            <&gpio0 28 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>, /* Col3: D2 P0.28 */
-            <&gpio0 29 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>, /* Col4: D3 P0.29 */
-            <&gpio1 11 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>; /* Col5: D6 P1.11 */
+            <&gpio0  2 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>, /* Col1: D0 P0.02 */
+            <&gpio0  3 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>, /* Col2: D1 P0.03 */
+            <&gpio0 28 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>, /* Col3: D2 P0.28 */
+            <&gpio0 29 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>, /* Col4: D3 P0.29 */
+            <&gpio1 11 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>; /* Col5: D6 P1.11 */
     };
 
     /* ────────────────────────────────
