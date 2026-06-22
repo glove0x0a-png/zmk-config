@@ -1,5 +1,6 @@
 #include "glove0x0a_right.dtsi"
-//右手用
+
+// 右手用
 &xiao_i2c {
     az1uball: az1uball@a {
         compatible = "zmk,az1uball";
@@ -17,7 +18,7 @@
     status = "okay";
 };
 
-/ {
+ / {
     chosen {
         zmk,input-devices = &az1uball;
         zmk,split-role = "central";
@@ -26,12 +27,12 @@
 
     input-listeners {
         compatible = "zmk,input-listeners";
-        listeners = < &az1uball_listener>;
+        listeners = < &az1uball_listener >;
     };
 
     az1uball_listener: az1uball_listener {
         compatible = "zmk,input-listener";
-        device  = < &az1uball >;
+        device = < &az1uball >;
     };
 
     aliases {
@@ -44,57 +45,67 @@
         status = "okay";
     };
 
-    //keymap
     keymap {
         compatible = "zmk,keymap";
-        //0:normal
-        layer_qwerty { bindings = <
-&mt Q       TAB  &mt LGUI W &kp  E    &kp R     &kp T     &kp  Y     &kp  U    &kp I     &kp O     &mt  RCTRL MINUS
-&mt RCTRL   A    &kp S      &MY_kp_D  &kp F     &kp G     &kp  H     &none     &kp K     &kp L     &kp  SEMI
-&kp LS_          &kp Z      &kp  C    &kp V     &kp B     &kp  N     &kp  M    &kp COMMA &kp UP    &kp  ENTER
-&kp LCTRL        &kp LALT   &mkp LCLK &mo 2     &kp SPACE            &mo  3    &kp LEFT  &kp DOWN  &kp  RIGHT
-          >;
-        };
-        //1:jigler-dummyレイヤー
-        layer_fn1    { bindings = <
-&trans           &trans    &trans    &trans     &trans    &trans     &trans    &trans    &trans    &trans
-&trans           &trans    &trans    &trans     &trans    &trans     &trans    &trans    &trans    &trans
-&trans           &trans    &trans    &trans     &trans    &trans     &trans    &trans    &trans    &trans
-&trans           &trans    &trans    &mo 4      &trans               &mo  5    &trans    &trans    &trans
- >; };
-        //2:Custom + Function Keys + Vol
-        layer_fn2    { bindings = <
-&TAB_F1_ESC_BtCL &kp F2     &kp UP    &kp F4    &kp F5    &kp  F6    &F7_F10   &F8_F11   &F9_F12   &kp  P
-&mt LALT    CAPS &kp LEFT   &kp DOWN  &kp RIGHT &kp F3    &RBKT_NUHS &trans    &kp HOME  &kp PG_UP &kp  INT1
-&trans           &VOL_DN    &kp X     &VOL_UP   &kp EQUAL &NEW_8977  &kp DEL   &kp END   &kp PG_DN &kp  SLASH
-&trans           &tog 1     &kp PSCRN &none     &kp BSPC             &kp K_APP &trans    &trans    &trans
-            >;
-        };
-        //3:Number + Bluetooth /マウス高速
-        layer_fn3    { bindings = <
-&kp N1           &MY_N2     &kp  N3   &kp N4    &kp N5    &kp  N6    &kp  N7   &kp N8    &kp N9    &N0_PIPE
-&MY_U            &MY_L      &MY_D     &MY_R     &kp F3    &kp  SQT   &trans    &SC_U_L   &SC_D_R   &trans
-&trans           &VOL_DN    &kp X     &VOL_UP   &kp EQUAL &kp  LBKT  &mkp LCLK &trans    &kp DOT   &kp  SLASH
-&trans           &trans     &mkp RCLK &kp K_APP &ind_bat             &none     &BLE_USB  &BLE0_2   &BLE1_3
+
+        // 0: normal
+        layer_qwerty {
+            bindings = <
+                &mt LGUI KC_Q      &kp KC_TAB      &mt LGUI KC_W   &kp KC_E   &kp KC_R   &kp KC_T   &kp KC_Y   &kp KC_U   &kp KC_I   &kp KC_O   &mt RCTRL KC_MINUS
+                &mt RCTRL KC_A     &kp KC_S        &MY_kp_D        &kp KC_F   &kp KC_G   &kp KC_H   &none       &kp KC_K   &kp KC_L   &kp KC_SEMICOLON
+                &kp LS_            &kp KC_Z        &kp KC_C        &kp KC_V   &kp KC_B   &kp KC_N   &kp KC_M   &kp KC_COMMA &kp KC_UP  &kp KC_ENTER
+                &kp LCTRL          &kp LALT        &mkp LCLK       &mo 2      &kp KC_SPACE              &mo 3     &kp KC_LEFT &kp KC_DOWN &kp KC_RIGHT
             >;
         };
 
-        //4:Custom + Function Keys + Vol
-        layer_fn4    { bindings = <
-&TAB_F1_ESC_BtCL &kp F2     &kp UP    &kp F4    &kp F5    &kp  F6    &F7_F10   &F8_F11   &F9_F12   &kp  P
-&mt LALT    CAPS &kp LEFT   &kp DOWN  &kp RIGHT &kp F3    &RBKT_NUHS &trans    &kp HOME  &kp PG_UP &kp  INT1
-&trans           &VOL_DN    &kp X     &VOL_UP   &kp EQUAL &NEW_8977  &kp DEL   &kp END   &kp PG_DN &kp  SLASH
-&trans           &tog 1     &kp PSCRN &none     &kp BSPC             &kp K_APP &trans    &trans    &trans
+        // 1: jigler dummy
+        layer_fn1 {
+            bindings = <
+                &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+                &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+                &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+                &trans &trans &trans &mo 4  &trans           &mo 5  &trans &trans &trans
             >;
         };
-        //5:Number + Bluetooth /マウス高速
-        layer_fn5    { bindings = <
-&kp N1           &MY_N2     &kp  N3   &kp N4    &kp N5    &kp  N6    &kp  N7   &kp N8    &kp N9    &N0_PIPE
-&MY_U            &MY_L      &MY_D     &MY_R     &kp F3    &kp  SQT   &trans    &SC_U_L   &SC_D_R   &trans
-&trans           &VOL_DN    &kp X     &VOL_UP   &kp EQUAL &kp  LBKT  &mkp LCLK &trans    &kp DOT   &kp  SLASH
-&trans           &trans     &mkp RCLK &kp K_APP &ind_bat             &none     &BLE_USB  &BLE0_2   &BLE1_3
+
+        // 2: Custom + Function Keys + Vol
+        layer_fn2 {
+            bindings = <
+                &TAB_F1_ESC_BtCL  &kp KC_F2   &kp KC_UP    &kp KC_F4   &kp KC_F5   &kp KC_F6   &F7_F10   &F8_F11   &F9_F12   &kp KC_P
+                &mt LALT CAPS     &kp KC_LEFT &kp KC_DOWN  &kp KC_RIGHT &kp KC_F3  &RBKT_NUHS  &trans    &kp KC_HOME &kp KC_PGUP &kp KC_INT1
+                &trans            &VOL_DN     &kp KC_X     &VOL_UP      &kp KC_EQUAL &NEW_8977 &kp KC_DEL &kp KC_END &kp KC_PGDN &kp KC_SLASH
+                &trans            &tog 1      &kp KC_PSCR  &none        &kp KC_BSPC            &kp K_APP &trans &trans &trans
+            >;
+        };
+
+        // 3: Number + Bluetooth / Mouse fast
+        layer_fn3 {
+            bindings = <
+                &kp KC_1   &MY_N2     &kp KC_3   &kp KC_4   &kp KC_5   &kp KC_6   &kp KC_7   &kp KC_8   &kp KC_9   &N0_PIPE
+                &MY_U      &MY_L      &MY_D      &MY_R      &kp KC_F3  &kp KC_QUOTE &trans   &SC_U_L    &SC_D_R    &trans
+                &trans     &VOL_DN    &kp KC_X   &VOL_UP    &kp KC_EQUAL &kp KC_LBKT &mkp LCLK &trans    &kp KC_DOT &kp KC_SLASH
+                &trans     &trans     &mkp RCLK  &kp K_APP  &ind_bat              &none      &BLE_USB   &BLE0_2    &BLE1_3
+            >;
+        };
+
+        // 4: Custom + Function Keys + Vol
+        layer_fn4 {
+            bindings = <
+                &TAB_F1_ESC_BtCL  &kp KC_F2   &kp KC_UP    &kp KC_F4   &kp KC_F5   &kp KC_F6   &F7_F10   &F8_F11   &F9_F12   &kp KC_P
+                &mt LALT CAPS     &kp KC_LEFT &kp KC_DOWN  &kp KC_RIGHT &kp KC_F3  &RBKT_NUHS  &trans    &kp KC_HOME &kp KC_PGUP &kp KC_INT1
+                &trans            &VOL_DN     &kp KC_X     &VOL_UP      &kp KC_EQUAL &NEW_8977 &kp KC_DEL &kp KC_END &kp KC_PGDN &kp KC_SLASH
+                &trans            &tog 1      &kp KC_PSCR  &none        &kp KC_BSPC            &kp K_APP &trans &trans &trans
+            >;
+        };
+
+        // 5: Number + Bluetooth / Mouse fast
+        layer_fn5 {
+            bindings = <
+                &kp KC_1   &MY_N2     &kp KC_3   &kp KC_4   &kp KC_5   &kp KC_6   &kp KC_7   &kp KC_8   &kp KC_9   &N0_PIPE
+                &MY_U      &MY_L      &MY_D      &MY_R      &kp KC_F3  &kp KC_QUOTE &trans   &SC_U_L    &SC_D_R    &trans
+                &trans     &VOL_DN    &kp KC_X   &VOL_UP    &kp KC_EQUAL &kp KC_LBKT &mkp LCLK &trans    &kp KC_DOT &kp KC_SLASH
+                &trans     &trans     &mkp RCLK  &kp K_APP  &ind_bat              &none      &BLE_USB   &BLE0_2    &BLE1_3
             >;
         };
     };
-
 };
