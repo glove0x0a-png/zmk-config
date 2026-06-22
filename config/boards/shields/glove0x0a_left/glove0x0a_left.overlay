@@ -32,7 +32,6 @@
         compatible = "zmk,keymap";
         //0:normal
         layer_qwerty { bindings = <
-/*左手*/
 &mt Q       TAB  &mt LGUI W &kp  E    &kp R     &kp T
 &mt RCTRL   A    &kp S      &MY_kp_D  &kp F     &kp G
 &kp LS_          &kp Z      &kp  C    &kp V     &kp B
@@ -41,7 +40,6 @@
         };
         //1:jigler-dummyレイヤー
         layer_fn1    { bindings = <
-/*左手*/
 &trans           &trans    &trans    &trans     &trans
 &trans           &trans    &trans    &trans     &trans
 &trans           &trans    &trans    &trans     &trans
@@ -49,7 +47,6 @@
  >; };
         //2:Custom + Function Keys + Vol
         layer_fn2    { bindings = <
-/*左手*/
 &TAB_F1_ESC_BtCL &kp F2     &kp UP    &kp F4    &kp F5
 &mt LALT    CAPS &kp LEFT   &kp DOWN  &kp RIGHT &kp F3
 &trans           &VOL_DN    &kp X     &VOL_UP   &kp EQUAL
@@ -58,7 +55,6 @@
         };
         //3:Number + Bluetooth /マウス高速
         layer_fn3    { bindings = <
-/*左手*/
 &kp N1           &MY_N2     &kp  N3   &kp N4    &kp N5
 &MY_U            &MY_L      &MY_D     &MY_R     &kp F3
 &trans           &VOL_DN    &kp X     &VOL_UP   &kp EQUAL
@@ -68,7 +64,6 @@
 
         //4:Custom + Function Keys + Vol
         layer_fn4    { bindings = <
-/*左手*/
 &TAB_F1_ESC_BtCL &kp F2     &kp UP    &kp F4    &kp F5
 &mt LALT    CAPS &kp LEFT   &kp DOWN  &kp RIGHT &kp F3
 &trans           &VOL_DN    &kp X     &VOL_UP   &kp EQUAL
@@ -77,7 +72,6 @@
         };
         //5:Number + Bluetooth /マウス高速
         layer_fn5    { bindings = <
-/*左手*/
 &kp N1           &MY_N2     &kp  N3   &kp N4    &kp N5
 &MY_U            &MY_L      &MY_D     &MY_R     &kp F3
 &trans           &VOL_DN    &kp X     &VOL_UP   &kp EQUAL
