@@ -28,7 +28,7 @@
     kscan_left: kscan {
         compatible = "zmk,kscan-gpio-matrix";
         wakeup-source;
-        diode-direction = "col2row";
+        diode-direction = "row2col";
 
         /* 行（Row）: 出力 */
         row-gpios =
