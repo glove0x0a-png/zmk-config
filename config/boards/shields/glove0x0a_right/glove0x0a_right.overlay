@@ -1,0 +1,45 @@
+#include "glove0x0a_right.dtsi"
+//右手用
+&xiao_i2c {
+    az1uball: az1uball@a {
+        compatible = "zmk,az1uball";
+        reg = <0x0a>;
+        status = "okay";
+        sensitivity = "1x";
+    };
+};
+
+&kscan_right {
+    status = "okay";
+};
+
+&right_transform {
+    status = "okay";
+};
+
+/ {
+    chosen {
+        zmk,input-devices = &az1uball;
+        zmk,split-role = "central";
+    };
+
+    input-listeners {
+        compatible = "zmk,input-listeners";
+        listeners = < &az1uball_listener>;
+    };
+
+    az1uball_listener: az1uball_listener {
+        compatible = "zmk,input-listener";
+        device  = < &az1uball >;
+    };
+
+    aliases {
+        led-red = &led0;
+        led-green = &led1;
+        led-blue = &led2;
+    };
+
+    leds {
+        status = "okay";
+    };
+};
