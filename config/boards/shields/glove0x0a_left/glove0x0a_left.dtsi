@@ -4,7 +4,7 @@
 
 / {
     chosen {
-        zmk,physical-layout = &glove0x0a_left_layout;
+        //zmk,physical-layout = &glove0x0a_left_layout;
     };
 
     /* ────────────────────────────────

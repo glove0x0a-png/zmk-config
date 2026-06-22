@@ -22,7 +22,7 @@
     chosen {
         zmk,input-devices = &az1uball;
         zmk,split-role = "central";
-        zmk,split-key-count = <39>;
+        zmk,split-key-count = <59>;
     };
 
     input-listeners {
