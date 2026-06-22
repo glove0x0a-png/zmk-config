@@ -12,7 +12,6 @@
  / {
     chosen {
         zmk,split-role = "peripheral";
-        zmk,split-key-count = <20>;
     };
 
     aliases {
