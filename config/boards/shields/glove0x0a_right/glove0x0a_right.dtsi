@@ -7,7 +7,7 @@
         zmk,physical-layout = &glove0x0a_layout;
     };
 
-    /* transform（右手 10×4） */
+    /* transform（右手 5×4） */
     right_transform: matrix_transform_right {
         compatible = "zmk,matrix-transform";
         rows = <8>;
