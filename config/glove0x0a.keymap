@@ -30,7 +30,7 @@
 #define Rc(keycode) APPLY_MODS(MOD_RCTL, keycode)
 
 //■■dtsi*********************************************************************************************
-//2026.06.25 #1247                         BLE設定残存より、初期化。I2Cは誤動作するので、無効化状態。
+//2026.06.25 #1248                         BLE設定残存より、初期化。I2Cは誤動作するので、無効化状態。
 //2026.06.25 #1243                         右X4A、左X4Aセット。
 //2026.06.22 #1236                         左X4A、右CSTS。特に左(ペリフェラル)側のキーマップが右手用になる対応。 ダミーマトリクス。
 //2026.06.22 #1222                         ☑XIAO BLE plusのGPIO制限からマトリクススキャンに変更。
@@ -351,8 +351,8 @@
 &kp LS_          &kp Z      &kp  C    &kp V     &kp B
 &kp LCTRL        &kp LALT   &mkp LCLK &mo 2     &kp SPACE
 /*右手*/
-&kp  Y           &kp  U     &kp I     &kp O     &mt  RCTRL MINUS
-&kp  H           &none      &kp K     &kp L     &mt  ESC   SEMI
+&kp  Y           &kp  U     &kp I     &kp O     &mt  ESC   MINUS
+&kp  H           &none      &kp K     &kp L     &mt  RCTRL SEMI
 &kp  N           &kp  M     &kp COMMA &kp UP    &kp  ENTER
 &kp SPACE        &mo  3     &kp LEFT  &kp DOWN  &kp  RIGHT
           >;
@@ -429,6 +429,7 @@
         };
     };
 };
+//SPRIT
 //SPRIT
 //SPRIT
 //SPRIT
