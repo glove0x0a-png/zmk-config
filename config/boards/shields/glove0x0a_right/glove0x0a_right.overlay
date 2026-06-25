@@ -20,7 +20,7 @@
 
  / {
     chosen {
-        zmk,input-devices = &az1uball;
+    //    zmk,input-devices = &az1uball;
         zmk,split-role = "central";
     };
 
