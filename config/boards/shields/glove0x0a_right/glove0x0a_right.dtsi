@@ -13,8 +13,10 @@
         rows = <6>;
         columns = <10>;
         map = <
+        //dummy
 RC( 0, 0) RC( 0, 0) RC( 0, 0) RC( 0, 0) RC( 0, 0)  RC( 0, 0) RC( 0, 0) RC( 0, 0) RC( 0, 0) RC( 0, 0)
 RC( 0, 0) RC( 0, 0) RC( 0, 0) RC( 0, 0) RC( 0, 0)  RC( 0, 0) RC( 0, 0) RC( 0, 0) RC( 0, 0) RC( 0, 0)
+        //key-scan
 RC( 4, 0) RC( 4, 1) RC( 4, 2) RC( 4, 3) RC( 3, 4)  RC( 3, 5) RC( 3, 6) RC( 3, 7) RC( 3, 8) RC( 3, 9)
 RC( 5, 0) RC( 5, 1) RC( 5, 2) RC( 5, 3) RC( 2, 4)  RC( 2, 5) RC( 2, 6) RC( 2, 7) RC( 2, 8) RC( 2, 9)
 RC( 6, 0) RC( 6, 1) RC( 6, 2) RC( 6, 3) RC( 1, 4)  RC( 1, 5) RC( 1, 6) RC( 1, 7) RC( 1, 8) RC( 1, 9)
@@ -36,7 +38,8 @@ RC( 7, 0) RC( 7, 1) RC( 7, 2) RC( 7, 3) RC( 0, 4)            RC( 0, 6) RC( 0, 7)
           , <&gpio0 29  GPIO_ACTIVE_HIGH> /*D03*/
           , <&gpio1  1  GPIO_ACTIVE_HIGH> /*D02-D03*/
           , <&gpio0  2  GPIO_ACTIVE_HIGH> /*D00*/
-          , <&gpio0 19  GPIO_ACTIVE_HIGH> /*D01-D02*/
+          , <&gpio0 28 (GPIO_ACTIVE_HIGH> /*D2 P0.28 */
+          /*, <&gpio0 19  GPIO_ACTIVE_HIGH>*/ /*D01-D02*/
           , <&gpio1 11  GPIO_ACTIVE_HIGH> /*D06*/
           , <&gpio0 15  GPIO_ACTIVE_HIGH> /*D00-D01*/
         ;
@@ -49,7 +52,6 @@ RC( 7, 0) RC( 7, 1) RC( 7, 2) RC( 7, 3) RC( 0, 4)            RC( 0, 6) RC( 0, 7)
         transform = <&right_transform>;
         kscan = <&kscan_right>;
         keys  //                     w   h    x    y     rot    rx    ry
-            //左手
            =  <&key_physical_attrs 100 100    0    0       0     0     0>
             , <&key_physical_attrs 100 100  100    0       0     0     0>
             , <&key_physical_attrs 100 100  200    0       0     0     0>
@@ -69,8 +71,7 @@ RC( 7, 0) RC( 7, 1) RC( 7, 2) RC( 7, 3) RC( 0, 4)            RC( 0, 6) RC( 0, 7)
             , <&key_physical_attrs 100 100  100  300       0     0     0>
             , <&key_physical_attrs 100 100  200  300       0     0     0>
             , <&key_physical_attrs 100 100  300  300       0     0     0>
-            , <&key_physical_attrs 200 100  400  300       0     0     0>
-            //右手
+            , <&key_physical_attrs 100 100  400  300       0     0     0>
             , <&key_physical_attrs 100 100  500    0       0     0     0>
             , <&key_physical_attrs 100 100  600    0       0     0     0>
             , <&key_physical_attrs 100 100  700    0       0     0     0>
