@@ -14,7 +14,7 @@
 #include <dt-bindings/input/input-event-codes.h>
 
 #define HOLD_MS 250
-//#define DANCE_MS 200
+#define DANCE_MS 200
 #define PIPE_ LS(INT3)
 #define LS_   LSHFT
 
@@ -29,17 +29,6 @@
 
 #define Rc(keycode) APPLY_MODS(MOD_RCTL, keycode)
 
-//■■dtsi*********************************************************************************************
-//2026.06.25 #1248                         BLE設定残存より、初期化。I2Cは誤動作するので、無効化状態。
-//2026.06.25 #1243                         右X4A、左X4Aセット。
-//2026.06.22 #1236                         左X4A、右CSTS。特に左(ペリフェラル)側のキーマップが右手用になる対応。 ダミーマトリクス。
-//2026.06.22 #1222                         ☑XIAO BLE plusのGPIO制限からマトリクススキャンに変更。
-//2026.06.20 #1208                         ☑1.キーマップ修正右→左、左手でLED利用(CapsLock)。
-//2026.06.20 #1202 『glove0x0a_left.dtsi』 ☑1.左右でコンパイル、右手はCSTSを使用、左はX4Aを利用。
-//2026.06.20 #1200 『glove0x0a_left.dtsi』 ☑1.direct scan
-//                                         ☑2.XIAO BLE plus、表面のpinを入力で使う
-//                                         ☑3.左右でコンパイル、右手はCSTSを使用、左はまだ
-//                                         ☑4.USB-Cの5V給電(外両端-GND,次のピン-5V)
 //■■Keymap*******************************************************************************************
 //2026.06.06 #1172  Layer=2,4              mtを200msへ。shiftをCTRL+shiftへ。他レイヤーはshiftのみ。
 //2026.05.30 #1113  Layer=0                W長押しでWin。
@@ -300,18 +289,18 @@
             behavior-status = "capslock";
         };
 //★TAP DANCE-----------------------------------------------
-//      mo3_ESC: mo3_ESC {
-//          compatible = "zmk,behavior-tap-dance";
-//          #binding-cells = <0>;
-//          tapping-term-ms = <DANCE_MS>;
-//          bindings = <&mo 3>, <&kp ESC>;
-//      };
-//      mo5_ESC: mo5_ESC {
-//          compatible = "zmk,behavior-tap-dance";
-//          #binding-cells = <0>;
-//          tapping-term-ms = <DANCE_MS>;
-//          bindings = <&mo 5>, <&kp ESC>;
-//      };
+        mo3_ESC: mo3_ESC {
+            compatible = "zmk,behavior-tap-dance";
+            #binding-cells = <0>;
+            tapping-term-ms = <DANCE_MS>;
+            bindings = <&mo 3>, <&kp ESC>;
+        };
+        mo5_ESC: mo5_ESC {
+            compatible = "zmk,behavior-tap-dance";
+            #binding-cells = <0>;
+            tapping-term-ms = <DANCE_MS>;
+            bindings = <&mo 5>, <&kp ESC>;
+        };
     };
     //aliases
     aliases {
@@ -345,91 +334,50 @@
         compatible = "zmk,keymap";
         //0:normal
         layer_qwerty { bindings = <
-/*左手*/
-&mt Q       TAB  &mt LGUI W &kp  E    &kp R     &kp T
-&mt RCTRL   A    &kp S      &MY_kp_D  &kp F     &kp G
-&kp LS_          &kp Z      &kp  C    &kp V     &kp B
-&kp LCTRL        &kp LALT   &mkp LCLK &mo 2     &kp SPACE
-/*右手*/
-&kp  Y           &kp  U     &kp I     &kp O     &mt  ESC   MINUS
-&kp  H           &none      &kp K     &kp L     &mt  RCTRL SEMI
-&kp  N           &kp  M     &kp COMMA &kp UP    &kp  ENTER
-&kp SPACE        &mo  3     &kp LEFT  &kp DOWN  &kp  RIGHT
+&mt Q       TAB  &mt LGUI W &kp  E    &kp R     &kp T     &kp  Y     &kp  U    &kp I     &kp O     &mt  RCTRL MINUS
+&mt RCTRL   A    &kp S      &MY_kp_D  &kp F     &kp G     &kp  H     &none     &kp K     &kp L     &mt  ESC   SEMI
+&kp LS_          &kp Z      &kp  C    &kp V     &kp B     &kp  N     &kp  M    &kp COMMA &kp UP    &kp  ENTER
+&kp LCTRL        &kp LALT   &mkp LCLK &mo 2     &kp SPACE            &mo 3     &kp LEFT  &kp DOWN  &kp  RIGHT
           >;
         };
         //1:jigler-dummyレイヤー
-        layer_fn1    { bindings = <
-/*左手*/
-&trans           &trans    &trans    &trans     &trans
-&trans           &trans    &trans    &trans     &trans
-&trans           &trans    &trans    &trans     &trans
-&trans           &trans    &trans    &mo 4      &trans
-/*右手*/
-&trans           &trans    &trans    &trans     &trans
-&trans           &trans    &trans    &trans     &trans
-&trans           &trans    &trans    &trans     &trans
-&trans           &mo  5    &trans    &trans     &trans
- >; };
+        layer_fn1    { bindings = < &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+&trans           &trans    &trans    &mo 4      &trans               &mo 5     &trans    &trans    &trans >; };
         //2:Custom + Function Keys + Vol
         layer_fn2    { bindings = <
-/*左手*/
-&TAB_F1_ESC_BtCL &kp F2     &kp UP    &kp F4    &kp F5
-&mt LALT    CAPS &kp LEFT   &kp DOWN  &kp RIGHT &kp F3
-&trans           &VOL_DN    &kp X     &VOL_UP   &kp EQUAL
-&trans           &tog 1     &kp PSCRN &none     &kp BSPC
-/*右手*/
-&kp  F6          &F7_F10   &F8_F11   &F9_F12    &kp  P
-&RBKT_NUHS       &trans    &kp HOME  &kp PG_UP  &kp  INT1
-&NEW_8977        &kp DEL   &kp END   &kp PG_DN  &kp  SLASH
-&kp BSPC         &kp K_APP &trans    &trans     &trans
+&TAB_F1_ESC_BtCL &kp F2     &kp UP    &kp F4    &kp F5    &kp  F6    &F7_F10   &F8_F11   &F9_F12   &kp  P
+&mt LALT    CAPS &kp LEFT   &kp DOWN  &kp RIGHT &kp F3    &RBKT_NUHS &trans    &kp HOME  &kp PG_UP &kp  INT1
+&trans           &VOL_DN    &kp X     &VOL_UP   &kp EQUAL &NEW_8977  &kp DEL   &kp END   &kp PG_DN &kp  SLASH
+&trans           &tog 1     &kp PSCRN &none     &kp BSPC             &kp K_APP &trans    &trans    &trans 
             >;
         };
         //3:Number + Bluetooth /マウス高速
         layer_fn3    { bindings = <
-/*左手*/
-&kp N1           &MY_N2     &kp  N3   &kp N4    &kp N5
-&MY_U            &MY_L      &MY_D     &MY_R     &kp F3
-&trans           &VOL_DN    &kp X     &VOL_UP   &kp EQUAL
-&trans           &trans     &mkp RCLK &kp K_APP &ind_bat
-/*右手*/
-&kp  N6          &kp  N7    &kp N8    &kp N9    &N0_PIPE
-&kp  SQT         &trans     &SC_U_L   &SC_D_R   &trans
-&kp  LBKT        &mkp LCLK  &trans    &kp DOT   &kp  SLASH
-&ind_bat         &none      &BLE_USB  &BLE0_2   &BLE1_3
+&kp N1           &MY_N2     &kp  N3   &kp N4    &kp N5    &kp  N6    &kp  N7   &kp N8    &kp N9    &N0_PIPE
+&MY_U            &MY_L      &MY_D     &MY_R     &kp F3    &kp  SQT   &trans    &SC_U_L   &SC_D_R   &trans
+&trans           &VOL_DN    &kp X     &VOL_UP   &kp EQUAL &kp  LBKT  &mkp LCLK &trans    &kp DOT   &kp  SLASH
+&trans           &trans     &mkp RCLK &kp K_APP &ind_bat             &none     &BLE_USB  &BLE0_2   &BLE1_3
             >;
         };
-
         //4:Custom + Function Keys + Vol
         layer_fn4    { bindings = <
-/*左手*/
-&TAB_F1_ESC_BtCL &kp F2     &kp UP    &kp F4    &kp F5
-&mt LALT    CAPS &kp LEFT   &kp DOWN  &kp RIGHT &kp F3
-&trans           &VOL_DN    &kp X     &VOL_UP   &kp EQUAL
-&trans           &tog 1     &kp PSCRN &none     &kp BSPC
-/*右手*/
-&kp  F6          &F7_F10   &F8_F11   &F9_F12    &kp  P
-&RBKT_NUHS       &trans    &kp HOME  &kp PG_UP  &kp  INT1
-&NEW_8977        &kp DEL   &kp END   &kp PG_DN  &kp  SLASH
-&kp BSPC         &kp K_APP &trans    &trans     &trans
+&TAB_F1_ESC_BtCL &kp F2     &kp UP    &kp F4    &kp F5    &kp  F6    &F7_F10   &F8_F11   &F9_F12   &kp  P
+&mt LALT    CAPS &kp LEFT   &kp DOWN  &kp RIGHT &kp F3    &RBKT_NUHS &trans    &kp HOME  &kp PG_UP &kp  INT1
+&trans           &VOL_DN    &kp X     &VOL_UP   &kp EQUAL &NEW_8977  &kp DEL   &kp END   &kp PG_DN &kp  SLASH
+&trans           &tog 1     &kp PSCRN &none     &kp BSPC             &kp K_APP &trans    &trans    &trans 
             >;
         };
         //5:Number + Bluetooth /マウス高速
         layer_fn5    { bindings = <
-/*左手*/
-&kp N1           &MY_N2     &kp  N3   &kp N4    &kp N5
-&MY_U            &MY_L      &MY_D     &MY_R     &kp F3
-&trans           &VOL_DN    &kp X     &VOL_UP   &kp EQUAL
-&trans           &trans     &mkp RCLK &kp K_APP &ind_bat
-/*右手*/
-&kp  N6          &kp  N7    &kp N8    &kp N9    &N0_PIPE
-&kp  SQT         &trans     &SC_U_L   &SC_D_R   &trans
-&kp  LBKT        &mkp LCLK  &trans    &kp DOT   &kp  SLASH
-&ind_bat         &none      &BLE_USB  &BLE0_2   &BLE1_3
+&kp N1           &MY_N2     &kp  N3   &kp N4    &kp N5    &kp  N6    &kp  N7   &kp N8    &kp N9    &N0_PIPE
+&MY_U            &MY_L      &MY_D     &MY_R     &kp F3    &kp  SQT   &trans    &SC_U_L   &SC_D_R   &trans
+&trans           &VOL_DN    &kp X     &VOL_UP   &kp EQUAL &kp  LBKT  &mkp LCLK &trans    &kp DOT   &kp  SLASH
+&trans           &trans     &mkp RCLK &kp K_APP &ind_bat             &none     &BLE_USB  &BLE0_2   &BLE1_3
             >;
         };
     };
 };
-//SPRIT
-//SPRIT
-//SPRIT
-//SPRIT
+//CSTC
+//CSTC
+//CSTC
+//CSTC
