@@ -30,6 +30,7 @@
 #define Rc(keycode) APPLY_MODS(MOD_RCTL, keycode)
 
 //■■Keymap*******************************************************************************************
+//2026.06.06 #1251                         device_name_reset.
 //2026.06.06 #1172  Layer=2,4              mtを200msへ。shiftをCTRL+shiftへ。他レイヤーはshiftのみ。
 //2026.05.30 #1113  Layer=0                W長押しでWin。
 //                  Layer=1                QキーにBLE_CLRを統合。基本:ESC, 【ALT,Ctrl】:LS(TAB), 【LGUI】:F1, 【LSFT】:BT_CLR
@@ -377,6 +378,7 @@
         };
     };
 };
+//CSTC
 //CSTC
 //CSTC
 //CSTC
