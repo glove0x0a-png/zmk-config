@@ -56,6 +56,7 @@
 //2026.06.03 #1130 『az1uball.c』          ポーリングを節電方式に。
 //2026.04.30 #1084 『az1uball.c』          ZIGGLER = mo 1 レイヤ & ON/OFF 物理スイッチ。
 //■■カスタムbehavior*******************************************************************************************
+//2026.06.27 #1252 『behavior_hold_tap.c』 moX 割込みは、holdへ倒す方向。
 //2026.06.08 #1175 『behavior_tap_dance.c』mo3とESCをタップダンスで実装。ほかキー割込み時にシングルタップ(mo3,5)を優先。
 //2026.05.20 #1101 『behavior_hold_tap.c』 1.他キー割込み時はtap扱い。2.LALTのみhold扱い。3.Layer3の高速比率を3->6へ。
 //2026.03.14 #919  『behavior_mod_morph.c』Q、TABへ。mod-morphの修飾キー(CTRL/ALT)マスク削除。例) ALT + Q(ALT時TAB)→ALT + TABへ。GUIはESC割込み追加。
@@ -378,6 +379,7 @@
         };
     };
 };
+//CSTC
 //CSTC
 //CSTC
 //CSTC
