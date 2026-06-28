@@ -30,24 +30,16 @@
 #define Rc(keycode) APPLY_MODS(MOD_RCTL, keycode)
 
 //■■dtsi*********************************************************************************************
-//2026.06.25 #1249                         BLE設定残存より、初期化。I2Cは誤動作するので、無効化状態。D4:SDA,D5:SCL
 //2026.06.25 #1243                         右X4A、左X4Aセット。
 //2026.06.22 #1236                         左X4A、右CSTS。特に左(ペリフェラル)側のキーマップが右手用になる対応。 ダミーマトリクス。
 //2026.06.22 #1222                         ☑XIAO BLE plusのGPIO制限からマトリクススキャンに変更。
-//2026.06.20 #1208                         ☑1.キーマップ修正右→左、左手でLED利用(CapsLock)。
-//2026.06.20 #1202 『glove0x0a_left.dtsi』 ☑1.左右でコンパイル、右手はCSTSを使用、左はX4Aを利用。
-//2026.06.20 #1200 『glove0x0a_left.dtsi』 ☑1.direct scan
-//                                         ☑2.XIAO BLE plus、表面のpinを入力で使う
-//                                         ☑3.左右でコンパイル、右手はCSTSを使用、左はまだ
-//                                         ☑4.USB-Cの5V給電(外両端-GND,次のピン-5V)
+//2026.06.20 #1208                         ☑1.キーマップ修正右→左、左手でLED利用(CapsLock)。//2026.06.20 #1202 『glove0x0a_left.dtsi』 ☑1.左右でコンパイル、右手はCSTSを使用、左はX4Aを利用。//2026.06.20 #1200 『glove0x0a_left.dtsi』 ☑1.direct scan//                                         ☑2.XIAO BLE plus、表面のpinを入力で使う//                                         ☑3.左右でコンパイル、右手はCSTSを使用、左はまだ//                                         ☑4.USB-Cの5V給電(外両端-GND,次のピン-5V)//2026.06.25 #1249                         BLE設定残存より、初期化。I2Cは誤動作するので、無効化状態。D4:SDA,D5:SCL☑1.キーマップ修正右→左、左手でLED利用(CapsLock)。//2026.06.20 #1202 『glove0x0a_left.dtsi』 ☑1.左右でコンパイル、右手はCSTSを使用、左はX4Aを利用。//2026.06.20 #1200 『glove0x0a_left.dtsi』 ☑1.direct scan// ☑2.XIAO BLE plus、表面のpinを入力で使う// ☑3.左右でコンパイル、右手はCSTSを使用、左はまだ// ☑4.USB-Cの5V給電(外両端-GND,次のピン-5V)//2026.06.25 #1249 BLE設定残存より、初期化。I2Cは誤動作するので、無効化状態。D4:SDA,D5:SCL
 //■■Keymap*******************************************************************************************
-//2026.06.06 #1172  Layer=2,4              mtを200msへ。shiftをCTRL+shiftへ。他レイヤーはshiftのみ。
 //2026.05.30 #1113  Layer=0                W長押しでWin。
 //                  Layer=1                QキーにBLE_CLRを統合。基本:ESC, 【ALT,Ctrl】:LS(TAB), 【LGUI】:F1, 【LSFT】:BT_CLR
 //                  Layer=4                Layre 2をオーバーライド。zigglerがONのときだけ。LEDカラーが異なる。
 //                  Layer=5                Layer 3をオーバーライド。zigglerがONのときだけ。LEDカラーが異なる。
 //2026.05.20 #1101  Layer=2                CAPSとLALTを左小指に集約。
-//2026.03.12 #873   全Layer                物理配置を再調整。D1が不調。(dts再調整)
 //2026.03.03 #860   Layer=3                レイヤー3でMキーで、左クリック。
 //2026.03.01 #847   Layer=ALL              Ctrlキーを再配置。
 //                  Layer=3                BLE機能関連のキー右下に集約。
@@ -66,6 +58,7 @@
 //2026.06.03 #1130 『az1uball.c』          ポーリングを節電方式に。
 //2026.04.30 #1084 『az1uball.c』          ZIGGLER = mo 1 レイヤ & ON/OFF 物理スイッチ。
 //■■カスタムbehavior*******************************************************************************************
+//2026.06.28 #1259 『behavior_hold_tap.c』 GUIから、moキーは、hold扱い。
 //2026.06.08 #1175 『behavior_tap_dance.c』mo3とESCをタップダンスで実装。ほかキー割込み時にシングルタップ(mo3,5)を優先。
 //2026.05.20 #1101 『behavior_hold_tap.c』 1.他キー割込み時はtap扱い。2.LALTのみhold扱い。3.Layer3の高速比率を3->6へ。
 //2026.03.14 #919  『behavior_mod_morph.c』Q、TABへ。mod-morphの修飾キー(CTRL/ALT)マスク削除。例) ALT + Q(ALT時TAB)→ALT + TABへ。GUIはESC割込み追加。
@@ -213,18 +206,6 @@
             bindings = <&kp D>, <&kp X>;
             mods = <(MOD_LCTL|MOD_RCTL)>;
         };
-        //MY_SPACE_1: MY_SPACE_1 {
-        //    compatible = "zmk,behavior-mod-morph";
-        //    #binding-cells = <0>;
-        //    bindings = <&kp SPACE>, <&kp Z>;
-        //    mods = <(MOD_LCTL|MOD_RCTL)>;
-        //};
-        //MY_SPACE: MY_SPACE {
-        //    compatible = "zmk,behavior-mod-morph";
-        //    #binding-cells = <0>;
-        //    bindings = <&MY_SPACE_1>, <&kp LS(Z)>;
-        //    mods = <MOD_LSFT>;
-        //};
 //////////十字キー
         MY_R: MY_R{
             compatible = "zmk,behavior-mod-morph";
@@ -300,18 +281,6 @@
             behavior-status = "capslock";
         };
 //★TAP DANCE-----------------------------------------------
-//      mo3_ESC: mo3_ESC {
-//          compatible = "zmk,behavior-tap-dance";
-//          #binding-cells = <0>;
-//          tapping-term-ms = <DANCE_MS>;
-//          bindings = <&mo 3>, <&kp ESC>;
-//      };
-//      mo5_ESC: mo5_ESC {
-//          compatible = "zmk,behavior-tap-dance";
-//          #binding-cells = <0>;
-//          tapping-term-ms = <DANCE_MS>;
-//          bindings = <&mo 5>, <&kp ESC>;
-//      };
     };
     //aliases
     aliases {
@@ -429,10 +398,5 @@
         };
     };
 };
-//SPRIT
-//SPRIT
-//SPRIT
-//SPRIT
-//SPRIT
 //SPRIT
 //SPRIT
