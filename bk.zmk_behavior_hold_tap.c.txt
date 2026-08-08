@@ -547,6 +547,7 @@ static void decide_hold_tap(struct active_hold_tap *hold_tap,
     // ★ 他キー割込み時は必ず TAP に強制
     // LSHIFT の hold は絶対に HOLD 優先
     if (hold_tap->param_hold == LSHFT) {
+        decide_positional_hold(hold_tap);
         // 何もせず通常の判定へ進む（= TAP 強制ロジックを無視）
     } else
     if (decision_moment == HT_OTHER_KEY_DOWN
