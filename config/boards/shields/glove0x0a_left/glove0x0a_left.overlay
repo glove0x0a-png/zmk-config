@@ -1,0 +1,26 @@
+#include "glove0x0a_left.dtsi"
+
+// 左手用
+&kscan_left {
+    status = "okay";
+};
+
+&left_transform {
+    status = "okay";
+};
+
+ / {
+    chosen {
+        zmk,split-role = "peripheral";
+    };
+
+//    aliases {
+//        led-red = &led0;
+//        led-green = &led1;
+//        led-blue = &led2;
+//    };
+
+//    leds {
+//        status = "okay";
+//    };
+};

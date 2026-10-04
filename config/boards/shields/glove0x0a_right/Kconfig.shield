@@ -1,0 +1,4 @@
+# No whitespace after the comma or in your keyboard name!
+config SHIELD_GLOVE0X0A_RIGHT
+    bool "glove0x0a right"
+

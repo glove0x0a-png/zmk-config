@@ -4,7 +4,7 @@
 #include <dt-bindings/zmk/outputs.h>
 #include <dt-bindings/zmk/rgb.h>
 #include <behaviors/rgbled_widget.dtsi>
-
+//SPRIT
 //define
 //ロータリーエンコーダ：マウスのスクロール量
 #define ZMK_POINTING_DEFAULT_MOVE_VAL 1500
@@ -14,7 +14,7 @@
 #include <dt-bindings/input/input-event-codes.h>
 
 #define HOLD_MS 250
-#define DANCE_MS 200
+//#define DANCE_MS 200
 #define PIPE_ LS(INT3)
 #define LS_   LSHFT
 
@@ -29,23 +29,26 @@
 
 #define Rc(keycode) APPLY_MODS(MOD_RCTL, keycode)
 
+//■■dtsi*********************************************************************************************
+//2026.06.25 #1243                         右X4A、左X4Aセット。
+//2026.06.22 #1236                         左X4A、右CSTS。特に左(ペリフェラル)側のキーマップが右手用になる対応。 ダミーマトリクス。
+//2026.06.22 #1222                         ☑XIAO BLE plusのGPIO制限からマトリクススキャンに変更。
+//2026.06.20 #1208                         ☑1.キーマップ修正右→左、左手でLED利用(CapsLock)。//2026.06.20 #1202 『glove0x0a_left.dtsi』 ☑1.左右でコンパイル、右手はCSTSを使用、左はX4Aを利用。//2026.06.20 #1200 『glove0x0a_left.dtsi』 ☑1.direct scan//                                         ☑2.XIAO BLE plus、表面のpinを入力で使う//                                         ☑3.左右でコンパイル、右手はCSTSを使用、左はまだ//                                         ☑4.USB-Cの5V給電(外両端-GND,次のピン-5V)//2026.06.25 #1249                         BLE設定残存より、初期化。I2Cは誤動作するので、無効化状態。D4:SDA,D5:SCL☑1.キーマップ修正右→左、左手でLED利用(CapsLock)。//2026.06.20 #1202 『glove0x0a_left.dtsi』 ☑1.左右でコンパイル、右手はCSTSを使用、左はX4Aを利用。//2026.06.20 #1200 『glove0x0a_left.dtsi』 ☑1.direct scan// ☑2.XIAO BLE plus、表面のpinを入力で使う// ☑3.左右でコンパイル、右手はCSTSを使用、左はまだ// ☑4.USB-Cの5V給電(外両端-GND,次のピン-5V)//2026.06.25 #1249 BLE設定残存より、初期化。I2Cは誤動作するので、無効化状態。D4:SDA,D5:SCL
 //■■Keymap*******************************************************************************************
-//2026.06.06 #1251                         device_name_reset.
-//2026.06.06 #1172  Layer=2,4              mtを200msへ。shiftをCTRL+shiftへ。他レイヤーはshiftのみ。
+//2026.06.28 #1260 『glove0x0a_right.conf』Battery表示修正。CONFIG_RGBLED_WIDGET_BATTERY_SHOW_SELF/CONFIG_RGBLED_WIDGET_BATTERY_SHOW_PERIPHERALS
 //2026.05.30 #1113  Layer=0                W長押しでWin。
 //                  Layer=1                QキーにBLE_CLRを統合。基本:ESC, 【ALT,Ctrl】:LS(TAB), 【LGUI】:F1, 【LSFT】:BT_CLR
-//                  Layer=4                Layre 2をオーバーライド。zigglerがONのときだけ。LEDカラーが異なる。
-//                  Layer=5                Layer 3をオーバーライド。zigglerがONのときだけ。LEDカラーが異なる。
+//                  Layer=4                Layre 2をオーバーライド(=4)。zigglerがONのときだけ。LEDカラーが異なる。
+//                  Layer=5                Layer 3をオーバーライド(=5)。zigglerがONのときだけ。LEDカラーが異なる。
 //2026.05.20 #1101  Layer=2                CAPSとLALTを左小指に集約。
-//2026.03.12 #873   全Layer                物理配置を再調整。D1が不調。(dts再調整)
 //2026.03.03 #860   Layer=3                レイヤー3でMキーで、左クリック。
 //2026.03.01 #847   Layer=ALL              Ctrlキーを再配置。
 //                  Layer=3                BLE機能関連のキー右下に集約。
-//2026.02.28 #832   Layer=2                Fnキーをレイヤー上段に集約。
+//2026.02.28 #832   Layer=2                Fキーをレイヤー上段に集約。
 //■■az1uball*******************************************************************************************
 //2026.06.03 #1145 『az1uball.c』          キー検知の際に、画面描写がすぐ行われるように、検知直後のpolling周期を最速へ。
-//2026.05.30 #1113 『az1uball.c』          R_CTR検知でマウス移動。
-//2026.05.20 #1101 『az1uball.c』          GUI検知時にマウス移動。
+//2026.05.30 #1113 『az1uball.c』          R_CTR検知でマウス移動(画面描写)。
+//2026.05.20 #1101 『az1uball.c』          GUI検知時にマウス移動(画面描写)。
 //2026.03.01 #843  『az1uball.c』          デバッグ:AZ1UBALL:加速度上限制御。//2026.03.01 #842 デバッグ:AZ1UBALL:前回移動量のクリアを明記。//2026.03.01 #841 デバッグ:AZ1UBALL:前回移動量の保存条件を変更。//2026.03.01 #838 デバッグ:AZ1UBALL:cos/sinの符号不良。//2026.03.01 #837 デバッグ:AZ1UBALL:方向検出不良(if右else左else下else上->if右else左 if下else上)//2026.02.28 #834 デバッグ:AZ1UBALL:加速度不良。
 //2026.02.28 #828  『az1uball.c』          I2C & AZ1UBALLのカスタマイズ。移動量,角度,加速度。
 //■■ziggler*******************************************************************************************
@@ -56,12 +59,12 @@
 //2026.06.03 #1130 『az1uball.c』          ポーリングを節電方式に。
 //2026.04.30 #1084 『az1uball.c』          ZIGGLER = mo 1 レイヤ & ON/OFF 物理スイッチ。
 //■■カスタムbehavior*******************************************************************************************
-//2026.06.27 #1256 『behavior_hold_tap.c』 moX 割込みは、holdへ倒す方向。
-//2026.06.08 #1175 『behavior_tap_dance.c』mo3とESCをタップダンスで実装。ほかキー割込み時にシングルタップ(mo3,5)を優先。
-//2026.05.20 #1101 『behavior_hold_tap.c』 1.他キー割込み時はtap扱い。2.LALTのみhold扱い。3.Layer3の高速比率を3->6へ。
+//2026.06.28 #1259 『behavior_hold_tap.c』 GUIの誤動作防止。moキーは、hold扱い。
+//2026.05.20 #1101 『behavior_hold_tap.c』 1.他キー割込み時はtap扱い。2.LALT,mo割込みはhold扱い。3.Layer3の高速比率を3->6へ。
 //2026.03.14 #919  『behavior_mod_morph.c』Q、TABへ。mod-morphの修飾キー(CTRL/ALT)マスク削除。例) ALT + Q(ALT時TAB)→ALT + TABへ。GUIはESC割込み追加。
-//2026.03.13 #881  『behavior_tap_dance.c』tap-danceの自動リリース削除、押しっぱなしでホールド/即リリースは後追い。
 //2026.02.23 #764  『behavior_capslock_led.c』zmkバージョンアップにより、rgbledをローカルzmkへ統合。
+//× //2026.06.08 #1175 『behavior_tap_dance.c』mo3とESCをタップダンスで実装。ほかキー割込み時にシングルタップ(mo3,5)を優先。
+//× //2026.03.13 #881  『behavior_tap_dance.c』tap-danceの自動リリース削除、押しっぱなしでホールド/即リリースは後追い。
 /////////////////////////////////////////////////
 &mt {
     tapping-term-ms = <HOLD_MS>;  //hold-tap / caps -> Ctrl
@@ -312,51 +315,90 @@
         compatible = "zmk,keymap";
         //0:normal
         layer_qwerty { bindings = <
-&mt Q       TAB  &mt LGUI W &kp  E    &kp R     &kp T     &kp  Y     &kp  U    &kp I     &kp O     &mt  ESC   MINUS
-&mt RCTRL   A    &kp S      &MY_kp_D  &kp F     &kp G     &kp  H     &none     &kp K     &kp L     &mt  RCTRL SEMI
-&kp LS_          &kp Z      &kp  C    &kp V     &kp B     &kp  N     &kp  M    &kp COMMA &kp UP    &kp  ENTER
-&kp LCTRL        &kp LALT   &mkp LCLK &mo 2     &kp SPACE            &mo 3     &kp LEFT  &kp DOWN  &kp  RIGHT
+/*左手*/
+&mt Q       TAB  &mt LGUI W &kp  E    &kp R     &kp T
+&mt RCTRL   A    &kp S      &MY_kp_D  &kp F     &kp G
+&kp LS_          &kp Z      &kp  C    &kp V     &kp B
+&kp LCTRL        &kp LALT   &mkp LCLK &mo 2     &kp SPACE
+/*右手*/
+&kp  Y           &kp  U     &kp I     &kp O     &kp MINUS
+&mt  RCTRL  H    &none      &kp K     &kp L     &kp SEMI
+&kp  N           &kp  M     &kp COMMA &kp UP    &kp ENTER
+&kp SPACE        &mo  3     &kp LEFT  &kp DOWN  &kp RIGHT
           >;
         };
         //1:jigler-dummyレイヤー
-        layer_fn1    { bindings = < &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-&trans           &trans    &trans    &mo 4      &trans               &mo 5     &trans    &trans    &trans >; };
+        layer_fn1    { bindings = <
+/*左手*/
+&trans           &trans    &trans    &trans     &trans
+&trans           &trans    &trans    &trans     &trans
+&trans           &trans    &trans    &trans     &trans
+&trans           &trans    &trans    &mo 4      &trans
+/*右手*/
+&trans           &trans    &trans    &trans     &trans
+&trans           &trans    &trans    &trans     &trans
+&trans           &trans    &trans    &trans     &trans
+&trans           &mo  5    &trans    &trans     &trans
+ >; };
         //2:Custom + Function Keys + Vol
         layer_fn2    { bindings = <
-&TAB_F1_ESC_BtCL &kp F2     &kp UP    &kp F4    &kp F5    &kp  F6    &F7_F10   &F8_F11   &F9_F12   &kp  P
-&mt LALT    CAPS &kp LEFT   &kp DOWN  &kp RIGHT &kp F3    &RBKT_NUHS &trans    &kp HOME  &kp PG_UP &kp  INT1
-&trans           &VOL_DN    &kp X     &VOL_UP   &kp EQUAL &NEW_8977  &kp DEL   &kp END   &kp PG_DN &kp  SLASH
-&trans           &tog 1     &kp PSCRN &none     &kp BSPC             &kp K_APP &trans    &trans    &trans 
+/*左手*/
+&TAB_F1_ESC_BtCL &kp F2     &kp UP    &kp F4    &kp F5
+&kp LALT         &kp LEFT   &kp DOWN  &kp RIGHT &kp F3
+&trans           &VOL_DN    &kp X     &VOL_UP   &kp EQUAL
+&trans           &tog 1     &kp PSCRN &none     &kp BSPC
+/*右手*/
+&kp  F6          &F7_F10   &F8_F11   &F9_F12    &kp P
+&RBKT_NUHS       &trans    &kp HOME  &kp PG_UP  &kp INT1
+&NEW_8977        &kp DEL   &kp END   &kp PG_DN  &kp SLASH
+&kp BSPC         &kp K_APP &trans    &trans     &trans
             >;
         };
         //3:Number + Bluetooth /マウス高速
         layer_fn3    { bindings = <
-&kp N1           &MY_N2     &kp  N3   &kp N4    &kp N5    &kp  N6    &kp  N7   &kp N8    &kp N9    &N0_PIPE
-&MY_U            &MY_L      &MY_D     &MY_R     &kp F3    &kp  SQT   &trans    &SC_U_L   &SC_D_R   &trans
-&trans           &VOL_DN    &kp X     &VOL_UP   &kp EQUAL &kp  LBKT  &mkp LCLK &trans    &kp DOT   &kp  SLASH
-&trans           &trans     &mkp RCLK &kp K_APP &ind_bat             &none     &BLE_USB  &BLE0_2   &BLE1_3
+/*左手*/
+&kp N1           &MY_N2     &kp  N3   &kp N4    &kp N5
+&MY_U            &MY_L      &MY_D     &MY_R     &kp F3
+&trans           &VOL_DN    &kp X     &VOL_UP   &kp EQUAL
+&trans           &trans     &mkp RCLK &kp ESC   &ind_bat
+/*右手*/
+&kp  N6          &kp  N7    &kp N8    &kp N9    &N0_PIPE
+&kp  SQT         &trans     &SC_U_L   &SC_D_R   &trans
+&kp  LBKT        &mkp LCLK  &trans    &kp DOT   &kp SLASH
+&ind_bat         &none      &BLE_USB  &BLE0_2   &BLE1_3
             >;
         };
+
         //4:Custom + Function Keys + Vol
         layer_fn4    { bindings = <
-&TAB_F1_ESC_BtCL &kp F2     &kp UP    &kp F4    &kp F5    &kp  F6    &F7_F10   &F8_F11   &F9_F12   &kp  P
-&mt LALT    CAPS &kp LEFT   &kp DOWN  &kp RIGHT &kp F3    &RBKT_NUHS &trans    &kp HOME  &kp PG_UP &kp  INT1
-&trans           &VOL_DN    &kp X     &VOL_UP   &kp EQUAL &NEW_8977  &kp DEL   &kp END   &kp PG_DN &kp  SLASH
-&trans           &tog 1     &kp PSCRN &none     &kp BSPC             &kp K_APP &trans    &trans    &trans 
+/*左手*/
+&TAB_F1_ESC_BtCL &kp F2     &kp UP    &kp F4    &kp F5
+&kp LALT         &kp LEFT   &kp DOWN  &kp RIGHT &kp F3
+&trans           &VOL_DN    &kp X     &VOL_UP   &kp EQUAL
+&trans           &tog 1     &kp PSCRN &none     &kp BSPC
+/*右手*/
+&kp  F6          &F7_F10   &F8_F11   &F9_F12    &kp P
+&RBKT_NUHS       &trans    &kp HOME  &kp PG_UP  &kp INT1
+&NEW_8977        &kp DEL   &kp END   &kp PG_DN  &kp SLASH
+&kp BSPC         &kp K_APP &trans    &trans     &trans
             >;
         };
         //5:Number + Bluetooth /マウス高速
         layer_fn5    { bindings = <
-&kp N1           &MY_N2     &kp  N3   &kp N4    &kp N5    &kp  N6    &kp  N7   &kp N8    &kp N9    &N0_PIPE
-&MY_U            &MY_L      &MY_D     &MY_R     &kp F3    &kp  SQT   &trans    &SC_U_L   &SC_D_R   &trans
-&trans           &VOL_DN    &kp X     &VOL_UP   &kp EQUAL &kp  LBKT  &mkp LCLK &trans    &kp DOT   &kp  SLASH
-&trans           &trans     &mkp RCLK &kp K_APP &ind_bat             &none     &BLE_USB  &BLE0_2   &BLE1_3
+/*左手*/
+&kp N1           &MY_N2     &kp  N3   &kp N4    &kp N5
+&MY_U            &MY_L      &MY_D     &MY_R     &kp F3
+&trans           &VOL_DN    &kp X     &VOL_UP   &kp EQUAL
+&trans           &trans     &mkp RCLK &kp ESC   &ind_bat
+/*右手*/
+&kp  N6          &kp  N7    &kp N8    &kp N9    &N0_PIPE
+&kp  SQT         &trans     &SC_U_L   &SC_D_R   &trans
+&kp  LBKT        &mkp LCLK  &trans    &kp DOT   &kp SLASH
+&ind_bat         &none      &BLE_USB  &BLE0_2   &BLE1_3
             >;
         };
     };
 };
-//CSTC
-//CSTC
-//CSTC
-//CSTC
-//CSTC
+//SPRIT
+//SPRIT
+//SPRIT

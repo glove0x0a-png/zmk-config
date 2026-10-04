@@ -1,4 +1,4 @@
-name: glove0x0a
+name: zmk-config
 
 build:
   settings:
