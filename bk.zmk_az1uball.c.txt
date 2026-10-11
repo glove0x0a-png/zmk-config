@@ -51,6 +51,7 @@ void az1uball_read_data_work(struct k_work *work)
     uint8_t  buf[5]; //buf
     uint32_t now = k_uptime_get(); //実行時刻
     int      lock_direct=1;
+
     struct az1uball_data *data = CONTAINER_OF(work, struct az1uball_data, work); //az1uball
     data->layer = zmk_keymap_highest_layer_active(); //現レイヤ
     zmk_sleep_inhibit = ( data->layer == JIG_LAYER ); //レイヤー1ならスリープ抑止
@@ -58,12 +59,10 @@ void az1uball_read_data_work(struct k_work *work)
     const struct az1uball_config *config = data->dev->config; //config
     float scaling = data->scaling_factor; //比率
 
-    bool rctrl = zmk_hid_get_explicit_mods() & 0x10;
-    bool lgui  = zmk_hid_get_explicit_mods() & 0x08;
+    bool rctrl = zmk_hid_get_explicit_mods() & 0x10; //右Ctrl
+    bool lgui  = zmk_hid_get_explicit_mods() & 0x08; //左GUI
 
-    if (    zmk_hid_get_explicit_mods() & 0x10  //右Ctrl
-         || zmk_hid_get_explicit_mods() & 0x08  //左GUI
-    ){
+    if ( rctrl || lgui ){
         if( !data->First_flg )                  //検知時に1回だけ(押しっぱなし対策)
         {
             data->First_flg = true;             //〃
@@ -80,7 +79,7 @@ void az1uball_read_data_work(struct k_work *work)
             }
 
             for (int i = 0; i < 5; i++) {
-                input_report_rel(data->dev, INPUT_REL_Y, data->direction, true , K_NO_WAIT);
+                input_report_rel(data->dev, INPUT_REL_Y, lock_direct, true , K_NO_WAIT);
                 k_sleep(K_MSEC( 5));
             }
         }
@@ -304,21 +303,17 @@ extern struct az1uball_data az1uball_data_0;
 // #21.割込み検知
 static int az1uball_event_handler(const zmk_event_t *eh)
 {
+    //キー状態に変更がない場合
     const struct zmk_keycode_state_changed *ev = as_zmk_keycode_state_changed(eh);
     if (!ev) {
         return 0;
     }
-    // 押下時    ：低ポーリング中でも、ポーリング。画面描画でFirst_flg=trueへ。(押しっぱなしの繰り返し防止)
-    // リリース時：低ポーリング中でも、ポーリング。次の挙動を保証するため、First_flg=falseに戻す。
-
-    struct az1uball_data *data = &az1uball_data_0;
-    bool is_ESC = (ev->usage_page == 0x07 && ev->keycode    == 0x29);    //USAGE_PAGE_KEYBOARD 0x07,KEY_ESC 0x29 
-
-    // 無効 /* ESC 押下  *///if (is_ESC) {//    data->last_activity_time = k_uptime_get();  //★時間更新する -> 次のポーリングでサイクルは高頻度へリセット。//}
 
     k_timer_stop(&data->polling_timer);
     k_timer_start(&data->polling_timer, NOR_POLL_MS, NOR_POLL_MS);  //1回はポーリング起動(起点リセット・ESC以外はもう一度超低頻度スタート)
     return 0;
+    //削除済み。
+    //      押下時    ：低ポーリング中でも、ポーリング。画面描画でFirst_flg=trueへ。(押しっぱなしの繰り返し防止)    // リリース時：低ポーリング中でも、ポーリング。次の挙動を保証するため、First_flg=falseに戻す。    //struct az1uball_data *data = &az1uball_data_0;    //bool is_ESC = (ev->usage_page == 0x07 && ev->keycode    == 0x29);    //USAGE_PAGE_KEYBOARD 0x07,KEY_ESC 0x29     // 無効 /* ESC 押下  *///if (is_ESC) {//    data->last_activity_time = k_uptime_get();  //★時間更新する -> 次のポーリングでサイクルは高頻度へリセット。//}
 }
 
 ZMK_LISTENER(az1uball, az1uball_event_handler);
