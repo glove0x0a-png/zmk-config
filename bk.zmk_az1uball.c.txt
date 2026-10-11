@@ -309,6 +309,7 @@ static int az1uball_event_handler(const zmk_event_t *eh)
         return 0;
     }
 
+    struct az1uball_data *data = &az1uball_data_0;
     k_timer_stop(&data->polling_timer);
     k_timer_start(&data->polling_timer, NOR_POLL_MS, NOR_POLL_MS);  //1回はポーリング起動(起点リセット・ESC以外はもう一度超低頻度スタート)
     return 0;
