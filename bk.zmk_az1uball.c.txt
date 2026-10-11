@@ -200,7 +200,7 @@ static void az1uball_polling(struct k_timer *timer)
     k_timer_stop( &data->polling_timer);
 
     //マウス有効化中だけ、高速ポーリングあり。
-    if ( &data->direction > 0 ){
+    if ( data->direction > 0 ){
         //高サイクル:USB接続
         if ( zmk_usb_is_powered() ){
             k_timer_start(&data->polling_timer, NOR_POLL_MS, NOR_POLL_MS);
@@ -221,7 +221,7 @@ static void az1uball_polling(struct k_timer *timer)
 
      //idle時間経過で、超低速ポーリング。※キー操作・マウス操作なしで30秒経過
      if (k_uptime_get() - data->last_activity_time >= IDLE_MS){
-         &data->direction = -1;              //マウス無効化
+         data->direction = -1;              //マウス無効化
          k_timer_start(&data->polling_timer, JIG_POLL_MS, JIG_POLL_MS);
      }
 
