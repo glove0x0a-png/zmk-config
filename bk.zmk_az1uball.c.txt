@@ -68,7 +68,16 @@ void az1uball_read_data_work(struct k_work *work)
         if( !data->First_flg )                  //検知時に1回だけ
         {
             data->First_flg = true;
-            data->direction *= -1;              //マウス無効化 or マウス有効化はトグル式。
+            //マウスの無効化時
+            if ( data->direction > 0 ){
+                data->direction = -1;              //マウス無効化
+            }
+            //マウスの有効化
+            else {
+                data->direction = 1;              //マウス有効化
+                data->last_activity_time = now;   //マウス有効化時はマウス操作時刻更新。
+            }
+            
             for (int i = 0; i < 5; i++) {
                 input_report_rel(data->dev, INPUT_REL_Y, data->direction, true , K_NO_WAIT);
                 k_sleep(K_MSEC( 5));
@@ -260,7 +269,7 @@ static int az1uball_init(const struct device *dev)
     data->pre_y=0;
     data->layer=0;
     data->First_flg=false;
-    data->direction=-1;
+    data->direction=1;
 
     device_is_ready(config->i2c.bus); //i2c_初期
     i2c_write_dt(&config->i2c, &cmd, sizeof(cmd));
