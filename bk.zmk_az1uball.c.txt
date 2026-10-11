@@ -96,7 +96,7 @@ void az1uball_read_data_work(struct k_work *work)
     float delta_x=0,delta_y=0; //移動距離(誤作動防止のためDED_ZONE考慮)
 
     //マウス有効化中のみ、マウス移動値を検知。
-    if  ( data->lock ){
+    if  ( !data->lock ){
         if     ( abs((int16_t)buf[1]) > abs(buf[0])) delta_x= MOUSE_VAL_X; //buf[1]=右:指の向きで接点が短いので感度2倍
         else if( abs((int16_t)buf[0]) > abs(buf[1])) delta_x=-MOUSE_VAL_X; //buf[0]=左:同上
         if     ( abs((int16_t)buf[3]) > abs(buf[2])) delta_y= MOUSE_VAL_Y; //buf[3]=下
