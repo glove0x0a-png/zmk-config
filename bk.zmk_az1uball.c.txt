@@ -68,12 +68,12 @@ void az1uball_read_data_work(struct k_work *work)
             data->First_flg = true;             //〃
 
             if ( data->lock ){                    //マウス有効化時(ロックあり⇒なし)
-                data->lock  = false;
+                if( rctrl) data->lock  = false;   //
                 lock_direct = 1;                  //下が有効化
                 data->last_activity_time = now;   //マウス最終操作時刻更新(ポーリング高速化へ)
             }
             else{                     //マウス無効化時(ロックなし⇒あり)
-                data->lock  = true;
+                if( rctrl) data->lock  = true;
                 lock_direct = -1;                           //上が無効化
                 data->last_activity_time = now - IDLE_MS;   //マウス最終操作時刻更新(ポーリング低速化)
             }
