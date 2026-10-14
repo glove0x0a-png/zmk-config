@@ -32,7 +32,7 @@
 
         /* 行（Row）: 出力 */
         row-gpios =
-            <&gpio1 15 GPIO_ACTIVE_HIGH>, /* Row1: D10 P1.15 */
+            <&gpio0  4 GPIO_ACTIVE_HIGH>, /* Row1: D10 P1.15->D4 */
             <&gpio1 14 GPIO_ACTIVE_HIGH>, /* Row2: D9  P1.14 */
             <&gpio1 13 GPIO_ACTIVE_HIGH>, /* Row3: D8  P1.13 */
             <&gpio1 12 GPIO_ACTIVE_HIGH>; /* Row4: D7  P1.12 */

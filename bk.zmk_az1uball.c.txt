@@ -82,6 +82,10 @@ void az1uball_read_data_work(struct k_work *work)
                 input_report_rel(data->dev, INPUT_REL_Y, lock_direct, true , K_NO_WAIT);
                 k_sleep(K_MSEC( 5));
             }
+            for (int i = 0; i < 5; i++) {
+                input_report_rel(data->dev, INPUT_REL_X, lock_direct, true , K_NO_WAIT);
+                k_sleep(K_MSEC( 5));
+            }
         }
     }
     else{
